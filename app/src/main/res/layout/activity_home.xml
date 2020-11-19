@@ -38,7 +38,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
                     android:layout_marginEnd="0dp"
-                    android:background="?android:attr/windowBackground"
+                    android:background="@color/light_blue"
+                    app:itemIconTint="@drawable/bottom_nav_icon_selector"
+                    app:itemTextColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -66,6 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        app:itemIconTint="@color/white"
         android:id="@+id/side_nav_view"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"/>
