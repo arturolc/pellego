@@ -1,24 +1,25 @@
 package com.example.pellego.ui.learn;
 
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.pellego.R;
+import com.example.pellego.ui.technique.TechniqueOverviewFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -32,10 +33,9 @@ public class LearnFragment extends Fragment {
 
     private LearnViewModel learnViewModel;
 
-    ListView mDrawerList;
-    RelativeLayout mDrawerPane;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private NavigationView mDrawerLayout;
+    ListView moduleList;
+    RelativeLayout modulePane;
+    private NavigationView moduleLayout;
 
     ArrayList<ModuleItem> mNavItems = new ArrayList<>();
 
@@ -58,21 +58,30 @@ public class LearnFragment extends Fragment {
         mNavItems.add(new ModuleItem("Reducing Subvocalization", "5 minutes, 3 lessons", R.drawable.ic_reducing_subvocalization));
         mNavItems.add(new ModuleItem("Meta Guiding", "6 minutes, 3 lessons", R.drawable.ic_meta_guiding));
         mNavItems.add(new ModuleItem("Pre-Reading", "4 minutes, 3 lessons", R.drawable.ic_pre_reading));
-        mDrawerLayout = root.findViewById(R.id.nav_module_overview);
-//
-//        // Populate the Navigtion Drawer with options
-        mDrawerPane = root.findViewById(R.id.module_pane);
-        mDrawerList = root.findViewById(R.id.navList);
+        moduleLayout = root.findViewById(R.id.nav_module_overview);
+        // Populate the Navigtion Drawer with options
+        modulePane = root.findViewById(R.id.module_pane);
+        moduleList = root.findViewById(R.id.navList);
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
-        mDrawerList.setAdapter(adapter);
+        moduleList.setAdapter(adapter);
 
         // Drawer Item click listeners
-//        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                selectItemFromDrawer(position);
-//            }
-//        });
+        moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("id" + id);
+                TechniqueOverviewFragment techniqueOverviewFragment = new TechniqueOverviewFragment();
+                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+
+//                Navigation.findNavController(view).navigate(R.id.nav_technique);
+//                fragmentTransaction.add(R.id.host_fragment_container, techniqueOverviewFragment).commit();
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+
+
+            }
+        });
 
         return root;
     }

@@ -8,6 +8,7 @@
     <string name="title_rsv">Rapid Serial Visualization</string>
     <string name="title_clump_reading">Clump Reading</string>
     <string name="title_meta_guiding">Meta Guiding</string>
+    <string name="title_technique">Technique Overview</string>
     <string name="title_reducing_subvocalization">Reducing Subvocalization</string>
     <string name="title_profile">Profile</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>

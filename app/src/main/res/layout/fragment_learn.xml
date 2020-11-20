@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.learn.LearnFragment">
+    tools:context=".ui.learn.LearnFragment"
+    android:id="@+id/frag_learn">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -26,24 +27,10 @@
             android:textSize="70dp" />
 
 
-
-
             <!-- Here is the inserted layout -->
             <include layout="@layout/modules_overview"/>
 
 
-
-<!--        <com.google.android.material.navigation.NavigationView-->
-<!--            android:id="@+id/modules_nav_view"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="bottom"-->
-<!--            android:background="@drawable/vertical_menu_background"-->
-<!--            android:fitsSystemWindows="false"-->
-<!--            app:itemIconTint="@color/light_blue"-->
-<!--            app:itemTextColor="@color/light_blue"-->
-<!--            app:itemTextAppearance="@style/menu_text_style"-->
-<!--            app:menu="@menu/modules_overview_menu" />-->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

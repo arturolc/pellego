@@ -28,6 +28,7 @@ import com.example.pellego.ui.learn.ModuleItem;
 import com.example.pellego.ui.learn.ModuleListAdapter;
 import com.example.pellego.ui.profile.ProfileFragment;
 import com.example.pellego.ui.settings.SettingsFragment;
+import com.example.pellego.ui.technique.TechniqueOverviewFragment;
 import com.example.pellego.ui.termsAndConditions.TermsAndConditionsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -43,8 +44,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
-
-
 
 
     @Override
@@ -78,12 +77,10 @@ public class HomeActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_library, R.id.nav_learn, R.id.nav_progress, R.id.nav_settings)
+                R.id.nav_library, R.id.nav_learn, R.id.nav_progress, R.id.nav_settings, R.id.nav_technique)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
-
-
 
 
     }
