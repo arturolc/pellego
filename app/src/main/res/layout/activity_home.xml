@@ -21,7 +21,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:itemIconTint="@color/white"
-        android:background="@drawable/nav_drawer_background"
+        android:background="@drawable/nav_side_drawer_background"
         app:itemTextColor="@color/white"
         android:id="@+id/side_nav_view"
         android:fitsSystemWindows="false"
