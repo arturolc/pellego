@@ -11,8 +11,8 @@
             android:layout_height="70dp"
             android:id="@+id/toolbar"
             android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+            />
 
 
     <include layout="@layout/content_main" />

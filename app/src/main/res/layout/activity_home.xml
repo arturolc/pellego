@@ -25,7 +25,6 @@
         app:itemTextColor="@color/white"
         android:id="@+id/side_nav_view"
         android:fitsSystemWindows="false"
-
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"/>
 

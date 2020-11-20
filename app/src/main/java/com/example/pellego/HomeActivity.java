@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -12,15 +13,26 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.app.Notification;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.pellego.ui.learn.ModuleItem;
+import com.example.pellego.ui.learn.ModuleListAdapter;
 import com.example.pellego.ui.profile.ProfileFragment;
 import com.example.pellego.ui.settings.SettingsFragment;
 import com.example.pellego.ui.termsAndConditions.TermsAndConditionsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 /**
  * Eli Hebdon & Chris Bordoy
@@ -32,6 +44,9 @@ public class HomeActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +55,7 @@ public class HomeActivity extends AppCompatActivity {
         // toolbar at top of screen that contains hamburger drawer menu button
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // layout that contains the side menu drawer
         drawer = findViewById(R.id.home_layout);
@@ -57,7 +73,6 @@ public class HomeActivity extends AppCompatActivity {
         toggle.syncState(); // rotates hamburger icon
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.light_blue));
 
-
         // Setup footer menu navigation
         BottomNavigationView navView = findViewById(R.id.bottom_nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -67,6 +82,8 @@ public class HomeActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
+
+
 
 
     }

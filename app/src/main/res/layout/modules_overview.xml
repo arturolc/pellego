@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.navigation.NavigationView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nav_module_overview"
+    android:layout_below="@+id/bottom_nav_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:paddingTop="35dp"
+    android:background="@drawable/vertical_menu_background"
+    android:fitsSystemWindows="false"
+    >
+
+    <ListView
+        android:id="@+id/navList"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:choiceMode="singleChoice"
+        android:background="#ffffffff" />
+
+</com.google.android.material.navigation.NavigationView>

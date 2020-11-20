@@ -15,7 +15,7 @@ public class LearnViewModel extends ViewModel {
 
     public LearnViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is the Learn fragment");
+        mText.setValue("Learning Modules");
     }
 
     public LiveData<String> getText() {

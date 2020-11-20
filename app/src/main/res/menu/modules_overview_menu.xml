@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view" >
+    <group android:checkableBehavior="single">
+        <group>
+            <item
+                android:id="@+id/nav_rsv"
+                android:icon="@drawable/ic_checked_circle"
+                android:iconTint="@null"
+                android:title="@string/title_rsv" >
+            </item>
+        </group>
+        <group>
+            <item
+                android:id="@+id/nav_clump_reading"
+                android:icon="@drawable/ic_empty_circle"
+                android:title="@string/title_clump_reading" />
+        </group>
+        <group>
+            <item
+                android:id="@+id/nav_reducing_subvocalization"
+                android:icon="@drawable/ic_checked_circle"
+                android:title="@string/title_reducing_subvocalization" />
+        </group>
+        <group>
+            <item
+                android:id="@+id/nav_mega_guiding"
+                android:icon="@drawable/ic_empty_circle"
+                android:title="@string/title_meta_guiding" />
+        </group>
+
+
+
+
+
+
+
+
+
+        <item
+            android:icon="@drawable/ic_settings_white_24dp"
+            android:title="empty" />
+    </group>
+</menu>
