@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
 import com.example.pellego.ui.rapid_serial_visualization.RsvFragment;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
@@ -32,13 +30,12 @@ import java.util.ArrayList;
 public class LearnFragment extends Fragment {
 
     private LearnViewModel learnViewModel;
-
-    ListView moduleList;
-    RelativeLayout modulePane;
+    private ListView moduleList;
+    private RelativeLayout modulePane;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ArrayList<ModuleItem> mNavItems = new ArrayList<>();
+        ArrayList<ModuleItemModel> mNavItems = new ArrayList<>();
         learnViewModel =
                 new ViewModelProvider(this).get(LearnViewModel.class);
 
@@ -52,11 +49,11 @@ public class LearnFragment extends Fragment {
         });
 
         // Add nav items to the list of learning techniques
-        mNavItems.add(new ModuleItem("Rapid Serial Visualization", "10 minues, 3 lessons", R.drawable.ic_rsv));
-        mNavItems.add(new ModuleItem("Clump Reading", "5 minutes, 2 lessons", R.drawable.ic_clump_reading));
-        mNavItems.add(new ModuleItem("Reducing Subvocalization", "5 minutes, 3 lessons", R.drawable.ic_reducing_subvocalization));
-        mNavItems.add(new ModuleItem("Meta Guiding", "6 minutes, 3 lessons", R.drawable.ic_meta_guiding));
-        mNavItems.add(new ModuleItem("Pre-Reading", "4 minutes, 3 lessons", R.drawable.ic_pre_reading));
+        mNavItems.add(new ModuleItemModel("Rapid Serial Visualization", "10 minutes, 3 lessons", R.drawable.ic_rsv));
+        mNavItems.add(new ModuleItemModel("Clump Reading", "5 minutes, 2 lessons", R.drawable.ic_clump_reading));
+        mNavItems.add(new ModuleItemModel("Reducing Subvocalization", "5 minutes, 3 lessons", R.drawable.ic_reducing_subvocalization));
+        mNavItems.add(new ModuleItemModel("Meta Guiding", "6 minutes, 3 lessons", R.drawable.ic_meta_guiding));
+        mNavItems.add(new ModuleItemModel("Pre-Reading", "4 minutes, 3 lessons", R.drawable.ic_pre_reading));
         // Populate the Navigation Drawer with options
         modulePane = root.findViewById(R.id.module_pane);
         moduleList = root.findViewById(R.id.nav_module_list);
@@ -68,23 +65,16 @@ public class LearnFragment extends Fragment {
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
-
-
                 // TODO: navigate to fragment based on click id
                 fragmentTransaction.replace(R.id.host_fragment_container, rsvFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-
-
-                ((HomeActivity) getActivity()).toggleActionBarIcon();
+                ((HomeActivity) getActivity()).setActionBarIconArrow();
             }
         });
 
         return root;
     }
-
-
 
 }

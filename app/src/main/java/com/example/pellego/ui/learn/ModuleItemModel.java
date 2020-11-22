@@ -5,12 +5,12 @@ package com.example.pellego.ui.learn;
 
  Representation of a single learning module list item
  **********************************************/
-public class ModuleItem {
+public class ModuleItemModel {
     String mTitle;
     String mSubtitle;
     int mIcon;
 
-    public ModuleItem(String title, String subtitle, int icon) {
+    public ModuleItemModel(String title, String subtitle, int icon) {
         mTitle = title;
         mSubtitle = subtitle;
         mIcon = icon;

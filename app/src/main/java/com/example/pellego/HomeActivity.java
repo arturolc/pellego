@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().popBackStack();
-                restoreActionBar();
+                setActionBarIconMenu();
             }
         });
 
@@ -84,21 +84,30 @@ public class HomeActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        restoreActionBar();
+        setActionBarIconMenu();
         // Add starting fragment
         getSupportFragmentManager().beginTransaction().add(R.id.host_fragment_container, new LibraryFragment()).commit();
         bottomNavigationView.setOnNavigationItemSelectedListener(setNavBottomListener());
-
     }
 
     /**
      * Resets action bar to hamburger view after back button press
      */
-    private void restoreActionBar() {
+    private void setActionBarIconMenu() {
         toggle.setDrawerIndicatorEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+    }
+
+    /**
+     * Sets action bar icon to the back button after navigating into a fragment
+     */
+    public void setActionBarIconArrow() {
+        toggle.setDrawerIndicatorEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
     }
 
     /**
@@ -112,19 +121,14 @@ public class HomeActivity extends AppCompatActivity {
                 // Handle navigation view item clicks here.
                 FragmentManager fragmentManager=getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                toggle.setDrawerIndicatorEnabled(true);
-                getSupportActionBar().setHomeButtonEnabled(true);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+                setActionBarIconMenu();
                 switch (item.getItemId()) {
                     case R.id.nav_profile:
-                        // Navigation.findNavController(view).navigate(R.id.nav_technique);
                         fragmentTransaction.replace(R.id.host_fragment_container, new ProfileFragment());
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                         break;
                     case R.id.nav_terms_and_conditions:
-                        // Navigation.findNavController(view).navigate(R.id.nav_technique);
                         fragmentTransaction.replace(R.id.host_fragment_container, new TermsAndConditionsFragment());
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
@@ -143,23 +147,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets action bar icon to the back button after navigating into a fragment
-     */
-    public void toggleActionBarIcon() {
-        toggle.setDrawerIndicatorEnabled(false);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
-    }
-
-    /**
      * Don't know what this does ..
      * @return
      */
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
@@ -175,19 +168,14 @@ public class HomeActivity extends AppCompatActivity {
                 // Handle navigation view item clicks here.
                 FragmentManager fragmentManager=getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                toggle.setDrawerIndicatorEnabled(true);
-                getSupportActionBar().setHomeButtonEnabled(true);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+                setActionBarIconMenu();
                 switch (item.getItemId()) {
                     case R.id.nav_library:
-                        // Navigation.findNavController(view).navigate(R.id.nav_technique);
                         fragmentTransaction.replace(R.id.host_fragment_container, new LibraryFragment());
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                         break;
                     case R.id.nav_learn:
-                        // Navigation.findNavController(view).navigate(R.id.nav_technique);
                         fragmentTransaction.replace(R.id.host_fragment_container, new LearnFragment());
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
@@ -207,5 +195,4 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
 }

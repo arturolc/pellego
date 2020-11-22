@@ -21,9 +21,9 @@ import java.util.ArrayList;
 public class ModuleListAdapter extends BaseAdapter {
 
     Context mContext;
-    ArrayList<ModuleItem> mNavItems;
+    ArrayList<ModuleItemModel> mNavItems;
 
-    public ModuleListAdapter(Context context, ArrayList<ModuleItem> navItems) {
+    public ModuleListAdapter(Context context, ArrayList<ModuleItemModel> navItems) {
         mContext = context;
         mNavItems = navItems;
     }
