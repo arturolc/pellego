@@ -3,9 +3,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-/**
- * Eli hebdon
- */
+/**********************************************
+ Eli Hebdon
+
+ Profile View Model
+ **********************************************/
 public class ProfileViewModel extends ViewModel {
     private MutableLiveData<String> mText;
 

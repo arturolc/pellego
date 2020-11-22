@@ -12,6 +12,12 @@ import com.example.pellego.R;
 
 import java.util.ArrayList;
 
+/**********************************************
+ Eli Hebdon
+
+ Adapter to populate learning module list with module items
+ **********************************************/
+
 public class ModuleListAdapter extends BaseAdapter {
 
     Context mContext;

@@ -14,7 +14,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pellego.R;
 
+/**********************************************
+ Eli Hebdon
 
+ Rapid Serial Visualization fragment
+ **********************************************/
 public class RsvFragment extends Fragment  {
 
     private RsvViewModel techniqueOverviewViewModel;

@@ -13,10 +13,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pellego.R;
+/**********************************************
+ Eli Hebdon
 
-/**
- * Eli Hebdon
- */
+ Terms and Conditions Fragment
+ **********************************************/
 public class TermsAndConditionsFragment extends Fragment {
     private TermsAndConditionsViewModel termsAndConditionsViewModel;
 

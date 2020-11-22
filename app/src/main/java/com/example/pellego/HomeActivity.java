@@ -26,12 +26,12 @@ import com.example.pellego.ui.termsAndConditions.TermsAndConditionsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-/**
- * Eli Hebdon & Chris Bordoy
- * Startup activity that the user sees when first opening the app after the splash
- * screen is displayed.
- */
-public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+/**********************************************
+ Eli Hebdon & Chris Bordoy
+ Startup activity that the user sees when first opening the app after the splash
+ screen is displayed.
+ **********************************************/
+public class HomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
@@ -57,7 +57,56 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        // Handle navigation view item selection
+        navigationView.setNavigationItemSelectedListener(setNavDrawerListener());
+
+        // Handle pen & close nav drawer button
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState(); // rotates hamburger icon
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
+        // Handle back button click
+        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().popBackStack();
+                restoreActionBar();
+            }
+        });
+
+        // Setup footer menu navigation
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_library, R.id.nav_learn, R.id.nav_progress, R.id.nav_settings)
+                .build();
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+        restoreActionBar();
+        // Add starting fragment
+        getSupportFragmentManager().beginTransaction().add(R.id.host_fragment_container, new LibraryFragment()).commit();
+        bottomNavigationView.setOnNavigationItemSelectedListener(setNavBottomListener());
+
+    }
+
+    /**
+     * Resets action bar to hamburger view after back button press
+     */
+    private void restoreActionBar() {
+        toggle.setDrawerIndicatorEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+    }
+
+    /**
+     * Listens for press events on the navigation drawer and handles fragment transitions
+     * @return
+     */
+    private NavigationView.OnNavigationItemSelectedListener setNavDrawerListener() {
+        return (new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 // Handle navigation view item clicks here.
@@ -91,63 +140,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
             }
         });
-
-        // Open & close nav drawer button
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState(); // rotates hamburger icon
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
-        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getSupportFragmentManager().popBackStack();
-                toggle.setDrawerIndicatorEnabled(true);
-                getSupportActionBar().setHomeButtonEnabled(true);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-            }
-        });
-
-        // Setup footer menu navigation
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_library, R.id.nav_learn, R.id.nav_progress, R.id.nav_settings)
-                .build();
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
-
-        toggle.setDrawerIndicatorEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-        getSupportFragmentManager().beginTransaction().add(R.id.host_fragment_container, new LibraryFragment()).commit();
-        bottomNavigationView.setOnNavigationItemSelectedListener(this);
-
     }
 
     /**
-     * Makes sure that the activity isn't exited if
-     * the nav drawer is open. Instead, close it.
+     * Sets action bar icon to the back button after navigating into a fragment
      */
-    @Override
-    public void onBackPressed() {
-        System.out.println("here");
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START); // closes drawer that is at START of screen aka the right side
-        }
-        else if (false) {
-//            Navigation.findNavController(view).navigate(R.id.nav_technique);
-
-        }
-        else {
-            toggleActionBarIcon();
-            super.onBackPressed();
-        }
-
-    }
-
     public void toggleActionBarIcon() {
         toggle.setDrawerIndicatorEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -155,6 +152,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
     }
 
+    /**
+     * Don't know what this does ..
+     * @return
+     */
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -163,42 +164,48 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 || super.onSupportNavigateUp();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        toggle.setDrawerIndicatorEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-        switch (item.getItemId()) {
-            case R.id.nav_library:
-                // Navigation.findNavController(view).navigate(R.id.nav_technique);
-                fragmentTransaction.replace(R.id.host_fragment_container, new LibraryFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                break;
-            case R.id.nav_learn:
-                // Navigation.findNavController(view).navigate(R.id.nav_technique);
-                fragmentTransaction.replace(R.id.host_fragment_container, new LearnFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                break;
-            case R.id.nav_settings:
-                fragmentTransaction.replace(R.id.host_fragment_container, new SettingsFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                break;
-            case R.id.nav_progress:
-                fragmentTransaction.replace(R.id.host_fragment_container, new ProgressFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                break;
-        }
-        return true;
+    /**
+     * Listens for press events on the bottom navigation menu and handles fragment transitions
+     * @return
+     */
+    private BottomNavigationView.OnNavigationItemSelectedListener setNavBottomListener() {
+        return (new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // Handle navigation view item clicks here.
+                FragmentManager fragmentManager=getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                toggle.setDrawerIndicatorEnabled(true);
+                getSupportActionBar().setHomeButtonEnabled(true);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+                switch (item.getItemId()) {
+                    case R.id.nav_library:
+                        // Navigation.findNavController(view).navigate(R.id.nav_technique);
+                        fragmentTransaction.replace(R.id.host_fragment_container, new LibraryFragment());
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        break;
+                    case R.id.nav_learn:
+                        // Navigation.findNavController(view).navigate(R.id.nav_technique);
+                        fragmentTransaction.replace(R.id.host_fragment_container, new LearnFragment());
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        break;
+                    case R.id.nav_settings:
+                        fragmentTransaction.replace(R.id.host_fragment_container, new SettingsFragment());
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        break;
+                    case R.id.nav_progress:
+                        fragmentTransaction.replace(R.id.host_fragment_container, new ProgressFragment());
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        break;
+                }
+                return true;
+            }
+        });
     }
-
-
 
 }

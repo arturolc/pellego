@@ -4,6 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+/**********************************************
+ Eli Hebdon
+
+ Rapid Serial Visualization ViewModel
+ **********************************************/
 public class RsvViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;

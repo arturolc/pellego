@@ -14,9 +14,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pellego.R;
 
-/**
- * Eli Hebdon
- */
+/**********************************************
+ Eli Hebdon
+
+ Profile Fragment
+ **********************************************/
 public class ProfileFragment extends Fragment {
     private ProfileViewModel profileViewModel;
 

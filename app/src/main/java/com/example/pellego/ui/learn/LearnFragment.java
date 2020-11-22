@@ -25,7 +25,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
 /**********************************************
-    Chris Bordoy
+    Chris Bordoy & Eli Hebdon
 
     The Learn Modules Component
  **********************************************/
@@ -35,9 +35,6 @@ public class LearnFragment extends Fragment {
 
     ListView moduleList;
     RelativeLayout modulePane;
-    private NavigationView moduleLayout;
-
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,31 +51,32 @@ public class LearnFragment extends Fragment {
             }
         });
 
+        // Add nav items to the list of learning techniques
         mNavItems.add(new ModuleItem("Rapid Serial Visualization", "10 minues, 3 lessons", R.drawable.ic_rsv));
         mNavItems.add(new ModuleItem("Clump Reading", "5 minutes, 2 lessons", R.drawable.ic_clump_reading));
         mNavItems.add(new ModuleItem("Reducing Subvocalization", "5 minutes, 3 lessons", R.drawable.ic_reducing_subvocalization));
         mNavItems.add(new ModuleItem("Meta Guiding", "6 minutes, 3 lessons", R.drawable.ic_meta_guiding));
         mNavItems.add(new ModuleItem("Pre-Reading", "4 minutes, 3 lessons", R.drawable.ic_pre_reading));
-        moduleLayout = root.findViewById(R.id.nav_module_overview);
-        // Populate the Navigtion Drawer with options
+        // Populate the Navigation Drawer with options
         modulePane = root.findViewById(R.id.module_pane);
-        moduleList = root.findViewById(R.id.navList);
+        moduleList = root.findViewById(R.id.nav_module_list);
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
         RsvFragment rsvFragment = new RsvFragment();
-
 
         // Drawer Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("id" + id);
-                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+
                 FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
 
+
+                // TODO: navigate to fragment based on click id
                 fragmentTransaction.replace(R.id.host_fragment_container, rsvFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+
 
                 ((HomeActivity) getActivity()).toggleActionBarIcon();
             }
