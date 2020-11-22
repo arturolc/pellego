@@ -1,4 +1,4 @@
-package com.example.pellego.ui.technique;
+package com.example.pellego.ui.rapid_serial_visualization;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,22 +15,25 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.pellego.R;
 
 
-public class TechniqueOverviewFragment extends Fragment {
+public class RsvFragment extends Fragment  {
 
-    private TechniqueOverviewViewModel techniqueOverviewViewModel;
+    private RsvViewModel techniqueOverviewViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         techniqueOverviewViewModel =
-                new ViewModelProvider(this).get(TechniqueOverviewViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_technique_overview, container, false);
-        final TextView textView = root.findViewById(R.id.text_technique);
+                new ViewModelProvider(this).get(RsvViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_rsv, container, false);
+        final TextView textView = root.findViewById(R.id.text_rsv);
         techniqueOverviewViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
+
         return root;
     }
+
+
 }

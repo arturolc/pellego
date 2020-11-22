@@ -11,7 +11,7 @@ public class TermsAndConditionsViewModel extends ViewModel {
 
     public TermsAndConditionsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is the Terms and Conditions fragment");
+        mText.setValue("Terms and Conditions");
     }
 
     public LiveData<String> getText() {

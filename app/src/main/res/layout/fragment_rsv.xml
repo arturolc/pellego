@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.termsAndConditions.TermsAndConditionsFragment">
+    tools:context=".ui.rapid_serial_visualization.RsvFragment"
+    android:id="@+id/frag_technique_overview">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
         tools:layout_editor_absoluteY="146dp"
         android:background="@color/light_blue">
         <TextView
-            android:id="@+id/text_terms_and_conditions"
+            android:id="@+id/text_rsv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -22,7 +23,7 @@
             android:layout_marginEnd="8dp"
             android:gravity="center_horizontal"
             android:textColor="@color/white"
-            android:textSize="70dp" />
+            android:textSize="50dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

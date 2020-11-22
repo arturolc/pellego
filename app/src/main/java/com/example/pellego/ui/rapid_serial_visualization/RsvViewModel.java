@@ -1,16 +1,16 @@
-package com.example.pellego.ui.technique;
+package com.example.pellego.ui.rapid_serial_visualization;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class TechniqueOverviewViewModel extends ViewModel {
+public class RsvViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public TechniqueOverviewViewModel() {
+    public RsvViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is the Technique Overview fragment");
+        mText.setValue("Rapid Serial Visualization");
     }
 
     public LiveData<String> getText() {
