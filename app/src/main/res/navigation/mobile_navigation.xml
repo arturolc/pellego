@@ -3,30 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_library">
+    app:startDestination="@+id/nav_library">
 
     <fragment
-        android:id="@+id/navigation_library"
+        android:id="@+id/nav_library"
         android:name="com.example.pellego.ui.library.LibraryFragment"
         android:label="@string/title_library"
         tools:layout="@layout/fragment_library" />
 
     <fragment
-        android:id="@+id/navigation_learn"
+        android:id="@+id/nav_learn"
         android:name="com.example.pellego.ui.learn.LearnFragment"
         android:label="@string/title_learn"
         tools:layout="@layout/fragment_learn" />
 
     <fragment
-        android:id="@+id/navigation_progress"
+        android:id="@+id/nav_progress"
         android:name="com.example.pellego.ui.progress.ProgressFragment"
         android:label="@string/title_progress"
         tools:layout="@layout/fragment_progress" />
 
     <fragment
-        android:id="@+id/navigation_settings"
+        android:id="@+id/nav_settings"
         android:name="com.example.pellego.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/nav_technique"
+        android:name="com.example.pellego.ui.rapid_serial_visualization.RsvFragment"
+        android:label="@string/title_technique"
+        tools:layout="@layout/fragment_terms_and_conditions" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.pellego.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/nav_terms_and_conditions"
+        android:name="com.example.pellego.ui.termsAndConditions.TermsAndConditionsFragment"
+        android:label="@string/title_terms_and_conditions"
+        tools:layout="@layout/fragment_terms_and_conditions" />
+
 
 </navigation>
