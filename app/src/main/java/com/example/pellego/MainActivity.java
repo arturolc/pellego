@@ -7,10 +7,11 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-/**
- * The main entry point for the app on startup.
- * Displays a splash screen before navigating to the home activity.
- */
+/**********************************************
+ Eli Hebdon
+ The main entry point for the app on startup.
+ Displays a splash screen before navigating to the home activity.
+ **********************************************/
 public class MainActivity extends AppCompatActivity {
     private static int SPLASH_SCREEN_TIME_OUT=2000;
     @Override
