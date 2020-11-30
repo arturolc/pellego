@@ -28,7 +28,7 @@
 
 
             <!-- Here is the inserted layout -->
-            <include layout="@layout/modules_overview"/>
+            <include layout="@layout/container_submodules"/>
 
 
 

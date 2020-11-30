@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
-import com.example.pellego.ui.rsvp.RsvpFragment;
+import com.example.pellego.ui.rsvp.RsvpOverviewFragment;
 
 import java.util.ArrayList;
 
@@ -59,7 +59,7 @@ public class LearnFragment extends Fragment {
         moduleList = root.findViewById(R.id.nav_module_list);
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
-        RsvpFragment rsvpFragment = new RsvpFragment();
+        RsvpOverviewFragment rsvpOverviewFragment = new RsvpOverviewFragment();
 
         // Drawer Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,7 +67,7 @@ public class LearnFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
                 // TODO: navigate to fragment based on click id
-                fragmentTransaction.replace(R.id.host_fragment_container, rsvpFragment);
+                fragmentTransaction.replace(R.id.host_fragment_container, rsvpOverviewFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 ((HomeActivity) getActivity()).setActionBarIconArrow();
