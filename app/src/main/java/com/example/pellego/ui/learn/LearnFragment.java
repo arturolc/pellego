@@ -49,11 +49,11 @@ public class LearnFragment extends Fragment {
         });
 
         // Add nav items to the list of learning techniques
-        mNavItems.add(new ModuleItemModel("Rapid Serial Visual Presentation", "10 minutes, 3 lessons", R.drawable.ic_rsvp));
-        mNavItems.add(new ModuleItemModel("Clump Reading", "5 minutes, 2 lessons", R.drawable.ic_clump_reading));
-        mNavItems.add(new ModuleItemModel("Reducing Subvocalization", "5 minutes, 3 lessons", R.drawable.ic_reducing_subvocalization));
-        mNavItems.add(new ModuleItemModel("Meta Guiding", "6 minutes, 3 lessons", R.drawable.ic_meta_guiding));
-        mNavItems.add(new ModuleItemModel("Pre-Reading", "4 minutes, 3 lessons", R.drawable.ic_pre_reading));
+        mNavItems.add(new ModuleItemModel("Rapid Serial Visual Presentation", "1 out of 4 submodules completed", R.drawable.ic_rsvp));
+        mNavItems.add(new ModuleItemModel("Clump Reading", "0 out of 4 submodules completed", R.drawable.ic_clump_reading));
+        mNavItems.add(new ModuleItemModel("Reducing Subvocalization", "3 out of 4 submodules completed", R.drawable.ic_reducing_subvocalization));
+        mNavItems.add(new ModuleItemModel("Meta Guiding", "2 out of 4 submodules completed", R.drawable.ic_meta_guiding));
+        mNavItems.add(new ModuleItemModel("Pre-Reading", "1 out of 4 submodules completed", R.drawable.ic_pre_reading));
         // Populate the Navigation Drawer with options
         modulePane = root.findViewById(R.id.module_pane);
         moduleList = root.findViewById(R.id.nav_module_list);
