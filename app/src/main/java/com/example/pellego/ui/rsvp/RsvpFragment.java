@@ -1,4 +1,4 @@
-package com.example.pellego.ui.rapid_serial_visualization;
+package com.example.pellego.ui.rsvp;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,9 +31,9 @@ import java.util.ArrayList;
  Rapid Serial Visualization fragment
  **********************************************/
 
-public class RsvFragment extends Fragment  {
+public class RsvpFragment extends Fragment  {
 
-    private RsvViewModel techniqueOverviewViewModel;
+    private RsvpViewModel techniqueOverviewViewModel;
     ArrayList<ModuleItemModel> mNavItems = new ArrayList<>();
     private LearnViewModel learnViewModel;
     private ListView moduleList;
@@ -42,22 +42,22 @@ public class RsvFragment extends Fragment  {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         techniqueOverviewViewModel =
-                new ViewModelProvider(this).get(RsvViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_rsv, container, false);
-        final TextView textView = root.findViewById(R.id.text_rsv);
+                new ViewModelProvider(this).get(RsvpViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_rsvp, container, false);
+        final TextView textView = root.findViewById(R.id.text_rsvp);
         techniqueOverviewViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+                textView.setText(R.string.title_rsvp);
             }
         });
 
         // Add nav items to the list of submodules
-        mNavItems.add(new ModuleItemModel("Intro", "Learn the benefits of RSV", R.drawable.ic_checked_circle));
+        mNavItems.add(new ModuleItemModel("Intro", "Learn the benefits of RSVP", R.drawable.ic_checked_circle));
         mNavItems.add(new ModuleItemModel("Beginner", "Demonstrate basic skills", R.drawable.ic_empty_circle));
         mNavItems.add(new ModuleItemModel("Intermediate", "Show some improvement", R.drawable.ic_empty_circle));
         mNavItems.add(new ModuleItemModel("Advanced", "Prove your mastery", R.drawable.ic_empty_circle));
-        TextView rsvDescription = (TextView) root.findViewById(R.id.rsv_description);
+        TextView rsvDescription = (TextView) root.findViewById(R.id.rsvp_description);
         rsvDescription.setText("   Rapid Serial Visual Presentation is a method in which individual words are displayed in rapid succession. The words are fixed to the same " +
                 "point on the screen which eliminates the need for saccades. This means your eyes can remain fixed while the words change.");
 
@@ -66,7 +66,7 @@ public class RsvFragment extends Fragment  {
         moduleList = root.findViewById(R.id.nav_module_list);
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
-        RsvFragment rsvFragment = new RsvFragment();
+        RsvpFragment rsvpFragment = new RsvpFragment();
 
         // menu Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

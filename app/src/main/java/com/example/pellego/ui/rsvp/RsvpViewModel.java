@@ -1,4 +1,4 @@
-package com.example.pellego.ui.rapid_serial_visualization;
+package com.example.pellego.ui.rsvp;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,11 +9,11 @@ import androidx.lifecycle.ViewModel;
 
  Rapid Serial Visualization ViewModel
  **********************************************/
-public class RsvViewModel extends ViewModel {
+public class RsvpViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public RsvViewModel() {
+    public RsvpViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("Rapid Serial Visualization");
     }

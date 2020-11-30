@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
  the user selects a (beginner, intermediate, advanced) submodule
  in the RSV fragment.
  **********************************************/
-public class RsvActivity extends AppCompatActivity {
+public class RsvpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
