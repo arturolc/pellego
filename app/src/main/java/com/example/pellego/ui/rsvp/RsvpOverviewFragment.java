@@ -82,19 +82,19 @@ public class RsvpOverviewFragment extends Fragment  {
                         fragmentTransaction.replace(R.id.host_fragment_container, new LearnFragment());
                         break;
                     case 1:
-                        args.putString("difficulty", "RSVP Beginner Submodule");
+                        args.putString("difficulty", "Beginner Submodule");
                         args.putString("wpm", "120");
                         rsvpModuleFragment.setArguments(args);
                         fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment);
                         break;
                     case 2:
-                        args.putString("difficulty", "RSVP Intermediate Submodule");
+                        args.putString("difficulty", "Intermediate Submodule");
                         args.putString("wpm", "250");
                         rsvpModuleFragment.setArguments(args);
                         fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment);
                         break;
                     case 3:
-                        args.putString("difficulty", "RSVP Advanced Submodule");
+                        args.putString("difficulty", "Advanced Submodule");
                         args.putString("wpm", "500");
                         rsvpModuleFragment.setArguments(args);
                         fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment);

@@ -33,30 +33,33 @@ public class RsvpModuleFragment extends Fragment {
     private SettingsViewModel settingsViewModel;
     private View root;
     private Integer wpm;
+    public String difficulty;
     private static AsyncUpdateText asyncUpdateText;
     private String content;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        wpm = Integer.parseInt(getArguments().getString("wpm"));
+        difficulty = getArguments().getString("difficulty");
         settingsViewModel =
                 new ViewModelProvider(this).get(SettingsViewModel.class);
         root = inflater.inflate(R.layout.fragment_rsvp_module, container, false);
         final TextView textView = root.findViewById(R.id.title_rsvp);
         settingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
-            public void onChanged(@Nullable String s) { textView.setText(getArguments().getString("difficulty")); }
+            public void onChanged(@Nullable String s) { textView.setText(difficulty); }
         });
-        wpm = Integer.parseInt(getArguments().getString("wpm"));
+
 
         // Set the displayed text to the appropriate level
-        switch(getArguments().getString("difficulty")) {
-            case "RSVP Beginner Submodule":
+        switch(difficulty) {
+            case "Beginner Submodule":
                 content = getString(R.string.content_rsvp_beginner);
                 break;
-            case "RSVP Intermediate Submodule":
+            case "Intermediate Submodule":
                 content = getString(R.string.content_rsvp_intermediate);
                 break;
-            case "RSVP Advanced Submodule":
+            case "Advanced Submodule":
                 content = getString(R.string.content_rsvp_advanced);
                 break;
         }
@@ -116,7 +119,12 @@ public class RsvpModuleFragment extends Fragment {
             // TODO: navigate to quiz upon completion
             FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
             // TODO: navigate to fragment based on click id
-            fragmentTransaction.replace(R.id.host_fragment_container, new QuizFragment());
+            QuizFragment quizFragment = new QuizFragment();
+            Bundle args = new Bundle();
+            args.putString("difficulty", difficulty.toString());
+            args.putString("wpm", String.valueOf(wpm));
+            quizFragment.setArguments(args);
+            fragmentTransaction.replace(R.id.host_fragment_container, quizFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             ((HomeActivity) getActivity()).setActionBarIconMenu();
