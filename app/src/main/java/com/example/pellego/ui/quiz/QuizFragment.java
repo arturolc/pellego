@@ -56,7 +56,11 @@ public class QuizFragment extends Fragment {
                 textView.setText(s);
             }
         });
+        // Set view model parameters
         quizViewModel.setDifficulty(getArguments().getString("difficulty"));
+        quizViewModel.setWPM(Integer.parseInt(getArguments().getString("wpm")));
+        quizViewModel.setModule(getArguments().getString("module"));
+
         quizViewModel.populateQuestionBank();
         ((TextView) root.findViewById(R.id.text_quiz_question)).setText(quizViewModel.getNextQuestion());
         mNavItems = quizViewModel.getNextAnswers();
@@ -74,7 +78,7 @@ public class QuizFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                // Last question
+                // Last question, navigate to results
                 if (quizViewModel.isLastQuestion()) {
                     FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
                     QuizResultFragment resultFragment = new QuizResultFragment(quizViewModel);
@@ -97,7 +101,6 @@ public class QuizFragment extends Fragment {
 
                 ((TextView) root.findViewById(R.id.text_quiz_question)).setText(quizViewModel.getNextQuestion());
                 mNavItems = quizViewModel.getNextAnswers();
-
                 // Populate the Navigation Drawer with options
                 modulePane = root.findViewById(R.id.question_pane);
                 moduleList = root.findViewById(R.id.nav_question_list);

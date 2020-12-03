@@ -1,11 +1,15 @@
 package com.example.pellego.ui.quiz;
 
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.pellego.R;
+import com.example.pellego.ui.clumpReading.ClumpReadingFragment;
+import com.example.pellego.ui.learn.LearnFragment;
 import com.example.pellego.ui.learn.ModuleItemModel;
+import com.example.pellego.ui.rsvp.RsvpModuleFragment;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -23,21 +27,50 @@ public class QuizViewModel extends ViewModel {
     public static Integer question_no;
     private static ArrayList<QuizQuestion> questions;
     public static int score;
+    private static String module;
+    private static Integer wpm;
 
     public QuizViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("Quiz");
         question_no = 0;
         score = 0;
+        module = "";
+        wpm = 0;
         questions = new ArrayList<>();
     }
 
     public void setDifficulty(String diff) {
         this.difficulty = diff;
     }
+    public void setWPM(Integer wpm) {this.wpm = wpm;}
+    public void setModule(String m) {this.module = m;}
+    public String getModule() {return this.module;}
 
     public boolean isLastQuestion() {
         return question_no == questions.size() - 1;
+    }
+
+    public String getFinalScore() {
+        return (score + "/" + (questions.size() - 1));
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public Integer getWPM() {
+        return wpm;
+    }
+
+    public String getFinalMessage() {
+        if (score == questions.size() - 1) {
+            return "Perfection!";
+        } else if (score / (questions.size() - 1) > 0.6) {
+            return "Not bad. You passed";
+        } else {
+            return "Oof. You'll have to try again..";
+        }
     }
 
 
@@ -62,6 +95,17 @@ public class QuizViewModel extends ViewModel {
 
     public LiveData<String> getText() {
         return mText;
+    }
+
+    public Fragment getModuleFragment() {
+        switch (module) {
+            case "rsvp":
+                return new RsvpModuleFragment();
+            case "clump":
+                return new ClumpReadingFragment();
+            default:
+                return new LearnFragment();
+        }
     }
 
     public void populateQuestionBank() {

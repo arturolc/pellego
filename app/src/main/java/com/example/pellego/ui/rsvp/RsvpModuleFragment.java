@@ -123,6 +123,7 @@ public class RsvpModuleFragment extends Fragment {
             Bundle args = new Bundle();
             args.putString("difficulty", difficulty.toString());
             args.putString("wpm", String.valueOf(wpm));
+            args.putString("module", "rsvp");
             quizFragment.setArguments(args);
             fragmentTransaction.replace(R.id.host_fragment_container, quizFragment);
             fragmentTransaction.addToBackStack(null);

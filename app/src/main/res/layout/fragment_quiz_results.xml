@@ -6,15 +6,16 @@
     android:layout_height="match_parent"
     >
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/light_blue"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="92dp"
-        tools:layout_editor_absoluteY="146dp"
-        android:background="@color/light_blue">
+        tools:layout_editor_absoluteX="111dp"
+        tools:layout_editor_absoluteY="16dp">
+
         <TextView
-            android:id="@+id/text_results"
+            android:id="@+id/title_results"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -24,5 +25,67 @@
             android:textColor="@color/white"
             android:textSize="70dp" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <TextView
+            android:id="@+id/text_results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="130dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/white"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:textAlignment="center"
+            android:textColor="@color/light_blue"
+            android:textSize="50dp"></TextView>
+
+        <TextView
+            android:id="@+id/text_results_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="8dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="15dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="15dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="50dp"></TextView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_results_retry"
+            android:text="Try Again"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="100dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/light_blue"
+            android:clickable="true">
+
+        </androidx.appcompat.widget.AppCompatButton>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_results_return"
+            android:text="Return to Learning Modules"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/white"
+            android:clickable="true"
+            android:textColor="@color/light_blue">
+
+        </androidx.appcompat.widget.AppCompatButton>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
