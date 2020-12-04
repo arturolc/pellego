@@ -5,7 +5,10 @@
     <string name="title_progress">Progress</string>
     <string name="title_terms_and_conditions">Terms and Conditions</string>
     <string name="title_settings">Settings</string>
-    <string name="title_rsv">Rapid Serial Visualization</string>
+    <string name="title_rsvp">Rapid Serial Visual Presentation</string>
+    <string name="title_rsvp_beginner">Beginner RSVP</string>
+    <string name="title_rsvp_intermediate">Intermediate RSVP</string>
+    <string name="title_rsvp_advanced">Advanced RSVP</string>
     <string name="title_clump_reading">Clump Reading</string>
     <string name="title_meta_guiding">Meta Guiding</string>
     <string name="title_technique">Technique Overview</string>
@@ -13,4 +16,25 @@
     <string name="title_profile">Profile</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="text_dialog">Read the words as they are displayed on the screen. After all the words have been displayed, you will be tested on your comprehension. Do your best!</string>
+
+    <string name="description_rsvp">Rapid Serial Visual Presentation is a method in which individual words are displayed in rapid succession. The words are fixed to the same
+                point on the screen which eliminates the need for saccades. This means your eyes can remain fixed while the words change."</string>
+    <string name="content_rsvp_beginner">I just returned </string>
+<!--    <string name="content_rsvp_beginner">I just returned from the greatest summer vacation! It was so fantastic, I never wanted it to end. I spent eight days in Paris, France. My best friends, Henry and Steve, went with me. We had a beautiful hotel room in the Latin Quarter, and it wasnt even expensive. We had a balcony with a wonderful view.-->
+<!--We visited many famous tourist places. My favorite was the Louvre, a well-known museum. I was always interested in art, so that was a special treat for me. The museum is so huge, you could spend weeks there. Henry got tired walking around the museum and said “Enough! I need to take a break and rest.”-->
+<!--We took lots of breaks and sat in cafes along the river Seine. The French food we ate was delicious. The wines were tasty, too. Steve’s favorite part of the vacation was the hotel breakfast. He said he would be happy if he could eat croissants like those forever. We had so much fun that we’re already talking about our next vacation!</string>-->
+    <string name="content_rsvp_intermediate">Keith recently came back from a trip to Chicago, Illinois. This midwestern metropolis is found along the shore of Lake Michigan. During his visit, Keith spent a lot of time exploring the city to visit important landmarks and monuments.
+Keith loves baseball, and he made sure to take a visit to Wrigley Field. Not only did he take a tour of this spectacular stadium, but he also got to watch a Chicago Cubs game. In the stadium, Keith and the other fans cheered for the Cubs. Keith was happy that the Cubs won with a score of 5-4.
+Chicago has many historic places to visit. Keith found the Chicago Water Tower impressive as it is one of the few remaining landmarks to have survived the Great Chicago Fire of 1871. Keith also took a walk through Jackson Park, a great outdoor space that hosted the World’s Fair of 1892. The park is great for a leisurely stroll, and it still features some of the original architecture and replicas of monuments that were featured in the World’s Fair.
+During the last part of his visit, Keith managed to climb the stairs inside of the Willis Tower, a 110-story skyscraper. Despite the challenge of climbing the many flights of stairs, Keith felt that reaching the top was worth the effort. From the rooftop, Keith received a gorgeous view of the city’s skyline with Lake Michigan in the background.</string>
+    <string name="content_rsvp_advanced">It goes without saying that humans (mammals identifiable as those that stand upright and are comparatively advanced and capable of detailed thought) have pretty remarkable bodies, given all that theyve accomplished. (Furthermore, an especially intelligent human brain produced this text!) To be sure, humans have overcome predators, disease, and all sorts of other obstacles over thousands of years.
+To fully understand and appreciate these accomplishments, lets take at some of the most well-known parts of the human body!
+The head, or the spherical body part that contains the brain and rests at the top of the human body, has quite a few individual organs and body parts on it. (It should quickly be mentioned that hair occupies the space on top of the head, and the ears, the organs responsible for hearing, are located on either side of the head.) From top to bottom, the eyebrows, or horizontal strips of hair that can be found above the eye, are the first components of the head. The eyes are below them, and are round, orb-like organs that allow humans to see.
+The eyes make way for the nose, or an external (sticking-out) organ that plays an important part in the breathing and bacteria-elimination processes. Below that is the mouth, or a wide, cavernous organ that chews food, removes bacteria, helps with breathing, and more. The mouth contains teeth, or small, white-colored, pointed body parts used to chew food, and the tongue, or a red-colored, boneless organ used to chew food and speak.
+The neck is the long body part that connects the head to the chest (the muscular body part that protects the heart and lungs), and the stomach, or the part of the body that contains food and liquid-processing organs, comes below that.
+The legs are the long, muscular body parts that allow humans to move from one spot to another and perform a variety of actions. Each leg contains a thigh (a thick, especially muscular body part used to perform strenuous motions; the upper part of the leg) and a calf (thinner, more flexible body part that absorbs the shock associated with movement; the lower part of the leg). Feet can be found at the bottom of legs, and each foot is comprised of five toes, or small appendages that help balance.
+Arms are long, powerful body parts that are located on either side of chest, below the shoulders;arms are comprised of biceps (the thicker, more powerful upper portion), and forearms (the thinner, more flexible lower portion). Hands, or small, gripping body parts used for a tremendous number of actions, are at the end of arms. Each hand contains five fingers, or small appendages used to grip objects.
+The aforementioned shoulders are rounded body parts that aid arms\' flexibility. One\'s back is found on the opposite side of the stomach, and is a flat section of the body that contains important muscles that\'re intended to protect the lungs and other internal organs, in addition to helping humans perform certain motions and actions.</string>
+
 </resources>

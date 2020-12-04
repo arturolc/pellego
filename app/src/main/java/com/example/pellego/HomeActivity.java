@@ -14,8 +14,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.pellego.ui.learn.LearnFragment;
 import com.example.pellego.ui.library.LibraryFragment;
@@ -23,7 +27,9 @@ import com.example.pellego.ui.profile.ProfileFragment;
 import com.example.pellego.ui.progress.ProgressFragment;
 import com.example.pellego.ui.settings.SettingsFragment;
 import com.example.pellego.ui.termsAndConditions.TermsAndConditionsFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
 
 /**********************************************
@@ -36,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
     private NavController navController;
-    ActionBarDrawerToggle toggle;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
     /**
      * Resets action bar to hamburger view after back button press
      */
-    private void setActionBarIconMenu() {
+    public void setActionBarIconMenu() {
         toggle.setDrawerIndicatorEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -118,6 +124,9 @@ public class HomeActivity extends AppCompatActivity {
         return (new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // unhighlight the selected bottom navigation menu item
+                BottomNavigationView menuView = findViewById(R.id.bottom_nav_view);
+                menuView.setLabelVisibilityMode( LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED);
                 // Handle navigation view item clicks here.
                 FragmentManager fragmentManager=getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -165,6 +174,9 @@ public class HomeActivity extends AppCompatActivity {
         return (new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // re-highlight the selected bottom navigation menu item
+                BottomNavigationView menuView = findViewById(R.id.bottom_nav_view);
+                menuView.setLabelVisibilityMode( LabelVisibilityMode.LABEL_VISIBILITY_SELECTED);
                 // Handle navigation view item clicks here.
                 FragmentManager fragmentManager=getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -195,4 +207,5 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
 }

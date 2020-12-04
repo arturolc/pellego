@@ -18,7 +18,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
-import com.example.pellego.ui.rapid_serial_visualization.RsvFragment;
+import com.example.pellego.ui.clumpReading.ClumpReadingFragment;
+import com.example.pellego.ui.rsvp.RsvpOverviewFragment;
 
 import java.util.ArrayList;
 
@@ -49,17 +50,16 @@ public class LearnFragment extends Fragment {
         });
 
         // Add nav items to the list of learning techniques
-        mNavItems.add(new ModuleItemModel("Rapid Serial Visualization", "10 minutes, 3 lessons", R.drawable.ic_rsv));
-        mNavItems.add(new ModuleItemModel("Clump Reading", "5 minutes, 2 lessons", R.drawable.ic_clump_reading));
-        mNavItems.add(new ModuleItemModel("Reducing Subvocalization", "5 minutes, 3 lessons", R.drawable.ic_reducing_subvocalization));
-        mNavItems.add(new ModuleItemModel("Meta Guiding", "6 minutes, 3 lessons", R.drawable.ic_meta_guiding));
-        mNavItems.add(new ModuleItemModel("Pre-Reading", "4 minutes, 3 lessons", R.drawable.ic_pre_reading));
+        mNavItems.add(new ModuleItemModel("Rapid Serial Visual Presentation", "1 out of 4 submodules completed", R.drawable.ic_rsvp));
+        mNavItems.add(new ModuleItemModel("Clump Reading", "0 out of 4 submodules completed", R.drawable.ic_clump_reading));
+        mNavItems.add(new ModuleItemModel("Reducing Subvocalization", "3 out of 4 submodules completed", R.drawable.ic_reducing_subvocalization));
+        mNavItems.add(new ModuleItemModel("Meta Guiding", "2 out of 4 submodules completed", R.drawable.ic_meta_guiding));
+        mNavItems.add(new ModuleItemModel("Pre-Reading", "1 out of 4 submodules completed", R.drawable.ic_pre_reading));
         // Populate the Navigation Drawer with options
         modulePane = root.findViewById(R.id.module_pane);
         moduleList = root.findViewById(R.id.nav_module_list);
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
-        RsvFragment rsvFragment = new RsvFragment();
 
         // Drawer Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,10 +67,21 @@ public class LearnFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
                 // TODO: navigate to fragment based on click id
-                fragmentTransaction.replace(R.id.host_fragment_container, rsvFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                ((HomeActivity) getActivity()).setActionBarIconArrow();
+                switch(position) {
+                    case 0:
+                        fragmentTransaction.replace(R.id.host_fragment_container, new RsvpOverviewFragment());
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        ((HomeActivity) getActivity()).setActionBarIconArrow();
+                        break;
+                    case 1:
+                        fragmentTransaction.replace(R.id.host_fragment_container, new ClumpReadingFragment());
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        ((HomeActivity) getActivity()).setActionBarIconArrow();
+                        break;
+                }
+
             }
         });
 
