@@ -17,11 +17,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_Pellego);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-
+        // delay transition to home activity with splash screen
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -31,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
 
                 finish();
-                //the current activity will get finished.
             }
         }, SPLASH_SCREEN_TIME_OUT);
 
