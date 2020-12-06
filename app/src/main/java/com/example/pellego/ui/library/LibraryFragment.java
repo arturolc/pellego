@@ -6,17 +6,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -38,14 +44,14 @@ import static android.app.Activity.RESULT_OK;
 public class LibraryFragment extends Fragment {
 
     private LibraryViewModel libraryViewModel;
-    private TextView emptyBookCard;
-    private String emptyBookTitle;
+    private View root;
 
+    @SuppressLint("ResourceAsColor")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         libraryViewModel =
                 new ViewModelProvider(this).get(LibraryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_library, container, false);
+        root = inflater.inflate(R.layout.fragment_library, container, false);
         final TextView textView = root.findViewById(R.id.text_library);
         libraryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -53,7 +59,6 @@ public class LibraryFragment extends Fragment {
                 textView.setText(s);
             }
         });
-        emptyBookCard = root.findViewById(R.id.book_empty);
         // handle import button click
         View button_import = root.findViewById(R.id.button_import);
         button_import.setOnClickListener(new View.OnClickListener() {
@@ -64,9 +69,11 @@ public class LibraryFragment extends Fragment {
                         .setType("*/*")
                         .setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
-
             }
         });
+
+        // TODO: populate library gridlayout by querying the DB
+
         return root;
     }
 
@@ -76,15 +83,16 @@ public class LibraryFragment extends Fragment {
      * @param resultCode
      * @param data
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 123 && resultCode == RESULT_OK) {
             Uri selectedFile = data.getData(); //The uri with the location of the file
             System.out.println("File selected: " + getNameFromURI(selectedFile));
-            this.emptyBookTitle = getNameFromURI(selectedFile);
+            String title = getNameFromURI(selectedFile);
             String content = readTextFile(selectedFile);
-            addToLibrary(content);
+            addToLibrary(content, title);
         }
     }
 
@@ -134,20 +142,38 @@ public class LibraryFragment extends Fragment {
      * associated with the current user
      * @param content
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceAsColor")
-    private void addToLibrary(String content) {
-        emptyBookCard.setOnClickListener(new View.OnClickListener() {
+    private void addToLibrary(String content, String title) {
+        TextView book = new TextView(getActivity());
+        book.setTextColor(R.color.black);
+        book.setBackgroundResource(R.drawable.rounded_background);
+        GridLayout grid =  root.findViewById(R.id.book_grid);
+        GridLayout.LayoutParams param = new GridLayout.LayoutParams();
+        book.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.white_transparent));
+        book.setGravity(Gravity.CENTER);
+        int num_children = grid.getChildCount();
+        int cur_row = num_children / 3;
+        int cur_col = num_children % 3;
+        param.columnSpec = GridLayout.spec(cur_col);
+        param.rowSpec = GridLayout.spec(cur_row);
+        param.setMargins(4, 4, 4, 4);
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        param.height = (int) (160 * scale + 0.5f);
+        param.width = (int) (110 * scale + 0.5f);
+        param.setGravity(Gravity.CENTER);
+        book.setLayoutParams (param);
+        grid.addView(book);
+        book.setText(title);
+        book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: update DB with added text
                 popupMessage(content);
             }
         });
-        emptyBookCard.setTextColor(R.color.black);
-        emptyBookCard.setText(emptyBookTitle);
 
-        // TODO: add another blank book to represent the next one to be added
-
+        // TODO: update DB with new book for current user
     }
 
     // just a quick method to display the text file contents
@@ -159,4 +185,5 @@ public class LibraryFragment extends Fragment {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+
 }
