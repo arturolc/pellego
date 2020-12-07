@@ -14,17 +14,23 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.pellego.ui.learn.LearnFragment;
 import com.example.pellego.ui.library.LibraryFragment;
 import com.example.pellego.ui.profile.ProfileFragment;
 import com.example.pellego.ui.progress.ProgressFragment;
-import com.example.pellego.ui.rapid_serial_visualization.RsvpIntroFragment;
+//import com.example.pellego.ui.rsvp.RsvpIntroFragment;
 import com.example.pellego.ui.settings.SettingsFragment;
 import com.example.pellego.ui.termsAndConditions.TermsAndConditionsFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
 
 /**********************************************
@@ -37,11 +43,12 @@ public class HomeActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
     private NavController navController;
-    ActionBarDrawerToggle toggle;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_Pellego);
         setContentView(R.layout.activity_home);
 
         // toolbar at top of screen that contains hamburger drawer menu button
@@ -87,14 +94,14 @@ public class HomeActivity extends AppCompatActivity {
 
         setActionBarIconMenu();
         // Add starting fragment
-        getSupportFragmentManager().beginTransaction().add(R.id.host_fragment_container, new RsvpIntroFragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.host_fragment_container, new LibraryFragment()).commit();
         bottomNavigationView.setOnNavigationItemSelectedListener(setNavBottomListener());
     }
 
     /**
      * Resets action bar to hamburger view after back button press
      */
-    private void setActionBarIconMenu() {
+    public void setActionBarIconMenu() {
         toggle.setDrawerIndicatorEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -119,6 +126,9 @@ public class HomeActivity extends AppCompatActivity {
         return (new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // unhighlight the selected bottom navigation menu item
+                BottomNavigationView menuView = findViewById(R.id.bottom_nav_view);
+                menuView.setLabelVisibilityMode( LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED);
                 // Handle navigation view item clicks here.
                 FragmentManager fragmentManager=getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -166,13 +176,16 @@ public class HomeActivity extends AppCompatActivity {
         return (new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // re-highlight the selected bottom navigation menu item
+                BottomNavigationView menuView = findViewById(R.id.bottom_nav_view);
+                menuView.setLabelVisibilityMode( LabelVisibilityMode.LABEL_VISIBILITY_SELECTED);
                 // Handle navigation view item clicks here.
                 FragmentManager fragmentManager=getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 setActionBarIconMenu();
                 switch (item.getItemId()) {
                     case R.id.nav_library:
-                        fragmentTransaction.replace(R.id.host_fragment_container, new RsvpIntroFragment());
+                        fragmentTransaction.replace(R.id.host_fragment_container, new LibraryFragment());
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                         break;
@@ -196,4 +209,5 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
 }

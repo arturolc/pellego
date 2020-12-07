@@ -1,4 +1,4 @@
-package com.example.pellego.ui.rapid_serial_visualization;
+package com.example.pellego.ui.rsvp;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

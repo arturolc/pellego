@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.rapid_serial_visualization.RsvpFragment"
+    tools:context=".ui.rsvp.RsvpOverviewFragment"
     android:id="@+id/frag_technique_overview">
 
     <LinearLayout
@@ -15,18 +15,18 @@
         tools:layout_editor_absoluteY="146dp"
         android:background="@color/light_blue">
         <TextView
-            android:id="@+id/text_rsv"
+            android:id="@+id/title_module_overview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="8dp"
             android:gravity="center_horizontal"
             android:textColor="@color/white"
-            android:textSize="50dp" />
+            android:textSize="35dp" />
 
         <TextView
-            android:id="@+id/rsv_description"
+            android:id="@+id/text_module_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
@@ -39,11 +39,11 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/white_transparent">
+            android:backgroundTint="@color/white">
         </TextView>
 
         <!-- Here is the inserted layout -->
-        <include layout="@layout/modules_overview"/>
+        <include layout="@layout/container_submodules"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,5 @@
-package com.example.pellego.ui.learn;
+package com.example.pellego.ui.quiz;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,15 +15,15 @@ import java.util.ArrayList;
 /**********************************************
  Eli Hebdon
 
- Adapter to populate learning module list with module items
+ Adapter to populate quiz question list with module items
  **********************************************/
 
-public class ModuleListAdapter extends BaseAdapter {
+public class QuizQuestionListAdapter extends BaseAdapter {
 
     Context mContext;
-    ArrayList<ModuleItemModel> mNavItems;
+    ArrayList<QuizQuestionModel> mNavItems;
 
-    public ModuleListAdapter(Context context, ArrayList<ModuleItemModel> navItems) {
+    public QuizQuestionListAdapter(Context context, ArrayList<QuizQuestionModel> navItems) {
         mContext = context;
         mNavItems = navItems;
     }
@@ -44,27 +43,23 @@ public class ModuleListAdapter extends BaseAdapter {
         return 0;
     }
 
-    @SuppressLint("ResourceAsColor")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.module_item, null);
+            view = inflater.inflate(R.layout.question_item, null);
         }
         else {
             view = convertView;
         }
 
         TextView titleView = (TextView) view.findViewById(R.id.title);
-        TextView subtitleView = (TextView) view.findViewById(R.id.subTitle);
-        ImageView iconView = (ImageView) view.findViewById(R.id.icon);
-        subtitleView.setTextColor(R.color.black);
+        TextView iconView = (TextView) view.findViewById(R.id.icon);
 
         titleView.setText( mNavItems.get(position).mTitle );
-        subtitleView.setText( mNavItems.get(position).mSubtitle );
-        iconView.setImageResource(mNavItems.get(position).mIcon);
+        iconView.setText(mNavItems.get(position).mIcon);
 
         return view;
     }
