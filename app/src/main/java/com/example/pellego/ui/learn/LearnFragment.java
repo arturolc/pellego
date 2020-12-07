@@ -1,6 +1,8 @@
 package com.example.pellego.ui.learn;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +18,22 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
 import com.example.pellego.ui.clumpReading.ClumpReadingFragment;
 import com.example.pellego.ui.rsvp.RsvpOverviewFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -33,10 +47,11 @@ public class LearnFragment extends Fragment {
     private LearnViewModel learnViewModel;
     private ListView moduleList;
     private RelativeLayout modulePane;
+    private ArrayList<ModuleItemModel> mNavItems;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ArrayList<ModuleItemModel> mNavItems = new ArrayList<>();
+        mNavItems = new ArrayList<>();
         learnViewModel =
                 new ViewModelProvider(this).get(LearnViewModel.class);
 
@@ -49,15 +64,19 @@ public class LearnFragment extends Fragment {
             }
         });
 
+        getApiData(inflater, container);
+
         // Add nav items to the list of learning techniques
-        mNavItems.add(new ModuleItemModel("Rapid Serial Visual Presentation", "1 out of 4 submodules completed", R.drawable.ic_rsvp));
-        mNavItems.add(new ModuleItemModel("Clump Reading", "0 out of 4 submodules completed", R.drawable.ic_clump_reading));
-        mNavItems.add(new ModuleItemModel("Reducing Subvocalization", "3 out of 4 submodules completed", R.drawable.ic_reducing_subvocalization));
-        mNavItems.add(new ModuleItemModel("Meta Guiding", "2 out of 4 submodules completed", R.drawable.ic_meta_guiding));
-        mNavItems.add(new ModuleItemModel("Pre-Reading", "1 out of 4 submodules completed", R.drawable.ic_pre_reading));
+//        mNavItems.add(new ModuleItemModel("Rapid Serial Visual Presentation", "1 out of 4 submodules completed", R.drawable.ic_rsvp));
+//        mNavItems.add(new ModuleItemModel("Clump Reading", "0 out of 4 submodules completed", R.drawable.ic_clump_reading));
+//        mNavItems.add(new ModuleItemModel("Reducing Subvocalization", "3 out of 4 submodules completed", R.drawable.ic_reducing_subvocalization));
+//        mNavItems.add(new ModuleItemModel("Meta Guiding", "2 out of 4 submodules completed", R.drawable.ic_meta_guiding));
+//        mNavItems.add(new ModuleItemModel("Pre-Reading", "1 out of 4 submodules completed", R.drawable.ic_pre_reading));
+
         // Populate the Navigation Drawer with options
         modulePane = root.findViewById(R.id.module_pane);
         moduleList = root.findViewById(R.id.nav_module_list);
+        Log.d("cheking", mNavItems.toString());
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
 
@@ -88,4 +107,41 @@ public class LearnFragment extends Fragment {
         return root;
     }
 
+    private void getApiData(@NonNull LayoutInflater inflater, ViewGroup container)
+    {
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url ="http://54.176.198.201:5000/modules";
+
+        // Request a json response from the provided URL.
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("response", response.toString());
+
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject item = response.getJSONObject(i);
+                                mNavItems.add(new ModuleItemModel(item.get("Name").toString(),
+                                        "1 out of 4 submodules completed", R.drawable.ic_rsvp));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.d("error", error.toString());
+
+                    }
+                });
+
+        // Add the request to the RequestQueue.
+        queue.add(jsonArrayRequest);
+    }
 }
