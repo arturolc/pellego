@@ -1,4 +1,4 @@
-package com.example.pellego.ui.rapid_serial_visualization;
+package com.example.pellego.ui.rsvp;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,7 +15,6 @@ import com.example.pellego.R;
 
 public class RsvpIntroPagerAdapter extends RecyclerView.Adapter<RsvpIntroPagerAdapter.RsvpIntroViewHolder>{
 
-    Context context;
     //color and icons
     int[][] color_icon_matrix = new int[][] {
             {android.R.color.holo_red_light, R.drawable.ic_arrow_back},
@@ -27,7 +26,7 @@ public class RsvpIntroPagerAdapter extends RecyclerView.Adapter<RsvpIntroPagerAd
     @NonNull
     @Override
     public RsvpIntroViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new RsvpIntroViewHolder(LayoutInflater.from(context).inflate(R.layout.item_page, parent, false));
+        return new RsvpIntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_page, parent, false));
     }
 
     @Override

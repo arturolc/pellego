@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.rapid_serial_visualization.RsvpIntroFragment"
+    tools:context=".ui.rsvp.RsvpIntroFragment"
     android:id="@+id/parent_view">
 
     <androidx.viewpager2.widget.ViewPager2

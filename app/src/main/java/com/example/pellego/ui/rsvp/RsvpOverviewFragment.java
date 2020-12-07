@@ -78,8 +78,7 @@ public class RsvpOverviewFragment extends Fragment  {
                 Bundle args = new Bundle();
                 switch(position) {
                     case 0:
-                        // TODO: navigate to intro fragment
-                        fragmentTransaction.replace(R.id.host_fragment_container, new LearnFragment());
+                        fragmentTransaction.replace(R.id.host_fragment_container, new RsvpIntroFragment());
                         break;
                     case 1:
                         args.putString("difficulty", "Beginner Submodule");
@@ -100,14 +99,11 @@ public class RsvpOverviewFragment extends Fragment  {
                         fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment);
                         break;
                 }
-
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 ((HomeActivity) getActivity()).setActionBarIconMenu();
             }
         });
-
-
         return root;
     }
 
