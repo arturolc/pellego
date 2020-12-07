@@ -47,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_Pellego);
         setContentView(R.layout.activity_home);
 
         // toolbar at top of screen that contains hamburger drawer menu button

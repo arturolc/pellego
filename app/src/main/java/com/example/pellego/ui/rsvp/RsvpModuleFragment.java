@@ -116,12 +116,10 @@ public class RsvpModuleFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Integer result) {
-            // TODO: navigate to quiz upon completion
             FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
-            // TODO: navigate to fragment based on click id
             QuizFragment quizFragment = new QuizFragment();
             Bundle args = new Bundle();
-            args.putString("difficulty", difficulty.toString());
+            args.putString("difficulty", difficulty);
             args.putString("wpm", String.valueOf(wpm));
             args.putString("module", "rsvp");
             quizFragment.setArguments(args);

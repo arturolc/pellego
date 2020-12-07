@@ -1,5 +1,6 @@
 package com.example.pellego.ui.learn;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class ModuleListAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
@@ -58,6 +60,7 @@ public class ModuleListAdapter extends BaseAdapter {
         TextView titleView = (TextView) view.findViewById(R.id.title);
         TextView subtitleView = (TextView) view.findViewById(R.id.subTitle);
         ImageView iconView = (ImageView) view.findViewById(R.id.icon);
+        subtitleView.setTextColor(R.color.black);
 
         titleView.setText( mNavItems.get(position).mTitle );
         subtitleView.setText( mNavItems.get(position).mSubtitle );
