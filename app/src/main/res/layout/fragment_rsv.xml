@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.rapid_serial_visualization.RsvFragment"
+    tools:context=".ui.rapid_serial_visualization.RsvpFragment"
     android:id="@+id/frag_technique_overview">
 
     <LinearLayout

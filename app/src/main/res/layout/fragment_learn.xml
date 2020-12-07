@@ -30,8 +30,6 @@
             <!-- Here is the inserted layout -->
             <include layout="@layout/modules_overview"/>
 
-
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

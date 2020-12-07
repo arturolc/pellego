@@ -21,6 +21,7 @@ import com.example.pellego.ui.learn.LearnFragment;
 import com.example.pellego.ui.library.LibraryFragment;
 import com.example.pellego.ui.profile.ProfileFragment;
 import com.example.pellego.ui.progress.ProgressFragment;
+import com.example.pellego.ui.rapid_serial_visualization.RsvpIntroFragment;
 import com.example.pellego.ui.settings.SettingsFragment;
 import com.example.pellego.ui.termsAndConditions.TermsAndConditionsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -86,7 +87,7 @@ public class HomeActivity extends AppCompatActivity {
 
         setActionBarIconMenu();
         // Add starting fragment
-        getSupportFragmentManager().beginTransaction().add(R.id.host_fragment_container, new LibraryFragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.host_fragment_container, new RsvpIntroFragment()).commit();
         bottomNavigationView.setOnNavigationItemSelectedListener(setNavBottomListener());
     }
 
@@ -171,7 +172,7 @@ public class HomeActivity extends AppCompatActivity {
                 setActionBarIconMenu();
                 switch (item.getItemId()) {
                     case R.id.nav_library:
-                        fragmentTransaction.replace(R.id.host_fragment_container, new LibraryFragment());
+                        fragmentTransaction.replace(R.id.host_fragment_container, new RsvpIntroFragment());
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                         break;
