@@ -7,4 +7,8 @@
     <color name="white_transparent">#77FFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="transparent">#000000CC</color>
+    <color name="pastel_blue">#1b85b8</color>
+    <color name="pastel_purple">#5a5255</color>
+    <color name="pastel_green">#559e83</color>
+    <color name="pastel_orange">#ae5a41</color>
 </resources>

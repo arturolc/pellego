@@ -25,6 +25,7 @@ import com.example.pellego.ui.learn.LearnFragment;
 import com.example.pellego.ui.library.LibraryFragment;
 import com.example.pellego.ui.profile.ProfileFragment;
 import com.example.pellego.ui.progress.ProgressFragment;
+//import com.example.pellego.ui.rsvp.RsvpIntroFragment;
 import com.example.pellego.ui.settings.SettingsFragment;
 import com.example.pellego.ui.termsAndConditions.TermsAndConditionsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;

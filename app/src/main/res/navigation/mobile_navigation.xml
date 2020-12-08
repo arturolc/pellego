@@ -47,5 +47,4 @@
         android:label="@string/title_terms_and_conditions"
         tools:layout="@layout/fragment_terms_and_conditions" />
 
-
 </navigation>
