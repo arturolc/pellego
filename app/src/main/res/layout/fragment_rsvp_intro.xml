@@ -9,17 +9,27 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical">
+    </androidx.viewpager2.widget.ViewPager2>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabDots"
-        android:layout_marginBottom="40dp"
-        android:layout_width="match_parent"
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+        android:id="@+id/dots_indicator"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:tabMode="fixed"
-        app:tabGravity="center"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabIndicatorHeight="0dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        app:dotsColor="@color/white_transparent"
+        app:dotsCornerRadius="8dp"
+        app:dotsSize="16dp"
+        app:dotsSpacing="4dp"
+        app:dotsWidthFactor="2.5"
+        app:selectedDotColor="@color/white"
+        app:progressMode="true"
+        />
+
 </RelativeLayout>

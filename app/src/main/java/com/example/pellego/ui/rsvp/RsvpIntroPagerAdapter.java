@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,14 +12,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pellego.R;
 
+/***********************************************
+ *  Chris Bordoy
+ *
+ *  The RSVP Intro Pager Adapter
+ */
 public class RsvpIntroPagerAdapter extends RecyclerView.Adapter<RsvpIntroPagerAdapter.RsvpIntroViewHolder>{
 
     //color and icons
     int[][] color_icon_matrix = new int[][] {
-            {android.R.color.holo_red_light, R.drawable.ic_arrow_back},
-            {android.R.color.holo_blue_bright, R.drawable.ic_arrow_back},
-            {android.R.color.darker_gray, R.drawable.ic_arrow_back},
-            {android.R.color.holo_green_dark, R.drawable.ic_arrow_back}
+            {R.color.pastel_blue},
+            {R.color.pastel_purple},
+            {R.color.pastel_green},
+            {R.color.pastel_orange}
+    };
+
+    //Hard coded-text but can be populated from DB
+    int[][] text = new int[][]{
+            {R.string.rsvp_intro_header1, R.string.rsvp_intro_description1},
+            {R.string.rsvp_intro_header2, R.string.rsvp_intro_description2},
+            {R.string.rsvp_intro_header3, R.string.rsvp_intro_description3},
+            {R.string.rsvp_intro_header4, R.string.rsvp_intro_description4}
     };
 
     @NonNull
@@ -31,7 +43,8 @@ public class RsvpIntroPagerAdapter extends RecyclerView.Adapter<RsvpIntroPagerAd
 
     @Override
     public void onBindViewHolder(@NonNull RsvpIntroViewHolder holder, int position) {
-        holder.img_view.setImageResource(color_icon_matrix[position][1]);
+        holder.header_text_view.setText(text[position][0]);
+        holder.description_text_view.setText(text[position][1]);
         holder.container.setBackgroundResource(color_icon_matrix[position][0]);
     }
 
@@ -40,15 +53,16 @@ public class RsvpIntroPagerAdapter extends RecyclerView.Adapter<RsvpIntroPagerAd
         return color_icon_matrix.length;
     }
 
+    //TODO: Add finish button to last slide that navigates back to RSVP submodules
     public class RsvpIntroViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_view;
-        TextView text_view;
+        TextView header_text_view;
+        TextView description_text_view;
         RelativeLayout container;
 
         public RsvpIntroViewHolder(@NonNull View itemView) {
             super(itemView);
-            img_view = (ImageView)itemView.findViewById(R.id.img_view);
-            text_view = (TextView)itemView.findViewById(R.id.text_view);
+            header_text_view = (TextView)itemView.findViewById(R.id.header_text_view);
+            description_text_view = (TextView)itemView.findViewById(R.id.description_text_view);
             container = (RelativeLayout)itemView.findViewById(R.id.item_page_container);
         }
     }
