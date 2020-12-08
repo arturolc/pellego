@@ -74,12 +74,12 @@ public class RsvpModuleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                // Kill the previous process if there was one and start a new one
-                try {
-                    asyncUpdateText.cancel(true);
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
+//                // Kill the previous process if there was one and stsart a new one
+//                try {
+//                    asyncUpdateText.cancel(true);
+//                } catch (Exception e) {
+//                    System.out.println(e);
+//                }
                 asyncUpdateText = new AsyncUpdateText(); // start thread on ok
                 asyncUpdateText.execute(wpm);
             }
@@ -89,6 +89,9 @@ public class RsvpModuleFragment extends Fragment {
         return root;
     }
 
+    /**
+     * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
+     */
     private class AsyncUpdateText extends AsyncTask<Integer, String, Integer> {
 
         TextView rsvp_text;
@@ -104,6 +107,12 @@ public class RsvpModuleFragment extends Fragment {
             long delay = (long) ((60.0 / (float) ints[0]) * 1000);
             for (String word : words) {
                 rsvp_text.setText(word);
+                // Verify that user has not navigated away from the RSVP fragment
+                Fragment myFragment = getActivity().getSupportFragmentManager().findFragmentByTag("RsvpModuleFragment");
+                if (myFragment == null || !myFragment.isVisible()) {
+                    cancel(true);
+                    return 0;
+                }
                 try {
                     Thread.sleep(delay);
                 } catch (InterruptedException e) {

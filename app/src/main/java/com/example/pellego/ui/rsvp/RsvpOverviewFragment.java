@@ -78,25 +78,26 @@ public class RsvpOverviewFragment extends Fragment  {
                 Bundle args = new Bundle();
                 switch(position) {
                     case 0:
-                        fragmentTransaction.replace(R.id.host_fragment_container, new RsvpIntroFragment());
+                        // TODO: navigate to intro fragment
+                        fragmentTransaction.replace(R.id.host_fragment_container, new LearnFragment());
                         break;
                     case 1:
                         args.putString("difficulty", "Beginner Submodule");
                         args.putString("wpm", "120");
                         rsvpModuleFragment.setArguments(args);
-                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment);
+                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment, "RsvpModuleFragment");
                         break;
                     case 2:
                         args.putString("difficulty", "Intermediate Submodule");
                         args.putString("wpm", "250");
                         rsvpModuleFragment.setArguments(args);
-                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment);
+                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment, "RsvpModuleFragment");
                         break;
                     case 3:
                         args.putString("difficulty", "Advanced Submodule");
                         args.putString("wpm", "500");
                         rsvpModuleFragment.setArguments(args);
-                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment);
+                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment, "RsvpModuleFragment");
                         break;
                 }
                 fragmentTransaction.addToBackStack(null);
@@ -104,6 +105,8 @@ public class RsvpOverviewFragment extends Fragment  {
                 ((HomeActivity) getActivity()).setActionBarIconMenu();
             }
         });
+
+
         return root;
     }
 

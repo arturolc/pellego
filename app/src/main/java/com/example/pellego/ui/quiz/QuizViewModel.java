@@ -108,6 +108,17 @@ public class QuizViewModel extends ViewModel {
         }
     }
 
+    public String getModuleTag() {
+        switch (module) {
+            case "rsvp":
+                return "RsvpModuleFragment";
+            case "clump":
+                return "ClumpReadingFragment";
+            default:
+                return "";
+        }
+    }
+
     public void populateQuestionBank() {
         this.questions = new ArrayList<>();
         switch(this.difficulty) {
