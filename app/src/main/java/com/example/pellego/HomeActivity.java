@@ -14,9 +14,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,17 +35,36 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import android.util.Log;
+import android.os.Build;
+
 /**********************************************
  Eli Hebdon & Chris Bordoy
  Startup activity that the user sees when first opening the app after the splash
  screen is displayed.
  **********************************************/
+
 public class HomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
     private NavController navController;
     private ActionBarDrawerToggle toggle;
+
+    private String user_name;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +88,7 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         // Handle navigation view item selection
         navigationView.setNavigationItemSelectedListener(setNavDrawerListener());
+
 
         // Handle pen & close nav drawer button
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -208,5 +231,4 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
 }
