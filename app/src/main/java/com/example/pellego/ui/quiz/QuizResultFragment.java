@@ -64,7 +64,7 @@ public class QuizResultFragment extends Fragment {
                 args.putString("wpm", quizViewModel.getWPM().toString());
                 args.putString("module", quizViewModel.getModule());
                 frag.setArguments(args);
-                fragmentTransaction.replace(R.id.host_fragment_container, frag);
+                fragmentTransaction.replace(R.id.host_fragment_container, frag, quizViewModel.getModuleTag());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 ((HomeActivity) getActivity()).setActionBarIconArrow();

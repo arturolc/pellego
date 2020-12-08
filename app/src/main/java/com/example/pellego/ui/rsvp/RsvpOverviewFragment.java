@@ -85,22 +85,21 @@ public class RsvpOverviewFragment extends Fragment  {
                         args.putString("difficulty", "Beginner Submodule");
                         args.putString("wpm", "120");
                         rsvpModuleFragment.setArguments(args);
-                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment);
+                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment, "RsvpModuleFragment");
                         break;
                     case 2:
                         args.putString("difficulty", "Intermediate Submodule");
                         args.putString("wpm", "250");
                         rsvpModuleFragment.setArguments(args);
-                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment);
+                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment, "RsvpModuleFragment");
                         break;
                     case 3:
                         args.putString("difficulty", "Advanced Submodule");
                         args.putString("wpm", "500");
                         rsvpModuleFragment.setArguments(args);
-                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment);
+                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment, "RsvpModuleFragment");
                         break;
                 }
-
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 ((HomeActivity) getActivity()).setActionBarIconMenu();

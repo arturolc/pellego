@@ -114,12 +114,42 @@ public class LearnFragment extends Fragment {
             }
         });
 
+        // Manual way of populating learning modules without the DB
         // Add nav items to the list of learning techniques
 //        mNavItems.add(new ModuleItemModel("Rapid Serial Visual Presentation", "1 out of 4 submodules completed", R.drawable.ic_rsvp));
 //        mNavItems.add(new ModuleItemModel("Clump Reading", "0 out of 4 submodules completed", R.drawable.ic_clump_reading));
 //        mNavItems.add(new ModuleItemModel("Reducing Subvocalization", "3 out of 4 submodules completed", R.drawable.ic_reducing_subvocalization));
 //        mNavItems.add(new ModuleItemModel("Meta Guiding", "2 out of 4 submodules completed", R.drawable.ic_meta_guiding));
 //        mNavItems.add(new ModuleItemModel("Pre-Reading", "1 out of 4 submodules completed", R.drawable.ic_pre_reading));
+//        // Populate the Navigation Drawer with options
+//        modulePane = root.findViewById(R.id.module_pane);
+//        moduleList = root.findViewById(R.id.nav_module_list);
+//        ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
+//        moduleList.setAdapter(adapter);
+//
+//        // Drawer Item click listeners
+//        moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
+//                // TODO: navigate to fragment based on click id
+//                switch(position) {
+//                    case 0:
+//                        fragmentTransaction.replace(R.id.host_fragment_container, new RsvpOverviewFragment());
+//                        fragmentTransaction.addToBackStack(null);
+//                        fragmentTransaction.commit();
+//                        ((HomeActivity) getActivity()).setActionBarIconArrow();
+//                        break;
+//                    case 1:
+//                        fragmentTransaction.replace(R.id.host_fragment_container, new ClumpReadingFragment());
+//                        fragmentTransaction.addToBackStack(null);
+//                        fragmentTransaction.commit();
+//                        ((HomeActivity) getActivity()).setActionBarIconArrow();
+//                        break;
+//                }
+//
+//            }
+//        });
 
         return root;
     }

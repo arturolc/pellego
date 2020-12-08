@@ -77,7 +77,6 @@ public class QuizFragment extends Fragment {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 // Last question, navigate to results
                 if (quizViewModel.isLastQuestion()) {
                     FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
@@ -87,7 +86,6 @@ public class QuizFragment extends Fragment {
                     fragmentTransaction.commit();
                     ((HomeActivity) getActivity()).setActionBarIconMenu();
                 }
-
                 // TODO: update icons based on button click
                 // Right answer
                 if (quizViewModel.getCorrectIndex() == position) {
@@ -96,9 +94,8 @@ public class QuizFragment extends Fragment {
                 }
                 // Wrong answer
                 else {
-
+                    // TODO: update UI to reflect incorrect response?
                 }
-
                 ((TextView) root.findViewById(R.id.text_quiz_question)).setText(quizViewModel.getNextQuestion());
                 mNavItems = quizViewModel.getNextAnswers();
                 // Populate the Navigation Drawer with options
@@ -106,7 +103,6 @@ public class QuizFragment extends Fragment {
                 moduleList = root.findViewById(R.id.nav_question_list);
                 QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems);
                 moduleList.setAdapter(adapter);
-
             }
         });
 
