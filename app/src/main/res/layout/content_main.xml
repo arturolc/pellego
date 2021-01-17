@@ -6,26 +6,43 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:background="@color/light_blue"
+    android:paddingTop="?attr/actionBarSize"
     >
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@color/white"
+        app:itemIconTint="@color/light_blue"
+        app:itemTextColor="@color/light_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
     <FrameLayout
         android:id="@+id/host_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="0dp">
 
         <fragment
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="599dp"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             app:defaultNavHost="true"
-            app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+
             app:navGraph="@navigation/mobile_navigation" />
     </FrameLayout>
+
 
 
 
@@ -48,18 +65,5 @@
 <!--        app:menu="@menu/bottom_nav_menu" />-->
 
 <!--The old bottom navigation view if we want to switch it out -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:elevation="8dp"
-        android:layout_marginEnd="0dp"
-        android:background="@color/white"
-        app:itemIconTint="@color/light_blue"
-        app:itemTextColor="@color/light_blue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -115,7 +115,7 @@ public class HomeActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        setActionBarIconMenu();
+//        setActionBarIconMenu();
         // Add starting fragment
 //        getSupportFragmentManager().beginTransaction().add(R.id.host_fragment_container, new LibraryFragment()).commit();
 //        bottomNavigationView.setOnNavigationItemSelectedListener(setNavBottomListener());
@@ -145,40 +145,40 @@ public class HomeActivity extends AppCompatActivity {
      * Listens for press events on the navigation drawer and handles fragment transitions
      * @return
      */
-    private NavigationView.OnNavigationItemSelectedListener setNavDrawerListener() {
-        return (new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                // unhighlight the selected bottom navigation menu item
-                BottomNavigationView menuView = findViewById(R.id.bottom_nav_view);
-                menuView.setLabelVisibilityMode( LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED);
-                // Handle navigation view item clicks here.
-                FragmentManager fragmentManager=getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                setActionBarIconMenu();
-                switch (item.getItemId()) {
-                    case R.id.nav_profile:
-                        fragmentTransaction.replace(R.id.host_fragment_container, new ProfileFragment());
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                        break;
-                    case R.id.nav_terms_and_conditions:
-                        fragmentTransaction.replace(R.id.host_fragment_container, new TermsAndConditionsFragment());
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                        break;
-                    case R.id.nav_settings:
-                        fragmentTransaction.replace(R.id.host_fragment_container, new SettingsFragment());
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                        break;
-                }
-                //close navigation drawer
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
-    }
+//    private NavigationView.OnNavigationItemSelectedListener setNavDrawerListener() {
+//        return (new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                // unhighlight the selected bottom navigation menu item
+//                BottomNavigationView menuView = findViewById(R.id.bottom_nav_view);
+//                menuView.setLabelVisibilityMode( LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED);
+//                // Handle navigation view item clicks here.
+//                FragmentManager fragmentManager=getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                setActionBarIconMenu();
+//                switch (item.getItemId()) {
+//                    case R.id.nav_profile:
+//                        fragmentTransaction.replace(R.id.host_fragment_container, new ProfileFragment());
+//                        fragmentTransaction.addToBackStack(null);
+//                        fragmentTransaction.commit();
+//                        break;
+//                    case R.id.nav_terms_and_conditions:
+//                        fragmentTransaction.replace(R.id.host_fragment_container, new TermsAndConditionsFragment());
+//                        fragmentTransaction.addToBackStack(null);
+//                        fragmentTransaction.commit();
+//                        break;
+//                    case R.id.nav_settings:
+//                        fragmentTransaction.replace(R.id.host_fragment_container, new SettingsFragment());
+//                        fragmentTransaction.addToBackStack(null);
+//                        fragmentTransaction.commit();
+//                        break;
+//                }
+//                //close navigation drawer
+//                drawer.closeDrawer(GravityCompat.START);
+//                return true;
+//            }
+//        });
+//    }
 
     /**
      * Don't know what this does ..
@@ -195,41 +195,41 @@ public class HomeActivity extends AppCompatActivity {
      * Listens for press events on the bottom navigation menu and handles fragment transitions
      * @return
      */
-    private BottomNavigationView.OnNavigationItemSelectedListener setNavBottomListener() {
-        return (new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                // re-highlight the selected bottom navigation menu item
-                BottomNavigationView menuView = findViewById(R.id.bottom_nav_view);
-                menuView.setLabelVisibilityMode( LabelVisibilityMode.LABEL_VISIBILITY_SELECTED);
-                // Handle navigation view item clicks here.
-                FragmentManager fragmentManager=getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                setActionBarIconMenu();
-                switch (item.getItemId()) {
-                    case R.id.nav_library:
-                        fragmentTransaction.replace(R.id.host_fragment_container, new LibraryFragment());
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                        break;
-                    case R.id.nav_learn:
-                        fragmentTransaction.replace(R.id.host_fragment_container, new LearnFragment());
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                        break;
-                    case R.id.nav_settings:
-                        fragmentTransaction.replace(R.id.host_fragment_container, new SettingsFragment());
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                        break;
-                    case R.id.nav_progress:
-                        fragmentTransaction.replace(R.id.host_fragment_container, new ProgressFragment());
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                        break;
-                }
-                return true;
-            }
-        });
-    }
+//    private BottomNavigationView.OnNavigationItemSelectedListener setNavBottomListener() {
+//        return (new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                // re-highlight the selected bottom navigation menu item
+//                BottomNavigationView menuView = findViewById(R.id.bottom_nav_view);
+//                menuView.setLabelVisibilityMode( LabelVisibilityMode.LABEL_VISIBILITY_SELECTED);
+//                // Handle navigation view item clicks here.
+//                FragmentManager fragmentManager=getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                setActionBarIconMenu();
+//                switch (item.getItemId()) {
+//                    case R.id.nav_library:
+//                        fragmentTransaction.replace(R.id.host_fragment_container, new LibraryFragment());
+//                        fragmentTransaction.addToBackStack(null);
+//                        fragmentTransaction.commit();
+//                        break;
+//                    case R.id.nav_learn:
+//                        fragmentTransaction.replace(R.id.host_fragment_container, new LearnFragment());
+//                        fragmentTransaction.addToBackStack(null);
+//                        fragmentTransaction.commit();
+//                        break;
+//                    case R.id.nav_settings:
+//                        fragmentTransaction.replace(R.id.host_fragment_container, new SettingsFragment());
+//                        fragmentTransaction.addToBackStack(null);
+//                        fragmentTransaction.commit();
+//                        break;
+//                    case R.id.nav_progress:
+//                        fragmentTransaction.replace(R.id.host_fragment_container, new ProgressFragment());
+//                        fragmentTransaction.addToBackStack(null);
+//                        fragmentTransaction.commit();
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
+//    }
 }
