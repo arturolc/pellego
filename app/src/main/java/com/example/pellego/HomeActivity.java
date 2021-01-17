@@ -88,7 +88,7 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         // Handle navigation view item selection
-        navigationView.setNavigationItemSelectedListener(setNavDrawerListener());
+//        navigationView.setNavigationItemSelectedListener(setNavDrawerListener());
 
 
         // Handle pen & close nav drawer button
@@ -109,16 +109,16 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_library, R.id.nav_learn, R.id.nav_progress, R.id.nav_settings)
-                .build();
+//        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+//                R.id.nav_library, R.id.nav_learn, R.id.nav_progress, R.id.nav_settings)
+//                .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         setActionBarIconMenu();
         // Add starting fragment
-        getSupportFragmentManager().beginTransaction().add(R.id.host_fragment_container, new LibraryFragment()).commit();
-        bottomNavigationView.setOnNavigationItemSelectedListener(setNavBottomListener());
+//        getSupportFragmentManager().beginTransaction().add(R.id.host_fragment_container, new LibraryFragment()).commit();
+//        bottomNavigationView.setOnNavigationItemSelectedListener(setNavBottomListener());
     }
 
     /**

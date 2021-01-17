@@ -6,13 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="?attr/actionBarSize"
             android:id="@+id/toolbar"
             android:elevation="4dp"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
             />
+    </com.google.android.material.appbar.AppBarLayout>
 
 
     <include layout="@layout/content_main" />
