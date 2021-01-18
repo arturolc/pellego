@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
@@ -75,17 +77,21 @@ public class RsvpOverviewFragment extends Fragment  {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
                 RsvpModuleFragment rsvpModuleFragment = new RsvpModuleFragment();
+
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 Bundle args = new Bundle();
                 switch(position) {
                     case 0:
-                        // TODO: navigate to intro fragment
-                        fragmentTransaction.replace(R.id.host_fragment_container, new LearnFragment());
+                        navController.navigate(R.id.nav_rsvp_intro);
+//                        fragmentTransaction.replace(R.id.host_fragment_container, new LearnFragment());
                         break;
                     case 1:
-                        args.putString("difficulty", "Beginner Submodule");
-                        args.putString("wpm", "120");
-                        rsvpModuleFragment.setArguments(args);
-                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment, "RsvpModuleFragment");
+                        navController.navigate(R.id.nav_rsvp_beginner);
+
+//                        args.putString("difficulty", "Beginner Submodule");
+//                        args.putString("wpm", "120");
+//                        rsvpModuleFragment.setArguments(args);
+//                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment, "RsvpModuleFragment");
                         break;
                     case 2:
                         args.putString("difficulty", "Intermediate Submodule");
@@ -102,7 +108,7 @@ public class RsvpOverviewFragment extends Fragment  {
                 }
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-                ((HomeActivity) getActivity()).setActionBarIconMenu();
+//                ((HomeActivity) getActivity()).setActionBarIconMenu();
             }
         });
 

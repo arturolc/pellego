@@ -90,20 +90,21 @@ public class HomeActivity extends AppCompatActivity {
         // Handle navigation view item selection
 //        navigationView.setNavigationItemSelectedListener(setNavDrawerListener());
 
-
-        // Handle pen & close nav drawer button
+        // Handle open & close nav drawer button
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState(); // rotates hamburger icon
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
+        NavigationUI.setupWithNavController(toolbar, navController);
+
         // Handle back button click
-        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getSupportFragmentManager().popBackStack();
-                setActionBarIconMenu();
-            }
-        });
+//        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                navController.popBackStack();
+//                setActionBarIconMenu();
+//            }
+//        });
 
         // Setup footer menu navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
@@ -130,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
     }
-
+//
     /**
      * Sets action bar icon to the back button after navigating into a fragment
      */

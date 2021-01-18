@@ -135,7 +135,7 @@ public class RsvpModuleFragment extends Fragment {
             fragmentTransaction.replace(R.id.host_fragment_container, quizFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-            ((HomeActivity) getActivity()).setActionBarIconMenu();
+//            ((HomeActivity) getActivity()).setActionBarIconMenu();
         }
     }
 }

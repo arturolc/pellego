@@ -67,7 +67,7 @@ public class QuizResultFragment extends Fragment {
                 fragmentTransaction.replace(R.id.host_fragment_container, frag, quizViewModel.getModuleTag());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-                ((HomeActivity) getActivity()).setActionBarIconArrow();
+//                ((HomeActivity) getActivity()).setActionBarIconArrow();
             }
         });
 
@@ -81,7 +81,7 @@ public class QuizResultFragment extends Fragment {
                 fragmentTransaction.replace(R.id.host_fragment_container, learnFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-                ((HomeActivity) getActivity()).setActionBarIconMenu();
+//                ((HomeActivity) getActivity()).setActionBarIconMenu();
             }
         });
 

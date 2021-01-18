@@ -84,7 +84,7 @@ public class QuizFragment extends Fragment {
                     fragmentTransaction.replace(R.id.host_fragment_container, resultFragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                    ((HomeActivity) getActivity()).setActionBarIconMenu();
+//                    ((HomeActivity) getActivity()).setActionBarIconMenu();
                 }
                 // TODO: update icons based on button click
                 // Right answer
