@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -78,24 +79,17 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        // layout that contains the side menu drawer
-        drawer = findViewById(R.id.home_layout);
-        NavigationView navigationView = findViewById(R.id.side_nav_view);
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_profile, R.id.nav_terms_and_conditions, R.id.nav_settings, R.id.nav_library, R.id.nav_learn, R.id.nav_progress)
-                .build();
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+
+
         // Handle navigation view item selection
 //        navigationView.setNavigationItemSelectedListener(setNavDrawerListener());
 
         // Handle open & close nav drawer button
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState(); // rotates hamburger icon
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
-        NavigationUI.setupWithNavController(toolbar, navController);
+//        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.addDrawerListener(toggle);
+//        toggle.syncState(); // rotates hamburger icon
+//        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
+//        NavigationUI.setupWithNavController(toolbar, navController);
 
         // Handle back button click
 //        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
@@ -106,15 +100,20 @@ public class HomeActivity extends AppCompatActivity {
 //            }
 //        });
 
-        // Setup footer menu navigation
+        // Setup drawer nav menu navigation
+        drawer = findViewById(R.id.home_layout);
+        NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupWithNavController(drawerNavigationView, navController);
+
+        // Setup bottom menu navigation
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                 R.id.nav_settings, R.id.nav_library, R.id.nav_learn, R.id.nav_progress, R.id.nav_profile, R.id.nav_terms_and_conditions)
+                .build();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-//        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-//                R.id.nav_library, R.id.nav_learn, R.id.nav_progress, R.id.nav_settings)
-//                .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
 
 //        setActionBarIconMenu();
         // Add starting fragment
