@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         app:titleTextColor="@color/light_blue"
         android:elevation="8dp"
-        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        app:theme="@style/ToolbarTheme"
         />
 
 
