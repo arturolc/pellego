@@ -1,56 +1,24 @@
 package com.example.pellego;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.pellego.ui.learn.LearnFragment;
-import com.example.pellego.ui.library.LibraryFragment;
-import com.example.pellego.ui.profile.ProfileFragment;
-import com.example.pellego.ui.progress.ProgressFragment;
 //import com.example.pellego.ui.rsvp.RsvpIntroFragment;
-import com.example.pellego.ui.settings.SettingsFragment;
-import com.example.pellego.ui.termsAndConditions.TermsAndConditionsFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import android.util.Log;
-import android.os.Build;
 
 /**********************************************
  Eli Hebdon & Chris Bordoy
@@ -60,10 +28,12 @@ import android.os.Build;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
+    private AppBarConfiguration appBarConfiguration;
     private DrawerLayout drawer;
     private NavController navController;
     private ActionBarDrawerToggle toggle;
+    BottomNavigationView bottomNavigationView;
+    private Toolbar toolbar;
 
     private String user_name;
 
@@ -73,112 +43,46 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_Pellego);
         setContentView(R.layout.activity_home);
+        drawer = findViewById(R.id.home_layout);
+        bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        toolbar = findViewById(R.id.toolbar);
 
-        // toolbar at top of screen that contains hamburger drawer menu button
-        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
 
-        // Handle navigation view item selection
-//        navigationView.setNavigationItemSelectedListener(setNavDrawerListener());
+        // setup bottom nav menu
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
-        // Handle open & close nav drawer button
-//        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.addDrawerListener(toggle);
-//        toggle.syncState(); // rotates hamburger icon
-//        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
-//        NavigationUI.setupWithNavController(toolbar, navController);
+        appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_settings, R.id.nav_library, R.id.nav_learn, R.id.nav_progress, R.id.nav_profile, R.id.nav_terms_and_conditions)
+                .build();
+        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        // Handle back button click
-//        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                navController.popBackStack();
-//                setActionBarIconMenu();
-//            }
-//        });
 
         // Setup drawer nav menu navigation
-        drawer = findViewById(R.id.home_layout);
         NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(drawerNavigationView, navController);
+        NavigationUI.setupActionBarWithNavController(this, navController);
+        NavigationUI.setupActionBarWithNavController(this, navController, drawer);
 
-        // Setup bottom menu navigation
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                 R.id.nav_settings, R.id.nav_library, R.id.nav_learn, R.id.nav_progress, R.id.nav_profile, R.id.nav_terms_and_conditions)
-                .build();
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState(); // rotates hamburger icon
 
-//        setActionBarIconMenu();
-        // Add starting fragment
-//        getSupportFragmentManager().beginTransaction().add(R.id.host_fragment_container, new LibraryFragment()).commit();
-//        bottomNavigationView.setOnNavigationItemSelectedListener(setNavBottomListener());
-    }
 
-    /**
-     * Resets action bar to hamburger view after back button press
-     */
-    public void setActionBarIconMenu() {
-        toggle.setDrawerIndicatorEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-    }
+
+        // toolbar at top of screen that contains hamburger drawer menu button
 //
-    /**
-     * Sets action bar icon to the back button after navigating into a fragment
-     */
-    public void setActionBarIconArrow() {
-        toggle.setDrawerIndicatorEnabled(false);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
-    }
+//        ActionBar actionbar = getSupportActionBar();
+//        actionbar.setHomeAsUpIndicator(R.color.white);
+//        actionbar.setDisplayHomeAsUpEnabled(true);
+//        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
 
-    /**
-     * Listens for press events on the navigation drawer and handles fragment transitions
-     * @return
-     */
-//    private NavigationView.OnNavigationItemSelectedListener setNavDrawerListener() {
-//        return (new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                // unhighlight the selected bottom navigation menu item
-//                BottomNavigationView menuView = findViewById(R.id.bottom_nav_view);
-//                menuView.setLabelVisibilityMode( LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED);
-//                // Handle navigation view item clicks here.
-//                FragmentManager fragmentManager=getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                setActionBarIconMenu();
-//                switch (item.getItemId()) {
-//                    case R.id.nav_profile:
-//                        fragmentTransaction.replace(R.id.host_fragment_container, new ProfileFragment());
-//                        fragmentTransaction.addToBackStack(null);
-//                        fragmentTransaction.commit();
-//                        break;
-//                    case R.id.nav_terms_and_conditions:
-//                        fragmentTransaction.replace(R.id.host_fragment_container, new TermsAndConditionsFragment());
-//                        fragmentTransaction.addToBackStack(null);
-//                        fragmentTransaction.commit();
-//                        break;
-//                    case R.id.nav_settings:
-//                        fragmentTransaction.replace(R.id.host_fragment_container, new SettingsFragment());
-//                        fragmentTransaction.addToBackStack(null);
-//                        fragmentTransaction.commit();
-//                        break;
-//                }
-//                //close navigation drawer
-//                drawer.closeDrawer(GravityCompat.START);
-//                return true;
-//            }
-//        });
-//    }
+
+
+    }
 
     /**
      * Don't know what this does ..
@@ -187,49 +91,11 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
 
-    /**
-     * Listens for press events on the bottom navigation menu and handles fragment transitions
-     * @return
-     */
-//    private BottomNavigationView.OnNavigationItemSelectedListener setNavBottomListener() {
-//        return (new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                // re-highlight the selected bottom navigation menu item
-//                BottomNavigationView menuView = findViewById(R.id.bottom_nav_view);
-//                menuView.setLabelVisibilityMode( LabelVisibilityMode.LABEL_VISIBILITY_SELECTED);
-//                // Handle navigation view item clicks here.
-//                FragmentManager fragmentManager=getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                setActionBarIconMenu();
-//                switch (item.getItemId()) {
-//                    case R.id.nav_library:
-//                        fragmentTransaction.replace(R.id.host_fragment_container, new LibraryFragment());
-//                        fragmentTransaction.addToBackStack(null);
-//                        fragmentTransaction.commit();
-//                        break;
-//                    case R.id.nav_learn:
-//                        fragmentTransaction.replace(R.id.host_fragment_container, new LearnFragment());
-//                        fragmentTransaction.addToBackStack(null);
-//                        fragmentTransaction.commit();
-//                        break;
-//                    case R.id.nav_settings:
-//                        fragmentTransaction.replace(R.id.host_fragment_container, new SettingsFragment());
-//                        fragmentTransaction.addToBackStack(null);
-//                        fragmentTransaction.commit();
-//                        break;
-//                    case R.id.nav_progress:
-//                        fragmentTransaction.replace(R.id.host_fragment_container, new ProgressFragment());
-//                        fragmentTransaction.addToBackStack(null);
-//                        fragmentTransaction.commit();
-//                        break;
-//                }
-//                return true;
-//            }
-//        });
-//    }
+
+    });
+
 }

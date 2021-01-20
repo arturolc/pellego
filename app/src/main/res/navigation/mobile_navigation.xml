@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_nav_learn_to_nav_progress"
             app:destination="@id/nav_progress" />
+        <action
+            android:id="@+id/action_nav_learn_to_nav_library"
+            app:destination="@id/nav_library" />
     </fragment>
 
     <fragment
