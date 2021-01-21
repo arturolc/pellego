@@ -17,6 +17,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
@@ -108,8 +111,8 @@ public class RsvpModuleFragment extends Fragment {
             for (String word : words) {
                 rsvp_text.setText(word);
                 // Verify that user has not navigated away from the RSVP fragment
-                Fragment myFragment = getActivity().getSupportFragmentManager().findFragmentByTag("RsvpModuleFragment");
-                if (myFragment == null || !myFragment.isVisible()) {
+                NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                if (!navHostFragment.getChildFragmentManager().getFragments().get(0).toString().contains("RsvpModuleFragment")) {
                     cancel(true);
                     return 0;
                 }
@@ -125,17 +128,12 @@ public class RsvpModuleFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Integer result) {
-            FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
-            QuizFragment quizFragment = new QuizFragment();
+            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
             Bundle args = new Bundle();
             args.putString("difficulty", difficulty);
             args.putString("wpm", String.valueOf(wpm));
             args.putString("module", "rsvp");
-            quizFragment.setArguments(args);
-            fragmentTransaction.replace(R.id.host_fragment_container, quizFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-//            ((HomeActivity) getActivity()).setActionBarIconMenu();
+            navController.navigate(R.id.nav_quiz, args);
         }
     }
 }

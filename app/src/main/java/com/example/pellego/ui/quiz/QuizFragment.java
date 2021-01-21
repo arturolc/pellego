@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
@@ -79,6 +81,7 @@ public class QuizFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Last question, navigate to results
                 if (quizViewModel.isLastQuestion()) {
+                    NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                     FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
                     QuizResultFragment resultFragment = new QuizResultFragment(quizViewModel);
                     fragmentTransaction.replace(R.id.host_fragment_container, resultFragment);

@@ -86,10 +86,9 @@ public class RsvpOverviewFragment extends Fragment  {
 //                        fragmentTransaction.replace(R.id.host_fragment_container, new LearnFragment());
                         break;
                     case 1:
-                        navController.navigate(R.id.nav_rsvp_beginner);
-
-//                        args.putString("difficulty", "Beginner Submodule");
-//                        args.putString("wpm", "120");
+                        args.putString("difficulty", "Beginner Submodule");
+                        args.putString("wpm", "120");
+                        navController.navigate(R.id.nav_rsvp_beginner, args);
 //                        rsvpModuleFragment.setArguments(args);
 //                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment, "RsvpModuleFragment");
                         break;
