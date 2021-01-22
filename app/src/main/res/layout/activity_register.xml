@@ -4,15 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20sp"
     tools:context=".RegisterActivity">
 
     <LinearLayout
+        android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="20"
+        android:visibility="gone"
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="525dp"
+        tools:visibility="visible">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="76dp" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verification Code" />
+
+        <EditText
+            android:id="@+id/confirmCodeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="70dp" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="confirm"
+            android:text="next"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible"
         tools:layout_editor_absoluteX="221dp"
-        tools:layout_editor_absoluteY="247dp">
+        tools:layout_editor_absoluteY="247dp"
+        tools:visibility="gone">
 
         <TextView
             android:id="@+id/textView"
@@ -85,7 +128,9 @@
             android:id="@+id/registerBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="register"
             android:text="Register"
             android:textColor="@color/white" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

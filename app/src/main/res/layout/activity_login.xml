@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:padding="20sp"
     tools:context=".LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10"
         tools:layout_editor_absoluteX="201dp"
         tools:layout_editor_absoluteY="234dp">
 
@@ -59,6 +61,7 @@
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="signIn"
             android:text="Sign In"
             android:textColor="@color/white" />
 
@@ -77,8 +80,10 @@
             android:id="@+id/textView13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:text="No account yet? Create one"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:onClick="moveToRegister"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
