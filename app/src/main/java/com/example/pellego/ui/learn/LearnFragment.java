@@ -141,25 +141,14 @@ public class LearnFragment extends Fragment {
                     case 0:
                         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                         navController.navigate(R.id.nav_module_overview);
-
-//                        fragmentTransaction.replace(R.id.host_fragment_container, new RsvpOverviewFragment());
-//                        fragmentTransaction.addToBackStack(null);
-//                        fragmentTransaction.commit();
-//                        ((HomeActivity) getActivity()).setActionBarIconArrow();
                         break;
                     case 1:
-//                        fragmentTransaction.replace(R.id.host_fragment_container, new ClumpReadingFragment());
-//                        fragmentTransaction.addToBackStack(null);
-//                        fragmentTransaction.commit();
-//                        ((HomeActivity) getActivity()).setActionBarIconArrow();
+                        // TODO: navigate to clump reader fragment
                         break;
                 }
 
             }
         });
-
-        // END
-
         return root;
     }
 
@@ -169,7 +158,6 @@ public class LearnFragment extends Fragment {
     public interface ResponseCallBack{
         void onResponse(Object response);
     }
-
 
     private void getApiData(@NonNull LayoutInflater inflater, ViewGroup container, ResponseCallBack responseCallBack)
     {
@@ -196,12 +184,10 @@ public class LearnFragment extends Fragment {
                         responseCallBack.onResponse(response);
                     }
                 }, new Response.ErrorListener() {
-
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         Log.d("error", error.toString());
-
                     }
                 });
 

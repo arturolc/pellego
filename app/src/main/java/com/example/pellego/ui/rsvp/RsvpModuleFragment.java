@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -39,13 +40,17 @@ public class RsvpModuleFragment extends Fragment {
     public String difficulty;
     private static AsyncUpdateText asyncUpdateText;
     private String content;
+    private RsvpViewModel rsvpViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         wpm = Integer.parseInt(getArguments().getString("wpm"));
         difficulty = getArguments().getString("difficulty");
+        rsvpViewModel =
+                new ViewModelProvider(requireActivity()).get(RsvpViewModel.class);
         settingsViewModel =
                 new ViewModelProvider(this).get(SettingsViewModel.class);
+
         root = inflater.inflate(R.layout.fragment_rsvp_module, container, false);
         final TextView textView = root.findViewById(R.id.title_rsvp);
         settingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -66,7 +71,12 @@ public class RsvpModuleFragment extends Fragment {
                 content = getString(R.string.content_rsvp_advanced);
                 break;
         }
+        // Only show popup if user navigated to the Rsvp module
+       if (rsvpViewModel.showDialog) showPopupDialog();
+        return root;
+    }
 
+    private void showPopupDialog() {
         // Setup the custom dialog
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.ok_dialog);
@@ -77,19 +87,12 @@ public class RsvpModuleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-//                // Kill the previous process if there was one and stsart a new one
-//                try {
-//                    asyncUpdateText.cancel(true);
-//                } catch (Exception e) {
-//                    System.out.println(e);
-//                }
                 asyncUpdateText = new AsyncUpdateText(); // start thread on ok
                 asyncUpdateText.execute(wpm);
             }
         });
         dialog.show();
-
-        return root;
+        rsvpViewModel.showDialog = false;
     }
 
     /**
