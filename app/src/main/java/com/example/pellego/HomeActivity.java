@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
         drawer = findViewById(R.id.home_layout);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_settings, R.id.nav_library, R.id.nav_learn, R.id.nav_progress, R.id.nav_profile, R.id.nav_terms_and_conditions)
+                R.id.nav_settings, R.id.nav_library, R.id.nav_learn, R.id.nav_progress, R.id.nav_profile, R.id.nav_terms_and_conditions, R.id.nav_sign_out)
                 .setDrawerLayout(drawer)
                 .build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
