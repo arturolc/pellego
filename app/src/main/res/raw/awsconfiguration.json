@@ -1,0 +1,42 @@
+{
+    "UserAgent": "aws-amplify-cli/0.1.0",
+    "Version": "0.1.0",
+    "IdentityManager": {
+        "Default": {}
+    },
+    "CredentialsProvider": {
+        "CognitoIdentity": {
+            "Default": {
+                "PoolId": "us-west-2:bd28d94a-732d-4879-a42a-7c01b4f6d168",
+                "Region": "us-west-2"
+            }
+        }
+    },
+    "CognitoUserPool": {
+        "Default": {
+            "PoolId": "us-west-2_WmLqSXRrc",
+            "AppClientId": "7eo4r806t5c69dvhhd7ei88lma",
+            "AppClientSecret": "5l0v45m07od1gvf6cmkrr73vjfqb1maeag64rrk9qs9ju9qk292",
+            "Region": "us-west-2"
+        }
+    },
+    "Auth": {
+        "Default": {
+            "OAuth": {
+                "WebDomain": "developmentb8b014ab-b8b014ab-dev.auth.us-west-2.amazoncognito.com",
+                "AppClientId": "7eo4r806t5c69dvhhd7ei88lma",
+                "AppClientSecret": "5l0v45m07od1gvf6cmkrr73vjfqb1maeag64rrk9qs9ju9qk292",
+                "SignInRedirectURI": "pellego://",
+                "SignOutRedirectURI": "pellego://",
+                "Scopes": [
+                    "phone",
+                    "email",
+                    "openid",
+                    "profile",
+                    "aws.cognito.signin.user.admin"
+                ]
+            },
+            "authenticationFlowType": "USER_SRP_AUTH"
+        }
+    }
+}
