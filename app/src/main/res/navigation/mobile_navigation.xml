@@ -81,8 +81,8 @@
 
     <fragment
         android:id="@+id/nav_sign_out"
-        android:name="com.example.pellego.ui.quiz.QuizResultFragment"
+        android:name="com.example.pellego.ui.signout.SignOutFragment"
         android:label="@string/title_sign_out"
-        tools:layout="@layout/fragment_quiz_results" />
+        tools:layout="@layout/fragment_sign_out" />
 
 </navigation>
