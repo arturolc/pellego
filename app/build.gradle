@@ -14,6 +14,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -23,6 +24,8 @@ android {
         }
     }
     compileOptions {
+        // Support for Java 8 features
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -43,12 +46,14 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-<<<<<<< app/build.gradle
-
     implementation "androidx.viewpager2:viewpager2:1.1.0-alpha01"
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
-
-=======
     implementation 'androidx.cardview:cardview:1.0.0'
->>>>>>> app/build.gradle
+    // Amplify core dependency
+    implementation 'com.amplifyframework:core:1.6.9'
+    // Support for Java 8 features
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
+
+    implementation 'com.amplifyframework:aws-auth-cognito:1.6.9'
+
 }

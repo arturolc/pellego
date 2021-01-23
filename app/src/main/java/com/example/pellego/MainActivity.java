@@ -4,11 +4,16 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
+import com.amplifyframework.core.Amplify;
 
 /**********************************************
  Eli Hebdon
@@ -26,10 +31,34 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i=new Intent(MainActivity.this,
-                        HomeActivity.class);
 
-                startActivity(i);
+                try {
+                    Amplify.addPlugin(new AWSCognitoAuthPlugin());
+                    Amplify.configure(getApplicationContext());
+                    Log.i("Amplify", "Initialized Amplify");
+                } catch (AmplifyException error) {
+                    Log.e("Amplify", "Could not initialize Amplify", error);
+                }
+
+                Amplify.Auth.fetchAuthSession(
+                        result -> {
+                            Log.i("AmplifyQuickstart", result.toString());
+                            if (result.isSignedIn()) {
+                                Intent i = new Intent(MainActivity.this,
+                                        HomeActivity.class);
+                                startActivity(i);
+
+                            } else {
+                                Intent i = new Intent(MainActivity.this,
+                                        LoginActivity.class);
+                                startActivity(i);
+                            }
+                        },
+                        error -> {
+                            Log.e("AmplifyQuickstart", error.toString());
+                        }
+                );
+
 
                 finish();
             }
