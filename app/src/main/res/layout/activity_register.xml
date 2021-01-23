@@ -15,7 +15,7 @@
         android:visibility="gone"
         tools:layout_editor_absoluteX="20dp"
         tools:layout_editor_absoluteY="525dp"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <Space
             android:layout_width="match_parent"
@@ -55,7 +55,7 @@
         android:visibility="visible"
         tools:layout_editor_absoluteX="221dp"
         tools:layout_editor_absoluteY="247dp"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/textView"
