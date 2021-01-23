@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_library">
+    app:startDestination="@id/nav_library">
 
     <fragment
         android:id="@+id/nav_library"
@@ -21,7 +21,8 @@
         android:id="@+id/nav_progress"
         android:name="com.example.pellego.ui.progress.ProgressFragment"
         android:label="@string/title_progress"
-        tools:layout="@layout/fragment_progress" />
+        tools:layout="@layout/fragment_progress"
+    />
 
     <fragment
         android:id="@+id/nav_settings"
@@ -46,5 +47,42 @@
         android:name="com.example.pellego.ui.termsAndConditions.TermsAndConditionsFragment"
         android:label="@string/title_terms_and_conditions"
         tools:layout="@layout/fragment_terms_and_conditions" />
+
+    <fragment
+        android:id="@+id/nav_module_overview"
+        android:name="com.example.pellego.ui.rsvp.RsvpOverviewFragment"
+        android:label="@string/title_technique"
+        tools:layout="@layout/fragment_rsvp_module"
+        />
+
+    <fragment
+        android:id="@+id/nav_rsvp_intro"
+        android:name="com.example.pellego.ui.rsvp.RsvpIntroFragment"
+        android:label="@string/title_rsvp_intro"
+        tools:layout="@layout/fragment_rsvp_intro" />
+
+    <fragment
+        android:id="@+id/nav_rsvp_beginner"
+        android:name="com.example.pellego.ui.rsvp.RsvpModuleFragment"
+        android:label="@string/title_rsvp_beginner"
+        tools:layout="@layout/fragment_rsvp_module" />
+
+    <fragment
+        android:id="@+id/nav_quiz"
+        android:name="com.example.pellego.ui.quiz.QuizFragment"
+        android:label="@string/title_quiz"
+        tools:layout="@layout/fragment_quiz" />
+
+    <fragment
+        android:id="@+id/nav_quiz_results"
+        android:name="com.example.pellego.ui.quiz.QuizResultFragment"
+        android:label="@string/title_quiz_results"
+        tools:layout="@layout/fragment_quiz_results" />
+
+    <fragment
+        android:id="@+id/nav_sign_out"
+        android:name="com.example.pellego.ui.signout.SignOutFragment"
+        android:label="@string/title_sign_out"
+        tools:layout="@layout/fragment_sign_out" />
 
 </navigation>

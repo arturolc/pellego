@@ -13,11 +13,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 
 import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
 import com.example.pellego.ui.learn.LearnFragment;
 import com.example.pellego.ui.rsvp.RsvpModuleFragment;
+import com.example.pellego.ui.rsvp.RsvpViewModel;
 
 /**********************************************
  Eli Hebdon
@@ -27,14 +31,15 @@ import com.example.pellego.ui.rsvp.RsvpModuleFragment;
 public class QuizResultFragment extends Fragment {
 
     private QuizViewModel quizViewModel;
-
-    public QuizResultFragment(QuizViewModel model) {
-        this.quizViewModel = model;
-    }
+    private RsvpViewModel rsvpViewModel;
+    private NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        this.quizViewModel = new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
+        rsvpViewModel =
+                new ViewModelProvider(requireActivity()).get(RsvpViewModel.class);
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         View root = inflater.inflate(R.layout.fragment_quiz_results, container, false);
         final TextView textView = root.findViewById(R.id.title_results);
         quizViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -57,31 +62,28 @@ public class QuizResultFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-                FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
-                Fragment frag = quizViewModel.getModuleFragment();
                 Bundle args = new Bundle();
                 args.putString("difficulty", quizViewModel.getDifficulty());
                 args.putString("wpm", quizViewModel.getWPM().toString());
                 args.putString("module", quizViewModel.getModule());
-                frag.setArguments(args);
-                fragmentTransaction.replace(R.id.host_fragment_container, frag, quizViewModel.getModuleTag());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                ((HomeActivity) getActivity()).setActionBarIconArrow();
+                quizViewModel = new QuizViewModel();
+                quizViewModel =
+                        new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
+                navController.navigate(R.id.nav_quiz, args);
+                return;
             }
         });
 
+        // Return to learning modules
         Button ret = root.findViewById(R.id.button_results_return);
         ret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
-                LearnFragment learnFragment = new LearnFragment();
-                fragmentTransaction.replace(R.id.host_fragment_container, learnFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                ((HomeActivity) getActivity()).setActionBarIconMenu();
+                quizViewModel.clear();
+                rsvpViewModel.clear();
+                navController.navigate(R.id.nav_learn);
+                return;
             }
         });
 

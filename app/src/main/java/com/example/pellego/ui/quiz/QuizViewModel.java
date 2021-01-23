@@ -119,6 +119,16 @@ public class QuizViewModel extends ViewModel {
         }
     }
 
+    public void clear() {
+        mText = new MutableLiveData<>();
+        mText.setValue("Quiz");
+        question_no = 0;
+        score = 0;
+        module = "";
+        wpm = 0;
+        questions = new ArrayList<>();
+    }
+
     public void populateQuestionBank() {
         this.questions = new ArrayList<>();
         switch(this.difficulty) {

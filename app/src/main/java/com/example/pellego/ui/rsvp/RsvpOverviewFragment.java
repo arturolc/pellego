@@ -15,10 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
-import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
-import com.example.pellego.ui.learn.LearnFragment;
 import com.example.pellego.ui.learn.LearnViewModel;
 import com.example.pellego.ui.learn.ModuleItemModel;
 import com.example.pellego.ui.learn.ModuleListAdapter;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 public class RsvpOverviewFragment extends Fragment  {
 
-    private RsvpViewModel techniqueOverviewViewModel;
+    private RsvpViewModel rsvpViewModel;
     ArrayList<ModuleItemModel> mNavItems;
     private LearnViewModel learnViewModel;
     private ListView moduleList;
@@ -43,11 +43,11 @@ public class RsvpOverviewFragment extends Fragment  {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        techniqueOverviewViewModel =
-                new ViewModelProvider(this).get(RsvpViewModel.class);
+        rsvpViewModel =
+                new ViewModelProvider(requireActivity()).get(RsvpViewModel.class);
         View root = inflater.inflate(R.layout.fragment_module_overview, container, false);
         final TextView textView = root.findViewById(R.id.title_module_overview);
-        techniqueOverviewViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        rsvpViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(R.string.title_rsvp);
@@ -75,17 +75,18 @@ public class RsvpOverviewFragment extends Fragment  {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
                 RsvpModuleFragment rsvpModuleFragment = new RsvpModuleFragment();
+
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 Bundle args = new Bundle();
+                rsvpViewModel.showDialog = true;
                 switch(position) {
                     case 0:
-                        // TODO: navigate to intro fragment
-                        fragmentTransaction.replace(R.id.host_fragment_container, new LearnFragment());
+                        navController.navigate(R.id.nav_rsvp_intro);
                         break;
                     case 1:
                         args.putString("difficulty", "Beginner Submodule");
                         args.putString("wpm", "120");
-                        rsvpModuleFragment.setArguments(args);
-                        fragmentTransaction.replace(R.id.host_fragment_container, rsvpModuleFragment, "RsvpModuleFragment");
+                        navController.navigate(R.id.nav_rsvp_beginner, args);
                         break;
                     case 2:
                         args.putString("difficulty", "Intermediate Submodule");
@@ -102,7 +103,6 @@ public class RsvpOverviewFragment extends Fragment  {
                 }
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-                ((HomeActivity) getActivity()).setActionBarIconMenu();
             }
         });
 
