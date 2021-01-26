@@ -8,46 +8,6 @@
     tools:context=".RegisterActivity">
 
     <LinearLayout
-        android:id="@+id/layout2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="525dp"
-        tools:visibility="gone">
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="76dp" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Verification Code" />
-
-        <EditText
-            android:id="@+id/confirmCodeText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="70dp" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="confirm"
-            android:text="next"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

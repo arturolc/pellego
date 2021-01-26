@@ -14,10 +14,13 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 //import com.example.pellego.ui.rsvp.RsvpIntroFragment;
+import com.amplifyframework.auth.options.AuthSignOutOptions;
+import com.amplifyframework.core.Amplify;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -64,6 +67,23 @@ public class HomeActivity extends AppCompatActivity {
         NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
         NavigationUI.setupWithNavController(drawerNavigationView, navController);
 
+        drawerNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
+
+                if (id == R.id.nav_sign_out) {
+                    Amplify.Auth.signOut(
+                            () -> {
+                                Log.i("AUTHENTICATION", "Signed out succesfully");
+                                finish();
+                            },
+                            error -> Log.e("AUTHENTICATION", error.toString())
+                    );
+                }
+                return true;
+            }
+        });
     }
 
     /**

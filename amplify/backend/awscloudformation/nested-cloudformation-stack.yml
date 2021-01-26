@@ -68,34 +68,34 @@
         }
       }
     },
-    "authdevelopmentb8b014ab": {
+    "authdevelopment241bbeea": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-development-dev-111120-deployment/amplify-cfn-templates/auth/developmentb8b014ab-cloudformation-template.yml",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-development-dev-143853-deployment/amplify-cfn-templates/auth/development241bbeea-cloudformation-template.yml",
         "Parameters": {
-          "identityPoolName": "developmentb8b014ab_identitypool_b8b014ab",
+          "identityPoolName": "development241bbeea_identitypool_241bbeea",
           "allowUnauthenticatedIdentities": false,
-          "resourceNameTruncated": "develob8b014ab",
-          "userPoolName": "developmentb8b014ab_userpool_b8b014ab",
+          "resourceNameTruncated": "develo241bbeea",
+          "userPoolName": "development241bbeea_userpool_241bbeea",
           "autoVerifiedAttributes": "email",
           "mfaConfiguration": "OFF",
           "mfaTypes": "SMS Text Message",
           "smsAuthenticationMessage": "Your authentication code is {####}",
           "smsVerificationMessage": "Your verification code is {####}",
-          "emailVerificationSubject": "Your verification code",
+          "emailVerificationSubject": "Pellego Verification Code",
           "emailVerificationMessage": "Your verification code is {####}",
           "defaultPasswordPolicy": false,
           "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": "",
-          "requiredAttributes": "email",
+          "requiredAttributes": "email,name",
           "userpoolClientGenerateSecret": true,
           "userpoolClientRefreshTokenValidity": 30,
           "userpoolClientWriteAttributes": "email",
           "userpoolClientReadAttributes": "email",
-          "userpoolClientLambdaRole": "develob8b014ab_userpoolclient_lambda_role",
+          "userpoolClientLambdaRole": "develo241bbeea_userpoolclient_lambda_role",
           "userpoolClientSetAttributes": false,
-          "sharedId": "b8b014ab",
-          "resourceName": "developmentb8b014ab",
+          "sharedId": "241bbeea",
+          "resourceName": "development241bbeea",
           "authSelections": "identityPoolAndUserPool",
           "authRoleArn": {
             "Fn::GetAtt": [
@@ -109,17 +109,26 @@
               "Arn"
             ]
           },
-          "useDefault": "defaultSocial",
+          "useDefault": "manual",
           "hostedUI": true,
           "usernameAttributes": "email",
-          "hostedUIDomainName": "developmentb8b014ab-b8b014ab",
-          "authProvidersUserPool": "",
-          "hostedUIProviderMeta": "[]",
-          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"pellego://\"],\"LogoutURLs\":[\"pellego://\"]}",
+          "triggers": "{}",
+          "hostedUIDomainName": "development241bbeea-241bbeea",
+          "authProvidersUserPool": "Google",
+          "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"name\":\"name\",\"username\":\"sub\"}}]",
           "userPoolGroupList": "",
           "serviceName": "Cognito",
           "usernameCaseSensitive": false,
+          "parentStack": {
+            "Ref": "AWS::StackId"
+          },
+          "permissions": "",
           "dependsOn": "",
+          "thirdPartyAuth": true,
+          "authProviders": "",
+          "userPoolGroups": false,
+          "adminQueries": false,
+          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"pellego://com.example.pellego/login/\"],\"LogoutURLs\":[\"pellego://com.example.pellego/logout/\"]}",
           "hostedUIProviderCreds": "[]",
           "env": "dev"
         }
@@ -129,7 +138,7 @@
       "DependsOn": [
         "AuthRole",
         "UnauthRole",
-        "authdevelopmentb8b014ab"
+        "authdevelopment241bbeea"
       ],
       "Type": "AWS::Lambda::Function",
       "Properties": {
@@ -212,7 +221,7 @@
         },
         "idpId": {
           "Fn::GetAtt": [
-            "authdevelopmentb8b014ab",
+            "authdevelopment241bbeea",
             "Outputs.IdentityPoolId"
           ]
         },

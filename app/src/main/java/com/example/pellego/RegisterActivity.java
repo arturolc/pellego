@@ -8,9 +8,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -31,38 +35,22 @@ public class RegisterActivity extends AppCompatActivity {
         email = ((EditText)findViewById(R.id.emailText)).getText().toString();
         EditText password = findViewById(R.id.passwordText);
 
+        List<AuthUserAttribute> list = new ArrayList<AuthUserAttribute>();
+        list.add(new AuthUserAttribute(AuthUserAttributeKey.name(), firstName + " " + lastName));
+        list.add(new AuthUserAttribute(AuthUserAttributeKey.email(), email));
+
         Amplify.Auth.signUp(
                 email,
                 password.getText().toString(),
-                AuthSignUpOptions.builder().userAttribute(AuthUserAttributeKey.email(), email).build(),
-                result -> Log.i("AUTHENTICATION", "Result: " + result.toString()),
+                AuthSignUpOptions.builder().userAttributes(list).build(),
+                result -> {
+                    Log.i("AUTHENTICATION", "Result: " + result.toString());
+                    Intent i  = new Intent(RegisterActivity.this, VerifyActivity.class);
+                    i.putExtra("EMAIL", email);
+                    startActivity(i);
+                },
                 error -> Log.e("AUTHENTICATION", "Sign up failed", error)
         );
-
-        findViewById(R.id.layout1).setVisibility(8);
-        findViewById(R.id.layout2).setVisibility(0);
     }
-
-    public void confirm(View view) {
-        EditText confirmationCode = findViewById(R.id.confirmCodeText);
-
-        Amplify.Auth.confirmSignUp(
-                email,
-                confirmationCode.getText().toString(),
-                result ->
-                {
-                    Intent i = new Intent(RegisterActivity.this,
-                            LoginActivity.class);
-                    startActivity(i);
-                    finish();
-                    Log.i("AUTHENTICATION", result.toString());
-                },
-                error -> Log.e("AUTHENTICATION", error.toString())
-        );
-
-    }
-
-
-
 
 }

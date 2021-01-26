@@ -7,27 +7,27 @@
     "CredentialsProvider": {
         "CognitoIdentity": {
             "Default": {
-                "PoolId": "us-west-2:bd28d94a-732d-4879-a42a-7c01b4f6d168",
+                "PoolId": "us-west-2:94cea1c8-6c99-42f4-8bda-96d3c15e5066",
                 "Region": "us-west-2"
             }
         }
     },
     "CognitoUserPool": {
         "Default": {
-            "PoolId": "us-west-2_WmLqSXRrc",
-            "AppClientId": "7eo4r806t5c69dvhhd7ei88lma",
-            "AppClientSecret": "5l0v45m07od1gvf6cmkrr73vjfqb1maeag64rrk9qs9ju9qk292",
+            "PoolId": "us-west-2_uMQcqkIOM",
+            "AppClientId": "6un6e2hj50itv794u87l2cj6n5",
+            "AppClientSecret": "1ee5i6alj5nggojs1f7ou3d3bni3l6ruuc9g9c1fceh3056jn4t2",
             "Region": "us-west-2"
         }
     },
     "Auth": {
         "Default": {
             "OAuth": {
-                "WebDomain": "developmentb8b014ab-b8b014ab-dev.auth.us-west-2.amazoncognito.com",
-                "AppClientId": "7eo4r806t5c69dvhhd7ei88lma",
-                "AppClientSecret": "5l0v45m07od1gvf6cmkrr73vjfqb1maeag64rrk9qs9ju9qk292",
-                "SignInRedirectURI": "pellego://",
-                "SignOutRedirectURI": "pellego://",
+                "WebDomain": "development241bbeea-241bbeea-dev.auth.us-west-2.amazoncognito.com",
+                "AppClientId": "6un6e2hj50itv794u87l2cj6n5",
+                "AppClientSecret": "1ee5i6alj5nggojs1f7ou3d3bni3l6ruuc9g9c1fceh3056jn4t2",
+                "SignInRedirectURI": "pellego://com.example.pellego/login/",
+                "SignOutRedirectURI": "pellego://com.example.pellego/logout/",
                 "Scopes": [
                     "phone",
                     "email",
