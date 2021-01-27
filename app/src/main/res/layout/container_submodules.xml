@@ -13,6 +13,7 @@
     android:layout_marginRight="8dp"
     android:background="@drawable/rounded_background"
     android:fitsSystemWindows="false"
+    android:visibility="invisible"
     >
 
     <ListView

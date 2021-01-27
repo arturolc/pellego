@@ -105,8 +105,7 @@ public class RsvpOverviewFragment extends Fragment  {
                 fragmentTransaction.commit();
             }
         });
-
-
+        
         return root;
     }
 

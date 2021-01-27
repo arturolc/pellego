@@ -1,5 +1,6 @@
 package com.example.pellego.ui.learn;
 
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,11 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
@@ -32,6 +35,7 @@ import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
 import com.example.pellego.ui.clumpReading.ClumpReadingFragment;
 import com.example.pellego.ui.rsvp.RsvpOverviewFragment;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,17 +54,20 @@ public class LearnFragment extends Fragment {
 
     private LearnViewModel learnViewModel;
     private ListView moduleList;
-    private RelativeLayout modulePane;
     private ArrayList<ModuleItemModel> mNavItems;
+    ProgressBar spinner;
+    NavigationView modulesView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mNavItems = new ArrayList<>();
+
         learnViewModel =
                 new ViewModelProvider(this).get(LearnViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_learn, container, false);
         final TextView textView = root.findViewById(R.id.text_learn);
+        moduleList = root.findViewById(R.id.nav_module_list);
         learnViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -68,82 +75,45 @@ public class LearnFragment extends Fragment {
             }
         });
 
+        spinner = root.findViewById(R.id.loading_spinner);
+        modulesView = root.findViewById(R.id.nav_module_overview);
         // Query DB for learning modules
-//        getApiData(inflater, container, new ResponseCallBack() {
-//            @Override
-//            public void onResponse(Object response) {
-//                // Update UI only after response is received &
-//                // Add icons and subtitles for modules manually for now
-//                // TODO: query DB for icons, titles, etc
-//                mNavItems.get(0).setIcon(R.drawable.ic_rsvp);
-//                mNavItems.get(0).setSubtitle("1 out of 4 submodules completed");
-//                mNavItems.get(1).setIcon(R.drawable.ic_clump_reading);
-//                mNavItems.get(1).setSubtitle("0 out of 4 submodules completed");
-//                mNavItems.get(2).setIcon(R.drawable.ic_reducing_subvocalization);
-//                mNavItems.get(2).setSubtitle("0 out of 4 submodules completed");
-//                mNavItems.get(3).setIcon(R.drawable.ic_meta_guiding);
-//                mNavItems.get(3).setSubtitle("0 out of 4 submodules completed");
-//                mNavItems.get(4).setIcon(R.drawable.ic_pre_reading);
-//                mNavItems.get(4).setSubtitle("0 out of 4 submodules completed");
-//
-//                // Populate the Navigation Drawer with options
-//                modulePane = root.findViewById(R.id.module_pane);
-//                moduleList = root.findViewById(R.id.nav_module_list);
-//                Log.d("checking", mNavItems.toString());
-//                ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
-//                moduleList.setAdapter(adapter);
-//
-//                // Drawer Item click listeners
-//                moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
-//                        // TODO: navigate to fragment based on click id
-//                        switch(position) {
-//                            case 0:
-//                                fragmentTransaction.replace(R.id.host_fragment_container, new RsvpOverviewFragment());
-//                                fragmentTransaction.addToBackStack(null);
-//                                fragmentTransaction.commit();
-//                                ((HomeActivity) getActivity()).setActionBarIconArrow();
-//                                break;
-//                            case 1:
-//                                fragmentTransaction.replace(R.id.host_fragment_container, new ClumpReadingFragment());
-//                                fragmentTransaction.addToBackStack(null);
-//                                fragmentTransaction.commit();
-//                                ((HomeActivity) getActivity()).setActionBarIconArrow();
-//                                break;
-//                        }
-//                    }
-//                });
-//            }
-//        });
+        getApiData(inflater, container, new ResponseCallBack() {
+            @Override
+            public void onResponse(Object response) {
+                // Update UI only after response is received &
+                // Add icons and subtitles for modules manually for now
+                System.out.println("response " + response);
+                // TODO: query DB for icons, titles, etc
+                mNavItems.get(0).setIcon(R.drawable.ic_rsvp);
+                mNavItems.get(0).setSubtitle("1 out of 4 submodules completed");
+                mNavItems.get(1).setIcon(R.drawable.ic_clump_reading);
+                mNavItems.get(1).setSubtitle("0 out of 4 submodules completed");
+                mNavItems.get(2).setIcon(R.drawable.ic_reducing_subvocalization);
+                mNavItems.get(2).setSubtitle("0 out of 4 submodules completed");
+                mNavItems.get(3).setIcon(R.drawable.ic_meta_guiding);
+                mNavItems.get(3).setSubtitle("0 out of 4 submodules completed");
+                mNavItems.get(4).setIcon(R.drawable.ic_pre_reading);
+                mNavItems.get(4).setSubtitle("0 out of 4 submodules completed");
 
-        // Manual way of populating learning modules without the DB. Comment out until 'END' to use DB
-        // Add nav items to the list of learning techniques
-        mNavItems.add(new ModuleItemModel("Rapid Serial Visual Presentation", "1 out of 4 submodules completed", R.drawable.ic_rsvp));
-        mNavItems.add(new ModuleItemModel("Clump Reading", "0 out of 4 submodules completed", R.drawable.ic_clump_reading));
-        mNavItems.add(new ModuleItemModel("Reducing Subvocalization", "3 out of 4 submodules completed", R.drawable.ic_reducing_subvocalization));
-        mNavItems.add(new ModuleItemModel("Meta Guiding", "2 out of 4 submodules completed", R.drawable.ic_meta_guiding));
-        mNavItems.add(new ModuleItemModel("Pre-Reading", "1 out of 4 submodules completed", R.drawable.ic_pre_reading));
-        // Populate the Navigation Drawer with options
-        modulePane = root.findViewById(R.id.module_pane);
-        moduleList = root.findViewById(R.id.nav_module_list);
-        ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
-        moduleList.setAdapter(adapter);
-
+                // Populate the Navigation Drawer with options
+                Log.d("checking", mNavItems.toString());
+                ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
+                moduleList.setAdapter(adapter);
+            }
+        });
         // Drawer Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 // TODO: navigate to fragment based on click id
                 switch(position) {
                     case 0:
-                        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-                        navController.navigate(R.id.nav_module_overview);
+                        navController.navigate(R.id.nav_rsvp_overview);
                         break;
                     case 1:
-                        // TODO: navigate to clump reader fragment
+//                        navController.navigate(R.id.nav_module_overview);
                         break;
                 }
 
@@ -159,6 +129,9 @@ public class LearnFragment extends Fragment {
         void onResponse(Object response);
     }
 
+    /**
+     * Query the DB for learning modules. If no connection can be established, use the default data
+     */
     private void getApiData(@NonNull LayoutInflater inflater, ViewGroup container, ResponseCallBack responseCallBack)
     {
         // Instantiate the RequestQueue.
@@ -186,12 +159,30 @@ public class LearnFragment extends Fragment {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
                         Log.d("error", error.toString());
+                        // Load the default data from shared preferences
+                        spinner.setVisibility(View.GONE);
+                        modulesView.setVisibility(View.VISIBLE);
+                        useDefaultData();
                     }
                 });
 
         // Add the request to the RequestQueue.
         queue.add(jsonArrayRequest);
+    }
+
+    /**
+     * Populates the learning module list with default data.
+     */
+    private void useDefaultData() {
+        //TODO use shared preferences to populate list using data stored locally on the device
+        mNavItems.add(new ModuleItemModel("Rapid Serial Visual Presentation", "1 out of 4 submodules completed", R.drawable.ic_rsvp));
+        mNavItems.add(new ModuleItemModel("Clump Reading", "0 out of 4 submodules completed", R.drawable.ic_clump_reading));
+        mNavItems.add(new ModuleItemModel("Reducing Subvocalization", "3 out of 4 submodules completed", R.drawable.ic_reducing_subvocalization));
+        mNavItems.add(new ModuleItemModel("Meta Guiding", "2 out of 4 submodules completed", R.drawable.ic_meta_guiding));
+        mNavItems.add(new ModuleItemModel("Pre-Reading", "1 out of 4 submodules completed", R.drawable.ic_pre_reading));
+        // Populate the Navigation Drawer with options
+        ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
+        moduleList.setAdapter(adapter);
     }
 }
