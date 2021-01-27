@@ -49,11 +49,12 @@
         tools:layout="@layout/fragment_terms_and_conditions" />
 
     <fragment
-        android:id="@+id/nav_rsvp_overview"
-        android:name="com.example.pellego.ui.rsvp.RsvpOverviewFragment"
+        android:id="@+id/nav_module_overview"
+        android:name="com.example.pellego.ui.learn.ModuleOverviewFragment"
         android:label="@string/title_technique"
         tools:layout="@layout/fragment_module_overview"
         />
+
 
     <fragment
         android:id="@+id/nav_rsvp_intro"

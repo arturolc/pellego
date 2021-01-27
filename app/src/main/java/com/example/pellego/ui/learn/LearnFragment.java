@@ -110,7 +110,7 @@ public class LearnFragment extends Fragment {
                 // TODO: navigate to fragment based on click id
                 switch(position) {
                     case 0:
-                        navController.navigate(R.id.nav_rsvp_overview);
+                        navController.navigate(R.id.nav_module_overview);
                         break;
                     case 1:
 //                        navController.navigate(R.id.nav_module_overview);

@@ -1,5 +1,4 @@
-package com.example.pellego.ui.rsvp;
-
+package com.example.pellego.ui.learn;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +21,8 @@ import com.example.pellego.R;
 import com.example.pellego.ui.learn.LearnViewModel;
 import com.example.pellego.ui.learn.ModuleItemModel;
 import com.example.pellego.ui.learn.ModuleListAdapter;
+import com.example.pellego.ui.rsvp.RsvpModuleFragment;
+import com.example.pellego.ui.rsvp.RsvpViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
  of the technique.
  **********************************************/
 
-public class RsvpOverviewFragment extends Fragment  {
+public class ModuleOverviewFragment extends Fragment  {
 
     private RsvpViewModel rsvpViewModel;
     ArrayList<ModuleItemModel> mNavItems;
@@ -67,7 +68,7 @@ public class RsvpOverviewFragment extends Fragment  {
         moduleList = root.findViewById(R.id.nav_module_list);
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
-        RsvpOverviewFragment rsvpOverviewFragment = new RsvpOverviewFragment();
+        com.example.pellego.ui.rsvp.RsvpOverviewFragment rsvpOverviewFragment = new com.example.pellego.ui.rsvp.RsvpOverviewFragment();
         modulesView = root.findViewById(R.id.nav_module_overview);
         modulesView.setVisibility(View.VISIBLE);
 
@@ -107,7 +108,7 @@ public class RsvpOverviewFragment extends Fragment  {
                 fragmentTransaction.commit();
             }
         });
-        
+
         return root;
     }
 

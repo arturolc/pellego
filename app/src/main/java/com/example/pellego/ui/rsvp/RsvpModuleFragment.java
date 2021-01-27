@@ -1,10 +1,12 @@
 package com.example.pellego.ui.rsvp;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
@@ -41,11 +44,13 @@ public class RsvpModuleFragment extends Fragment {
     private static AsyncUpdateText asyncUpdateText;
     private String content;
     private RsvpViewModel rsvpViewModel;
+    private FragmentActivity currentActivity;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         wpm = Integer.parseInt(getArguments().getString("wpm"));
         difficulty = getArguments().getString("difficulty");
+        currentActivity = getActivity();
         rsvpViewModel =
                 new ViewModelProvider(requireActivity()).get(RsvpViewModel.class);
         settingsViewModel =
@@ -114,7 +119,7 @@ public class RsvpModuleFragment extends Fragment {
             for (String word : words) {
                 rsvp_text.setText(word);
                 // Verify that user has not navigated away from the RSVP fragment
-                NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                NavHostFragment navHostFragment = (NavHostFragment) currentActivity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
                 if (!navHostFragment.getChildFragmentManager().getFragments().get(0).toString().contains("RsvpModuleFragment")) {
                     cancel(true);
                     return 0;
@@ -131,12 +136,17 @@ public class RsvpModuleFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Integer result) {
-            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-            Bundle args = new Bundle();
-            args.putString("difficulty", difficulty);
-            args.putString("wpm", String.valueOf(wpm));
-            args.putString("module", "rsvp");
-            navController.navigate(R.id.nav_quiz, args);
+            try {
+                NavController navController = Navigation.findNavController(currentActivity, R.id.nav_host_fragment);
+                Bundle args = new Bundle();
+                args.putString("difficulty", difficulty);
+                args.putString("wpm", String.valueOf(wpm));
+                args.putString("module", "rsvp");
+                navController.navigate(R.id.nav_quiz, args);
+            } catch (Exception e) {
+                Log.d("error" , e.getMessage());
+            }
+
         }
     }
 }
