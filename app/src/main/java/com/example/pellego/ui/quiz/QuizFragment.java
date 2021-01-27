@@ -31,8 +31,6 @@ public class QuizFragment extends Fragment {
 
     private QuizViewModel quizViewModel;
     private ListView moduleList;
-    private RelativeLayout modulePane;
-    private String difficulty;
     private ArrayList<QuizQuestionModel> mNavItems;
     NavController navController;
 
@@ -61,7 +59,6 @@ public class QuizFragment extends Fragment {
         mNavItems = quizViewModel.getNextAnswers();
 
         // Populate the Navigation Drawer with options
-        modulePane = root.findViewById(R.id.question_pane);
         moduleList = root.findViewById(R.id.nav_question_list);
         QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
@@ -89,7 +86,6 @@ public class QuizFragment extends Fragment {
                 ((TextView) root.findViewById(R.id.text_quiz_question)).setText(quizViewModel.getNextQuestion());
                 mNavItems = quizViewModel.getNextAnswers();
                 // Populate the Navigation Drawer with options
-                modulePane = root.findViewById(R.id.question_pane);
                 moduleList = root.findViewById(R.id.nav_question_list);
                 QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems);
                 moduleList.setAdapter(adapter);

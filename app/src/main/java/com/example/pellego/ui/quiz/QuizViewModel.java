@@ -97,27 +97,6 @@ public class QuizViewModel extends ViewModel {
         return mText;
     }
 
-    public Fragment getModuleFragment() {
-        switch (module) {
-            case "rsvp":
-                return new RsvpModuleFragment();
-            case "clump":
-                return new ClumpReadingFragment();
-            default:
-                return new LearnFragment();
-        }
-    }
-
-    public String getModuleTag() {
-        switch (module) {
-            case "rsvp":
-                return "RsvpModuleFragment";
-            case "clump":
-                return "ClumpReadingFragment";
-            default:
-                return "";
-        }
-    }
 
     public void clear() {
         mText = new MutableLiveData<>();
@@ -131,6 +110,7 @@ public class QuizViewModel extends ViewModel {
 
     public void populateQuestionBank() {
         this.questions = new ArrayList<>();
+        // TODO: query DB for quiz questions based on learning module and difficulty
         switch(this.difficulty) {
             case "Beginner Submodule":
                 this.questions.add(new QuizQuestion("What city did they go to for their summer vacation?", new ArrayList<String>(

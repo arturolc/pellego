@@ -1,6 +1,5 @@
-package com.example.pellego.ui.rsvp;
+package com.example.pellego.ui.module;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,9 @@ import com.example.pellego.R;
 /***********************************************
  *  Chris Bordoy
  *
- *  The RSVP Intro Pager Adapter
+ *  The Module Intro Pager Adapter
  */
-public class RsvpIntroPagerAdapter extends RecyclerView.Adapter<RsvpIntroPagerAdapter.RsvpIntroViewHolder>{
+public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPagerAdapter.RsvpIntroViewHolder>{
 
     //color and icons
     int[][] color_icon_matrix = new int[][] {
