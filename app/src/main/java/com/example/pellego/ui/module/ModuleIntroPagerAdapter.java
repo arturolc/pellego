@@ -16,7 +16,7 @@ import com.example.pellego.R;
  *
  *  The Module Intro Pager Adapter
  */
-public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPagerAdapter.RsvpIntroViewHolder>{
+public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPagerAdapter.ModuleIntroViewHolder>{
 
     //color and icons
     int[][] color_icon_matrix = new int[][] {
@@ -36,12 +36,12 @@ public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPag
 
     @NonNull
     @Override
-    public RsvpIntroViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new RsvpIntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_page, parent, false));
+    public ModuleIntroViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ModuleIntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_page, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RsvpIntroViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ModuleIntroViewHolder holder, int position) {
         holder.header_text_view.setText(text[position][0]);
         holder.description_text_view.setText(text[position][1]);
         holder.container.setBackgroundResource(color_icon_matrix[position][0]);
@@ -53,12 +53,12 @@ public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPag
     }
 
     //TODO: Add finish button to last slide that navigates back to RSVP submodules
-    public class RsvpIntroViewHolder extends RecyclerView.ViewHolder {
+    public class ModuleIntroViewHolder extends RecyclerView.ViewHolder {
         TextView header_text_view;
         TextView description_text_view;
         RelativeLayout container;
 
-        public RsvpIntroViewHolder(@NonNull View itemView) {
+        public ModuleIntroViewHolder(@NonNull View itemView) {
             super(itemView);
             header_text_view = (TextView)itemView.findViewById(R.id.header_text_view);
             description_text_view = (TextView)itemView.findViewById(R.id.description_text_view);

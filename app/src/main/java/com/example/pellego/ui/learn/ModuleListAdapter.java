@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pellego.R;
+import com.example.pellego.ui.module.ModuleItemModel;
 
 import java.util.ArrayList;
 

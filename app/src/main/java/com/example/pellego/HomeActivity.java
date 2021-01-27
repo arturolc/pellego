@@ -17,7 +17,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
-//import com.example.pellego.ui.rsvp.RsvpIntroFragment;
+//import com.example.pellego.ui.module.RsvpIntroFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 

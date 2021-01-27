@@ -1,4 +1,4 @@
-package com.example.pellego.ui.rsvp;
+package com.example.pellego.ui.module;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,9 +21,9 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 /***************************************************
  *  Chris Bordoy
  *
- *  The RSVP Introduction Fragment
+ *  The Module Introduction Fragment
  **************************************************/
-public class RsvpIntroFragment extends Fragment {
+public class ModuleIntroFragment extends Fragment {
     private ModuleViewModel moduleViewModel;
     RelativeLayout parent_view;
     ViewPager2 viewPager2;
@@ -32,8 +32,8 @@ public class RsvpIntroFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         moduleViewModel =
-                new ViewModelProvider(this).get(ModuleViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_rsvp_intro, container, false);
+                new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_module_intro, container, false);
 
         dotsIndicator = root.findViewById(R.id.dots_indicator);
         viewPager2 = root.findViewById(R.id.view_pager);

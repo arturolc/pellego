@@ -1,17 +1,9 @@
 package com.example.pellego.ui.quiz;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.pellego.R;
-import com.example.pellego.ui.clumpReading.ClumpReadingFragment;
-import com.example.pellego.ui.learn.LearnFragment;
-import com.example.pellego.ui.learn.ModuleItemModel;
-import com.example.pellego.ui.rsvp.RsvpModuleFragment;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 

@@ -11,19 +11,23 @@ import androidx.lifecycle.ViewModel;
  **********************************************/
 public class ModuleViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
     public boolean showDialog;
-    private String moduleTitle;
+    private MutableLiveData<String> moduleTitle;
     private String moduleDescription;
     private int intro_id;
     private int module_id;
+    private String introMessages[];
 
-    public String getModuleTitle() {
+    public MutableLiveData<String> getModuleTitle() {
         return moduleTitle;
     }
 
-    public void setModuleTitle(String moduleTitle) {
+    public void setModuleTitle(MutableLiveData<String> moduleTitle) {
         this.moduleTitle = moduleTitle;
+    }
+
+    public void setIntroMessages() {
+
     }
 
     public String getModuleDescription() {
@@ -51,33 +55,30 @@ public class ModuleViewModel extends ViewModel {
     }
 
     public ModuleViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("Rapid Serial Visualization");
         showDialog = false;
-        moduleTitle = "";
+        moduleTitle = new MutableLiveData<>();
         moduleDescription = "";
         intro_id = -1;
         module_id = -1;
     }
 
     public void clear() {
-        mText = new MutableLiveData<>();
-        mText.setValue("Rapid Serial Visualization");
         showDialog = false;
-        moduleTitle = "";
+        moduleTitle = new MutableLiveData<>();
         moduleDescription = "";
         intro_id = -1;
         module_id = -1;
     }
 
     public void setViewModelVars(String title, String descr, int intro_id, int module_id) {
-        this.moduleTitle = title;
+        this.moduleTitle = new MutableLiveData<>(title);
         this.moduleDescription = descr;
         this.intro_id = intro_id;
         this.module_id = module_id;
     }
 
     public LiveData<String> getText() {
-        return mText;
+
+        return  moduleTitle;
     }
 }

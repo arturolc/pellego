@@ -16,7 +16,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.pellego.R;
-import com.example.pellego.ui.learn.ModuleItemModel;
 import com.example.pellego.ui.learn.ModuleListAdapter;
 import com.google.android.material.navigation.NavigationView;
 
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 /**********************************************
  Eli Hebdon
 
- Rapid Serial Visual Representation Overview fragment that
+ Module Overview fragment that
  displays the technique submodules and gives a brief overview
  of the technique.
  **********************************************/
@@ -51,10 +50,10 @@ public class ModuleOverviewFragment extends Fragment  {
         });
         mNavItems = new ArrayList<>();
         // Add nav items to the list of submodules
-        mNavItems.add(new ModuleItemModel("Intro", "Learn the benefits", R.drawable.ic_checked_circle));
-        mNavItems.add(new ModuleItemModel("Beginner", "Demonstrate basic skills", R.drawable.ic_empty_circle));
-        mNavItems.add(new ModuleItemModel("Intermediate", "Show some improvement", R.drawable.ic_empty_circle));
-        mNavItems.add(new ModuleItemModel("Advanced", "Prove your mastery", R.drawable.ic_empty_circle));
+        mNavItems.add(new ModuleItemModel(getResources().getString(R.string.title_module_intro), getResources().getString(R.string.descr_module_intro), R.drawable.ic_checked_circle));
+        mNavItems.add(new ModuleItemModel(getResources().getString(R.string.title_module_beginner), getResources().getString(R.string.descr_module_beginner), R.drawable.ic_empty_circle));
+        mNavItems.add(new ModuleItemModel(getResources().getString(R.string.title_module_intermediate), getResources().getString(R.string.descr_module_intermediate), R.drawable.ic_empty_circle));
+        mNavItems.add(new ModuleItemModel(getResources().getString(R.string.title_module_advanced), getResources().getString(R.string.descr_module_advanced), R.drawable.ic_empty_circle));
         TextView rsvDescription = (TextView) root.findViewById(R.id.text_module_description);
         rsvDescription.setText(moduleViewModel.getModuleDescription());
 

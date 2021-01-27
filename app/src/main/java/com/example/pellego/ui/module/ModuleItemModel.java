@@ -1,9 +1,9 @@
-package com.example.pellego.ui.learn;
+package com.example.pellego.ui.module;
 
 /**********************************************
  Eli Hebdon
 
- Representation of a single learning module list item
+ Class representation of a module list item
  **********************************************/
 public class ModuleItemModel {
     private String mTitle;
