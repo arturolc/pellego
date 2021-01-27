@@ -1,6 +1,5 @@
 package com.example.pellego.ui.rsvp;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -17,17 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
-import com.example.pellego.ui.quiz.QuizFragment;
+import com.example.pellego.ui.learn.ModuleViewModel;
 import com.example.pellego.ui.settings.SettingsViewModel;
 
 /**********************************************
@@ -43,7 +39,7 @@ public class RsvpModuleFragment extends Fragment {
     public String difficulty;
     private static AsyncUpdateText asyncUpdateText;
     private String content;
-    private RsvpViewModel rsvpViewModel;
+    private ModuleViewModel moduleViewModel;
     private FragmentActivity currentActivity;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -51,8 +47,8 @@ public class RsvpModuleFragment extends Fragment {
         wpm = Integer.parseInt(getArguments().getString("wpm"));
         difficulty = getArguments().getString("difficulty");
         currentActivity = getActivity();
-        rsvpViewModel =
-                new ViewModelProvider(requireActivity()).get(RsvpViewModel.class);
+        moduleViewModel =
+                new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         settingsViewModel =
                 new ViewModelProvider(this).get(SettingsViewModel.class);
 
@@ -77,7 +73,7 @@ public class RsvpModuleFragment extends Fragment {
                 break;
         }
         // Only show popup if user navigated to the Rsvp module
-       if (rsvpViewModel.showDialog) showPopupDialog();
+       if (moduleViewModel.showDialog) showPopupDialog();
         return root;
     }
 
@@ -97,7 +93,7 @@ public class RsvpModuleFragment extends Fragment {
             }
         });
         dialog.show();
-        rsvpViewModel.showDialog = false;
+        moduleViewModel.showDialog = false;
     }
 
     /**

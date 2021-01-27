@@ -10,18 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
-import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
-import com.example.pellego.ui.learn.LearnFragment;
-import com.example.pellego.ui.rsvp.RsvpModuleFragment;
-import com.example.pellego.ui.rsvp.RsvpViewModel;
+import com.example.pellego.ui.learn.ModuleViewModel;
 
 /**********************************************
  Eli Hebdon
@@ -31,14 +26,14 @@ import com.example.pellego.ui.rsvp.RsvpViewModel;
 public class QuizResultFragment extends Fragment {
 
     private QuizViewModel quizViewModel;
-    private RsvpViewModel rsvpViewModel;
+    private ModuleViewModel moduleViewModel;
     private NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         this.quizViewModel = new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
-        rsvpViewModel =
-                new ViewModelProvider(requireActivity()).get(RsvpViewModel.class);
+        moduleViewModel =
+                new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         View root = inflater.inflate(R.layout.fragment_quiz_results, container, false);
         final TextView textView = root.findViewById(R.id.title_results);
@@ -49,6 +44,8 @@ public class QuizResultFragment extends Fragment {
             }
         });
 
+        // TODO: POST quiz result data
+
         // Display score
         TextView txt = root.findViewById(R.id.text_results);
         txt.setText(quizViewModel.getFinalScore());
@@ -57,6 +54,7 @@ public class QuizResultFragment extends Fragment {
         msg.setText(quizViewModel.getFinalMessage());
 
         // Setup button listeners
+        // retry the current module
         Button retry = root.findViewById(R.id.button_results_retry);
         retry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +79,7 @@ public class QuizResultFragment extends Fragment {
             public void onClick(View view)
             {
                 quizViewModel.clear();
-                rsvpViewModel.clear();
+                moduleViewModel.clear();
                 navController.navigate(R.id.nav_learn);
                 return;
             }

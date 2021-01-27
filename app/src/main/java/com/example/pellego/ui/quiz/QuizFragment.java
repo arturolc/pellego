@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,20 +13,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
-import com.example.pellego.ui.learn.LearnFragment;
-import com.example.pellego.ui.learn.LearnViewModel;
-import com.example.pellego.ui.learn.ModuleItemModel;
-import com.example.pellego.ui.learn.ModuleListAdapter;
-import com.example.pellego.ui.rsvp.RsvpModuleFragment;
-import com.example.pellego.ui.rsvp.RsvpOverviewFragment;
 
 import java.util.ArrayList;
 

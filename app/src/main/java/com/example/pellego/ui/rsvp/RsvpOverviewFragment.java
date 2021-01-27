@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +18,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.pellego.R;
-import com.example.pellego.ui.learn.LearnViewModel;
+import com.example.pellego.ui.learn.ModuleViewModel;
 import com.example.pellego.ui.learn.ModuleItemModel;
 import com.example.pellego.ui.learn.ModuleListAdapter;
 import com.google.android.material.navigation.NavigationView;
@@ -36,19 +35,18 @@ import java.util.ArrayList;
 
 public class RsvpOverviewFragment extends Fragment  {
 
-    private RsvpViewModel rsvpViewModel;
+    private ModuleViewModel moduleViewModel;
     ArrayList<ModuleItemModel> mNavItems;
-    private LearnViewModel learnViewModel;
     private ListView moduleList;
     NavigationView modulesView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        rsvpViewModel =
-                new ViewModelProvider(requireActivity()).get(RsvpViewModel.class);
+        moduleViewModel =
+                new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         View root = inflater.inflate(R.layout.fragment_module_overview, container, false);
         final TextView textView = root.findViewById(R.id.title_module_overview);
-        rsvpViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        moduleViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(R.string.title_rsvp);
@@ -80,7 +78,7 @@ public class RsvpOverviewFragment extends Fragment  {
 
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 Bundle args = new Bundle();
-                rsvpViewModel.showDialog = true;
+                moduleViewModel.showDialog = true;
                 switch(position) {
                     case 0:
                         navController.navigate(R.id.nav_rsvp_intro);
@@ -88,7 +86,7 @@ public class RsvpOverviewFragment extends Fragment  {
                     case 1:
                         args.putString("difficulty", "Beginner Submodule");
                         args.putString("wpm", "120");
-                        navController.navigate(R.id.nav_rsvp_beginner, args);
+                        navController.navigate(R.id.nav_rsvp_module, args);
                         break;
                     case 2:
                         args.putString("difficulty", "Intermediate Submodule");

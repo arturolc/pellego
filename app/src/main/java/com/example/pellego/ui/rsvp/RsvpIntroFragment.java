@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.pellego.R;
 
+import com.example.pellego.ui.learn.ModuleViewModel;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 
@@ -22,15 +23,15 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
  *  The RSVP Introduction Fragment
  **************************************************/
 public class RsvpIntroFragment extends Fragment {
-    private RsvpViewModel rsvpViewModel;
+    private ModuleViewModel moduleViewModel;
     RelativeLayout parent_view;
     ViewPager2 viewPager2;
     DotsIndicator dotsIndicator;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        rsvpViewModel =
-                new ViewModelProvider(this).get(RsvpViewModel.class);
+        moduleViewModel =
+                new ViewModelProvider(this).get(ModuleViewModel.class);
         View root = inflater.inflate(R.layout.fragment_rsvp_intro, container, false);
 
         dotsIndicator = root.findViewById(R.id.dots_indicator);

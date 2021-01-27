@@ -1,7 +1,5 @@
 package com.example.pellego.ui.learn;
 
-import android.app.ProgressDialog;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,14 +8,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -28,13 +23,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
-import com.example.pellego.ui.clumpReading.ClumpReadingFragment;
-import com.example.pellego.ui.rsvp.RsvpOverviewFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -52,7 +42,7 @@ import static androidx.navigation.Navigation.findNavController;
  **********************************************/
 public class LearnFragment extends Fragment {
 
-    private LearnViewModel learnViewModel;
+    private ModuleViewModel moduleViewModel;
     private ListView moduleList;
     private ArrayList<ModuleItemModel> mNavItems;
     ProgressBar spinner;
@@ -62,18 +52,13 @@ public class LearnFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         mNavItems = new ArrayList<>();
 
-        learnViewModel =
-                new ViewModelProvider(this).get(LearnViewModel.class);
+        moduleViewModel =
+                new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_learn, container, false);
         final TextView textView = root.findViewById(R.id.text_learn);
+        textView.setText(R.string.title_learn);
         moduleList = root.findViewById(R.id.nav_module_list);
-        learnViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
 
         spinner = root.findViewById(R.id.loading_spinner);
         modulesView = root.findViewById(R.id.nav_module_overview);
@@ -109,14 +94,15 @@ public class LearnFragment extends Fragment {
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 // TODO: navigate to fragment based on click id
                 switch(position) {
+                    // rsvp
                     case 0:
+                        moduleViewModel.setViewModelVars(getResources().getString(R.string.title_rsvp), getResources().getString(R.string.description_rsvp), R.id.nav_rsvp_intro, R.id.nav_rsvp_module);
                         navController.navigate(R.id.nav_module_overview);
                         break;
                     case 1:
 //                        navController.navigate(R.id.nav_module_overview);
                         break;
                 }
-
             }
         });
         return root;
@@ -185,4 +171,6 @@ public class LearnFragment extends Fragment {
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
     }
+
+
 }
