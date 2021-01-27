@@ -13,7 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.pellego.R;
 
-import com.example.pellego.ui.learn.ModuleViewModel;
+import com.example.pellego.ui.module.ModuleViewModel;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 

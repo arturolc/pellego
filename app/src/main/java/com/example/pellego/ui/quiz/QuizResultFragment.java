@@ -16,7 +16,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.pellego.R;
-import com.example.pellego.ui.learn.ModuleViewModel;
+import com.example.pellego.ui.module.ModuleViewModel;
 
 /**********************************************
  Eli Hebdon

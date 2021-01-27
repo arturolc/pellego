@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/nav_module_overview"
-        android:name="com.example.pellego.ui.learn.ModuleOverviewFragment"
+        android:name="com.example.pellego.ui.module.ModuleOverviewFragment"
         android:label="@string/title_technique"
         tools:layout="@layout/fragment_module_overview"
         />

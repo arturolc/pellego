@@ -1,4 +1,4 @@
-package com.example.pellego.ui.learn;
+package com.example.pellego.ui.module;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

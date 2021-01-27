@@ -11,9 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pellego.R;
+import com.example.pellego.ui.module.ModuleViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -94,8 +93,7 @@ public class LearnFragment extends Fragment {
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 // TODO: navigate to fragment based on click id
                 switch(position) {
-                    // rsvp
-                    case 0:
+                    case 0: // rsvp
                         moduleViewModel.setViewModelVars(getResources().getString(R.string.title_rsvp), getResources().getString(R.string.description_rsvp), R.id.nav_rsvp_intro, R.id.nav_rsvp_module);
                         navController.navigate(R.id.nav_module_overview);
                         break;
