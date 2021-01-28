@@ -23,8 +23,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pellego.R;
-import com.example.pellego.ui.module.ModuleItemModel;
+import com.example.pellego.ui.module.ModuleListItemModel;
 import com.example.pellego.ui.module.ModuleViewModel;
+import com.example.pellego.ui.module.overview.ModuleListAdapter;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -44,7 +45,7 @@ public class LearnFragment extends Fragment {
 
     private ModuleViewModel moduleViewModel;
     private ListView moduleList;
-    private ArrayList<ModuleItemModel> mNavItems;
+    private ArrayList<ModuleListItemModel> mNavItems;
     ProgressBar spinner;
     NavigationView modulesView;
 
@@ -137,7 +138,7 @@ public class LearnFragment extends Fragment {
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject item = response.getJSONObject(i);
-                                mNavItems.add(new ModuleItemModel(item.get("Name").toString()));
+                                mNavItems.add(new ModuleListItemModel(item.get("Name").toString()));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -164,11 +165,11 @@ public class LearnFragment extends Fragment {
      */
     private void useDefaultData() {
         //TODO use shared preferences to populate list using data stored locally on the device
-        mNavItems.add(new ModuleItemModel("Rapid Serial Visual Presentation", "1 out of 4 submodules completed", R.drawable.ic_rsvp));
-        mNavItems.add(new ModuleItemModel("Clump Reading", "0 out of 4 submodules completed", R.drawable.ic_clump_reading));
-        mNavItems.add(new ModuleItemModel("Reducing Subvocalization", "3 out of 4 submodules completed", R.drawable.ic_reducing_subvocalization));
-        mNavItems.add(new ModuleItemModel("Meta Guiding", "2 out of 4 submodules completed", R.drawable.ic_meta_guiding));
-        mNavItems.add(new ModuleItemModel("Pre-Reading", "1 out of 4 submodules completed", R.drawable.ic_pre_reading));
+        mNavItems.add(new ModuleListItemModel("Rapid Serial Visual Presentation", "1 out of 4 submodules completed", R.drawable.ic_rsvp));
+        mNavItems.add(new ModuleListItemModel("Clump Reading", "0 out of 4 submodules completed", R.drawable.ic_clump_reading));
+        mNavItems.add(new ModuleListItemModel("Reducing Subvocalization", "3 out of 4 submodules completed", R.drawable.ic_reducing_subvocalization));
+        mNavItems.add(new ModuleListItemModel("Meta Guiding", "2 out of 4 submodules completed", R.drawable.ic_meta_guiding));
+        mNavItems.add(new ModuleListItemModel("Pre-Reading", "1 out of 4 submodules completed", R.drawable.ic_pre_reading));
         // Populate the Navigation Drawer with options
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);

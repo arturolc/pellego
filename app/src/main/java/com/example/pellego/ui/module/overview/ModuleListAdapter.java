@@ -1,4 +1,4 @@
-package com.example.pellego.ui.learn;
+package com.example.pellego.ui.module.overview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pellego.R;
-import com.example.pellego.ui.module.ModuleItemModel;
+import com.example.pellego.ui.module.ModuleListItemModel;
+
 
 import java.util.ArrayList;
 
@@ -23,9 +24,9 @@ import java.util.ArrayList;
 public class ModuleListAdapter extends BaseAdapter {
 
     Context mContext;
-    ArrayList<ModuleItemModel> mNavItems;
+    ArrayList<ModuleListItemModel> mNavItems;
 
-    public ModuleListAdapter(Context context, ArrayList<ModuleItemModel> navItems) {
+    public ModuleListAdapter(Context context, ArrayList<ModuleListItemModel> navItems) {
         mContext = context;
         mNavItems = navItems;
     }
