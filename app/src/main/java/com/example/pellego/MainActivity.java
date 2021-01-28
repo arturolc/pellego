@@ -10,10 +10,10 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import com.amplifyframework.AmplifyException;
-import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
-import com.amplifyframework.core.Amplify;
+//
+//import com.amplifyframework.AmplifyException;
+//import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
+//import com.amplifyframework.core.Amplify;
 
 /**********************************************
  Eli Hebdon

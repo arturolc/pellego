@@ -1,4 +1,4 @@
-package com.example.pellego.ui.module;
+package com.example.pellego.ui.module.intro;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.pellego.R;
 
 import com.example.pellego.ui.module.ModuleViewModel;
-import com.example.pellego.ui.module.ModuleIntroPagerAdapter;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 
@@ -40,7 +39,9 @@ public class ModuleIntroFragment extends Fragment {
         parent_view = root.findViewById(R.id.parent_view);
 
         //set data
-        viewPager2.setAdapter(new ModuleIntroPagerAdapter());
+        ModuleIntroPagerAdapter pagerAdapter = new ModuleIntroPagerAdapter();
+        pagerAdapter.setContentAndHeaders(moduleViewModel.getIntro_header_id(), moduleViewModel.getIntro_content_id(), getResources());
+        viewPager2.setAdapter(pagerAdapter);
         dotsIndicator.setViewPager2(viewPager2);
         viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
 

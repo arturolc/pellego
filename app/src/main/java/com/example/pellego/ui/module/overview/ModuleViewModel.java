@@ -15,8 +15,25 @@ public class ModuleViewModel extends ViewModel {
     private MutableLiveData<String> moduleTitle;
     private String moduleDescription;
     private int intro_id;
+    private int intro_header_id;
+    private int intro_content_id;
     private int module_id;
-    private String introMessages[];
+
+    public int getIntro_header_id() {
+        return intro_header_id;
+    }
+
+    public void setIntro_header_id(int intro_header_id) {
+        this.intro_header_id = intro_header_id;
+    }
+
+    public int getIntro_content_id() {
+        return intro_content_id;
+    }
+
+    public void setIntro_content_id(int intro_content_id) {
+        this.intro_content_id = intro_content_id;
+    }
 
     public MutableLiveData<String> getModuleTitle() {
         return moduleTitle;
@@ -70,10 +87,12 @@ public class ModuleViewModel extends ViewModel {
         module_id = -1;
     }
 
-    public void setViewModelVars(String title, String descr, int intro_id, int module_id) {
+    public void setViewModelVars(String title, String descr, int intro_id, int intro_content_id, int intro_header_id, int module_id) {
         this.moduleTitle = new MutableLiveData<>(title);
         this.moduleDescription = descr;
         this.intro_id = intro_id;
+        this.intro_content_id = intro_content_id;
+        this.intro_header_id = intro_header_id;
         this.module_id = module_id;
     }
 
