@@ -104,7 +104,7 @@ public class QuizViewModel extends ViewModel {
         this.questions = new ArrayList<>();
         // TODO: query DB for quiz questions based on learning module and difficulty
         switch(this.difficulty) {
-            case "Beginner Submodule":
+            default:
                 this.questions.add(new QuizQuestion("What city did they go to for their summer vacation?", new ArrayList<String>(
                         Arrays.asList("Louvre",
                                 "Latin",

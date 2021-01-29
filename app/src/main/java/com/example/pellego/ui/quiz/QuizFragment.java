@@ -41,6 +41,7 @@ public class QuizFragment extends Fragment {
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         quizViewModel =
                 new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
+        quizViewModel.clear();
         View root = inflater.inflate(R.layout.fragment_quiz, container, false);
         final TextView textView = root.findViewById(R.id.title_quiz);
         quizViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
