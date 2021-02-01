@@ -72,9 +72,19 @@
             android:text="Forgot Password?"
             android:textStyle="bold" />
 
+
         <Space
             android:layout_width="match_parent"
-            android:layout_height="141dp" />
+            android:layout_height="67dp" />
+
+        <Button
+            android:id="@+id/signInGoogleBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign In with Google"
+            android:textColor="#FFFFFF"
+            android:visibility="visible"
+            android:onClick="googleSignIn"/>
 
         <TextView
             android:id="@+id/textView13"

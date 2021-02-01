@@ -14,6 +14,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pellego" >
+
+        <activity
+            android:name="com.amazonaws.mobileconnectors.cognitoauth.activities.CustomTabsRedirectActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https://development241bbeea-241bbeea-dev.auth.us-west-2.amazoncognito.com/oauth2/idpresponse" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".VerifyActivity" >
         </activity>
         <activity android:name=".RegisterActivity" />

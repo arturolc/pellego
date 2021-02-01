@@ -18,7 +18,7 @@
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
-      "lastPushTimeStamp": "2021-01-25T23:46:55.964Z",
+      "lastPushTimeStamp": "2021-02-01T07:32:09.736Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-development-dev-143853-deployment/amplify-cfn-templates/auth/development241bbeea-cloudformation-template.yml",
         "logicalId": "authdevelopment241bbeea"
