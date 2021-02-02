@@ -20,6 +20,10 @@
             "Region": "us-west-2"
         }
     },
+    "GoogleSignIn": {
+        "Permissions": "email,profile,openid",
+        "ClientId-WebApp": "342167975084-8qtnm1pgjtecmdsctmcifa94ddul09lg.apps.googleusercontent.com"
+    },
     "Auth": {
         "Default": {
             "OAuth": {
@@ -29,7 +33,6 @@
                 "SignInRedirectURI": "pellego://com.example.pellego/login/",
                 "SignOutRedirectURI": "pellego://com.example.pellego/logout/",
                 "Scopes": [
-                    "phone",
                     "email",
                     "openid",
                     "profile",

@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Root Stack for AWS Amplify CLI",
+  "Description": "Root Stack for AWS Amplify Console",
   "Parameters": {
     "DeploymentBucketName": {
       "Description": "Name of the common deployment bucket provided by the parent stack",
@@ -125,11 +125,14 @@
           "permissions": "",
           "dependsOn": "",
           "thirdPartyAuth": true,
-          "authProviders": "",
+          "authProviders": "accounts.google.com",
           "userPoolGroups": false,
           "adminQueries": false,
-          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"pellego://com.example.pellego/login/\"],\"LogoutURLs\":[\"pellego://com.example.pellego/logout/\"]}",
-          "hostedUIProviderCreds": "[]",
+          "audiences": "342167975084-8qtnm1pgjtecmdsctmcifa94ddul09lg.apps.googleusercontent.com,342167975084-roniukv62dhpbo9c79b88ae0mjqn3e1e.apps.googleusercontent.com",
+          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"pellego://com.example.pellego/login/\"],\"LogoutURLs\":[\"pellego://com.example.pellego/logout/\"]}",
+          "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"342167975084-8qtnm1pgjtecmdsctmcifa94ddul09lg.apps.googleusercontent.com\",\"client_secret\":\"E8VecRuPZ3ktOdovjH86tHZQ\"}]",
+          "googleClientId": "342167975084-8qtnm1pgjtecmdsctmcifa94ddul09lg.apps.googleusercontent.com",
+          "googleAndroid": "342167975084-roniukv62dhpbo9c79b88ae0mjqn3e1e.apps.googleusercontent.com",
           "env": "dev"
         }
       }

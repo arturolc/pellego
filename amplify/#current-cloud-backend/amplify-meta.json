@@ -18,7 +18,7 @@
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
-      "lastPushTimeStamp": "2021-01-25T23:46:55.964Z",
+      "lastPushTimeStamp": "2021-02-01T22:35:19.143Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-development-dev-143853-deployment/amplify-cfn-templates/auth/development241bbeea-cloudformation-template.yml",
         "logicalId": "authdevelopment241bbeea"
@@ -31,10 +31,12 @@
         "HostedUIDomain": "development241bbeea-241bbeea-dev",
         "IdentityPoolId": "us-west-2:94cea1c8-6c99-42f4-8bda-96d3c15e5066",
         "IdentityPoolName": "development241bbeea_identitypool_241bbeea__dev",
-        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"pellego://com.example.pellego/login/\"],\"LogoutURLs\":[\"pellego://com.example.pellego/logout/\"]}",
-        "UserPoolName": "development241bbeea_userpool_241bbeea"
+        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"pellego://com.example.pellego/login/\"],\"LogoutURLs\":[\"pellego://com.example.pellego/logout/\"]}",
+        "UserPoolName": "development241bbeea_userpool_241bbeea",
+        "GoogleWebClient": "342167975084-8qtnm1pgjtecmdsctmcifa94ddul09lg.apps.googleusercontent.com",
+        "GoogleAndroidClient": "342167975084-roniukv62dhpbo9c79b88ae0mjqn3e1e.apps.googleusercontent.com"
       },
-      "lastPushDirHash": "zzYCk6ATDW0/3c7qMpkhtogLZy4="
+      "lastPushDirHash": "mugrrO+vAZDJkljm5TFZABtBlIc="
     }
   }
 }

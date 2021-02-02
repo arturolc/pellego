@@ -13,7 +13,10 @@
     },
     "categories": {
       "auth": {
-        "development241bbeea": {}
+        "development241bbeea": {
+          "googleClientId": "342167975084-8qtnm1pgjtecmdsctmcifa94ddul09lg.apps.googleusercontent.com",
+          "googleAndroid": "342167975084-roniukv62dhpbo9c79b88ae0mjqn3e1e.apps.googleusercontent.com"
+        }
       }
     }
   }
