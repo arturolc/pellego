@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/nav_technique"
-        android:name="com.example.pellego.ui.rsvp.RsvpOverviewFragment"
+        android:name="com.example.pellego.ui.module.overview.ModuleOverviewFragment"
         android:label="@string/title_technique"
         tools:layout="@layout/fragment_terms_and_conditions" />
 
@@ -50,22 +50,34 @@
 
     <fragment
         android:id="@+id/nav_module_overview"
-        android:name="com.example.pellego.ui.rsvp.RsvpOverviewFragment"
+        android:name="com.example.pellego.ui.module.overview.ModuleOverviewFragment"
         android:label="@string/title_technique"
-        tools:layout="@layout/fragment_rsvp_module"
+        tools:layout="@layout/fragment_module_overview"
         />
 
     <fragment
         android:id="@+id/nav_rsvp_intro"
-        android:name="com.example.pellego.ui.rsvp.RsvpIntroFragment"
+        android:name="com.example.pellego.ui.module.intro.ModuleIntroFragment"
         android:label="@string/title_rsvp_intro"
-        tools:layout="@layout/fragment_rsvp_intro" />
+        tools:layout="@layout/fragment_module_intro" />
 
     <fragment
-        android:id="@+id/nav_rsvp_beginner"
+        android:id="@+id/nav_rsvp_module"
         android:name="com.example.pellego.ui.rsvp.RsvpModuleFragment"
-        android:label="@string/title_rsvp_beginner"
+        android:label="@string/title_rsvp"
         tools:layout="@layout/fragment_rsvp_module" />
+
+    <fragment
+        android:id="@+id/nav_metaguiding_intro"
+        android:name="com.example.pellego.ui.module.intro.ModuleIntroFragment"
+        android:label="@string/title_metaguiding_intro"
+        tools:layout="@layout/fragment_module_intro" />
+
+    <fragment
+        android:id="@+id/nav_metaguiding_module"
+        android:name="com.example.pellego.ui.metaguiding.MetaguidingModuleFragment"
+        android:label="@string/title_meta_guiding"
+        tools:layout="@layout/fragment_metaguiding_module" />
 
     <fragment
         android:id="@+id/nav_quiz"
