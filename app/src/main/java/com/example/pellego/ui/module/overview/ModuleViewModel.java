@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 /**********************************************
-    Chris Bordoy
+    Chris Bordoy & Eli Hebdon
 
     The Learn Modules view model
  **********************************************/

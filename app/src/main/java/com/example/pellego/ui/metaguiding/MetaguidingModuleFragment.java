@@ -36,7 +36,8 @@ import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiTh
 /**********************************************
  Eli Hebdon
 
- RSVP module fragment that displays words, one at a time, at 'wpm'
+ Metaguiding fragment that guides users through text with an underlined
+ or highlighted word
  **********************************************/
 public class MetaguidingModuleFragment extends Fragment {
 
@@ -100,7 +101,7 @@ public class MetaguidingModuleFragment extends Fragment {
 
     /**
      *
-     * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
+     * Asynchronously updates the text in the metaguiding fragment at the provided WPM rate
      */
     private class AsyncUpdateText extends AsyncTask<Integer, String, Integer> {
 
