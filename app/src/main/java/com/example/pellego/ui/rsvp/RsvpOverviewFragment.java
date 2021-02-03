@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,7 +27,7 @@ import com.example.pellego.ui.learn.ModuleListAdapter;
 import java.util.ArrayList;
 
 /**********************************************
- Eli Hebdon
+ Eli Hebdon and Chris Bordoy
 
  Rapid Serial Visual Representation Overview fragment that
  displays the technique submodules and gives a brief overview
@@ -81,12 +82,12 @@ public class RsvpOverviewFragment extends Fragment  {
                 rsvpViewModel.showDialog = true;
                 switch(position) {
                     case 0:
-                        navController.navigate(R.id.nav_rsvp_intro);
+                        navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_intro);
                         break;
                     case 1:
                         args.putString("difficulty", "Beginner Submodule");
                         args.putString("wpm", "120");
-                        navController.navigate(R.id.nav_rsvp_beginner, args);
+                        navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_beginner, args);
                         break;
                     case 2:
                         args.putString("difficulty", "Intermediate Submodule");
@@ -110,5 +111,21 @@ public class RsvpOverviewFragment extends Fragment  {
         return root;
     }
 
+
+    //TODO: Need to figure out what the "buttons" are on this overview page
+//    public void onViewCreated(@NonNull View view,  @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//
+//        final NavController navController = Navigation.findNavController(view);
+//
+//        Button button = view.findViewById(R.id.nav_rsvp_intro);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_intro);
+//            }
+//        });
+
+ //   }
 
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/home_layout"
+    android:id="@+id/home_activity_layout"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
     >
@@ -15,19 +15,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-
-    <com.google.android.material.navigation.NavigationView
-        app:itemShapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Nav"
-        android:layout_width="wrap_content"
+    <!--if I change this to a fragmentcontainerview it crashes the app-->
+    <!--saying that there is no navcontroller connected. Interesting-->
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:itemIconTint="@color/white"
-        android:background="@drawable/nav_side_drawer_background"
-        app:itemTextColor="@color/white"
-        android:id="@+id/side_nav_view"
-        android:fitsSystemWindows="false"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu"/>
+        android:layout_weight="2"
+
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
+
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        app:itemShapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Nav"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        app:itemIconTint="@color/white"-->
+<!--        android:background="@drawable/nav_side_drawer_background"-->
+<!--        app:itemTextColor="@color/white"-->
+<!--        android:id="@+id/side_nav_view"-->
+<!--        android:fitsSystemWindows="false"-->
+<!--        app:headerLayout="@layout/nav_header"-->
+<!--        app:menu="@menu/drawer_menu"/>-->
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

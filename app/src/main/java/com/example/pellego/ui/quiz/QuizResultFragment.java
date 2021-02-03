@@ -69,7 +69,7 @@ public class QuizResultFragment extends Fragment {
                 quizViewModel = new QuizViewModel();
                 quizViewModel =
                         new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
-                navController.navigate(R.id.nav_quiz, args);
+                navController.navigate(R.id.action_nav_quiz_results_to_nav_quiz, args);
                 return;
             }
         });
@@ -82,7 +82,7 @@ public class QuizResultFragment extends Fragment {
             {
                 quizViewModel.clear();
                 rsvpViewModel.clear();
-                navController.navigate(R.id.nav_learn);
+                navController.navigate(R.id.action_nav_quiz_results_to_nav_learn);
                 return;
             }
         });

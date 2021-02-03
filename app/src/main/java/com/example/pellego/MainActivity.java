@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                try {
+                //TODO: Uncomment before merging into development
+                /*try {
                     Amplify.addPlugin(new AWSCognitoAuthPlugin());
                     Amplify.configure(getApplicationContext());
                     Log.i("Amplify", "Initialized Amplify");
@@ -57,8 +57,11 @@ public class MainActivity extends AppCompatActivity {
                         error -> {
                             Log.e("AmplifyQuickstart", error.toString());
                         }
-                );
+                );*/
 
+                //TODO: Delete this when merging into Development
+                Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(i);
 
                 finish();
             }

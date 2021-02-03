@@ -136,15 +136,23 @@ public class LearnFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 // TODO: navigate to fragment based on click id
                 switch(position) {
                     case 0:
-                        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-                        navController.navigate(R.id.nav_module_overview);
+                        navController.navigate(R.id.action_nav_learn_to_nav_module_overview);
                         break;
                     case 1:
                         // TODO: navigate to clump reader fragment
                         break;
+                    case 2:
+                        //TODO: navigate to Reducing Subvocalization fragment
+                        break;
+                    case 3:
+                        //TODO: navigate to Meta Guiding fragment
+                        break;
+                    case 4:
+                        //TODO: navigate to Pre-Reading fragment
                 }
 
             }

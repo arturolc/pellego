@@ -43,7 +43,7 @@
         </TextView>
 
         <!-- Here is the inserted layout -->
-        <include layout="@layout/container_submodules"/>
+        <include layout="@layout/container_submodules" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

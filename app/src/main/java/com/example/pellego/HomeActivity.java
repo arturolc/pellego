@@ -38,32 +38,30 @@ public class HomeActivity extends AppCompatActivity {
 
     private String user_name;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_Pellego);
         setContentView(R.layout.activity_home);
-
-        // Set toolbar as action bar
+//
+//        // Set toolbar as action bar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // setup bottom nav and drawer nav menus
+//
+//        // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
-        drawer = findViewById(R.id.home_layout);
+        drawer = findViewById(R.id.home_activity_layout);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_settings, R.id.nav_library, R.id.nav_learn, R.id.nav_progress, R.id.nav_profile, R.id.nav_terms_and_conditions, R.id.nav_sign_out)
-                .setDrawerLayout(drawer)
+                R.id.nav_settings, R.id.nav_library, R.id.nav_learn, R.id.nav_progress,
+                R.id.nav_profile, R.id.nav_terms_and_conditions, R.id.nav_sign_out)
                 .build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        // Attach nav drawer to nav controller
-        NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
-        NavigationUI.setupWithNavController(drawerNavigationView, navController);
-
+         //Attach nav drawer to nav controller
+//        NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
+//        NavigationUI.setupWithNavController(drawerNavigationView, navController);
     }
 
     /**
