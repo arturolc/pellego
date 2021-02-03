@@ -1,4 +1,4 @@
-package com.example.pellego.ui.module;
+package com.example.pellego.ui.module.overview;
 
 /**********************************************
  Eli Hebdon

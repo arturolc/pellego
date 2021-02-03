@@ -23,9 +23,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pellego.R;
-import com.example.pellego.ui.module.ModuleListItemModel;
-import com.example.pellego.ui.module.ModuleViewModel;
 import com.example.pellego.ui.module.overview.ModuleListAdapter;
+import com.example.pellego.ui.module.overview.ModuleListItemModel;
+import com.example.pellego.ui.module.overview.ModuleViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;

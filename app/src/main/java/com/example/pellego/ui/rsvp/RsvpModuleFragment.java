@@ -23,7 +23,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.pellego.R;
-import com.example.pellego.ui.module.ModuleViewModel;
+import com.example.pellego.ui.module.overview.ModuleViewModel;
 import com.example.pellego.ui.settings.SettingsViewModel;
 
 /**********************************************

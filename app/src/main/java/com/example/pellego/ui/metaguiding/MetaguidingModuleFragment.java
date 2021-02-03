@@ -28,7 +28,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.pellego.R;
-import com.example.pellego.ui.module.ModuleViewModel;
+import com.example.pellego.ui.module.overview.ModuleViewModel;
 import com.example.pellego.ui.settings.SettingsViewModel;
 
 import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
@@ -117,7 +117,8 @@ public class MetaguidingModuleFragment extends Fragment {
 
         @Override
         protected Integer doInBackground(Integer... ints) {
-            long delay = (long) (((60.0 / (float) ints[0]) * 1000) * 1.8);
+            // This delay requires some fine tuning because word length varies
+            long delay = (long) (((60.0 / (float) ints[0]) * 130));
             UnderlineSpan underlineSpan = new UnderlineSpan();
             while (idx < content.length() - 5) {
                 // Underline the next word
