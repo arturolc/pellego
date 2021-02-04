@@ -1,7 +1,6 @@
 package com.example.pellego;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,10 +11,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.ActionBar;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 
 //import com.example.pellego.ui.module.RsvpIntroFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -35,19 +36,17 @@ public class HomeActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
-
     private String user_name;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_Pellego);
         setContentView(R.layout.activity_home);
-
         // Set toolbar as action bar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
