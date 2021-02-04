@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,20 +13,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
-import com.example.pellego.ui.learn.LearnFragment;
-import com.example.pellego.ui.learn.LearnViewModel;
-import com.example.pellego.ui.learn.ModuleItemModel;
-import com.example.pellego.ui.learn.ModuleListAdapter;
-import com.example.pellego.ui.rsvp.RsvpModuleFragment;
-import com.example.pellego.ui.rsvp.RsvpOverviewFragment;
 
 import java.util.ArrayList;
 
@@ -40,8 +31,6 @@ public class QuizFragment extends Fragment {
 
     private QuizViewModel quizViewModel;
     private ListView moduleList;
-    private RelativeLayout modulePane;
-    private String difficulty;
     private ArrayList<QuizQuestionModel> mNavItems;
     NavController navController;
 
@@ -52,6 +41,7 @@ public class QuizFragment extends Fragment {
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         quizViewModel =
                 new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
+        quizViewModel.clear();
         View root = inflater.inflate(R.layout.fragment_quiz, container, false);
         final TextView textView = root.findViewById(R.id.title_quiz);
         quizViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -70,7 +60,6 @@ public class QuizFragment extends Fragment {
         mNavItems = quizViewModel.getNextAnswers();
 
         // Populate the Navigation Drawer with options
-        modulePane = root.findViewById(R.id.question_pane);
         moduleList = root.findViewById(R.id.nav_question_list);
         QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
@@ -98,7 +87,6 @@ public class QuizFragment extends Fragment {
                 ((TextView) root.findViewById(R.id.text_quiz_question)).setText(quizViewModel.getNextQuestion());
                 mNavItems = quizViewModel.getNextAnswers();
                 // Populate the Navigation Drawer with options
-                modulePane = root.findViewById(R.id.question_pane);
                 moduleList = root.findViewById(R.id.nav_question_list);
                 QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems);
                 moduleList.setAdapter(adapter);

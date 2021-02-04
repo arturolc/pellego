@@ -1,4 +1,4 @@
-package com.example.pellego.ui.rsvp;
+package com.example.pellego.ui.module.intro;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,32 +13,35 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.pellego.R;
 
+import com.example.pellego.ui.module.overview.ModuleViewModel;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 
 /***************************************************
  *  Chris Bordoy
  *
- *  The RSVP Introduction Fragment
+ *  The Module Introduction Fragment
  **************************************************/
-public class RsvpIntroFragment extends Fragment {
-    private RsvpViewModel rsvpViewModel;
+public class ModuleIntroFragment extends Fragment {
+    private ModuleViewModel moduleViewModel;
     RelativeLayout parent_view;
     ViewPager2 viewPager2;
     DotsIndicator dotsIndicator;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        rsvpViewModel =
-                new ViewModelProvider(this).get(RsvpViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_rsvp_intro, container, false);
+        moduleViewModel =
+                new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_module_intro, container, false);
 
         dotsIndicator = root.findViewById(R.id.dots_indicator);
         viewPager2 = root.findViewById(R.id.view_pager);
         parent_view = root.findViewById(R.id.parent_view);
 
         //set data
-        viewPager2.setAdapter(new RsvpIntroPagerAdapter());
+        ModuleIntroPagerAdapter pagerAdapter = new ModuleIntroPagerAdapter();
+        pagerAdapter.setContentAndHeaders(moduleViewModel.getIntro_header_id(), moduleViewModel.getIntro_content_id(), getResources());
+        viewPager2.setAdapter(pagerAdapter);
         dotsIndicator.setViewPager2(viewPager2);
         viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
 

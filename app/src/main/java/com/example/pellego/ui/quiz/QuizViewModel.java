@@ -1,17 +1,9 @@
 package com.example.pellego.ui.quiz;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.pellego.R;
-import com.example.pellego.ui.clumpReading.ClumpReadingFragment;
-import com.example.pellego.ui.learn.LearnFragment;
-import com.example.pellego.ui.learn.ModuleItemModel;
-import com.example.pellego.ui.rsvp.RsvpModuleFragment;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -97,27 +89,6 @@ public class QuizViewModel extends ViewModel {
         return mText;
     }
 
-    public Fragment getModuleFragment() {
-        switch (module) {
-            case "rsvp":
-                return new RsvpModuleFragment();
-            case "clump":
-                return new ClumpReadingFragment();
-            default:
-                return new LearnFragment();
-        }
-    }
-
-    public String getModuleTag() {
-        switch (module) {
-            case "rsvp":
-                return "RsvpModuleFragment";
-            case "clump":
-                return "ClumpReadingFragment";
-            default:
-                return "";
-        }
-    }
 
     public void clear() {
         mText = new MutableLiveData<>();
@@ -131,8 +102,9 @@ public class QuizViewModel extends ViewModel {
 
     public void populateQuestionBank() {
         this.questions = new ArrayList<>();
+        // TODO: query DB for quiz questions based on learning module and difficulty
         switch(this.difficulty) {
-            case "Beginner Submodule":
+            default:
                 this.questions.add(new QuizQuestion("What city did they go to for their summer vacation?", new ArrayList<String>(
                         Arrays.asList("Louvre",
                                 "Latin",

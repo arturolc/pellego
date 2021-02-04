@@ -1,10 +1,15 @@
-package com.example.pellego.ui.rsvp;
+package com.example.pellego.ui.metaguiding;
 
 import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,21 +31,25 @@ import com.example.pellego.R;
 import com.example.pellego.ui.module.overview.ModuleViewModel;
 import com.example.pellego.ui.settings.SettingsViewModel;
 
+import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
+
 /**********************************************
  Eli Hebdon
 
- RSVP module fragment that displays words, one at a time, at 'wpm'
+ Metaguiding fragment that guides users through text with an underlined
+ or highlighted word
  **********************************************/
-public class RsvpModuleFragment extends Fragment {
+public class MetaguidingModuleFragment extends Fragment {
 
     private SettingsViewModel settingsViewModel;
     private View root;
     private Integer wpm;
     public String difficulty;
     private static AsyncUpdateText asyncUpdateText;
-    private String content;
+    private SpannableString content;
     private ModuleViewModel moduleViewModel;
     private FragmentActivity currentActivity;
+    private int idx =0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,28 +61,22 @@ public class RsvpModuleFragment extends Fragment {
         settingsViewModel =
                 new ViewModelProvider(this).get(SettingsViewModel.class);
 
-        root = inflater.inflate(R.layout.fragment_rsvp_module, container, false);
-        final TextView textView = root.findViewById(R.id.title_rsvp);
-        settingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) { textView.setText(difficulty); }
-        });
-
+        root = inflater.inflate(R.layout.fragment_metaguiding_module, container, false);
 
         // Set the displayed text to the appropriate level
         switch(difficulty) {
             case "Beginner Submodule":
-                content = getString(R.string.content_rsvp_beginner);
+                content = new SpannableString(getString(R.string.content_metaguiding_beginner));
                 break;
             case "Intermediate Submodule":
-                content = getString(R.string.content_rsvp_intermediate);
+                content = new SpannableString(getString(R.string.content_metaguiding_intermediate));
                 break;
             case "Advanced Submodule":
-                content = getString(R.string.content_rsvp_advanced);
+                content = new SpannableString(getString(R.string.content_metaguiding_advanced));
                 break;
         }
         // Only show popup if user navigated to the Rsvp module
-       if (moduleViewModel.showDialog) showPopupDialog();
+        if (moduleViewModel.showDialog) showPopupDialog();
         return root;
     }
 
@@ -97,26 +100,41 @@ public class RsvpModuleFragment extends Fragment {
     }
 
     /**
-     * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
+     *
+     * Asynchronously updates the text in the metaguiding fragment at the provided WPM rate
      */
     private class AsyncUpdateText extends AsyncTask<Integer, String, Integer> {
 
-        TextView rsvp_text;
-        String[] words = content.split ("\\W+"); // split on non-word characters
+        TextView metaguiding_textview;
+        String[] words = content.toString ().split("\\W+"); // split on non-word characters
+        char[] chars = content.toString().toCharArray();
 
         @Override
         protected void onPreExecute() {
-            rsvp_text = root.findViewById(R.id.text_rsvp);
+            metaguiding_textview = root.findViewById(R.id.text_metaguiding);
+            metaguiding_textview.setText(content);
         }
 
         @Override
         protected Integer doInBackground(Integer... ints) {
-            long delay = (long) ((60.0 / (float) ints[0]) * 1000);
-            for (String word : words) {
-                rsvp_text.setText(word);
+            // This delay requires some fine tuning because word length varies
+            long delay = (long) (((60.0 / (float) ints[0]) * 130));
+            UnderlineSpan underlineSpan = new UnderlineSpan();
+            while (idx < content.length() - 5) {
+                // Underline the next word
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Stuff that updates the UI
+                        content.removeSpan(underlineSpan);
+                        content.setSpan(underlineSpan, idx, idx + 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        metaguiding_textview.setText(content);
+                    }
+                });
+                idx++;
                 // Verify that user has not navigated away from the RSVP fragment
                 NavHostFragment navHostFragment = (NavHostFragment) currentActivity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-                if (!navHostFragment.getChildFragmentManager().getFragments().get(0).toString().contains("RsvpModuleFragment")) {
+                if (!navHostFragment.getChildFragmentManager().getFragments().get(0).toString().contains("MetaguidingModuleFragment")) {
                     cancel(true);
                     return 0;
                 }
