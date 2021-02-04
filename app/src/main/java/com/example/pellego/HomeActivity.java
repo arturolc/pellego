@@ -58,10 +58,11 @@ public class HomeActivity extends AppCompatActivity {
                 .build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        navController.navigate(R.id.nav_library);
 
          //Attach nav drawer to nav controller
-//        NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
-//        NavigationUI.setupWithNavController(drawerNavigationView, navController);
+        NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
+        NavigationUI.setupWithNavController(drawerNavigationView, navController);
     }
 
     /**

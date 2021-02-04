@@ -9,23 +9,36 @@
     tools:openDrawer="start"
     >
 
-
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+
+    <com.google.android.material.navigation.NavigationView
+        app:itemShapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Nav"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:itemIconTint="@color/white"
+        android:background="@drawable/nav_side_drawer_background"
+        app:itemTextColor="@color/white"
+        android:id="@+id/side_nav_view"
+        android:fitsSystemWindows="false"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_menu"/>
+
+
     <!--if I change this to a fragmentcontainerview it crashes the app-->
     <!--saying that there is no navcontroller connected. Interesting-->
-    <fragment
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph" />
+<!--    <fragment-->
+<!--        android:id="@+id/nav_host_fragment"-->
+<!--        android:name="androidx.navigation.fragment.NavHostFragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="2"-->
+<!--        app:defaultNavHost="true"-->
+<!--        app:navGraph="@navigation/nav_graph" />-->
 
 <!--    <com.google.android.material.navigation.NavigationView-->
 <!--        app:itemShapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Nav"-->
