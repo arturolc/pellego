@@ -1,3 +1,4 @@
+
 package com.example.pellego;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,11 @@ import android.widget.EditText;
 
 import com.amplifyframework.core.Amplify;
 
+/**********************************************
+ Arturo Lara
+
+ Email Verification with Code
+ **********************************************/
 public class VerifyActivity extends AppCompatActivity {
 
     private String email;

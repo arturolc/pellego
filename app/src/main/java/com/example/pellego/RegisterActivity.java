@@ -16,6 +16,10 @@ import com.amplifyframework.core.Amplify;
 import java.util.ArrayList;
 import java.util.List;
 
+/**********************************************
+ Arturo Lara
+ Registers a user. Sends verification code after submitting form
+ **********************************************/
 public class RegisterActivity extends AppCompatActivity {
 
     private String firstName;

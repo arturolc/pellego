@@ -14,7 +14,10 @@ import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.auth.options.AuthWebUISignInOptions;
 import com.amplifyframework.core.Amplify;
 
-
+/**********************************************
+ Arturo Lara
+ User authentication using AWS Amplify and AWS Cognito
+ **********************************************/
 public class LoginActivity extends AppCompatActivity {
 
     @Override
