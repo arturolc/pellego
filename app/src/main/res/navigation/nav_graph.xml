@@ -6,12 +6,13 @@
     app:startDestination="@id/container">
 
     <fragment
-        android:id="@+id/container"
-        android:name="com.example.pellego.HomeFragment"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_container_to_nav_library"
-            app:destination="@id/nav_library" />
+        android:id="@+id/nav_library"
+        android:name="com.example.pellego.ui.library.LibraryFragment"
+        android:label="@string/title_library"
+        tools:layout="@layout/fragment_library" >
+<!--        <action-->
+<!--            android:id="@+id/action_container_to_nav_library"-->
+<!--            app:destination="@id/nav_library" />-->
         <action
             android:id="@+id/action_container_to_nav_learn"
             app:destination="@id/nav_learn" />
@@ -32,11 +33,11 @@
             app:destination="@id/nav_settings" />
     </fragment>
 
-    <fragment
-        android:id="@+id/nav_library"
-        android:name="com.example.pellego.ui.library.LibraryFragment"
-        android:label="@string/title_library"
-        tools:layout="@layout/fragment_library" />
+<!--    <fragment-->
+<!--        android:id="@+id/nav_library"-->
+<!--        android:name="com.example.pellego.ui.library.LibraryFragment"-->
+<!--        android:label="@string/title_library"-->
+<!--        tools:layout="@layout/fragment_library" />-->
 
     <fragment
         android:id="@+id/nav_learn"
@@ -60,12 +61,6 @@
         android:name="com.example.pellego.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
-
-    <fragment
-        android:id="@+id/nav_technique"
-        android:name="com.example.pellego.ui.rsvp.RsvpOverviewFragment"
-        android:label="@string/title_technique"
-        tools:layout="@layout/fragment_terms_and_conditions" />
 
     <fragment
         android:id="@+id/nav_profile"

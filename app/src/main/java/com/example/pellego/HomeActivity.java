@@ -43,11 +43,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_Pellego);
         setContentView(R.layout.activity_home);
-//
+
 //        // Set toolbar as action bar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//
+
 //        // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
         drawer = findViewById(R.id.home_activity_layout);
@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
                 .build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
-        navController.navigate(R.id.nav_library);
+//        navController.navigate(R.id.nav_library);
 
          //Attach nav drawer to nav controller
         NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
