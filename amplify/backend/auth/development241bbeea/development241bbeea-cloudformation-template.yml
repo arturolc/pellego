@@ -121,6 +121,10 @@ Parameters:
   usernameAttributes:
     Type: CommaDelimitedList
       
+  triggers:
+    Type: String
+  
+            
   hostedUIDomainName:
     Type: String
   
@@ -133,19 +137,10 @@ Parameters:
     Type: String
   
             
-  hostedUIProviderCreds:
-    Type: String
-  
-            
-  oAuthMetadata:
-    Type: String
-  
-            
         
   userPoolGroupList:
     Type: CommaDelimitedList
       
-            
   serviceName:
     Type: String
   
@@ -154,10 +149,55 @@ Parameters:
   usernameCaseSensitive:
     Type: String
             
+      
+  parentStack:
+    Type: String
+        
+        
+  permissions:
+    Type: CommaDelimitedList
+      
         
   dependsOn:
     Type: CommaDelimitedList
       
+  
+  thirdPartyAuth:
+    Type: String
+            
+        
+  authProviders:
+    Type: CommaDelimitedList
+      
+  
+  userPoolGroups:
+    Type: String
+            
+  
+  adminQueries:
+    Type: String
+            
+  hostedUIProviderCreds:
+    Type: String
+  
+            
+  googleClientId:
+    Type: String
+  
+            
+  googleAndroid:
+    Type: String
+  
+            
+        
+  audiences:
+    Type: CommaDelimitedList
+      
+  oAuthMetadata:
+    Type: String
+  
+            
+            
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
 
@@ -169,7 +209,7 @@ Resources:
   # Created to allow the UserPool SMS Config to publish via the Simple Notification Service during MFA Process
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !If [ShouldNotCreateEnvResources, 'develob8b014ab_sns-role', !Join ['',[ 'sns', 'b8b014ab', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
+      RoleName: !If [ShouldNotCreateEnvResources, 'develo241bbeea_sns-role', !Join ['',[ 'sns', '241bbeea', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -181,10 +221,10 @@ Resources:
               - "sts:AssumeRole"
             Condition:
               StringEquals:
-                sts:ExternalId: develob8b014ab_role_external_id
+                sts:ExternalId: develo241bbeea_role_external_id
       Policies:
         -
-          PolicyName: develob8b014ab-sns-policy
+          PolicyName: develo241bbeea-sns-policy
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
@@ -213,6 +253,11 @@ Resources:
           Required: true
           Mutable: true
         
+        -
+          Name: name
+          Required: true
+          Mutable: true
+        
       
       
       
@@ -236,15 +281,27 @@ Resources:
       SmsVerificationMessage: !Ref smsVerificationMessage
       SmsConfiguration:
         SnsCallerArn: !GetAtt SNSRole.Arn
-        ExternalId: develob8b014ab_role_external_id
+        ExternalId: develo241bbeea_role_external_id
     
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # Updating lambda role with permissions to Cognito
+  
   
   UserPoolClientWeb:
   # Created provide application access to user pool
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: develob8b014ab_app_clientWeb
+      ClientName: develo241bbeea_app_clientWeb
       
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
       UserPoolId: !Ref UserPool
@@ -254,7 +311,7 @@ Resources:
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: develob8b014ab_app_client
+      ClientName: develo241bbeea_app_client
       
       GenerateSecret: !Ref userpoolClientGenerateSecret
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
@@ -265,7 +322,7 @@ Resources:
   # Created to execute Lambda which gets userpool app client config values
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !If [ShouldNotCreateEnvResources, !Ref userpoolClientLambdaRole, !Join ['',['upClientLambdaRole', 'b8b014ab', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
+      RoleName: !If [ShouldNotCreateEnvResources, !Ref userpoolClientLambdaRole, !Join ['',['upClientLambdaRole', '241bbeea', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -319,7 +376,7 @@ Resources:
   # Marked as depending on UserPoolClientRole for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: develob8b014ab_userpoolclient_lambda_iam_policy
+      PolicyName: develo241bbeea_userpoolclient_lambda_iam_policy
       Roles:
         - !Ref UserPoolClientRole
       PolicyDocument:
@@ -336,7 +393,7 @@ Resources:
   # Marked as depending on UserPoolClientLambdaPolicy for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: develob8b014ab_userpoolclient_lambda_log_policy
+      PolicyName: develo241bbeea_userpoolclient_lambda_log_policy
       Roles:
         - !Ref UserPoolClientRole
       PolicyDocument:
@@ -721,12 +778,174 @@ Resources:
     
   # BEGIN IDENTITY POOL RESOURCES
   
+  OpenIdLambdaRole:
+  # Created to execute Lambda which sets MFA config values
+  # Depends on UserPoolClientInputs to prevent further identity pool resources from being created before userpool is ready
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !If [ShouldNotCreateEnvResources, 'develo241bbeea_openid_lambda_role', !Join ['',['develo241bbeea_openid_lambda_role', '-', !Ref env]]]
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+      - PolicyName: develo241bbeea_openid_pass_role_policy
+        PolicyDocument:
+          Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Action:
+                - 'iam:PassRole'
+              Resource: !If [ShouldNotCreateEnvResources, 'arn:aws:iam:::role/develo241bbeea_openid_lambda_role', !Join ['',['arn:aws:iam:::role/develo241bbeea_openid_lambda_role', '-', !Ref env]]]
+    DependsOn: UserPoolClientInputs
+  OpenIdLambda:
+  # Lambda which sets OpenId Values
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        ZipFile: !Join
+          - |+
+          - - 'const response = require(''cfn-response'');'
+            - 'const aws = require(''aws-sdk'');'
+            - 'const iam = new aws.IAM();'
+            - 'exports.handler = (event, context) => {'
+            - ' if (event.RequestType == ''Delete'') { '
+            - '   response.send(event, context, response.SUCCESS, {});'
+            - ' }'
+            - ' if (event.RequestType == ''Update'' || event.RequestType == ''Create'') {'
+            - '   const params = {'
+            - '     ClientIDList: event.ResourceProperties.clientIdList.split('',''),'
+            - '     ThumbprintList: ["0000000000000000000000000000000000000000"],'
+            - '     Url: event.ResourceProperties.url'
+            - '   };'
+            - '   let exists = false;'
+            - '   let existingValue;'
+            - '   iam.listOpenIDConnectProviders({}).promise().then((data) => {'
+            - '     if (data.OpenIDConnectProviderList && data.OpenIDConnectProviderList.length > 0) {'
+            - '       const vals = data.OpenIDConnectProviderList.map(x => x.Arn);'
+            - '       existingValue = vals.find(i => i.split(''/'')[1] === params.Url.split(''//'')[1]);'
+            - '       if (!existingValue) {'
+            - '         exists = true;'
+            - '       }'
+            - '     }'
+            - '     if (!existingValue) {'
+            - '       iam.createOpenIDConnectProvider(params).promise().then((data) => {'
+            - '         response.send(event, context, response.SUCCESS, {providerArn: data.OpenIDConnectProviderArn, providerIds: params.ClientIDList});'
+            - '       })'
+            - '       .catch((err) => {'
+            - '         response.send(event, context, response.FAILED, {err});'
+            - '       });'
+            - '     } else {'
+            - '       const findParams = {'
+            - '         OpenIDConnectProviderArn: existingValue'
+            - '       };'
+            - '       iam.getOpenIDConnectProvider(findParams).promise().then((data) => {'
+            - '         const audiences = data.ClientIDList;'
+            - '         const updateCalls = [];'
+            - '         params.ClientIDList.forEach((a) => {'
+            - '           if (!audiences.includes(a)) {'
+            - '             const updateParams = {'
+            - '               ClientID: a,'
+            - '               OpenIDConnectProviderArn: existingValue'
+            - '             };'
+            - '             const prom = iam.addClientIDToOpenIDConnectProvider(updateParams).promise();'
+            - '             updateCalls.push(prom);'
+            - '           }'
+            - '         });'
+            - '         Promise.all(updateCalls).then(function(values) {'
+            - '           response.send(event, context, response.SUCCESS, {providerArn: existingValue, providerIds: params.ClientIDList});'
+            - '         })'
+            - '         .catch((err3) => {'
+            - '           response.send(event, context, response.FAILED, {err3});'
+            - '         });'
+            - '       })'
+            - '       .catch((err2) => {'
+            - '           response.send(event, context, response.FAILED, {err2});'
+            - '       });'
+            - '     }'
+            - '   })'
+            - '   .catch((err1) => {'
+            - '           response.send(event, context, response.FAILED, {err1});'
+            - '   });'
+            - ' }'
+            - '};'
+      Handler: index.handler
+      Runtime: nodejs10.x
+      Timeout: '300'
+      Role: !GetAtt
+        - OpenIdLambdaRole
+        - Arn
+    DependsOn: OpenIdLambdaRole
+  OpenIdLambdaIAMPolicy:
+  # Sets policy for the role that executes the OpenId Lambda
+  # Depends on OpenIdLambda for Arn
+  # Marked as depending on MFALambda for easier to understand CFN sequencing
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: develo241bbeea_openid_lambda_iam_policy
+      Roles:
+        - !If [ShouldNotCreateEnvResources, 'develo241bbeea_openid_lambda_role', !Join ['',['develo241bbeea_openid_lambda_role', '-', !Ref env]]]
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'iam:CreateOpenIDConnectProvider'
+              - 'iam:GetOpenIDConnectProvider'
+              - 'iam:AddClientIDToOpenIDConnectProvider'
+            Resource: !Sub
+              - arn:aws:iam::${account}:oidc-provider/accounts.google.com
+              - { account: !Ref "AWS::AccountId"}
+          - Effect: Allow
+            Action:
+              - 'iam:ListOpenIDConnectProviders'
+            Resource: !Sub
+              - arn:aws:iam::${account}:oidc-provider/${selector}
+              - { account: !Ref "AWS::AccountId", selector: '*'}
+    DependsOn: OpenIdLambda
+  OpenIdLogPolicy:
+  # Sets log policy for the role that executes the OpenId  Lambda
+  # Depends on OpenIdLambda for Arn
+  # Marked as depending on UserPoolClientLambdaPolicy for easier to understand CFN sequencing
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: develo241bbeea_openid_lambda_log_policy
+      Roles:
+        - !If [ShouldNotCreateEnvResources, 'develo241bbeea_openid_lambda_role', !Join ['',['develo241bbeea_openid_lambda_role', '-', !Ref env]]]
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'logs:CreateLogGroup'
+              - 'logs:CreateLogStream'
+              - 'logs:PutLogEvents'
+            Resource: !Sub
+              - arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*
+              - { region: !Ref "AWS::Region",  account: !Ref "AWS::AccountId", lambda: !Ref OpenIdLambda}
+    DependsOn: OpenIdLambdaIAMPolicy
+  OpenIdLambdaInputs:
+  # Values passed to OpenId Lambda
+  # Depends on OpenId for Arn
+  # Marked as depending on OpenIdLogPolicy for easier to understand CFN sequencing
+    Type: 'Custom::LambdaCallout'
+    Properties:
+      ServiceToken: !GetAtt OpenIdLambda.Arn
+      clientIdList: 342167975084-8qtnm1pgjtecmdsctmcifa94ddul09lg.apps.googleusercontent.com,342167975084-roniukv62dhpbo9c79b88ae0mjqn3e1e.apps.googleusercontent.com
+      url: 'https://accounts.google.com'
+    DependsOn: OpenIdLogPolicy
+  
 
   IdentityPool:
   # Always created
     Type: AWS::Cognito::IdentityPool
     Properties:
-      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'developmentb8b014ab_identitypool_b8b014ab', !Join ['',['developmentb8b014ab_identitypool_b8b014ab', '__', !Ref env]]]
+      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'development241bbeea_identitypool_241bbeea', !Join ['',['development241bbeea_identitypool_241bbeea', '__', !Ref env]]]
       
       CognitoIdentityProviders:
         - ClientId:  !Ref UserPoolClient
@@ -740,8 +959,10 @@ Resources:
             
       AllowUnauthenticatedIdentities: !Ref allowUnauthenticatedIdentities
       
-    
-    DependsOn: UserPoolClientInputs
+      OpenIdConnectProviderARNs:
+        - !GetAtt OpenIdLambdaInputs.providerArn
+    DependsOn: OpenIdLambdaInputs
+      
     
 
   IdentityPoolRoleMap:
@@ -788,7 +1009,13 @@ Outputs :
     Value: !GetAtt UserPoolClientInputs.appSecret
   
   
+  GoogleWebClient:
+    Value: !Ref googleClientId
   
+  
+  
+  GoogleAndroidClient:
+    Value: !Ref googleAndroid
   
   
   

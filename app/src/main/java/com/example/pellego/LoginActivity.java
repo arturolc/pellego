@@ -9,14 +9,31 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.amplifyframework.auth.AuthProvider;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
+import com.amplifyframework.auth.options.AuthWebUISignInOptions;
 import com.amplifyframework.core.Amplify;
 
+/**********************************************
+ Arturo Lara
+ User authentication using AWS Amplify and AWS Cognito
+ **********************************************/
 public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == AWSCognitoAuthPlugin.WEB_UI_SIGN_IN_ACTIVITY_CODE) {
+            Amplify.Auth.handleWebUISignInResponse(data);
+        }
     }
 
     public void signIn(View view) {
@@ -41,5 +58,15 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    public void googleSignIn(View view) {
+        Amplify.Auth.signInWithSocialWebUI(
+                AuthProvider.google(),
+                this,
+                result -> Log.i("AUTHENTICATION", result.toString()),
+                error -> Log.e("AUTHENTICATION", error.toString())
+        );
+
+
+    }
 
 }

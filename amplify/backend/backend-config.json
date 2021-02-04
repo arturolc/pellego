@@ -1,6 +1,6 @@
 {
   "auth": {
-    "developmentb8b014ab": {
+    "development241bbeea": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
