@@ -13,6 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**********************************************
+ Chris Bordoy
+
+ The starting fragment for the app's navigation graph
+ **********************************************/
+
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
