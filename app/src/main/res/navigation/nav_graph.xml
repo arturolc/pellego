@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_library">
+
+    <fragment
+        android:id="@+id/nav_library"
+        android:name="com.example.pellego.ui.library.LibraryFragment"
+        android:label="@string/title_library"
+        tools:layout="@layout/fragment_library" >
+        <action
+            android:id="@+id/action_container_to_nav_learn"
+            app:destination="@id/nav_learn" />
+        <action
+            android:id="@+id/action_container_to_nav_sign_out"
+            app:destination="@id/nav_sign_out" />
+        <action
+            android:id="@+id/action_container_to_nav_profile"
+            app:destination="@id/nav_profile" />
+        <action
+            android:id="@+id/action_container_to_nav_terms_and_conditions"
+            app:destination="@id/nav_terms_and_conditions" />
+        <action
+            android:id="@+id/action_container_to_nav_progress"
+            app:destination="@id/nav_progress" />
+        <action
+            android:id="@+id/action_container_to_nav_settings"
+            app:destination="@id/nav_settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_learn"
+        android:name="com.example.pellego.ui.learn.LearnFragment"
+        android:label="@string/title_learn"
+        tools:layout="@layout/fragment_learn" >
+        <action
+            android:id="@+id/action_nav_learn_to_nav_module_overview"
+            app:destination="@id/nav_module_overview" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_progress"
+        android:name="com.example.pellego.ui.progress.ProgressFragment"
+        android:label="@string/title_progress"
+        tools:layout="@layout/fragment_progress"
+        />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.pellego.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.pellego.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/nav_terms_and_conditions"
+        android:name="com.example.pellego.ui.termsAndConditions.TermsAndConditionsFragment"
+        android:label="@string/title_terms_and_conditions"
+        tools:layout="@layout/fragment_terms_and_conditions" />
+
+    <fragment
+        android:id="@+id/nav_module_overview"
+        android:name="com.example.pellego.ui.module.overview.ModuleOverviewFragment"
+        android:label="@string/title_technique"
+        tools:layout="@layout/fragment_rsvp_module"
+        >
+        <action
+            android:id="@+id/action_nav_module_overview_to_nav_quiz"
+            app:destination="@id/nav_quiz" />
+        <action
+            android:id="@+id/action_nav_module_overview_to_nav_rsvp_beginner"
+            app:destination="@id/nav_rsvp_module" />
+        <action
+            android:id="@+id/action_nav_module_overview_to_nav_rsvp_intro"
+            app:destination="@id/nav_rsvp_intro" />
+        <action
+            android:id="@+id/action_nav_module_overview_to_nav_metaguiding_beginner"
+            app:destination="@id/nav_metaguiding_module" />
+        <action
+            android:id="@+id/action_nav_module_overview_to_nav_metaguiding_intro"
+            app:destination="@id/nav_metaguiding_intro" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_metaguiding_intro"
+        android:name="com.example.pellego.ui.module.intro.ModuleIntroFragment"
+        android:label="@string/title_metaguiding_intro"
+        tools:layout="@layout/fragment_module_intro" />
+
+    <fragment
+        android:id="@+id/nav_metaguiding_module"
+        android:name="com.example.pellego.ui.metaguiding.MetaguidingModuleFragment"
+        android:label="@string/title_meta_guiding"
+        tools:layout="@layout/fragment_metaguiding_module" />
+
+
+    <fragment
+        android:id="@+id/nav_rsvp_intro"
+        android:name="com.example.pellego.ui.rsvp.RsvpModuleFragment"
+        android:label="@string/title_rsvp_intro"
+        tools:layout="@layout/fragment_module_intro" />
+
+    <fragment
+        android:id="@+id/nav_rsvp_module"
+        android:name="com.example.pellego.ui.rsvp.RsvpModuleFragment"
+        android:label="@string/title_rsvp"
+        tools:layout="@layout/fragment_rsvp_module" />
+
+    <fragment
+        android:id="@+id/nav_quiz"
+        android:name="com.example.pellego.ui.quiz.QuizFragment"
+        android:label="@string/title_quiz"
+        tools:layout="@layout/fragment_quiz" >
+        <action
+            android:id="@+id/action_nav_quiz_to_nav_quiz_results"
+            app:destination="@id/nav_quiz_results" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_quiz_results"
+        android:name="com.example.pellego.ui.quiz.QuizResultFragment"
+        android:label="@string/title_quiz_results"
+        tools:layout="@layout/fragment_quiz_results" >
+        <action
+            android:id="@+id/action_nav_quiz_results_to_nav_learn"
+            app:destination="@id/nav_learn" />
+        <action
+            android:id="@+id/action_nav_quiz_results_to_nav_quiz"
+            app:destination="@id/nav_quiz" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_sign_out"
+        android:name="com.example.pellego.ui.signout.SignOutFragment"
+        android:label="@string/title_sign_out"
+        tools:layout="@layout/fragment_sign_out" />
+</navigation>

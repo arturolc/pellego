@@ -49,9 +49,9 @@ public class LibraryFragment extends Fragment {
     @SuppressLint("ResourceAsColor")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.fragment_library, container, false);
         libraryViewModel =
                 new ViewModelProvider(this).get(LibraryViewModel.class);
-        root = inflater.inflate(R.layout.fragment_library, container, false);
         final TextView textView = root.findViewById(R.id.text_library);
         libraryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
