@@ -10,9 +10,6 @@
         android:name="com.example.pellego.ui.library.LibraryFragment"
         android:label="@string/title_library"
         tools:layout="@layout/fragment_library" >
-        <!--        <action-->
-        <!--            android:id="@+id/action_container_to_nav_library"-->
-        <!--            app:destination="@id/nav_library" />-->
         <action
             android:id="@+id/action_container_to_nav_learn"
             app:destination="@id/nav_learn" />
@@ -32,13 +29,6 @@
             android:id="@+id/action_container_to_nav_settings"
             app:destination="@id/nav_settings" />
     </fragment>
-
-    <!--    <fragment-->
-    <!--        android:id="@+id/nav_library"-->
-    <!--        android:name="com.example.pellego.ui.library.LibraryFragment"-->
-    <!--        android:label="@string/title_library"-->
-    <!--        tools:layout="@layout/fragment_library" />-->
-
     <fragment
         android:id="@+id/nav_learn"
         android:name="com.example.pellego.ui.learn.LearnFragment"
@@ -85,11 +75,32 @@
             app:destination="@id/nav_quiz" />
         <action
             android:id="@+id/action_nav_module_overview_to_nav_rsvp_beginner"
-            app:destination="@id/nav_rsvp_beginner" />
+            app:destination="@id/nav_rsvp_module" />
         <action
             android:id="@+id/action_nav_module_overview_to_nav_rsvp_intro"
             app:destination="@id/nav_rsvp_intro" />
+        <action
+            android:id="@+id/action_nav_module_overview_to_nav_metaguiding_beginner"
+            app:destination="@id/nav_metaguiding_module" />
+        <action
+            android:id="@+id/action_nav_module_overview_to_nav_metaguiding_intro"
+            app:destination="@id/nav_metaguiding_intro" />
+
     </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_metaguiding_intro"
+        android:name="com.example.pellego.ui.module.intro.ModuleIntroFragment"
+        android:label="@string/title_metaguiding_intro"
+        tools:layout="@layout/fragment_module_intro" />
+
+    <fragment
+        android:id="@+id/nav_metaguiding_module"
+        android:name="com.example.pellego.ui.metaguiding.MetaguidingModuleFragment"
+        android:label="@string/title_meta_guiding"
+        tools:layout="@layout/fragment_metaguiding_module" />
+
 
     <fragment
         android:id="@+id/nav_rsvp_intro"
@@ -98,7 +109,7 @@
         tools:layout="@layout/fragment_module_intro" />
 
     <fragment
-        android:id="@+id/nav_rsvp_beginner"
+        android:id="@+id/nav_rsvp_module"
         android:name="com.example.pellego.ui.rsvp.RsvpModuleFragment"
         android:label="@string/title_rsvp"
         tools:layout="@layout/fragment_rsvp_module" />

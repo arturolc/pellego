@@ -65,15 +65,6 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Called when the user presses the back button
-     * @return
-     */
-    @Override
-    public boolean onSupportNavigateUp() {
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
 
 
 }
