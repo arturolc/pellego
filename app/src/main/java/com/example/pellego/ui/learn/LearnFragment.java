@@ -126,7 +126,9 @@ public class LearnFragment extends Fragment {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String url ="http://54.176.198.201:5000/modules";
-
+//        spinner.setVisibility(View.GONE);
+        modulesView.setVisibility(View.VISIBLE);
+        useDefaultData();
         // Request a json response from the provided URL.
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -151,8 +153,8 @@ public class LearnFragment extends Fragment {
                         Log.d("error", error.toString());
                         // Load the default data from shared preferences
                         spinner.setVisibility(View.GONE);
-                        modulesView.setVisibility(View.VISIBLE);
-                        useDefaultData();
+//                        modulesView.setVisibility(View.VISIBLE);
+//                        useDefaultData();
                     }
                 });
 
