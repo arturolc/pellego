@@ -41,6 +41,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                                     "FilePath VARCHAR(255) NOT NULL" +
                                     ")";
 
+        // TODO: Add learning modules, progress reports, statistics tables
+
         db.execSQL(createUsersQuery);
         db.execSQL(createLibraryQuery);
         db.execSQL(createBooksQuery);
