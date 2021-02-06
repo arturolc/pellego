@@ -26,6 +26,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.pellego.R;
 
@@ -72,10 +74,23 @@ public class LibraryFragment extends Fragment {
             }
         });
 
-        // TODO: populate library gridlayout by querying the DB
 
+
+        // TODO: populate library gridlayout by querying the DB and set on click listeners
+
+        // This is a demo on click listener just on the first book in the library to show the transition to the default reader
+        TextView book1 = (TextView) root.findViewById(R.id.book_1);
+        book1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                navController.navigate(R.id.nav_default_pager);
+            }
+        });
         return root;
     }
+
+
 
     /**
      * File explorer has been closed or a file was selected

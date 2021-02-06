@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_container_to_nav_settings"
             app:destination="@id/nav_settings" />
+        <action
+            android:id="@+id/action_nav_library_to_nav_default_pager"
+            app:destination="@id/nav_default_pager" />
     </fragment>
     <fragment
         android:id="@+id/nav_learn"
@@ -104,7 +107,7 @@
 
     <fragment
         android:id="@+id/nav_rsvp_intro"
-        android:name="com.example.pellego.ui.rsvp.RsvpModuleFragment"
+        android:name="com.example.pellego.ui.module.intro.ModuleIntroFragment"
         android:label="@string/title_rsvp_intro"
         tools:layout="@layout/fragment_module_intro" />
 
@@ -142,4 +145,10 @@
         android:name="com.example.pellego.ui.signout.SignOutFragment"
         android:label="@string/title_sign_out"
         tools:layout="@layout/fragment_sign_out" />
+
+    <fragment
+        android:id="@+id/nav_default_pager"
+        android:name="com.example.pellego.ui.defaultPager.DefaultPagerFragment"
+        android:label="@string/menu_title"
+        tools:layout="@layout/fragment_default_pager" />
 </navigation>

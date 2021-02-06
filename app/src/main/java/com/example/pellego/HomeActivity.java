@@ -6,25 +6,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.ActionBar;
 import android.content.res.Configuration;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.util.Log;
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TableLayout;
+import android.widget.TextView;
 
 //import com.example.pellego.ui.rsvp.RsvpIntroFragment;
 import com.amplifyframework.auth.options.AuthSignOutOptions;
 import com.amplifyframework.core.Amplify;
 
+import com.example.pellego.ui.defaultPager.PagerAdapter;
+import com.example.pellego.ui.defaultPager.PagerTask;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**********************************************
  Eli Hebdon & Chris Bordoy
@@ -40,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
-    private String user_name;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +99,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
     }
-
-
-
 }
