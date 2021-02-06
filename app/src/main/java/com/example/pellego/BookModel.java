@@ -1,5 +1,9 @@
 package com.example.pellego;
 
+/**********************************************
+ Arturo Lara
+ UserModel class to keep track of Book and Library info
+ **********************************************/
 public class BookModel {
     private String bookName;
     private String author;

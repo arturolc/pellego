@@ -1,5 +1,9 @@
 package com.example.pellego;
 
+/**********************************************
+ Arturo Lara
+ UserModel class to keep track of User info
+ **********************************************/
 public class UserModel {
 
     private int uID;

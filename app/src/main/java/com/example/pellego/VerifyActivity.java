@@ -13,7 +13,6 @@ import com.amplifyframework.core.Amplify;
 
 /**********************************************
  Arturo Lara
-
  Email Verification with Code
  **********************************************/
 public class VerifyActivity extends AppCompatActivity {

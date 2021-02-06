@@ -7,6 +7,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+/**********************************************
+ Arturo Lara
+ DatabaseHelper uses SQLite local database to cache online data
+ so application can work offline
+ **********************************************/
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
