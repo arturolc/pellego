@@ -16,23 +16,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createUsersQuery =   "CREATE TABLE IF NOT EXISTS Users (" +
-                                    "UID INTEGER UNIQUE NOT NULL AUTOINCREMENT," +
+                                    "UID INTEGER PRIMARY KEY AUTOINCREMENT," +
                                     "UniqueIdentifier VARCHAR(320) UNIQUE NOT NULL," +
                                     "FirstName VARCHAR(50) NOT NULL," +
-                                    "LastName VARCHAR(50) NOT NULL," +
-                                    "PRIMARY KEY (UID))";
+                                    "LastName VARCHAR(50) NOT NULL" +
+                                    ")";
 
         String createLibraryQuery = "CREATE TABLE IF NOT EXISTS Library (" +
                                     "UID INT NOT NULL," +
                                     "BID INT NOT NULL," +
-                                    "PRIMARY KEY(UID, BID))";
+                                    "PRIMARY KEY (UID, BID)," +
+                                    "FOREIGN KEY (UID) REFERENCES Users(UID)," +
+                                    "FOREIGN KEY (BID) REFERENCES Books(BID))";
 
         String createBooksQuery =   "CREATE TABLE IF NOT EXISTS Books (" +
-                                    "BID INT UNIQUE NOT NULL AUTOINCREMENT," +
+                                    "BID INTEGER PRIMARY KEY AUTOINCREMENT," +
                                     "BookName VARCHAR(200) NOT NULL," +
                                     "Author VARCHAR(100) NOT NULL," +
-                                    "FilePath VARCHAR(255) NOT NULL," +
-                                    "PRIMARY KEY (BID))";
+                                    "FilePath VARCHAR(255) NOT NULL" +
+                                    ")";
 
         db.execSQL(createUsersQuery);
         db.execSQL(createLibraryQuery);
