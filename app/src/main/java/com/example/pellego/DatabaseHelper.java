@@ -1,5 +1,6 @@
 package com.example.pellego;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -44,6 +45,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean addUser(UserModel user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put("UniqueIdentifier", user.getEmail());
+        cv.put("FirstName", user.getFirstName());
+        cv.put("LastName", user.getLastName());
+
+        db.insert("Users", null, cv);
+    }
+
+    public boolean addBook(BookModel book) {
 
     }
 }
