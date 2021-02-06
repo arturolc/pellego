@@ -4,6 +4,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+/**
+ * Eli Hebdon
+ * Base class for page contents that keeps track of page numbers
+ *
+ * based on AndroidReader here: https://github.com/koros/AndroidReader
+ */
 public class PageContentsFragmentBase extends Fragment {
 
     public static final String ARG_PAGE = "page";

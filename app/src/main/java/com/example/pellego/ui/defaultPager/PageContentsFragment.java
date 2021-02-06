@@ -11,6 +11,12 @@ import android.widget.TextView;
 import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
 
+/**
+ * Eli Hebdon
+ * Page contents fragment child that handles reader initializations
+ *
+ * based on AndroidReader here: https://github.com/koros/AndroidReader
+ */
 public class PageContentsFragment extends PageContentsFragmentBase {
 
     @Override
