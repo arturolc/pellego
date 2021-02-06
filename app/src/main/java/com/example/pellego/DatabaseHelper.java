@@ -43,5 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public boolean addUser(UserModel user) {
 
+    }
 }
