@@ -22,4 +22,13 @@ public class BookModel {
     public String getFilePath() {
         return filePath;
     }
+
+    @Override
+    public String toString() {
+        return "BookModel{" +
+                "bookName='" + bookName + '\'' +
+                ", author='" + author + '\'' +
+                ", filePath='" + filePath + '\'' +
+                '}';
+    }
 }

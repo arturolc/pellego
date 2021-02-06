@@ -52,10 +52,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put("FirstName", user.getFirstName());
         cv.put("LastName", user.getLastName());
 
-        db.insert("Users", null, cv);
+        long res = db.insert("Users", null, cv);
+
+        return res != -1;
     }
 
     public boolean addBook(BookModel book) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
 
+        cv.put("BookName", book.getBookName());
+        cv.put("Author", book.getAuthor());
+        cv.put("FilePath", book.getFilePath());
+
+        long res = db.insert("Users", null, cv);
+
+        return res != 1;
     }
 }
