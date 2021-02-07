@@ -39,13 +39,13 @@ import java.util.Map;
 public class DefaultPagerFragment extends Fragment {
 
     //pager
-    private ViewPager mPager;
+    protected ViewPager mPager;
     private FragmentPagerAdapter mPagerAdapter;
     private static Map<String, String> mPages = new HashMap<String, String>();
-    private LinearLayout mPageIndicator;
-    private ProgressBar mProgressBar;
-    private static String mContentString = "";
-    private Display mDisplay;
+    protected LinearLayout mPageIndicator;
+    protected ProgressBar mProgressBar;
+    protected static String mContentString = "";
+    protected Display mDisplay;
     private View root;
 
 
@@ -73,13 +73,15 @@ public class DefaultPagerFragment extends Fragment {
     }
 
 
-    private int getScreenWidth(){
+
+
+    protected int getScreenWidth(){
         float horizontalMargin = getResources().getDimension(R.dimen.activity_horizontal_margin) * 2;
         int screenWidth = (int) (mDisplay.getWidth() - horizontalMargin);
         return screenWidth;
     }
 
-    private int getMaxLineCount(TextView view){
+    protected int getMaxLineCount(TextView view){
         float verticalMargin = getResources().getDimension(R.dimen.activity_vertical_margin) * 2;
         int screenHeight = mDisplay.getHeight();
         TextPaint paint = view.getPaint();

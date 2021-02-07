@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -30,6 +31,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.pellego.R;
+import com.example.pellego.ui.defaultPager.DefaultPagerFragment;
+import com.example.pellego.ui.defaultPager.PagerTask;
 import com.example.pellego.ui.module.overview.ModuleViewModel;
 import com.example.pellego.ui.settings.SettingsViewModel;
 
@@ -43,7 +46,7 @@ import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiTh
  Metaguiding fragment that guides users through text with an underlined
  or highlighted word
  **********************************************/
-public class MetaguidingModuleFragment extends Fragment {
+public class MetaguidingModuleFragment extends DefaultPagerFragment {
 
     private SettingsViewModel settingsViewModel;
     private View root;
@@ -56,9 +59,11 @@ public class MetaguidingModuleFragment extends Fragment {
     private int idx =0;
     private int maxChars;
     private ArrayList<String> pageText;
+    public TextView contentTextView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         wpm = Integer.parseInt(getArguments().getString("wpm"));
         difficulty = getArguments().getString("difficulty");
         currentActivity = getActivity();
@@ -66,25 +71,43 @@ public class MetaguidingModuleFragment extends Fragment {
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         settingsViewModel =
                 new ViewModelProvider(this).get(SettingsViewModel.class);
-
-        root = inflater.inflate(R.layout.fragment_metaguiding_module, container, false);
-        // max chars per page
-        maxChars = 952;
-
-        // Set the displayed text to the appropriate level
-        switch(difficulty) {
-            case "Beginner Submodule":
-                content = new SpannableString(getString(R.string.content_metaguiding_beginner));
-                break;
-            case "Intermediate Submodule":
-                content = new SpannableString(getString(R.string.content_metaguiding_intermediate));
-                break;
-            case "Advanced Submodule":
-                content = new SpannableString(getString(R.string.content_metaguiding_advanced));
-                break;
-        }
+//        root = inflater.inflate(R.layout.fragment_metaguiding_module, container, false);
+//        // max chars per page
+//        maxChars = 952;
+//
+//        // Set the displayed text to the appropriate level
+//        switch(difficulty) {
+//            case "Beginner Submodule":
+//                content = new SpannableString(getString(R.string.content_metaguiding_beginner));
+//                break;
+//            case "Intermediate Submodule":
+//                content = new SpannableString(getString(R.string.content_metaguiding_intermediate));
+//                break;
+//            case "Advanced Submodule":
+//                content = new SpannableString(getString(R.string.content_metaguiding_advanced));
+//                break;
+//        }
         // Only show popup if user navigated to the Rsvp module
+//        if (moduleViewModel.showDialog) showPopupDialog();
+
+        root = inflater.inflate(R.layout.fragment_default_pager, container, false);
+        mPager = root.findViewById(R.id.pager);
+        mProgressBar = root.findViewById(R.id.progress_bar);
+        mPageIndicator = root.findViewById(R.id.pageIndicator);
+        ViewGroup textviewPage = (ViewGroup) getLayoutInflater().inflate(R.layout.fragment_pager_container, (ViewGroup) getActivity().getWindow().getDecorView().findViewById(android.R.id.content) , false);
+        contentTextView = (TextView) textviewPage.findViewById(R.id.mText);
+
+        // Instantiate a ViewPager and a PagerAdapter.
+        mContentString = getString(R.string.content_test_book);
+        // obtaining screen dimensions
+        mDisplay = getActivity().getWindowManager().getDefaultDisplay();
+
+//        ViewAndPaint  vp = new ViewAndPaint((TextPaint)contentTextView.getPaint(), textviewPage, getScreenWidth(), getMaxLineCount(contentTextView), mContentString);
+//
+//        PagerTask pt = new PagerTask(this);
+//        pt.execute(vp);
         if (moduleViewModel.showDialog) showPopupDialog();
+
         return root;
     }
 
@@ -132,7 +155,8 @@ public class MetaguidingModuleFragment extends Fragment {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         protected void onPreExecute() {
-            metaguiding_textview = root.findViewById(R.id.text_metaguiding);
+
+            metaguiding_textview = contentTextView;
             pageText = getPageTextArray(content.toString());
             metaguiding_textview.setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
         }
