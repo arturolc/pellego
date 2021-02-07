@@ -42,6 +42,6 @@
         android:gravity="center"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="60dp" />
+        android:textSize="55dp" />
 
 </RelativeLayout>

@@ -4,15 +4,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.pellego.R;
 
+import com.example.pellego.ui.defaultPager.PagerAdapter;
 import com.example.pellego.ui.module.overview.ModuleViewModel;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
@@ -27,6 +32,8 @@ public class ModuleIntroFragment extends Fragment {
     RelativeLayout parent_view;
     ViewPager2 viewPager2;
     DotsIndicator dotsIndicator;
+    Button btn_register;
+    private NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,24 +45,38 @@ public class ModuleIntroFragment extends Fragment {
         viewPager2 = root.findViewById(R.id.view_pager);
         parent_view = root.findViewById(R.id.parent_view);
 
+        btn_register = root.findViewById(R.id.rsvp_intro_finish_btn);
+
         //set data
         ModuleIntroPagerAdapter pagerAdapter = new ModuleIntroPagerAdapter();
-        pagerAdapter.setContentAndHeaders(moduleViewModel.getIntro_header_id(), moduleViewModel.getIntro_content_id(), getResources());
+        pagerAdapter.setContentAndHeaders(moduleViewModel.getIntro_header_id(),
+                moduleViewModel.getIntro_content_id(),
+                getResources());
         viewPager2.setAdapter(pagerAdapter);
+
+        //Sets button visibility on the last page of the introduction slides
+        int totalPageCount = pagerAdapter.getItemCount();
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                if (position == totalPageCount - 1) {
+                    btn_register.setVisibility(View.VISIBLE);
+                    btn_register.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view){
+                            NavController navController = Navigation.findNavController(getActivity(),
+                                    R.id.nav_host_fragment);
+                            navController.navigate(R.id.action_nav_rsvp_intro_to_nav_module_overview);
+                            return;
+                        }
+                    });
+                }
+            }
+        });
+
         dotsIndicator.setViewPager2(viewPager2);
         viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
 
-        //Can potentially use this code for setting text more dynamically if
-        //we decide to use a TabLayout within this fragment.
-//        new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
-//        }).attach();
-
-//        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                Snackbar.make(parent_view,"You have selected page: "+(position+1),Snackbar.LENGTH_SHORT).show();
-//            }
-//        });
         return root;
     }
 }
