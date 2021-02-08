@@ -40,13 +40,13 @@ public class DefaultPagerFragment extends Fragment {
 
     //pager
     protected ViewPager mPager;
-    private FragmentPagerAdapter mPagerAdapter;
-    private static Map<String, String> mPages = new HashMap<String, String>();
+    protected FragmentPagerAdapter mPagerAdapter;
+    protected static Map<String, String> mPages = new HashMap<String, String>();
     protected LinearLayout mPageIndicator;
     protected ProgressBar mProgressBar;
     protected static String mContentString = "";
     protected Display mDisplay;
-    private View root;
+    protected View root;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,7 +61,7 @@ public class DefaultPagerFragment extends Fragment {
         TextView contentTextView = (TextView) textviewPage.findViewById(R.id.mText);
 
         // Instantiate a ViewPager and a PagerAdapter.
-        mContentString = getString(R.string.content_test_book);
+        mContentString = getString(getArguments().getInt("string_id"));
         // obtaining screen dimensions
         mDisplay = getActivity().getWindowManager().getDefaultDisplay();
 
@@ -93,14 +93,16 @@ public class DefaultPagerFragment extends Fragment {
 
         int maxLineCount = (int) ((screenHeight - verticalMargin ) / textHeight);
 
-        // add extra spaces at the bottom, remove 2 lines
-        maxLineCount -= 2;
+        // add extra spaces at the bottom, remove 4 lines
+        maxLineCount -= 4;
 
         return maxLineCount;
     }
 
     private void initViewPager(){
         mPagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), 1);
+        mPager.setAdapter(mPagerAdapter);
+        // Do this twice to clear the cache, just in case
         mPager.setAdapter(mPagerAdapter);
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override

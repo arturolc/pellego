@@ -25,7 +25,7 @@ public class PageContentsFragment extends PageContentsFragmentBase {
         TextView contentTextView = (TextView) rootView.findViewById(R.id.mText);
         String contents = (DefaultPagerFragment.getContents(mPageNumber));
         contentTextView.setText(contents);
-        contentTextView.setMovementMethod(new ScrollingMovementMethod());
+//        contentTextView.setMovementMethod(new ScrollingMovementMethod());
         return rootView;
     }
 

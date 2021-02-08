@@ -84,7 +84,9 @@ public class LibraryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-                navController.navigate(R.id.nav_default_pager);
+                Bundle args = new Bundle();
+                args.putInt("string_id", R.string.content_test_book);
+                navController.navigate(R.id.nav_default_pager, args);
             }
         });
         return root;
