@@ -27,37 +27,37 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
 
                 // TODO: uncomment when merging back into development
-//                try {
-//                    Amplify.addPlugin(new AWSCognitoAuthPlugin());
-//                    Amplify.configure(getApplicationContext());
-//                    Log.i("Amplify", "Initialized Amplify");
-//                } catch (AmplifyException error) {
-//                    Log.e("Amplify", "Could not initialize Amplify", error);
-//                }
-//
-//                Amplify.Auth.fetchAuthSession(
-//                        result -> {
-//                            Log.i("AmplifyQuickstart", result.toString());
-//                            if (result.isSignedIn()) {
-//                                Intent i = new Intent(MainActivity.this,
-//                                        HomeActivity.class);
-//                                startActivity(i);
-//
-//                            } else {
-//                                Intent i = new Intent(MainActivity.this,
-//                                        LoginActivity.class);
-//                                startActivity(i);
-//                            }
-//                        },
-//                        error -> {
-//                            Log.e("AmplifyQuickstart", error.toString());
-//                        }
-//                );
+                try {
+                    Amplify.addPlugin(new AWSCognitoAuthPlugin());
+                    Amplify.configure(getApplicationContext());
+                    Log.i("Amplify", "Initialized Amplify");
+                } catch (AmplifyException error) {
+                    Log.e("Amplify", "Could not initialize Amplify", error);
+                }
 
-                Intent i=new Intent(MainActivity.this,
-                        HomeActivity.class);
+                Amplify.Auth.fetchAuthSession(
+                        result -> {
+                            Log.i("AmplifyQuickstart", result.toString());
+                            if (result.isSignedIn()) {
+                                Intent i = new Intent(MainActivity.this,
+                                        HomeActivity.class);
+                                startActivity(i);
 
-                startActivity(i);
+                            } else {
+                                Intent i = new Intent(MainActivity.this,
+                                        LoginActivity.class);
+                                startActivity(i);
+                            }
+                        },
+                        error -> {
+                            Log.e("AmplifyQuickstart", error.toString());
+                        }
+                );
+
+//                Intent i=new Intent(MainActivity.this,
+//                        HomeActivity.class);
+//
+//                startActivity(i);
 
 
 
