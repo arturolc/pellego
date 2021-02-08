@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.pellego.R;
+
 public class bookPreviewActivity extends AppCompatActivity {
 
     @Override

@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_nav_library_to_nav_default_pager"
             app:destination="@id/nav_default_pager" />
+        <action
+            android:id="@+id/action_nav_library_to_pellegoLibrary"
+            app:destination="@id/pellegoLibrary" />
     </fragment>
     <fragment
         android:id="@+id/nav_learn"
@@ -155,4 +158,9 @@
         android:name="com.example.pellego.ui.defaultPager.DefaultPagerFragment"
         android:label="@string/menu_title"
         tools:layout="@layout/fragment_default_pager" />
+    <fragment
+        android:id="@+id/pellegoLibrary"
+        android:name="com.example.pellego.ui.pellegolibrary.PellegoLibrary"
+        android:label="pellego_library_fragment"
+        tools:layout="@layout/pellego_library_fragment" />
 </navigation>

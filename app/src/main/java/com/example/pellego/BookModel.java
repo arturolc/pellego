@@ -7,24 +7,15 @@ package com.example.pellego;
 public class BookModel {
     private String bookName;
     private String author;
-    private String filePath;
+    private String bookFilePath;
+    private String imgFilePath;
 
-    public BookModel(String bookName, String author, String filePath) {
+
+    public BookModel(String bookName, String author, String bookFilePath, String imgFilePath) {
         this.bookName = bookName;
         this.author = author;
-        this.filePath = filePath;
-    }
-
-    public String getBookName() {
-        return bookName;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getFilePath() {
-        return filePath;
+        this.bookFilePath = bookFilePath;
+        this.imgFilePath = imgFilePath;
     }
 
     @Override
@@ -32,7 +23,40 @@ public class BookModel {
         return "BookModel{" +
                 "bookName='" + bookName + '\'' +
                 ", author='" + author + '\'' +
-                ", filePath='" + filePath + '\'' +
+                ", bookFilePath='" + bookFilePath + '\'' +
+                ", imgFilePath='" + imgFilePath + '\'' +
                 '}';
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getBookFilePath() {
+        return bookFilePath;
+    }
+
+    public void setBookFilePath(String bookFilePath) {
+        this.bookFilePath = bookFilePath;
+    }
+
+    public String getImgFilePath() {
+        return imgFilePath;
+    }
+
+    public void setImgFilePath(String imgFilePath) {
+        this.imgFilePath = imgFilePath;
     }
 }
