@@ -23,7 +23,7 @@ import com.example.pellego.R;
 import java.util.ArrayList;
 
 /**********************************************
- Eli Hebdon
+ Eli Hebdon and Chris Bordoy
 
  Quiz fragment that contains logic for learning submodule quizes
  **********************************************/
@@ -83,6 +83,9 @@ public class QuizFragment extends Fragment {
                 // Wrong answer
                 else {
                     // TODO: update UI to reflect incorrect response?
+                }
+                if (!quizViewModel.isLastQuestion()) {
+                    quizViewModel.incrementQuestionCount();
                 }
                 ((TextView) root.findViewById(R.id.text_quiz_question)).setText(quizViewModel.getNextQuestion());
                 mNavItems = quizViewModel.getNextAnswers();

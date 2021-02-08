@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**********************************************
- Eli Hebdon
+ Eli Hebdon and Chris Bordoy
 
  Quiz view model
  **********************************************/
@@ -44,7 +44,7 @@ public class QuizViewModel extends ViewModel {
     }
 
     public String getFinalScore() {
-        return (score + "/" + (questions.size() - 1));
+        return (score + "/" + (questions.size()));
     }
 
     public String getDifficulty() {
@@ -56,16 +56,14 @@ public class QuizViewModel extends ViewModel {
     }
 
     public String getFinalMessage() {
-        if (score == questions.size() - 1) {
+        if (score == questions.size()) {
             return "Perfection!";
-        } else if (score / (questions.size() - 1) > 0.6) {
+        } else if ((float)score / questions.size() > 0.6) {
             return "Not bad. You passed";
         } else {
             return "Oof. You'll have to try again..";
         }
     }
-
-
 
     public ArrayList<QuizQuestionModel> getNextAnswers() {
         ArrayList<QuizQuestionModel> mNavItems = new ArrayList<>();
@@ -73,7 +71,6 @@ public class QuizViewModel extends ViewModel {
         mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(1), "B)"));
         mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(2), "C)"));
         mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(3), "D)"));
-        question_no++;
         return mNavItems;
     }
 
@@ -89,6 +86,9 @@ public class QuizViewModel extends ViewModel {
         return mText;
     }
 
+    public void incrementQuestionCount() {
+        question_no++;
+    }
 
     public void clear() {
         mText = new MutableLiveData<>();
@@ -104,32 +104,33 @@ public class QuizViewModel extends ViewModel {
         this.questions = new ArrayList<>();
         // TODO: query DB for quiz questions based on learning module and difficulty
         switch(this.difficulty) {
-            default:
-                this.questions.add(new QuizQuestion("What city did they go to for their summer vacation?", new ArrayList<String>(
-                        Arrays.asList("Louvre",
-                                "Latin",
+            case "Beginner Submodule":
+                this.questions.add(new QuizQuestion("What city was traveled to for summer vacation?", new ArrayList<String>(
+                        Arrays.asList("Chicago",
+                                "London",
                                 "Paris",
-                                "Lyon")), 2));
+                                "Bangkok")), 2));
                 this.questions.add(new QuizQuestion("How long was the summer vacation?", new ArrayList<String>(
                         Arrays.asList("One week",
                                 "Eight days",
                                 "Two weeks",
                                 "Eight weeks")), 1));
-                this.questions.add(new QuizQuestion("What did their hotel room have?", new ArrayList<String>(
-                        Arrays.asList("A balcony",
-                                "A bottle of wine",
-                                "A view of the metro",
-                                "A refrigerator")), 0));
-                this.questions.add(new QuizQuestion("Who got tired walking in the Louvre museum?", new ArrayList<String>(
-                        Arrays.asList("Henry",
-                                "Seine",
-                                "Harry",
-                                "Steve")), 0));
-                this.questions.add(new QuizQuestion("What did Steve enjoy the most?", new ArrayList<String>(
-                        Arrays.asList("The hotel breakfast and the croissants",
-                                "The cafes along the river Seine",
-                                "The Latin Quarter and the balcony",
-                                "The wine and the food")), 0));
+                this.questions.add(new QuizQuestion("Who were the best friends in this reading?", new ArrayList<String>(
+                        Arrays.asList("Henry and Steve",
+                                "Tim and Mable",
+                                "Amy and Sheila",
+                                "Eli and Joanna")), 0));
+                this.questions.add(new QuizQuestion("What was the name of the famous museum in the reading?", new ArrayList<String>(
+                        Arrays.asList("The Metropolitan",
+                                "The Museum of Modern Art",
+                                "The Acropolis Museum",
+                                "The Louvre")), 3));
+                break;
+            case "Intermediate Submodule":
+                break;
+            case "Advanced Submodule":
+                break;
+            default:
                 break;
         }
     }
