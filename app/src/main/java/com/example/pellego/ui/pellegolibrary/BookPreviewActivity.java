@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.pellego.R;
 
-public class bookPreviewActivity extends AppCompatActivity {
+public class BookPreviewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

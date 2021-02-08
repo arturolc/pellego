@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pellego">
-        <activity android:name=".ui.pellegolibrary.bookPreviewActivity"></activity>
+        <activity android:name=".ui.pellegolibrary.BookPreviewActivity"></activity>
         <activity android:name="com.amazonaws.mobileconnectors.cognitoauth.activities.CustomTabsRedirectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

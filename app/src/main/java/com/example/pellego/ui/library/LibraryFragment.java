@@ -71,17 +71,32 @@ public class LibraryFragment extends Fragment {
         // handle import button click
 
         View button_import = root.findViewById(R.id.button_import);
-        PopupMenu popup = new PopupMenu(getContext(), button_import);
+
         button_import.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MenuInflater inflater = popup.getMenuInflater();
-                inflater.inflate(R.menu.popup_libary, popup.getMenu());
+                PopupMenu popup = new PopupMenu(getContext(), button_import);
+                popup.setOnMenuItemClickListener((item) -> {
+                    switch (item.getItemId()) {
+                        case R.id.importFileItem:
+                            //archive(item);
+                            Log.i("LIBRARY", "import file item clicked");
+                            return true;
+                        case R.id.importPellegoItem:
+                            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                            navController.navigate(R.id.pellegoLibrary);
+                            return true;
+                        default:
+                            return false;
+                    }
+                } );
+
+                popup.inflate(R.menu.popup_libary);
                 popup.show();
             }
         });
 
-        popup.setOnMenuItemClickListener(this::onMenuItemClick);
+
 
 
         // TODO: populate library gridlayout by querying the DB and set on click listeners
