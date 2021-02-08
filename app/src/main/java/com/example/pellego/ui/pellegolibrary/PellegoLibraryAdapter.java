@@ -1,6 +1,7 @@
 package com.example.pellego.ui.pellegolibrary;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,21 +9,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.pellego.R;
 
 public class PellegoLibraryAdapter extends RecyclerView.Adapter<PellegoLibraryAdapter.MyViewHolder> {
 
     String s1[], s2[];
-    int img[];
+    String imgs[];
     Context context;
+    Fragment myFragment;
 
-    public PellegoLibraryAdapter(String[] s1, String[] s2, Context context) {
+    public PellegoLibraryAdapter(String[] s1, String[] s2, String[] imgs, Context context, Fragment myFragment) {
         this.s1 = s1;
         this.s2 = s2;
-        this.img = img;
+        this.imgs = imgs;
         this.context = context;
+        this.myFragment = myFragment;
     }
 
     @NonNull
@@ -37,7 +42,8 @@ public class PellegoLibraryAdapter extends RecyclerView.Adapter<PellegoLibraryAd
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.bookName.setText(s1[position]);
         holder.bookAuthor.setText(s2[position]);
-        holder.imgView.setImageResource(R.drawable.harry_potter);
+        ImageView img = ((MyViewHolder) holder).imgView;
+        Glide.with(myFragment).load(imgs[position]).into(img);
     }
 
     @Override
@@ -55,6 +61,7 @@ public class PellegoLibraryAdapter extends RecyclerView.Adapter<PellegoLibraryAd
             bookName = itemView.findViewById(R.id.bookName);
             bookAuthor = itemView.findViewById(R.id.bookAuthor);
             imgView = itemView.findViewById(R.id.imageView2);
+
         }
     }
 }
