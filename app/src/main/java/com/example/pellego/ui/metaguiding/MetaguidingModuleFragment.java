@@ -2,14 +2,12 @@ package com.example.pellego.ui.metaguiding;
 
 import android.app.Dialog;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,11 +17,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -84,7 +80,7 @@ public class MetaguidingModuleFragment extends Fragment {
                 break;
         }
         // Only show popup if user navigated to the Rsvp module
-        if (moduleViewModel.showDialog) showPopupDialog();
+        if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
         return root;
     }
 
@@ -102,11 +98,11 @@ public class MetaguidingModuleFragment extends Fragment {
         return result;
     }
 
-    private void showPopupDialog() {
+    private void showSubmodulePopupDialog() {
         // Setup the custom dialog
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.ok_dialog);
-        ((TextView) dialog.findViewById(R.id.text_dialog)).setText(R.string.text_dialog);
+        ((TextView) dialog.findViewById(R.id.text_dialog)).setText(R.string.submodule_popup_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         Button dialogButton = (Button) dialog.findViewById(R.id.ok_dialog_button);
         dialogButton.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +114,7 @@ public class MetaguidingModuleFragment extends Fragment {
             }
         });
         dialog.show();
-        moduleViewModel.showDialog = false;
+        moduleViewModel.showSubmodulePopupDialog = false;
     }
 
     /**

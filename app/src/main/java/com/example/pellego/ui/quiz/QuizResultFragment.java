@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.pellego.App;
 import com.example.pellego.R;
 import com.example.pellego.ui.module.overview.ModuleViewModel;
 
@@ -40,7 +41,7 @@ public class QuizResultFragment extends Fragment {
         quizViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText("Results");
+                textView.setText(App.getAppResources().getString(R.string.quiz_results_label));
             }
         });
 
