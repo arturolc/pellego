@@ -1,6 +1,8 @@
 package com.example.pellego;
 
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -9,6 +11,8 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+
+import com.amplifyframework.core.Amplify;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -20,6 +24,8 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
@@ -38,16 +44,73 @@ public class TopLevelViewsNavigationTest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void topLevelViewsNavigationTest() {
-        try {
-            Thread.sleep(5000); // Allow the splash screen to finish
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void topLevelViewsNavigationTest() throws InterruptedException {
+        Thread.sleep(5000);
+
+        Amplify.Auth.fetchAuthSession(
+                result -> {
+                    Log.i("AmplifyQuickstart", result.toString());
+                    if (!result.isSignedIn()) { // sign in if not already
+                        ViewInteraction appCompatEditText = onView(
+                                allOf(withId(R.id.editTextTextEmailAddress),
+                                        childAtPosition(
+                                                childAtPosition(
+                                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                        0),
+                                                3),
+                                        isDisplayed()));
+                        appCompatEditText.perform(replaceText("elihebdon@gmail.com"), closeSoftKeyboard());
+
+                        ViewInteraction appCompatEditText2 = onView(
+                                allOf(withId(R.id.editTextTextPassword),
+                                        childAtPosition(
+                                                childAtPosition(
+                                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                        0),
+                                                5),
+                                        isDisplayed()));
+                        appCompatEditText2.perform(replaceText(""), closeSoftKeyboard());
+
+                        ViewInteraction appCompatEditText3 = onView(
+                                allOf(withId(R.id.editTextTextPassword),
+                                        childAtPosition(
+                                                childAtPosition(
+                                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                        0),
+                                                5),
+                                        isDisplayed()));
+                        appCompatEditText3.perform(click());
+
+                        ViewInteraction appCompatEditText4 = onView(
+                                allOf(withId(R.id.editTextTextPassword),
+                                        childAtPosition(
+                                                childAtPosition(
+                                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                        0),
+                                                5),
+                                        isDisplayed()));
+                        appCompatEditText4.perform(replaceText("speedread45!"), closeSoftKeyboard());
+
+                        ViewInteraction materialButton = onView(
+                                allOf(withId(R.id.button2), withText("Sign In"),
+                                        childAtPosition(
+                                                childAtPosition(
+                                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                        0),
+                                                6),
+                                        isDisplayed()));
+                        materialButton.perform(click());
+                    }
+                },
+                error -> {
+                    Log.e("AmplifyQuickstart", error.toString());
+                }
+        );
+        
         ViewInteraction textView = onView(
                 allOf(withId(R.id.text_library), withText("Library"),
                         withParent(allOf(withId(R.id.lib_linear_layout),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         textView.check(matches(withText("Library")));
 

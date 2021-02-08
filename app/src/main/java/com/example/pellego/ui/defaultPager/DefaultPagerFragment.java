@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
-
+import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,6 +24,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
+import com.example.pellego.ui.library.LibraryFragment;
 import com.example.pellego.ui.settings.SettingsViewModel;
 
 import java.util.HashMap;
@@ -47,6 +48,7 @@ public class DefaultPagerFragment extends Fragment {
     protected static String mContentString = "";
     protected Display mDisplay;
     protected View root;
+    private String uri;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,7 +63,7 @@ public class DefaultPagerFragment extends Fragment {
         TextView contentTextView = (TextView) textviewPage.findViewById(R.id.mText);
 
         // Instantiate a ViewPager and a PagerAdapter.
-        mContentString = getString(getArguments().getInt("string_id"));
+        parseArgs();
         // obtaining screen dimensions
         mDisplay = getActivity().getWindowManager().getDefaultDisplay();
 
@@ -72,7 +74,19 @@ public class DefaultPagerFragment extends Fragment {
         return root;
     }
 
+    private void parseArgs() {
+        // get string by uri
+        // TODO: read the file by URI
+        try {
+            mContentString = getArguments().getString("uri");
+//            LibraryFragment libraryFragment = new LibraryFragment();
+//            mContentString = libraryFragment.readTextFile(Uri.parse(uri));
+        } catch (Exception e) {
+            Log.d("error: ", e.getMessage());
+        }
+        if (mContentString == null)  mContentString = getString(getArguments().getInt("string_id"));
 
+    }
 
 
     protected int getScreenWidth(){
