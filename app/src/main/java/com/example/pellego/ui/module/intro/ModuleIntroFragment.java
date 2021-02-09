@@ -66,7 +66,7 @@ public class ModuleIntroFragment extends Fragment {
                         public void onClick(View view){
                             NavController navController = Navigation.findNavController(getActivity(),
                                     R.id.nav_host_fragment);
-                            navController.navigate(R.id.action_nav_rsvp_intro_to_nav_module_overview);
+                            navController.navigateUp();
                             return;
                         }
                     });

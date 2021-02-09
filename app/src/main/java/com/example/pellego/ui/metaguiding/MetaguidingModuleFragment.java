@@ -57,33 +57,27 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        getArguments().putInt("string_id", R.string.content_metaguiding_intermediate);
+        difficulty = getArguments().getString("difficulty");
+        // Set the displayed text to the appropriate level
+        switch(difficulty) {
+            case "Beginner Submodule":
+                getArguments().putInt("string_id", R.string.content_metaguiding_beginner);
+                break;
+            case "Intermediate Submodule":
+                getArguments().putInt("string_id", R.string.content_metaguiding_intermediate);
+                break;
+            case "Advanced Submodule":
+                getArguments().putInt("string_id", R.string.content_metaguiding_advanced);
+
+                break;
+        }
         super.onCreateView(inflater, container, savedInstanceState);
         wpm = Integer.parseInt(getArguments().getString("wpm"));
-        difficulty = getArguments().getString("difficulty");
         currentActivity = getActivity();
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         settingsViewModel =
                 new ViewModelProvider(this).get(SettingsViewModel.class);
-//        root = inflater.inflate(R.layout.fragment_metaguiding_module, container, false);
-//        // max chars per page
-//        maxChars = 952;
-//
-//        // Set the displayed text to the appropriate level
-//        switch(difficulty) {
-//            case "Beginner Submodule":
-//                content = new SpannableString(getString(R.string.content_metaguiding_beginner));
-//                break;
-//            case "Intermediate Submodule":
-//                content = new SpannableString(getString(R.string.content_metaguiding_intermediate));
-//                break;
-//            case "Advanced Submodule":
-//                content = new SpannableString(getString(R.string.content_metaguiding_advanced));
-//                break;
-//        }
-        // Only show popup if user navigated to the Rsvp module
-//        if (moduleViewModel.showDialog) showPopupDialog();
 
         root = inflater.inflate(R.layout.fragment_default_pager, container, false);
         mPager = root.findViewById(R.id.pager);
@@ -91,12 +85,8 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         mPageIndicator = root.findViewById(R.id.pageIndicator);
         ViewGroup textviewPage = (ViewGroup) getLayoutInflater().inflate(R.layout.fragment_pager_container, (ViewGroup) getActivity().getWindow().getDecorView().findViewById(android.R.id.content) , false);
 
-        // Instantiate a ViewPager and a PagerAdapter.
-        mContentString = getString(R.string.content_test_book);
-        // obtaining screen dimensions
-        mDisplay = getActivity().getWindowManager().getDefaultDisplay();
 
-       // if (moduleViewModel.showDialog) showPopupDialog();
+        mDisplay = getActivity().getWindowManager().getDefaultDisplay();
 
         if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
         return root;
@@ -151,7 +141,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         @Override
         protected Integer doInBackground(Integer... ints) {
             // This delay requires some fine tuning because word length varies
-            long delay = (long) (((60.0 / (float) ints[0]) * 130));
+            long delay = (long) (((60.0 / (float) ints[0]) * 70));
             contentTextView = (TextView) root.findViewById(R.id.mText);
             for (int i = 0; i < mPages.size(); i++) {
                 String pageTxt = getContents(i);
