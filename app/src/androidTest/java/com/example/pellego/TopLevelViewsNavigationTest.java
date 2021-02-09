@@ -110,6 +110,7 @@ public class TopLevelViewsNavigationTest {
                     Log.e("AmplifyQuickstart", error.toString());
                 }
         );
+        Thread.sleep(3000);
 
         ViewInteraction textView = onView(
                 allOf(withId(R.id.text_library), withText("Library"),
