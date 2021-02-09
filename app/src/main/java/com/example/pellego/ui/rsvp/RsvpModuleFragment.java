@@ -118,6 +118,7 @@ public class RsvpModuleFragment extends Fragment {
         dialog.show();
         moduleViewModel.showPopupDialog = false;
     }
+
     /**
      * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
      */

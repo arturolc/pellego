@@ -90,18 +90,27 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         return root;
     }
 
-    private ArrayList<String> getPageTextArray(String content) {
-        int index = 0;
-        ArrayList<String> result = new ArrayList<>();
-        while (index + maxChars <= content.length()) {
-            result.add(content.substring(index, index + maxChars));
-            index = index + maxChars;
-        }
-        // remaining chars
-        if (index < content.length()) {
-            result.add(content.substring(index));
-        }
-        return result;
+    private void showQuizPopupDialog() {
+        // Setup the custom dialog
+        Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.ok_dialog);
+        ((TextView) dialog.findViewById(R.id.text_dialog)).setText(R.string.quiz_popup_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Button dialogButton = (Button) dialog.findViewById(R.id.ok_dialog_button);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                NavController navController = Navigation.findNavController(currentActivity, R.id.nav_host_fragment);
+                Bundle args = new Bundle();
+                args.putString("difficulty", difficulty);
+                args.putString("wpm", String.valueOf(wpm));
+                args.putString("module", "metaguiding");
+                navController.navigate(R.id.nav_quiz, args);
+            }
+        });
+        dialog.show();
+        moduleViewModel.showPopupDialog = false;
     }
 
     private void showSubmodulePopupDialog() {
@@ -177,12 +186,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         @Override
         protected void onPostExecute(Integer result) {
             try {
-                NavController navController = Navigation.findNavController(currentActivity, R.id.nav_host_fragment);
-                Bundle args = new Bundle();
-                args.putString("difficulty", difficulty);
-                args.putString("wpm", String.valueOf(wpm));
-                args.putString("module", "rsvp");
-                navController.navigate(R.id.nav_quiz, args);
+                showQuizPopupDialog();
             } catch (Exception e) {
                 Log.d("error" , e.getMessage());
             }
