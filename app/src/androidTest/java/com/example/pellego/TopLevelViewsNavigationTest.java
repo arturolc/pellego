@@ -36,6 +36,10 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
+/**
+ * Test the navigation for the top level views of the app i.e. the bottom navigation and side nav views.
+ * This teest navigates to each view and verifies the title displayed on the screen matches the fragment.
+ */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class TopLevelViewsNavigationTest {
@@ -106,7 +110,7 @@ public class TopLevelViewsNavigationTest {
                     Log.e("AmplifyQuickstart", error.toString());
                 }
         );
-        
+
         ViewInteraction textView = onView(
                 allOf(withId(R.id.text_library), withText("Library"),
                         withParent(allOf(withId(R.id.lib_linear_layout),

@@ -8,8 +8,10 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 public class QuizViewModelTest extends TestCase {
+
 //    @Rule
 //    public InstantTaskExecutorRule instantExecutorRule = new InstantTaskExecutorRule();
+
     public void setUp() throws Exception {
         super.setUp();
     }
@@ -21,10 +23,9 @@ public class QuizViewModelTest extends TestCase {
     @Test
     public void testPopulateQuestionBank() {
 //        QuizViewModel quizViewModel = new QuizViewModel();
-
-            assertTrue(true);
 //            quizViewModel.setDifficulty("intermediate");
 //            quizViewModel.populateQuestionBank();
 //            assertNotNull(quizViewModel.getNextQuestion());
+        assertTrue(true);
     }
 }

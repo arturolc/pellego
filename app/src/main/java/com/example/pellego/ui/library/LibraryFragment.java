@@ -188,7 +188,6 @@ public class LibraryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO: update DB with added text
-//                popupMessage(content);
                 Bundle args = new Bundle();
                 args.putString("uri", content);
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
