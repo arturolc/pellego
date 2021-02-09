@@ -1,14 +1,19 @@
 package com.example.pellego.ui.quiz;
 
+import android.content.res.Resources;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.pellego.App;
+import com.example.pellego.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**********************************************
- Eli Hebdon
+ Eli Hebdon and Chris Bordoy
 
  Quiz view model
  **********************************************/
@@ -24,7 +29,7 @@ public class QuizViewModel extends ViewModel {
 
     public QuizViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Quiz");
+        mText.setValue(getResourceString(R.string.quiz_name));
         question_no = 0;
         score = 0;
         module = "";
@@ -44,7 +49,7 @@ public class QuizViewModel extends ViewModel {
     }
 
     public String getFinalScore() {
-        return (score + "/" + (questions.size() - 1));
+        return (score + "/" + (questions.size()));
     }
 
     public String getDifficulty() {
@@ -56,16 +61,14 @@ public class QuizViewModel extends ViewModel {
     }
 
     public String getFinalMessage() {
-        if (score == questions.size() - 1) {
-            return "Perfection!";
-        } else if (score / (questions.size() - 1) > 0.6) {
-            return "Not bad. You passed";
+        if (score == questions.size()) {
+            return getResourceString(R.string.quiz_perfect_score);
+        } else if ((float)score / questions.size() > 0.6) {
+            return getResourceString(R.string.quiz_mediocre_score);
         } else {
-            return "Oof. You'll have to try again..";
+            return getResourceString(R.string.quiz_bad_score);
         }
     }
-
-
 
     public ArrayList<QuizQuestionModel> getNextAnswers() {
         ArrayList<QuizQuestionModel> mNavItems = new ArrayList<>();
@@ -73,7 +76,6 @@ public class QuizViewModel extends ViewModel {
         mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(1), "B)"));
         mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(2), "C)"));
         mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(3), "D)"));
-        question_no++;
         return mNavItems;
     }
 
@@ -89,10 +91,13 @@ public class QuizViewModel extends ViewModel {
         return mText;
     }
 
+    public void incrementQuestionCount() {
+        question_no++;
+    }
 
     public void clear() {
         mText = new MutableLiveData<>();
-        mText.setValue("Quiz");
+        mText.setValue(getResourceString(R.string.quiz_perfect_score));
         question_no = 0;
         score = 0;
         module = "";
@@ -104,34 +109,39 @@ public class QuizViewModel extends ViewModel {
         this.questions = new ArrayList<>();
         // TODO: query DB for quiz questions based on learning module and difficulty
         switch(this.difficulty) {
+            case "Beginner Submodule":
+                this.questions.add(new QuizQuestion(getResourceString(R.string.rsvp_beginner_quiz_question_one), new ArrayList<String>(
+                        Arrays.asList(getResourceString(R.string.rsvp_beginner_quiz_answer_one_a),
+                                getResourceString(R.string.rsvp_beginner_quiz_answer_one_b),
+                                getResourceString(R.string.rsvp_beginner_quiz_answer_one_c),
+                                getResourceString(R.string.rsvp_beginner_quiz_answer_one_d))), 2));
+                this.questions.add(new QuizQuestion(getResourceString(R.string.rsvp_beginner_quiz_question_two), new ArrayList<String>(
+                        Arrays.asList(getResourceString(R.string.rsvp_beginner_quiz_answer_two_a),
+                                getResourceString(R.string.rsvp_beginner_quiz_answer_two_b),
+                                getResourceString(R.string.rsvp_beginner_quiz_answer_two_c),
+                                getResourceString(R.string.rsvp_beginner_quiz_answer_two_d))), 1));
+                this.questions.add(new QuizQuestion(getResourceString(R.string.rsvp_beginner_quiz_question_three), new ArrayList<String>(
+                        Arrays.asList(getResourceString(R.string.rsvp_beginner_quiz_answer_three_a),
+                                getResourceString(R.string.rsvp_beginner_quiz_answer_three_b),
+                                getResourceString(R.string.rsvp_beginner_quiz_answer_three_c),
+                                getResourceString(R.string.rsvp_beginner_quiz_answer_three_d))), 0));
+                this.questions.add(new QuizQuestion(getResourceString(R.string.rsvp_beginner_quiz_question_four), new ArrayList<String>(
+                        Arrays.asList(getResourceString(R.string.rsvp_beginner_quiz_answer_four_a),
+                                getResourceString(R.string.rsvp_beginner_quiz_answer_four_b),
+                                getResourceString(R.string.rsvp_beginner_quiz_answer_four_c),
+                                getResourceString(R.string.rsvp_beginner_quiz_answer_four_d))), 3));
+                break;
+            case "Intermediate Submodule":
+                break;
+            case "Advanced Submodule":
+                break;
             default:
-                this.questions.add(new QuizQuestion("What city did they go to for their summer vacation?", new ArrayList<String>(
-                        Arrays.asList("Louvre",
-                                "Latin",
-                                "Paris",
-                                "Lyon")), 2));
-                this.questions.add(new QuizQuestion("How long was the summer vacation?", new ArrayList<String>(
-                        Arrays.asList("One week",
-                                "Eight days",
-                                "Two weeks",
-                                "Eight weeks")), 1));
-                this.questions.add(new QuizQuestion("What did their hotel room have?", new ArrayList<String>(
-                        Arrays.asList("A balcony",
-                                "A bottle of wine",
-                                "A view of the metro",
-                                "A refrigerator")), 0));
-                this.questions.add(new QuizQuestion("Who got tired walking in the Louvre museum?", new ArrayList<String>(
-                        Arrays.asList("Henry",
-                                "Seine",
-                                "Harry",
-                                "Steve")), 0));
-                this.questions.add(new QuizQuestion("What did Steve enjoy the most?", new ArrayList<String>(
-                        Arrays.asList("The hotel breakfast and the croissants",
-                                "The cafes along the river Seine",
-                                "The Latin Quarter and the balcony",
-                                "The wine and the food")), 0));
                 break;
         }
+    }
+
+    private String getResourceString(int resString) {
+        return App.getAppResources().getString(resString);
     }
 
     private class QuizQuestion {

@@ -13,28 +13,32 @@ import com.amplifyframework.core.Amplify;
 
 /**********************************************
  Arturo Lara
-
  Email Verification with Code
  **********************************************/
 public class VerifyActivity extends AppCompatActivity {
 
     private String email;
+    private String firstName;
+    private String lastName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify);
-        email = getIntent().getStringExtra("EMAIL");
+        email = getIntent().getStringExtra("email");
+        firstName = getIntent().getStringExtra("fName");
+        lastName = getIntent().getStringExtra("lName");
     }
 
     public void confirm(View view) {
         EditText confirmationCode = findViewById(R.id.confirmCodeText);
-
+        DatabaseHelper dh = new DatabaseHelper(VerifyActivity.this, null, null, 1);
         Amplify.Auth.confirmSignUp(
                 email,
                 confirmationCode.getText().toString(),
                 result ->
                 {
+                    dh.addUser(new UserModel(-1, firstName, lastName, email));
                     Intent i = new Intent(VerifyActivity.this,
                             LoginActivity.class);
                     startActivity(i);

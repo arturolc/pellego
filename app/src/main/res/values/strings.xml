@@ -16,7 +16,10 @@
     <string name="title_sign_out">Sign Out</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
-    <string name="text_dialog">Read the words as they are displayed on the screen. After all the words have been displayed, you will be tested on your comprehension. Do your best!</string>
+    <string name="submodule_popup_dialog">Read the words as they are displayed on the screen. After all the
+        words have been displayed, you will be tested on your comprehension. Good luck!</string>
+    <string name="quiz_popup_dialog">Now you will be tested on your
+        comprehension. Good luck!</string>
     <!--    Module -->
     <string name="title_module_intro">Intro</string>
     <string name="title_module_beginner">Beginner</string>
@@ -32,10 +35,11 @@
     <string name="title_rsvp">Rapid Serial Visual Presentation</string>
     <string name="description_rsvp">Rapid Serial Visual Presentation is a method in which individual words are displayed in rapid succession. The words are fixed to the same
                 point on the screen which eliminates the need for saccades. This means your eyes can remain fixed while the words change."</string>
-    <string name="content_rsvp_beginner">I just returned </string>
-    <!--    <string name="content_rsvp_beginner">I just returned from the greatest summer vacation! It was so fantastic, I never wanted it to end. I spent eight days in Paris, France. My best friends, Henry and Steve, went with me. We had a beautiful hotel room in the Latin Quarter, and it wasnt even expensive. We had a balcony with a wonderful view.-->
-    <!--We visited many famous tourist places. My favorite was the Louvre, a well-known museum. I was always interested in art, so that was a special treat for me. The museum is so huge, you could spend weeks there. Henry got tired walking around the museum and said “Enough! I need to take a break and rest.”-->
-    <!--We took lots of breaks and sat in cafes along the river Seine. The French food we ate was delicious. The wines were tasty, too. Steve’s favorite part of the vacation was the hotel breakfast. He said he would be happy if he could eat croissants like those forever. We had so much fun that we’re already talking about our next vacation!</string>-->
+    <string name="content_rsvp_beginner">I just returned from the greatest summer vacation in Paris, France! I spent eight days
+        there with my best friends, Henry and Steve. We visited many famous tourist places and my favorite was the Louvre,
+        a well-known museum.</string>
+    <!--Below string is used for fast testing purposes for RSVP Beginner Submodule -->
+<!--    <string name="content_rsvp_beginner">I was</string>-->
     <string name="content_rsvp_intermediate">Keith recently came back from a trip to Chicago, Illinois. This midwestern metropolis is found along the shore of Lake Michigan. During his visit, Keith spent a lot of time exploring the city to visit important landmarks and monuments.
 Keith loves baseball, and he made sure to take a visit to Wrigley Field. Not only did he take a tour of this spectacular stadium, but he also got to watch a Chicago Cubs game. In the stadium, Keith and the other fans cheered for the Cubs. Keith was happy that the Cubs won with a score of 5-4.
 Chicago has many historic places to visit. Keith found the Chicago Water Tower impressive as it is one of the few remaining landmarks to have survived the Great Chicago Fire of 1871. Keith also took a walk through Jackson Park, a great outdoor space that hosted the World’s Fair of 1892. The park is great for a leisurely stroll, and it still features some of the original architecture and replicas of monuments that were.
@@ -213,4 +217,32 @@ Nam ut mi at erat tempus convallis. Donec euismod nibh sit amet condimentum dict
 Cras at mauris non nisi commodo ullamcorper. Praesent nec augue mauris. Nam id porta arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse volutpat elit ut urna elementum sagittis. Phasellus nec lorem massa. Curabitur et dolor risus. Fusce pulvinar sapien rutrum, varius arcu imperdiet, blandit leo. In ullamcorper posuere enim, eu fermentum diam tincidunt et. Sed viverra lorem leo, et vestibulum dui finibus id. Maecenas in ullamcorper nulla. Sed rutrum vulputate lectus eu malesuada. Phasellus ultricies vitae est ac rhoncus.
 
 Sed maximus viverra vehicula. Sed efficitur pulvinar lectus ac malesuada. Quisque ornare lorem bibendum dui convallis fermentum. Sed neque urna, eleifend vitae mattis eget, congue vel lorem. In dignissim erat arcu, et tristique felis euismod et. Morbi tincidunt quam sed interdum finibus. Praesent vitae consectetur purus, sed blandit risus. Mauris sit amet odio mattis, fermentum libero vel, pharetra risus. In at aliquet nulla, eu tincidunt orci. Nullam maximus molestie purus, ut scelerisque eros vehicula eu. Quisque ac scelerisque metus.</string>
+    <string name="finish">Finish</string>
+
+    <!--QUIZ STRINGS-->
+    <string name="quiz_perfect_score">Perfection!</string>
+    <string name="quiz_mediocre_score">Not bad. You passed.</string>
+    <string name="quiz_bad_score">Oof. You should try again...</string>
+    <string name="quiz_name">Quiz</string>
+    <string name="rsvp_beginner_quiz_question_one">What city was traveled to for summer vacation?</string>
+    <string name="rsvp_beginner_quiz_question_two">How long was the summer vacation?</string>
+    <string name="rsvp_beginner_quiz_question_three">Who were the best friends in this reading?</string>
+    <string name="rsvp_beginner_quiz_question_four">What was the name of the famous museum in the reading?</string>
+    <string name="rsvp_beginner_quiz_answer_one_a">Chicago</string>
+    <string name="rsvp_beginner_quiz_answer_one_b">London</string>
+    <string name="rsvp_beginner_quiz_answer_one_c">Paris</string>
+    <string name="rsvp_beginner_quiz_answer_one_d">Bangkok</string>
+    <string name="rsvp_beginner_quiz_answer_two_a">One week</string>
+    <string name="rsvp_beginner_quiz_answer_two_b">Eight days</string>
+    <string name="rsvp_beginner_quiz_answer_two_c">Two weeks</string>
+    <string name="rsvp_beginner_quiz_answer_two_d">Two months</string>
+    <string name="rsvp_beginner_quiz_answer_three_a">Henry and Steve</string>
+    <string name="rsvp_beginner_quiz_answer_three_b">Tim and Mable</string>
+    <string name="rsvp_beginner_quiz_answer_three_c">Amy and Sheila</string>
+    <string name="rsvp_beginner_quiz_answer_three_d">Eli and Joanna</string>
+    <string name="rsvp_beginner_quiz_answer_four_a">The Metropolitan</string>
+    <string name="rsvp_beginner_quiz_answer_four_b">The Museum of Modern Art</string>
+    <string name="rsvp_beginner_quiz_answer_four_c">The Acropolis Museum</string>
+    <string name="rsvp_beginner_quiz_answer_four_d">The Louvre</string>
+    <string name="quiz_results_label">Results</string>
 </resources>
