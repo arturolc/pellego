@@ -13,8 +13,11 @@ import com.example.pellego.R;
 
 
 /**
+ * Eli Hebdon
+ * Background task that reads text and loads it into the reader, updating page number and views as it goes
+ *
+ * based on AndroidReader here: https://github.com/koros/AndroidReader
  */
-
 public class PagerTask extends AsyncTask<DefaultPagerFragment.ViewAndPaint, DefaultPagerFragment.ProgressTracker, DefaultPagerFragment.ProgressTracker> {
 
     private DefaultPagerFragment defaultPagerFragment;

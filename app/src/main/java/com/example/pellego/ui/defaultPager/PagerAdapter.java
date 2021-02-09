@@ -4,7 +4,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-
+/**
+ * Eli Hebdon
+ * Adapter that handles pages being added as they're read (strings can be long)
+ *
+ * based on AndroidReader here: https://github.com/koros/AndroidReader
+ */
 public class PagerAdapter extends FragmentPagerAdapter {
 
     int pages;

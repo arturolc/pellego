@@ -102,7 +102,7 @@
         android:id="@+id/nav_metaguiding_module"
         android:name="com.example.pellego.ui.metaguiding.MetaguidingModuleFragment"
         android:label="@string/title_meta_guiding"
-        tools:layout="@layout/fragment_metaguiding_module" />
+        tools:layout="@layout/fragment_default_pager" />
 
 
     <fragment

@@ -82,23 +82,24 @@ public class HomeActivity extends AppCompatActivity {
         NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
         NavigationUI.setupWithNavController(drawerNavigationView, navController);
 
-        drawerNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int id = menuItem.getItemId();
-
-                if (id == R.id.nav_sign_out) {
-                    Amplify.Auth.signOut(
-                            () -> {
-                                Log.i("AUTHENTICATION", "Signed out succesfully");
-                                finish();
-                            },
-                            error -> Log.e("AUTHENTICATION", error.toString())
-                    );
-                }
-                return true;
-            }
-        });
+        // TODO: refactor this so it's just a click listener for the sign out button, otherwise navigation to other views doesn't work
+//        drawerNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                int id = menuItem.getItemId();
+//
+//                if (id == R.id.nav_sign_out) {
+//                    Amplify.Auth.signOut(
+//                            () -> {
+//                                Log.i("AUTHENTICATION", "Signed out succesfully");
+//                                finish();
+//                            },
+//                            error -> Log.e("AUTHENTICATION", error.toString())
+//                    );
+//                }
+//                return true;
+//            }
+//        });
 
 
     }

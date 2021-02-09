@@ -11,6 +11,12 @@ import android.widget.TextView;
 import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
 
+/**
+ * Eli Hebdon
+ * Page contents fragment child that handles reader initializations
+ *
+ * based on AndroidReader here: https://github.com/koros/AndroidReader
+ */
 public class PageContentsFragment extends PageContentsFragmentBase {
 
     @Override
@@ -19,7 +25,7 @@ public class PageContentsFragment extends PageContentsFragmentBase {
         TextView contentTextView = (TextView) rootView.findViewById(R.id.mText);
         String contents = (DefaultPagerFragment.getContents(mPageNumber));
         contentTextView.setText(contents);
-        contentTextView.setMovementMethod(new ScrollingMovementMethod());
+//        contentTextView.setMovementMethod(new ScrollingMovementMethod());
         return rootView;
     }
 

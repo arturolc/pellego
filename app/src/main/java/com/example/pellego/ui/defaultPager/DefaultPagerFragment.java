@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
-
+import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,6 +24,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
+import com.example.pellego.ui.library.LibraryFragment;
 import com.example.pellego.ui.settings.SettingsViewModel;
 
 import java.util.HashMap;
@@ -39,14 +40,15 @@ import java.util.Map;
 public class DefaultPagerFragment extends Fragment {
 
     //pager
-    private ViewPager mPager;
-    private FragmentPagerAdapter mPagerAdapter;
-    private static Map<String, String> mPages = new HashMap<String, String>();
-    private LinearLayout mPageIndicator;
-    private ProgressBar mProgressBar;
-    private static String mContentString = "";
-    private Display mDisplay;
-    private View root;
+    protected ViewPager mPager;
+    protected FragmentPagerAdapter mPagerAdapter;
+    protected static Map<String, String> mPages = new HashMap<String, String>();
+    protected LinearLayout mPageIndicator;
+    protected ProgressBar mProgressBar;
+    protected static String mContentString = "";
+    protected Display mDisplay;
+    protected View root;
+    private String uri;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,7 +63,7 @@ public class DefaultPagerFragment extends Fragment {
         TextView contentTextView = (TextView) textviewPage.findViewById(R.id.mText);
 
         // Instantiate a ViewPager and a PagerAdapter.
-        mContentString = getString(R.string.content_test_book);
+        parseArgs();
         // obtaining screen dimensions
         mDisplay = getActivity().getWindowManager().getDefaultDisplay();
 
@@ -72,14 +74,28 @@ public class DefaultPagerFragment extends Fragment {
         return root;
     }
 
+    private void parseArgs() {
+        // get string by uri
+        // TODO: read the file by URI
+        try {
+            mContentString = getArguments().getString("uri");
+//            LibraryFragment libraryFragment = new LibraryFragment();
+//            mContentString = libraryFragment.readTextFile(Uri.parse(uri));
+        } catch (Exception e) {
+            Log.d("error: ", e.getMessage());
+        }
+        if (mContentString == null)  mContentString = getString(getArguments().getInt("string_id"));
 
-    private int getScreenWidth(){
+    }
+
+
+    protected int getScreenWidth(){
         float horizontalMargin = getResources().getDimension(R.dimen.activity_horizontal_margin) * 2;
         int screenWidth = (int) (mDisplay.getWidth() - horizontalMargin);
         return screenWidth;
     }
 
-    private int getMaxLineCount(TextView view){
+    protected int getMaxLineCount(TextView view){
         float verticalMargin = getResources().getDimension(R.dimen.activity_vertical_margin) * 2;
         int screenHeight = mDisplay.getHeight();
         TextPaint paint = view.getPaint();
@@ -91,14 +107,16 @@ public class DefaultPagerFragment extends Fragment {
 
         int maxLineCount = (int) ((screenHeight - verticalMargin ) / textHeight);
 
-        // add extra spaces at the bottom, remove 2 lines
-        maxLineCount -= 2;
+        // add extra spaces at the bottom, remove 4 lines
+        maxLineCount -= 4;
 
         return maxLineCount;
     }
 
     private void initViewPager(){
         mPagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), 1);
+        mPager.setAdapter(mPagerAdapter);
+        // Do this twice to clear the cache, just in case
         mPager.setAdapter(mPagerAdapter);
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
