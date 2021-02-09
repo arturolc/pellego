@@ -106,13 +106,4 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.nav_metaguiding_intro);
-        if (f instanceof MetaguidingModuleFragment) {//the fragment on which you want to handle your back press
-            Log.i("BACK PRESSED", "BACK PRESSED");
-        }else{
-            super.onBackPressed();
-        }
-    }
 }
