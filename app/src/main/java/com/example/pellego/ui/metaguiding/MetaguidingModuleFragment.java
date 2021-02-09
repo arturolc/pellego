@@ -84,8 +84,6 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         mProgressBar = root.findViewById(R.id.progress_bar);
         mPageIndicator = root.findViewById(R.id.pageIndicator);
         ViewGroup textviewPage = (ViewGroup) getLayoutInflater().inflate(R.layout.fragment_pager_container, (ViewGroup) getActivity().getWindow().getDecorView().findViewById(android.R.id.content) , false);
-
-
         mDisplay = getActivity().getWindowManager().getDefaultDisplay();
 
         if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
@@ -151,7 +149,10 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
                         @Override
                         public void run() {
                             if (!Thread.interrupted()) {
-                                contentTextView.setText(Html.fromHtml(pageTxt.substring(0, idx) + "<u><font color='" + getResources().getColor(R.color.light_blue) + "'>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9)));
+                                NavHostFragment navHostFragment = (NavHostFragment) currentActivity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                                if (navHostFragment.getChildFragmentManager().getFragments().get(0).toString().contains("MetaguidingModuleFragment")) {
+                                    contentTextView.setText(Html.fromHtml(pageTxt.substring(0, idx) + "<u><font color='" + getResources().getColor(R.color.light_blue) + "'>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9)));
+                                }
                             }
                         }
                     });

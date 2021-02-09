@@ -1,5 +1,6 @@
 package com.example.pellego.ui.defaultPager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,8 +19,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.pellego.HomeActivity;
@@ -41,7 +44,7 @@ public class DefaultPagerFragment extends Fragment {
 
     //pager
     protected ViewPager mPager;
-    protected FragmentPagerAdapter mPagerAdapter;
+    protected FragmentStatePagerAdapter mPagerAdapter;
     protected static Map<String, String> mPages = new HashMap<String, String>();
     protected LinearLayout mPageIndicator;
     protected ProgressBar mProgressBar;
@@ -49,6 +52,8 @@ public class DefaultPagerFragment extends Fragment {
     protected Display mDisplay;
     protected View root;
     private String uri;
+    protected static String textSize;
+    private static int padding; // temporary variable while i'm still figuring out text sizing
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -66,6 +71,11 @@ public class DefaultPagerFragment extends Fragment {
         parseArgs();
         // obtaining screen dimensions
         mDisplay = getActivity().getWindowManager().getDefaultDisplay();
+
+        // get text size setting
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(getActivity());
+        textSize = sharedPreferences.getString("text_size", "18dp");
 
         ViewAndPaint  vp = new ViewAndPaint((TextPaint)contentTextView.getPaint(), textviewPage, getScreenWidth(), getMaxLineCount(contentTextView), mContentString);
 
@@ -88,6 +98,20 @@ public class DefaultPagerFragment extends Fragment {
 
     }
 
+    protected static float getTextSize() {
+        switch(textSize) {
+            case "small":
+                padding = 6;
+                return 14;
+            case "large":
+                padding = 12;
+                return 24;
+            default:
+                padding = 11;
+                return 18;
+        }
+    }
+
 
     protected int getScreenWidth(){
         float horizontalMargin = getResources().getDimension(R.dimen.activity_horizontal_margin) * 2;
@@ -96,21 +120,45 @@ public class DefaultPagerFragment extends Fragment {
     }
 
     protected int getMaxLineCount(TextView view){
-        float verticalMargin = getResources().getDimension(R.dimen.activity_vertical_margin) * 2;
+        float verticalMargin = convertDpToPx(getActivity(), getResources().getDimension(R.dimen.activity_vertical_margin) );
+        float bottomMargin = convertDpToPx(getActivity(),  getResources().getDimension(R.dimen.activity_actionbar_margin)) ;
         int screenHeight = mDisplay.getHeight();
+        int screenWidth = mDisplay.getWidth();
         TextPaint paint = view.getPaint();
 
         //Working Out How Many Lines Can Be Entered In The Screen
         Paint.FontMetrics fm = paint.getFontMetrics();
         float textHeight = fm.top - fm.bottom;
+        float textHeight1 = convertDpToPx(this.getActivity(), getTextSize());
+
         textHeight = Math.abs(textHeight);
 
-        int maxLineCount = (int) ((screenHeight - verticalMargin ) / textHeight);
-
+        int maxLineCount = (int) ((screenHeight - verticalMargin - bottomMargin) / (textHeight1));
+//        int maxChars = (int) (((screenHeight - verticalMargin - bottomMargin) * screenWidth) / (textHeight1 * textHeight1));
         // add extra spaces at the bottom, remove 4 lines
-        maxLineCount -= 4;
+
+        maxLineCount -= padding;
+
+//        float verticalMargin = getResources().getDimension(R.dimen.activity_vertical_margin) * 2;
+//        int screenHeight = mDisplay.getHeight();
+//        TextPaint paint = view.getPaint();
+//
+//        //Working Out How Many Lines Can Be Entered In The Screen
+//        Paint.FontMetrics fm = paint.getFontMetrics();
+//        float textHeight = fm.top - fm.bottom;
+//        textHeight = Math.abs(textHeight);
+//
+//        int maxLineCount = (int) ((screenHeight - verticalMargin ) / textHeight);
+//
+//        // add extra spaces at the bottom, remove 4 lines
+//        maxLineCount -= 4;
+//
 
         return maxLineCount;
+    }
+
+    public float convertDpToPx(Context context, float dp) {
+        return dp * context.getResources().getDisplayMetrics().density;
     }
 
     private void initViewPager(){

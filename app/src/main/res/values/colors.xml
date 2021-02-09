@@ -11,4 +11,8 @@
     <color name="pastel_purple">#5a5255</color>
     <color name="pastel_green">#559e83</color>
     <color name="pastel_orange">#ae5a41</color>
+    <color name="light_grey">#D0D3D4</color>
+    <color name="dark_grey">#4D5656</color>
+    <color name="dark_blue">#21618C</color>
+
 </resources>

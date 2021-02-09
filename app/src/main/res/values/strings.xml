@@ -72,6 +72,8 @@ The aforementioned shoulders are rounded body parts that aid arms\' flexibility.
     </string-array>
 
     <!-- Metaguiding -->
+    <string name="title_metaguiding_highlight">Meta-guiding highlight</string>
+    <string name="description_metaguiding_highlight">The default highlight color for the meta guiding technique</string>
     <string name="title_metaguiding_intro">Meta Guiding Introduction</string>
     <string name="title_metaguiding">Meta Guiding</string>
     <string name="description_metaguiding">Meta guiding is the visual guiding of the eye using a finger or pointer, such as a pen, in order for the eye to move faster along the length of a passage of text. It involves drawing invisible shapes on a page of text in order to broaden the visual span for speed reading. </string>
@@ -244,4 +246,25 @@ Sed maximus viverra vehicula. Sed efficitur pulvinar lectus ac malesuada. Quisqu
     <string name="rsvp_beginner_quiz_answer_four_c">The Acropolis Museum</string>
     <string name="rsvp_beginner_quiz_answer_four_d">The Louvre</string>
     <string name="quiz_results_label">Results</string>
+
+    <!--    Settings    -->
+    <string-array name="text_sizes">
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+    </string-array>
+    <string-array name="text_sizes_entries">
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+    </string-array>
+    <string name="title_text_size">Text size</string>
+    <string name="description_text_size">The default text size displayed in the reader</string>
+    <string name="default_text_size">medium</string>
+    <string name="title_wpm">WPM</string>
+    <string name="description_wpm">The default wpm used in the reader</string>
+
+
+
+
 </resources>
