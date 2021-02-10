@@ -1,0 +1,24 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-development-dev-222922-authRole",
+      "UnauthRoleArn": "arn:aws:iam::898244789264:role/amplify-development-dev-222922-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::898244789264:role/amplify-development-dev-222922-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-development-dev-222922-deployment",
+      "UnauthRoleName": "amplify-development-dev-222922-unauthRole",
+      "StackName": "amplify-development-dev-222922",
+      "StackId": "arn:aws:cloudformation:us-west-2:898244789264:stack/amplify-development-dev-222922/efa8c660-6b60-11eb-911e-0a7e602746f5",
+      "AmplifyAppId": "d1jnu8lu82twck"
+    }
+  },
+  "auth": {
+    "developmentcc1895dd": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "lastPushTimeStamp": "2021-02-10T05:40:00.299Z"
+    }
+  }
+}
