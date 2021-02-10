@@ -67,8 +67,6 @@ public class HomeActivity extends AppCompatActivity {
         // Set toolbar as action bar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
         // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
         drawer = findViewById(R.id.home_layout);
