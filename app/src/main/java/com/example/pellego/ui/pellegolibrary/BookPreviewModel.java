@@ -19,6 +19,11 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
+/**********************************************
+ Arturo Lara
+ Model for BookPreviewActivity class. Pulls data from remote server
+ using Volley. Loads images using Glide.
+ **********************************************/
 public class BookPreviewModel extends AndroidViewModel {
     private MutableLiveData<String> synopsis;
     private String id;

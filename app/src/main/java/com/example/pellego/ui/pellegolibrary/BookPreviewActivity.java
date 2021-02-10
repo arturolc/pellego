@@ -23,6 +23,11 @@ import com.example.pellego.SingletonRequestQueue;
 
 import java.util.List;
 
+/**********************************************
+ Arturo Lara
+ Preview of the book when the user clicks on recycler view item.
+ Contains button to add book to library
+ **********************************************/
 public class BookPreviewActivity extends AppCompatActivity {
 
     BookPreviewModel model;

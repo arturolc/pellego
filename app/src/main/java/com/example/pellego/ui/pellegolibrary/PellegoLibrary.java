@@ -25,6 +25,10 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 
+/**********************************************
+ Arturo Lara
+ Displays all of the books of Pellego Library in a recycler view.
+ **********************************************/
 public class PellegoLibrary extends Fragment {
 
     private PellegoLibraryViewModel mViewModel;

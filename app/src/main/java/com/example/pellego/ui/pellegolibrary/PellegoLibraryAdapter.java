@@ -16,6 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.pellego.R;
 
+/**********************************************
+ Arturo Lara
+ Adapter for Recycler view
+ **********************************************/
 public class PellegoLibraryAdapter extends RecyclerView.Adapter<PellegoLibraryAdapter.MyViewHolder> {
 
     String s1[], s2[], ids[];

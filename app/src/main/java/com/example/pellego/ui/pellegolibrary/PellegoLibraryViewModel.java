@@ -27,6 +27,10 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+/**********************************************
+ Arturo Lara
+ Model for PellegoLibrary fragment. Pulls data from remote server
+ **********************************************/
 public class PellegoLibraryViewModel extends AndroidViewModel {
 
 //    BookModel books[] = {};
