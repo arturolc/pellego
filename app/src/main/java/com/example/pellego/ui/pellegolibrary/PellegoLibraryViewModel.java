@@ -37,7 +37,7 @@ public class PellegoLibraryViewModel extends AndroidViewModel {
         super(application);
         books = new MutableLiveData<List<BookModel>>();
         // Formulate the request and handle the response.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://54.176.198.201:5000/library/",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://54.176.198.201:5000/library",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -65,12 +65,13 @@ public class PellegoLibraryViewModel extends AndroidViewModel {
             ArrayList<BookModel> bks = new ArrayList<>();
             JSONArray arr = new JSONArray(response);
             for (int i = 0; i < arr.length(); i++) {
+                String bID = arr.getJSONObject(i).get("BID").toString();
                 String name = arr.getJSONObject(i).get("Book_Name").toString();
                 String author = arr.getJSONObject(i).get("Author").toString();
                 String imageUrl = arr.getJSONObject(i).get("Image_Url").toString();
                 String bookUrl = arr.getJSONObject(i).get("Book_Url").toString();
 
-                BookModel b = new BookModel(name, author, bookUrl, imageUrl);
+                BookModel b = new BookModel(bID, name, author, bookUrl, imageUrl);
                 bks.add(b);
             }
             books.setValue(bks);

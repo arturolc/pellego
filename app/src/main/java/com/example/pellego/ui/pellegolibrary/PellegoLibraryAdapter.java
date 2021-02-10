@@ -1,6 +1,7 @@
 package com.example.pellego.ui.pellegolibrary;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +18,15 @@ import com.example.pellego.R;
 
 public class PellegoLibraryAdapter extends RecyclerView.Adapter<PellegoLibraryAdapter.MyViewHolder> {
 
-    String s1[], s2[];
+    String s1[], s2[], ids[];
     String imgs[];
     Context context;
     Fragment myFragment;
 
-    public PellegoLibraryAdapter(String[] s1, String[] s2, String[] imgs, Context context, Fragment myFragment) {
+    public PellegoLibraryAdapter(String[] ids, String[] s1, String[] s2, String[] imgs, Context context, Fragment myFragment) {
         this.s1 = s1;
         this.s2 = s2;
+        this.ids = ids;
         this.imgs = imgs;
         this.context = context;
         this.myFragment = myFragment;
@@ -44,6 +46,18 @@ public class PellegoLibraryAdapter extends RecyclerView.Adapter<PellegoLibraryAd
         holder.bookAuthor.setText(s2[position]);
         ImageView img = ((MyViewHolder) holder).imgView;
         Glide.with(myFragment).load(imgs[position]).into(img);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, BookPreviewActivity.class);
+                i.putExtra("id", ids[position]);
+                i.putExtra("title", s1[position]);
+                i.putExtra("author", s2[position]);
+                i.putExtra("image", imgs[position]);
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override

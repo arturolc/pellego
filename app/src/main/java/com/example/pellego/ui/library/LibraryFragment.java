@@ -81,6 +81,11 @@ public class LibraryFragment extends Fragment {
                         case R.id.importFileItem:
                             //archive(item);
                             Log.i("LIBRARY", "import file item clicked");
+                            // Start file explorer
+                            Intent intent = new Intent()
+                                    .setType("*/*")
+                                    .setAction(Intent.ACTION_GET_CONTENT);
+                            startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
                             return true;
                         case R.id.importPellegoItem:
                             NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
@@ -116,8 +121,12 @@ public class LibraryFragment extends Fragment {
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.importFileItem:
-                //archive(item);
                 Log.i("LIBRARY", "import file item clicked");
+                // Start file explorer
+                Intent intent = new Intent()
+                        .setType("*/*")
+                        .setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
                 return true;
             case R.id.importPellegoItem:
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);

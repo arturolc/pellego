@@ -5,13 +5,14 @@ package com.example.pellego;
  UserModel class to keep track of Book and Library info
  **********************************************/
 public class BookModel {
+    private String bID;
     private String bookName;
     private String author;
     private String bookFilePath;
     private String imgFilePath;
 
-
-    public BookModel(String bookName, String author, String bookFilePath, String imgFilePath) {
+    public BookModel(String bID, String bookName, String author, String bookFilePath, String imgFilePath) {
+        this.bID = bID;
         this.bookName = bookName;
         this.author = author;
         this.bookFilePath = bookFilePath;
@@ -21,11 +22,20 @@ public class BookModel {
     @Override
     public String toString() {
         return "BookModel{" +
-                "bookName='" + bookName + '\'' +
+                "bID='" + bID + '\'' +
+                ", bookName='" + bookName + '\'' +
                 ", author='" + author + '\'' +
                 ", bookFilePath='" + bookFilePath + '\'' +
                 ", imgFilePath='" + imgFilePath + '\'' +
                 '}';
+    }
+
+    public String getbID() {
+        return bID;
+    }
+
+    public void setbID(String bID) {
+        this.bID = bID;
     }
 
     public String getBookName() {
@@ -59,4 +69,6 @@ public class BookModel {
     public void setImgFilePath(String imgFilePath) {
         this.imgFilePath = imgFilePath;
     }
+
+
 }

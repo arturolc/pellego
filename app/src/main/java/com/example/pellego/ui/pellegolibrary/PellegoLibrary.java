@@ -29,7 +29,7 @@ public class PellegoLibrary extends Fragment {
 
     private PellegoLibraryViewModel mViewModel;
     private View root;
-    private Fragment my = this;
+    private Fragment myFragment = this;
     RecyclerView recyclerView;
 
 
@@ -62,14 +62,15 @@ public class PellegoLibrary extends Fragment {
                 String names[] = new String[mdl.size()];
                 String authors[] = new String[mdl.size()];
                 String imgs[] = new String[mdl.size()];
+                String ids[] = new String[mdl.size()];
 
                 for (int i = 0; i < mdl.size(); i++) {
                     names[i] = mdl.get(i).getBookName();
                     authors[i] = mdl.get(i).getAuthor();
                     imgs[i] = mdl.get(i).getImgFilePath();
+                    ids[i] = mdl.get(i).getbID();
                 }
-                PellegoLibraryAdapter adapter = new PellegoLibraryAdapter(names, authors, imgs,
-                        getContext(), my);
+                PellegoLibraryAdapter adapter = new PellegoLibraryAdapter(ids, names, authors, imgs, getContext(), myFragment);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             }
