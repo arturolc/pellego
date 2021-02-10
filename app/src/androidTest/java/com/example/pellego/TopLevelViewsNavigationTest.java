@@ -36,7 +36,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
-/**
+/** Eli Hebdon
  * Test the navigation for the top level views of the app i.e. the bottom navigation and side nav views.
  * This teest navigates to each view and verifies the title displayed on the screen matches the fragment.
  */
