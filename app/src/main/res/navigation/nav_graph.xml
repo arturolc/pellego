@@ -99,13 +99,16 @@
         android:id="@+id/nav_metaguiding_intro"
         android:name="com.example.pellego.ui.module.intro.ModuleIntroFragment"
         android:label="@string/title_metaguiding_intro"
-        tools:layout="@layout/fragment_module_intro" />
+        tools:layout="@layout/fragment_module_intro"
+        > <action
+        android:id="@+id/action_nav_module_intro_to_nav_module_overview"
+        app:destination="@id/nav_module_overview" /></fragment>
 
     <fragment
         android:id="@+id/nav_metaguiding_module"
         android:name="com.example.pellego.ui.metaguiding.MetaguidingModuleFragment"
         android:label="@string/title_meta_guiding"
-        tools:layout="@layout/fragment_metaguiding_module" />
+        tools:layout="@layout/fragment_default_pager" />
 
 
     <fragment
@@ -114,7 +117,7 @@
         android:label="@string/title_rsvp_intro"
         tools:layout="@layout/fragment_module_intro" >
         <action
-            android:id="@+id/action_nav_rsvp_intro_to_nav_module_overview"
+            android:id="@+id/action_nav_module_intro_to_nav_module_overview"
             app:destination="@id/nav_module_overview" />
     </fragment>
 

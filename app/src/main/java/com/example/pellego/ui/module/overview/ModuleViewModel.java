@@ -11,7 +11,8 @@ import androidx.lifecycle.ViewModel;
  **********************************************/
 public class ModuleViewModel extends ViewModel {
 
-    public boolean showDialog;
+    public boolean showSubmodulePopupDialog;
+    public boolean showPopupDialog;
     private MutableLiveData<String> moduleTitle;
     private String moduleDescription;
     private int intro_id;
@@ -72,7 +73,8 @@ public class ModuleViewModel extends ViewModel {
     }
 
     public ModuleViewModel() {
-        showDialog = false;
+        showSubmodulePopupDialog = false;
+        showPopupDialog = false;
         moduleTitle = new MutableLiveData<>();
         moduleDescription = "";
         intro_id = -1;
@@ -80,7 +82,8 @@ public class ModuleViewModel extends ViewModel {
     }
 
     public void clear() {
-        showDialog = false;
+        showSubmodulePopupDialog = false;
+        showPopupDialog = false;
         moduleTitle = new MutableLiveData<>();
         moduleDescription = "";
         intro_id = -1;

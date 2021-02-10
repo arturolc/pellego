@@ -27,7 +27,7 @@ import com.example.pellego.ui.module.overview.ModuleViewModel;
 import com.example.pellego.ui.settings.SettingsViewModel;
 
 /**********************************************
- Eli Hebdon
+ Eli Hebdon and Chris Bordoy
 
  RSVP module fragment that displays words, one at a time, at 'wpm'
  **********************************************/
@@ -73,15 +73,15 @@ public class RsvpModuleFragment extends Fragment {
                 break;
         }
         // Only show popup if user navigated to the Rsvp module
-       if (moduleViewModel.showDialog) showPopupDialog();
+       if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
         return root;
     }
 
-    private void showPopupDialog() {
+    private void showSubmodulePopupDialog() {
         // Setup the custom dialog
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.ok_dialog);
-        ((TextView) dialog.findViewById(R.id.text_dialog)).setText(R.string.text_dialog);
+        ((TextView) dialog.findViewById(R.id.text_dialog)).setText(R.string.submodule_popup_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         Button dialogButton = (Button) dialog.findViewById(R.id.ok_dialog_button);
         dialogButton.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +93,30 @@ public class RsvpModuleFragment extends Fragment {
             }
         });
         dialog.show();
-        moduleViewModel.showDialog = false;
+        moduleViewModel.showSubmodulePopupDialog = false;
+    }
+
+    private void showQuizPopupDialog() {
+        // Setup the custom dialog
+        Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.ok_dialog);
+        ((TextView) dialog.findViewById(R.id.text_dialog)).setText(R.string.quiz_popup_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Button dialogButton = (Button) dialog.findViewById(R.id.ok_dialog_button);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                NavController navController = Navigation.findNavController(currentActivity, R.id.nav_host_fragment);
+                Bundle args = new Bundle();
+                args.putString("difficulty", difficulty);
+                args.putString("wpm", String.valueOf(wpm));
+                args.putString("module", "rsvp");
+                navController.navigate(R.id.nav_quiz, args);
+            }
+        });
+        dialog.show();
+        moduleViewModel.showPopupDialog = false;
     }
 
     /**
@@ -113,12 +136,13 @@ public class RsvpModuleFragment extends Fragment {
         protected Integer doInBackground(Integer... ints) {
             long delay = (long) ((60.0 / (float) ints[0]) * 1000);
             for (String word : words) {
-                rsvp_text.setText(word);
                 // Verify that user has not navigated away from the RSVP fragment
                 NavHostFragment navHostFragment = (NavHostFragment) currentActivity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
                 if (!navHostFragment.getChildFragmentManager().getFragments().get(0).toString().contains("RsvpModuleFragment")) {
                     cancel(true);
                     return 0;
+                } else {
+                    rsvp_text.setText(word);
                 }
                 try {
                     Thread.sleep(delay);
@@ -133,12 +157,7 @@ public class RsvpModuleFragment extends Fragment {
         @Override
         protected void onPostExecute(Integer result) {
             try {
-                NavController navController = Navigation.findNavController(currentActivity, R.id.nav_host_fragment);
-                Bundle args = new Bundle();
-                args.putString("difficulty", difficulty);
-                args.putString("wpm", String.valueOf(wpm));
-                args.putString("module", "rsvp");
-                navController.navigate(R.id.nav_quiz, args);
+                showQuizPopupDialog();
             } catch (Exception e) {
                 Log.d("error" , e.getMessage());
             }

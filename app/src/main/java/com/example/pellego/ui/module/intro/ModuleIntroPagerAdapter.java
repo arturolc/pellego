@@ -55,7 +55,6 @@ public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPag
         return color_icon_matrix.length;
     }
 
-    //TODO: Add finish button to last slide that navigates back to RSVP submodules
     public class ModuleIntroViewHolder extends RecyclerView.ViewHolder {
         TextView header_text_view;
         TextView description_text_view;

@@ -52,6 +52,7 @@ public class LibraryFragment extends Fragment {
 
     private LibraryViewModel libraryViewModel;
     private View root;
+    private String uri;
 
     @SuppressLint("ResourceAsColor")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -112,7 +113,9 @@ public class LibraryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-                navController.navigate(R.id.nav_default_pager);
+                Bundle args = new Bundle();
+                args.putInt("string_id", R.string.content_test_book);
+                navController.navigate(R.id.nav_default_pager, args);
             }
         });
         return root;
@@ -149,6 +152,7 @@ public class LibraryFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 123 && resultCode == RESULT_OK) {
             Uri selectedFile = data.getData(); //The uri with the location of the file
+            uri = selectedFile.getPath();
             System.out.println("File selected: " + getNameFromURI(selectedFile));
             String title = getNameFromURI(selectedFile);
             String content = readTextFile(selectedFile);
@@ -172,7 +176,7 @@ public class LibraryFragment extends Fragment {
      * @param uri
      * @return
      */
-    private String readTextFile(Uri uri) {
+    public String readTextFile(Uri uri) {
         BufferedReader reader = null;
         StringBuilder builder = new StringBuilder();
         try {
@@ -229,21 +233,14 @@ public class LibraryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO: update DB with added text
-                popupMessage(content);
+                Bundle args = new Bundle();
+                args.putString("uri", content);
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                navController.navigate(R.id.nav_default_pager, args);
             }
         });
 
         // TODO: update DB with new book for current user
-    }
-
-    // just a quick method to display the text file contents
-    // TODO: delete this method and navigate to book reader
-    public void popupMessage(String content){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        alertDialogBuilder.setMessage(content);
-        alertDialogBuilder.setTitle("");
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 
 }

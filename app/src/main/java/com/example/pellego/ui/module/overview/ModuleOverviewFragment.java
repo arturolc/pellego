@@ -69,7 +69,7 @@ public class ModuleOverviewFragment extends Fragment  {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 Bundle args = new Bundle();
-                moduleViewModel.showDialog = true;
+                moduleViewModel.showSubmodulePopupDialog = true;
                 switch(position) {
                     case 0:
                         navController.navigate(moduleViewModel.getIntro_id());
