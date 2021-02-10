@@ -118,6 +118,7 @@ public class RsvpModuleFragment extends Fragment {
         dialog.show();
         moduleViewModel.showPopupDialog = false;
     }
+
     /**
      * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
      */
@@ -135,12 +136,13 @@ public class RsvpModuleFragment extends Fragment {
         protected Integer doInBackground(Integer... ints) {
             long delay = (long) ((60.0 / (float) ints[0]) * 1000);
             for (String word : words) {
-                rsvp_text.setText(word);
                 // Verify that user has not navigated away from the RSVP fragment
                 NavHostFragment navHostFragment = (NavHostFragment) currentActivity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
                 if (!navHostFragment.getChildFragmentManager().getFragments().get(0).toString().contains("RsvpModuleFragment")) {
                     cancel(true);
                     return 0;
+                } else {
+                    rsvp_text.setText(word);
                 }
                 try {
                     Thread.sleep(delay);

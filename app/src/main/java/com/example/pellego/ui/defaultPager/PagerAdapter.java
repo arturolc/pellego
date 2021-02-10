@@ -3,6 +3,7 @@ package com.example.pellego.ui.defaultPager;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 /**
  * Eli Hebdon
@@ -10,7 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
  *
  * based on AndroidReader here: https://github.com/koros/AndroidReader
  */
-public class PagerAdapter extends FragmentPagerAdapter {
+public class PagerAdapter extends FragmentStatePagerAdapter {
 
     int pages;
 

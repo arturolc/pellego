@@ -1,13 +1,18 @@
 package com.example.pellego;
 
 
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.test.espresso.DataInteraction;
+import androidx.test.espresso.PerformException;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.util.HumanReadables;
+import androidx.test.espresso.util.TreeIterables;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -22,33 +27,37 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.TimeoutException;
+
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
-
 /** Eli Hebdon
- * Test the navigation for the top level views of the app i.e. the bottom navigation and side nav views.
- * This teest navigates to each view and verifies the title displayed on the screen matches the fragment.
+ * Test the navigation for rsvp learning module. Navigate to the intro, go through the beginner submodule,
+ * and complete the quiz, then navigate back to the learning module.
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class TopLevelViewsNavigationTest {
+public class RsvpTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void topLevelViewsNavigationTest() throws InterruptedException {
+    public void rsvpTest() throws InterruptedException {
         Thread.sleep(5000);
 
         Amplify.Auth.fetchAuthSession(
@@ -112,13 +121,6 @@ public class TopLevelViewsNavigationTest {
         );
         Thread.sleep(3000);
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.text_library), withText("Library"),
-                        withParent(allOf(withId(R.id.lib_linear_layout),
-                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        textView.check(matches(withText("Library")));
-
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.nav_learn), withContentDescription("Learn"),
                         childAtPosition(
@@ -129,46 +131,37 @@ public class TopLevelViewsNavigationTest {
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
 
+        DataInteraction relativeLayout = onData(anything())
+                .inAdapterView(allOf(withId(R.id.nav_module_list),
+                        childAtPosition(
+                                withId(R.id.nav_module_overview),
+                                1)))
+                .atPosition(0);
+        relativeLayout.perform(click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.title_module_overview), withText("Rapid Serial Visual Presentation"),
+                        withParent(withParent(withId(R.id.frag_technique_overview))),
+                        isDisplayed()));
+        textView.check(matches(withText("Rapid Serial Visual Presentation")));
+
+        DataInteraction relativeLayout2 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.nav_module_list),
+                        childAtPosition(
+                                withId(R.id.nav_module_overview),
+                                1)))
+                .atPosition(0);
+        relativeLayout2.perform(click());
+
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.text_learn), withText("Learning Modules"),
-                        withParent(withParent(withId(R.id.frag_learn))),
+                allOf(withId(R.id.header_text_view), withText("What is RSVP?"),
+                        withParent(allOf(withId(R.id.item_page_container),
+                                withParent(IsInstanceOf.<View>instanceOf(androidx.recyclerview.widget.RecyclerView.class)))),
                         isDisplayed()));
-        textView2.check(matches(withText("Learning Modules")));
-
-        ViewInteraction bottomNavigationItemView2 = onView(
-                allOf(withId(R.id.nav_progress), withContentDescription("Progress"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.bottom_nav_view),
-                                        0),
-                                2),
-                        isDisplayed()));
-        bottomNavigationItemView2.perform(click());
-
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.text_progress), withText("Progress Reports"),
-                        withParent(withParent(withId(R.id.nav_host_fragment))),
-                        isDisplayed()));
-        textView3.check(matches(withText("Progress Reports")));
-
-        ViewInteraction bottomNavigationItemView3 = onView(
-                allOf(withId(R.id.nav_settings), withContentDescription("Settings"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.bottom_nav_view),
-                                        0),
-                                3),
-                        isDisplayed()));
-        bottomNavigationItemView3.perform(click());
-
-        ViewInteraction textView4 = onView(
-                allOf(withId(R.id.text_settings), withText("Settings"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
-                        isDisplayed()));
-        textView4.check(matches(withText("Settings")));
+        textView2.check(matches(withText("What is RSVP?")));
 
         ViewInteraction appCompatImageButton = onView(
-                allOf(withContentDescription("Open navigation drawer"),
+                allOf(withContentDescription("Navigate up"),
                         childAtPosition(
                                 allOf(withId(R.id.toolbar),
                                         childAtPosition(
@@ -178,85 +171,102 @@ public class TopLevelViewsNavigationTest {
                         isDisplayed()));
         appCompatImageButton.perform(click());
 
-        ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.design_navigation_view),
-                        withParent(allOf(withId(R.id.side_nav_view),
-                                withParent(withId(R.id.home_layout)))),
-                        isDisplayed()));
-        recyclerView.check(matches(isDisplayed()));
-
-        ViewInteraction navigationMenuItemView = onView(
-                allOf(withId(R.id.nav_profile),
+        DataInteraction relativeLayout3 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.nav_module_list),
                         childAtPosition(
-                                allOf(withId(R.id.design_navigation_view),
-                                        childAtPosition(
-                                                withId(R.id.side_nav_view),
-                                                0)),
-                                2),
-                        isDisplayed()));
-        navigationMenuItemView.perform(click());
+                                withId(R.id.nav_module_overview),
+                                1)))
+                .atPosition(1);
+        relativeLayout3.perform(click());
 
-        ViewInteraction textView5 = onView(
-                allOf(withId(R.id.text_profile), withText("Profile"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
+        ViewInteraction linearLayout = onView(
+                allOf(withParent(allOf(withId(android.R.id.content),
+                        withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class)))),
                         isDisplayed()));
-        textView5.check(matches(withText("Profile")));
+        linearLayout.check(matches(isDisplayed()));
 
-        ViewInteraction appCompatImageButton2 = onView(
-                allOf(withContentDescription("Open navigation drawer"),
+        // start beginner rsvp module
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.ok_dialog_button), withText("GO!"),
                         childAtPosition(
-                                allOf(withId(R.id.toolbar),
-                                        childAtPosition(
-                                                withClassName(is("androidx.coordinatorlayout.widget.CoordinatorLayout")),
-                                                0)),
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
                                 1),
                         isDisplayed()));
-        appCompatImageButton2.perform(click());
+        materialButton2.perform(click());
 
-        ViewInteraction navigationMenuItemView2 = onView(
-                allOf(withId(R.id.nav_settings),
+        onView(isRoot()).perform(WaitForViewHelper.waitId(R.id.ok_dialog_button, 5000));
+
+        ViewInteraction materialButton3 = onView(
+                allOf(withId(R.id.ok_dialog_button), withText("GO!"),
                         childAtPosition(
-                                allOf(withId(R.id.design_navigation_view),
-                                        childAtPosition(
-                                                withId(R.id.side_nav_view),
-                                                0)),
-                                3),
-                        isDisplayed()));
-        navigationMenuItemView2.perform(click());
-
-        ViewInteraction textView6 = onView(
-                allOf(withId(R.id.text_settings), withText("Settings"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
-                        isDisplayed()));
-        textView6.check(matches(withText("Settings")));
-
-        ViewInteraction appCompatImageButton3 = onView(
-                allOf(withContentDescription("Open navigation drawer"),
-                        childAtPosition(
-                                allOf(withId(R.id.toolbar),
-                                        childAtPosition(
-                                                withClassName(is("androidx.coordinatorlayout.widget.CoordinatorLayout")),
-                                                0)),
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
                                 1),
                         isDisplayed()));
-        appCompatImageButton3.perform(click());
+        materialButton3.perform(click());
 
-        ViewInteraction navigationMenuItemView3 = onView(
-                allOf(withId(R.id.nav_terms_and_conditions),
+        ViewInteraction textView3 = onView(
+                allOf(withId(R.id.title_quiz), withText("Perfection!"),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
+                        isDisplayed()));
+        textView3.check(matches(isDisplayed()));
+
+        DataInteraction relativeLayout4 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.nav_question_list),
                         childAtPosition(
-                                allOf(withId(R.id.design_navigation_view),
-                                        childAtPosition(
-                                                withId(R.id.side_nav_view),
-                                                0)),
+                                withId(R.id.container_questions),
+                                1)))
+                .atPosition(0);
+        relativeLayout4.perform(click());
+
+        DataInteraction relativeLayout5 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.nav_question_list),
+                        childAtPosition(
+                                withId(R.id.container_questions),
+                                1)))
+                .atPosition(1);
+        relativeLayout5.perform(click());
+
+        DataInteraction relativeLayout6 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.nav_question_list),
+                        childAtPosition(
+                                withId(R.id.container_questions),
+                                1)))
+                .atPosition(2);
+        relativeLayout6.perform(click());
+
+        DataInteraction relativeLayout7 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.nav_question_list),
+                        childAtPosition(
+                                withId(R.id.container_questions),
+                                1)))
+                .atPosition(3);
+        relativeLayout7.perform(click());
+
+        ViewInteraction textView4 = onView(
+                allOf(withId(R.id.title_results), withText("Results"),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
+                        isDisplayed()));
+        textView4.check(matches(withText("Results")));
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.button_results_return), withText("Return to Learning Modules"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                        0),
                                 4),
                         isDisplayed()));
-        navigationMenuItemView3.perform(click());
+        appCompatButton.perform(click());
 
-        ViewInteraction textView7 = onView(
-                allOf(withId(R.id.text_terms_and_conditions), withText("Terms and Conditions"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
+        ViewInteraction textView5 = onView(
+                allOf(withId(R.id.text_learn), withText("Learning Modules"),
+                        withParent(withParent(withId(R.id.frag_learn))),
                         isDisplayed()));
-        textView7.check(matches(withText("Terms and Conditions")));
+        textView5.check(matches(withText("Learning Modules")));
     }
 
     private static Matcher<View> childAtPosition(

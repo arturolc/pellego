@@ -39,11 +39,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RsvpActivity"
-            android:label="RsvpIntro" />
-        <activity
             android:name=".HomeActivity"
-            android:label="Home" >
+            android:label="Home"
+            >
+            >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

@@ -109,7 +109,8 @@ public class QuizViewModel extends ViewModel {
         this.questions = new ArrayList<>();
         // TODO: query DB for quiz questions based on learning module and difficulty
         switch(this.difficulty) {
-            case "Beginner Submodule":
+//            case "Beginner Submodule":
+            default:
                 this.questions.add(new QuizQuestion(getResourceString(R.string.rsvp_beginner_quiz_question_one), new ArrayList<String>(
                         Arrays.asList(getResourceString(R.string.rsvp_beginner_quiz_answer_one_a),
                                 getResourceString(R.string.rsvp_beginner_quiz_answer_one_b),
@@ -130,13 +131,14 @@ public class QuizViewModel extends ViewModel {
                                 getResourceString(R.string.rsvp_beginner_quiz_answer_four_b),
                                 getResourceString(R.string.rsvp_beginner_quiz_answer_four_c),
                                 getResourceString(R.string.rsvp_beginner_quiz_answer_four_d))), 3));
-                break;
-            case "Intermediate Submodule":
-                break;
-            case "Advanced Submodule":
-                break;
-            default:
-                break;
+//                break;
+//            case "Intermediate Submodule":
+//
+//                break;
+//            case "Advanced Submodule":
+//                break;
+//            default:
+//                break;
         }
     }
 

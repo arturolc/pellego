@@ -62,6 +62,9 @@ public class LearnFragment extends Fragment {
         moduleList = root.findViewById(R.id.nav_module_list);
 
         spinner = root.findViewById(R.id.loading_spinner);
+        // TODO: show spinner while modules load in
+        spinner.setVisibility(View.GONE);
+
         modulesView = root.findViewById(R.id.nav_module_overview);
         // Query DB for learning modules
         getApiData(inflater, container, new ResponseCallBack() {
