@@ -51,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
                     i.putExtra("email", email);
                     startActivity(i);
                 },
-                error -> Log.e("AUTHENTICATION", "Sign up failed", error)
+                error -> Log.e("AUTHENTICATION", "Sign up failed" + error.toString())
         );
     }
 

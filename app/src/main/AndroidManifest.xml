@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https://development241bbeea-241bbeea-dev.auth.us-west-2.amazoncognito.com/oauth2/idpresponse" />
+                <data android:scheme="https://development50c2b620-50c2b620-dev.auth.us-west-2.amazoncognito.com/oauth2/idpresponse" />
             </intent-filter>
         </activity>
         <activity android:name=".VerifyActivity" />

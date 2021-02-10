@@ -53,12 +53,8 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("AmplifyQuickstart", error.toString());
                         }
                 );
-
                 finish();
             }
         }, SPLASH_SCREEN_TIME_OUT);
-
-
     }
-
 }
