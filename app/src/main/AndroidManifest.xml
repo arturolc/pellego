@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.pellego" >
+    package="com.example.pellego">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,45 +15,51 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pellego"
         android:name=".App">
-        <activity
-            android:name="com.amazonaws.mobileconnectors.cognitoauth.activities.CustomTabsRedirectActivity">
+        <activity android:name=".ui.pellegolibrary.BookPreviewActivity"></activity>
+        <activity android:name="com.amazonaws.mobileconnectors.cognitoauth.activities.CustomTabsRedirectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https://development241bbeea-241bbeea-dev.auth.us-west-2.amazoncognito.com/oauth2/idpresponse" />
+                <data android:scheme="https://development50c2b620-50c2b620-dev.auth.us-west-2.amazoncognito.com/oauth2/idpresponse" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".VerifyActivity" >
-        </activity>
+        <activity android:name=".VerifyActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="pellego" android:host="com.example.pellego" android:pathPrefix="/logout"/>
+
+                <data
+                    android:host="com.example.pellego"
+                    android:pathPrefix="/logout"
+                    android:scheme="pellego" />
             </intent-filter>
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:label="Home"
-            >
-            >
+            android:label="Home">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="pellego" android:host="com.example.pellego" android:pathPrefix="/login"/>
+
+                <data
+                    android:host="com.example.pellego"
+                    android:pathPrefix="/login"
+                    android:scheme="pellego" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Splash" >
+            android:theme="@style/Theme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

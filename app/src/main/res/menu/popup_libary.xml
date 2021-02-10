@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/importFileItem"
+        android:title="Import file"/>
+    <item android:id="@+id/importPellegoItem"
+        android:title="Import from Pellego Library" />
+</menu>

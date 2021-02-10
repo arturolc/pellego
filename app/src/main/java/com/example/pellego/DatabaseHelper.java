@@ -72,7 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cv.put("BookName", book.getBookName());
         cv.put("Author", book.getAuthor());
-        cv.put("FilePath", book.getFilePath());
+        cv.put("FilePath", book.getBookFilePath());
 
         long res = db.insert("Users", null, cv);
 

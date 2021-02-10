@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:foregroundGravity="center_horizontal|fill"
+    android:requiresFadingEdge="horizontal"
+    android:visibility="visible"
+    tools:context=".ui.pellegolibrary.BookPreviewActivity"
+    tools:visibility="visible">
+
+    <ImageView
+        android:id="@+id/bookImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/harry_potter" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20sp"
+        tools:layout_editor_absoluteX="192dp"
+        tools:layout_editor_absoluteY="218dp">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Harry Potter and the Half-Blood Prince"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"/>
+
+        <TextView
+            android:id="@+id/authorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="By J. K. Rowling" />
+
+        <Button
+            android:id="@+id/addToLibraryBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add to library"
+            android:textColor="#FFFFFF"
+            android:onClick="addToLibrary"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="39dp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/synopsisTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis risus sed vulputate odio ut enim blandit volutpat. Nunc sed velit dignissim sodales ut eu. Placerat orci nulla pellentesque dignissim. Vulputate odio ut enim blandit. Sed augue lacus viverra vitae congue eu. Velit euismod in pellentesque massa placerat duis ultricies lacus. Vitae aliquet nec ullamcorper sit amet. Nam libero justo laoreet sit amet. Eget felis eget nunc lobortis mattis aliquam faucibus purus. In hac habitasse platea dictumst quisque sagittis purus. Tellus orci ac auctor augue mauris augue.  Fusce ut placerat orci nulla pellentesque dignissim. Ut faucibus pulvinar elementum integer enim neque volutpat ac tincidunt. Ultrices in iaculis nunc sed augue lacus viverra. Varius duis at consectetur lorem. Viverra nibh cras pulvinar mattis. Tincidunt dui ut ornare lectus. Vel turpis nunc eget lorem dolor sed viverra. Vitae ultricies leo integer malesuada nunc. Nisl nunc mi ipsum faucibus vitae aliquet. Consectetur adipiscing elit duis tristique sollicitudin. Pulvinar mattis nunc sed blandit libero volutpat sed cras ornare. Proin sed libero enim sed faucibus. Metus aliquam eleifend mi in nulla posuere. Urna duis convallis convallis tellus id. Fermentum leo vel orci porta non pulvinar neque laoreet. Sapien pellentesque habitant morbi tristique senectus. Lectus magna fringilla urna porttitor. Elementum sagittis vitae et leo duis ut diam quam. Vestibulum lectus mauris ultrices eros. Scelerisque varius morbi enim nunc faucibus a.  Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Viverra vitae congue eu consequat ac felis donec et. Lacinia quis vel eros donec. Elementum facilisis leo vel fringilla est ullamcorper eget nulla. Id faucibus nisl tincidunt eget nullam non nisi. Vestibulum sed arcu non odio. Pulvinar pellentesque habitant morbi tristique. Integer feugiat scelerisque varius morbi enim. Bibendum ut tristique et egestas quis. Risus at ultrices mi tempus. Tellus cras adipiscing enim eu. Elementum eu facilisis sed odio morbi quis. Adipiscing elit duis tristique sollicitudin nibh. Eget felis eget nunc lobortis mattis. Cras ornare arcu dui vivamus. Fermentum dui faucibus in ornare quam. Mauris cursus mattis molestie a iaculis at erat pellentesque."
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

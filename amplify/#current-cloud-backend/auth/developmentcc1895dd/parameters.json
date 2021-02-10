@@ -1,8 +1,6 @@
 {
-    "identityPoolName": "development241bbeea_identitypool_241bbeea",
-    "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "develo241bbeea",
-    "userPoolName": "development241bbeea_userpool_241bbeea",
+    "resourceNameTruncated": "develocc1895dd",
+    "userPoolName": "developmentcc1895dd_userpool_cc1895dd",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -29,11 +27,11 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "develo241bbeea_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "develocc1895dd_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "241bbeea",
-    "resourceName": "development241bbeea",
-    "authSelections": "identityPoolAndUserPool",
+    "sharedId": "cc1895dd",
+    "resourceName": "developmentcc1895dd",
+    "authSelections": "userPoolOnly",
     "authRoleArn": {
         "Fn::GetAtt": [
             "AuthRole",
@@ -47,16 +45,10 @@
         ]
     },
     "useDefault": "manual",
-    "hostedUI": true,
     "usernameAttributes": [
         "email"
     ],
     "triggers": "{}",
-    "hostedUIDomainName": "development241bbeea-241bbeea",
-    "authProvidersUserPool": [
-        "Google"
-    ],
-    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"name\":\"name\",\"username\":\"sub\"}}]",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
@@ -65,15 +57,13 @@
     },
     "permissions": [],
     "dependsOn": [],
-    "thirdPartyAuth": true,
-    "authProviders": [
-        "accounts.google.com"
-    ],
     "userPoolGroups": false,
     "adminQueries": false,
-    "audiences": [
-        "342167975084-8qtnm1pgjtecmdsctmcifa94ddul09lg.apps.googleusercontent.com",
-        "342167975084-roniukv62dhpbo9c79b88ae0mjqn3e1e.apps.googleusercontent.com"
+    "hostedUI": true,
+    "hostedUIDomainName": "development50c2b620-50c2b620",
+    "authProvidersUserPool": [
+        "Google"
     ],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"pellego://com.example.pellego/login/\"],\"LogoutURLs\":[\"pellego://com.example.pellego/logout/\"]}"
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"name\":\"name\",\"username\":\"sub\"}}]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"pellego://com.example.pellego/login/\"],\"LogoutURLs\":[\"pellego://com.example.pellego/logout/\"]}"
 }

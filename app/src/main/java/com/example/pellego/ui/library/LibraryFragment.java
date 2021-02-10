@@ -9,12 +9,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,28 +57,51 @@ public class LibraryFragment extends Fragment {
     @SuppressLint("ResourceAsColor")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         root = inflater.inflate(R.layout.fragment_library, container, false);
-        libraryViewModel =
-                new ViewModelProvider(this).get(LibraryViewModel.class);
+        libraryViewModel = new ViewModelProvider(this).get(LibraryViewModel.class);
         final TextView textView = root.findViewById(R.id.text_library);
+
         libraryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
+
         // handle import button click
+
         View button_import = root.findViewById(R.id.button_import);
+
         button_import.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Start file explorer
-                Intent intent = new Intent()
-                        .setType("*/*")
-                        .setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
+                PopupMenu popup = new PopupMenu(getContext(), button_import);
+                popup.setOnMenuItemClickListener((item) -> {
+                    switch (item.getItemId()) {
+                        case R.id.importFileItem:
+                            //archive(item);
+                            Log.i("LIBRARY", "import file item clicked");
+                            // Start file explorer
+                            Intent intent = new Intent()
+                                    .setType("*/*")
+                                    .setAction(Intent.ACTION_GET_CONTENT);
+                            startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
+                            return true;
+                        case R.id.importPellegoItem:
+                            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                            navController.navigate(R.id.pellegoLibrary);
+                            return true;
+                        default:
+                            return false;
+                    }
+                } );
+
+                popup.inflate(R.menu.popup_libary);
+                popup.show();
             }
         });
+
 
 
 
@@ -93,7 +121,24 @@ public class LibraryFragment extends Fragment {
         return root;
     }
 
-
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.importFileItem:
+                Log.i("LIBRARY", "import file item clicked");
+                // Start file explorer
+                Intent intent = new Intent()
+                        .setType("*/*")
+                        .setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select a file"), 123);
+                return true;
+            case R.id.importPellegoItem:
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                navController.navigate(R.id.pellegoLibrary);
+                return true;
+            default:
+                return false;
+        }
+    }
 
     /**
      * File explorer has been closed or a file was selected
