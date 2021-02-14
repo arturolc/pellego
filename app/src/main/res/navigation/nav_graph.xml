@@ -23,6 +23,9 @@
             android:id="@+id/action_container_to_nav_terms_and_conditions"
             app:destination="@id/nav_terms_and_conditions" />
         <action
+            android:id="@+id/action_container_to_nav_privacy_policy"
+            app:destination="@id/nav_privacy_policy" />
+        <action
             android:id="@+id/action_container_to_nav_progress"
             app:destination="@id/nav_progress" />
         <action
@@ -69,6 +72,12 @@
         android:name="com.example.pellego.ui.termsAndConditions.TermsAndConditionsFragment"
         android:label="@string/title_terms_and_conditions"
         tools:layout="@layout/fragment_terms_and_conditions" />
+
+    <fragment
+        android:id="@+id/nav_privacy_policy"
+        android:name="com.example.pellego.ui.privacypolicy.PrivacyPolicyFragment"
+        android:label="@string/title_privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" />
 
     <fragment
         android:id="@+id/nav_module_overview"
