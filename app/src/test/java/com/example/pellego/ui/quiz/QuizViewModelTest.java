@@ -16,8 +16,8 @@ public class QuizViewModelTest extends TestCase {
         super.setUp();
     }
 
-    @Mock
-    QuizViewModel quizViewModel = new QuizViewModel();
+//    @Mock
+//    QuizViewModel quizViewModel = new QuizViewModel();
 
 // not working as we cannot test live data not on the android thread
     @Test
