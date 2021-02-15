@@ -6,6 +6,6 @@ unitTests:
   tags: 
     - android
   script:
-    - ./gradlew -Pci --console=plain :app:test
+    - ./gradlew -Pci --console=plain :app:testDebug
 #   only: 
 #     - merge_requests
