@@ -55,32 +55,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Amplify.addPlugin(new AWSCognitoAuthPlugin());
-                    Amplify.configure(getApplicationContext());
-                    Log.i("Amplify", "Initialized Amplify");
-                } catch (AmplifyException error) {
-                    Log.e("Amplify", "Could not initialize Amplify", error);
-                }
-
-                Amplify.Auth.fetchAuthSession(
-                        result -> {
-                            Log.i("AmplifyQuickstart", result.toString());
-                            if (result.isSignedIn()) {
-                                Intent i = new Intent(MainActivity.this,
-                                        HomeActivity.class);
-                                startActivity(i);
-
-                            } else {
-                                Intent i = new Intent(MainActivity.this,
-                                        LoginActivity.class);
-                                startActivity(i);
-                            }
-                        },
-                        error -> {
-                            Log.e("AmplifyQuickstart", error.toString());
-                        }
-                );
+                startActivity(i);
                 finish();
             }
         }, SPLASH_SCREEN_TIME_OUT);
