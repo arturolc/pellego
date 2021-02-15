@@ -14,29 +14,28 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
-//@RunWith(AndroidJUnit4.class)
+@RunWith(AndroidJUnit4.class)
 public class QuizViewModelTest extends TestCase {
 
     @Rule
-//    public InstantTaskExecutorRule instantExecutorRule = new InstantTaskExecutorRule();
+    public InstantTaskExecutorRule instantExecutorRule = new InstantTaskExecutorRule();
 
-//    private Context context = ApplicationProvider.getApplicationContext();
+    private Context context = ApplicationProvider.getApplicationContext();
 
     public void setUp() throws Exception {
         super.setUp();
     }
 
-//    @Mock
-//    QuizViewModel quizViewModel = new QuizViewModel();
+    @Mock
+    QuizViewModel quizViewModel = new QuizViewModel();
 
 // not working as we cannot test live data not on the android thread
     @Test
     public void testPopulateQuestionBank() {
-//        QuizViewModel quizViewModel = new QuizViewModel();
-//            quizViewModel.setDifficulty("intermediate");
-//            quizViewModel.populateQuestionBank();
-//            assertNotNull(quizViewModel.getNextQuestion());
-        assertTrue(true);
+            quizViewModel.setDifficulty("intermediate");
+            quizViewModel.populateQuestionBank();
+            assertNotNull(quizViewModel.getNextQuestion());
+//        assertTrue(true);
     }
 
 //    @Test
