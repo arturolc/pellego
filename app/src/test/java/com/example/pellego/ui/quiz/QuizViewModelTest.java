@@ -19,28 +19,37 @@ public class QuizViewModelTest extends TestCase {
 
     @Rule
     public InstantTaskExecutorRule instantExecutorRule = new InstantTaskExecutorRule();
-
     private Context context = ApplicationProvider.getApplicationContext();
 
-    public void setUp() throws Exception {
-        super.setUp();
-    }
 
     @Mock
     QuizViewModel quizViewModel = new QuizViewModel();
 
-// not working as we cannot test live data not on the android thread
-    @Test
-    public void testPopulateQuestionBank() {
-            quizViewModel.setDifficulty("intermediate");
-            quizViewModel.populateQuestionBank();
-            assertNotNull(quizViewModel.getNextQuestion());
-//        assertTrue(true);
+    @Before
+    public void initialize() {
+        quizViewModel.setDifficulty("intermediate");
+        quizViewModel.setWPM(120);
+        quizViewModel.setModule("metaguiding");
     }
 
-//    @Test
-//    public void testGetDifficulty() {
-//        quizViewModel.setDifficulty("intermediate");
-//        assertEquals("intermediate", quizViewModel.getDifficulty());
-//    }
+    @Test
+    public void testInitialization() {
+
+        assertEquals("intermediate", quizViewModel.getDifficulty());
+        assertTrue(120 == quizViewModel.getWPM());
+        assertEquals("metaguiding", quizViewModel.getModule());
+    }
+
+
+    @Test
+    public void testQuestions() {
+        quizViewModel.populateQuestionBank();
+        String q = quizViewModel.getNextQuestion();
+        assertNotNull(q);
+        assertFalse(quizViewModel.isLastQuestion());
+        assertNotNull(quizViewModel.getNextAnswers());
+        assertTrue(quizViewModel.getCorrectIndex() > -1 && quizViewModel.getCorrectIndex() < 4);
+        quizViewModel.incrementQuestionCount();
+        assertNotSame(quizViewModel.getNextQuestion(), q);
+ }
 }
