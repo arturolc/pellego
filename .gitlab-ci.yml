@@ -1,0 +1,9 @@
+before_script:
+  - chmod +x ./gradlew
+
+debugTests:
+  stage: test
+  tags: 
+    - android
+  script:
+    - ./gradlew -Pci --console=plain :app:test
