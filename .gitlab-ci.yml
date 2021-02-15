@@ -7,3 +7,5 @@ unitTests:
     - android
   script:
     - ./gradlew -Pci --console=plain :app:test
+#   only: 
+#     - merge_requests
