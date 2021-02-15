@@ -1,14 +1,13 @@
 before_script:
-    - chmod +x ./gradlew
-
-unitTests:
- stage: test
- tags:
+  - chmod +x ./gradlew
+  
+unitTest:
+  stage: test
+  tags:
     - android
- script:
+  script:
     - ./gradlew -Pci --console=plain :app:testDebug
-  only: 
-    - merge_requests
+
 
 # instrumentationTests:
 #   stage: test
