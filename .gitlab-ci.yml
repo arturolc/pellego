@@ -41,6 +41,8 @@ stages:
 
 unitTest:
   stage: test
+  tags:
+    - android
   script:
     - ./gradlew testDebug
 
