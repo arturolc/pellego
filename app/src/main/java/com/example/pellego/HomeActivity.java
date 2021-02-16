@@ -1,5 +1,6 @@
 package com.example.pellego;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -9,6 +10,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 
 //import com.example.pellego.ui.rsvp.RsvpIntroFragment;
 import com.amplifyframework.auth.options.AuthSignOutOptions;
@@ -59,22 +62,25 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(drawerNavigationView, navController);
 
         // TODO: refactor this so it's just a click listener for the sign out button, otherwise navigation to other views doesn't work
-//        drawerNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//                int id = menuItem.getItemId();
-//
-//                if (id == R.id.nav_sign_out) {
-//                    Amplify.Auth.signOut(
-//                            () -> {
-//                                Log.i("AUTHENTICATION", "Signed out succesfully");
-//                                finish();
-//                            },
-//                            error -> Log.e("AUTHENTICATION", error.toString())
-//                    );
-//                }
-//                return true;
-//            }
-//        });
+        drawerNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
+
+                if (id == R.id.nav_sign_out) {
+                    Amplify.Auth.signOut(
+                            () -> {
+                                Log.i("AUTHENTICATION", "Signed out succesfully");
+                                finish();
+                            },
+                            error -> Log.e("AUTHENTICATION", error.toString())
+                    );
+                } else {
+                    navController.navigate(id);
+                    drawer.close();
+                }
+                return true;
+            }
+        });
     }
 }
