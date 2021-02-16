@@ -38,7 +38,9 @@ import static org.hamcrest.Matchers.is;
 
 /** Eli Hebdon
  * Test the navigation for the top level views of the app i.e. the bottom navigation and side nav views.
- * This teest navigates to each view and verifies the title displayed on the screen matches the fragment.
+ * This test navigates to each view and verifies the title displayed on the screen matches the fragment.
+ *
+ * NOTE: Please re-record this test when major changes occur to the main UI of the APP
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
