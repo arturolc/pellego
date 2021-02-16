@@ -12,7 +12,7 @@ unitTest:
 instrumentationTests:
   stage: test
   tags:
-    - emulated
+    - android
   script:
     - /opt/start-default-emulator.sh
     # # Turn off animation
@@ -22,7 +22,8 @@ instrumentationTests:
     # # Turn off google auto-fill
     - adb shell settings put secure autofill_service null
     - ./gradlew connectedAndroidTest
-    - ./ci/stop-emulators.sh
-   only:
-     - merge_requests
+    # - ./ci/stop-emulators.sh
+  # only:
+  #   - merge_requests
+
 
