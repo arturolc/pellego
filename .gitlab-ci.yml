@@ -12,7 +12,7 @@ unitTest:
 instrumentationTests:
   stage: test
   tags:
-    - android
+    - emulator
   script:
     - /opt/start-default-emulator.sh
     # # Turn off animation
