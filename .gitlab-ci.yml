@@ -13,6 +13,8 @@ instrumentationTests:
   stage: test
   tags:
     - emulator
+  only:
+    - merge_requests
   script:
     - /opt/start-default-emulator.sh
     # # Turn off animation
@@ -23,8 +25,7 @@ instrumentationTests:
     - adb shell settings put secure autofill_service null
     - ./gradlew connectedAndroidTest
     - ./ci/stop-emulators.sh
-    only:
-    - merge_requests
+    
     
 
 
