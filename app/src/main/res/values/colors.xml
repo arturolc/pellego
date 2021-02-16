@@ -14,5 +14,7 @@
     <color name="light_grey">#D0D3D4</color>
     <color name="dark_grey">#4D5656</color>
     <color name="dark_blue">#21618C</color>
+    <color name="ruddy_pink">#E88B95</color>
+    <color name="pale_pink">#FCD9D9</color>
 
 </resources>
