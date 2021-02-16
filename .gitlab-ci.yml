@@ -9,20 +9,20 @@ unitTest:
     - ./gradlew -Pci --console=plain :app:testDebug
 
 
-# instrumentationTests:
-#   stage: test
-#   tags:
-#     - android
-#   script:
-#     - /opt/start-default-emulator.sh
-#     # # Turn off animation
-#     - adb shell settings put global window_animation_scale 0
-#     - adb shell settings put global transition_animation_scale 0
-#     - adb shell settings put global animator_duration_scale 0
-#     # # Turn off google auto-fill
-#     - adb shell settings put secure autofill_service null
-#     - ./gradlew connectedAndroidTest
-    # - ./ci/stop-emulators.sh
-  # only:
-  #   - merge_requests
+instrumentationTests:
+  stage: test
+  tags:
+    - emulated
+  script:
+    - /opt/start-default-emulator.sh
+    # # Turn off animation
+    - adb shell settings put global window_animation_scale 0
+    - adb shell settings put global transition_animation_scale 0
+    - adb shell settings put global animator_duration_scale 0
+    # # Turn off google auto-fill
+    - adb shell settings put secure autofill_service null
+    - ./gradlew connectedAndroidTest
+    - ./ci/stop-emulators.sh
+   only:
+     - merge_requests
 
