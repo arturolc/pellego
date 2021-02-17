@@ -5,7 +5,7 @@ stages:
   - build
   - test
 
-assembleDebug:
+Build:
   stage: build
   tags:
     - android
