@@ -16,5 +16,9 @@
     <color name="dark_blue">#21618C</color>
     <color name="ruddy_pink">#E88B95</color>
     <color name="pale_pink">#FCD9D9</color>
+    <color name="bold_red">#E21B22</color>
+    <color name="eminent_purple">#69208E</color>
+    <color name="north_carolina_blue">#a1c4fd</color>
+    <color name="sky_blue">#c2e9fb</color>
 
 </resources>

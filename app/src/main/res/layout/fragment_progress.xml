@@ -26,31 +26,56 @@
             android:layout_height="wrap_content"
             android:columnCount="1"
             android:rowCount="4"
-            android:padding="30dp">
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/piechart"
+            android:padding="2dp">
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
-                android:layout_row="0"
-                android:layout_rowWeight="1"
-                android:layout_column="0"
-                android:layout_columnWeight="1"/>
+                android:layout_height="480dp"
+                android:padding="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="@color/white"
+                app:contentPadding="10dp"
+                app:cardElevation="10dp"
+                app:cardUseCompatPadding="true">
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/piechart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_row="0"
+                    android:layout_rowWeight="1"
+                    android:layout_column="0"
+                    android:layout_columnWeight="1"/>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                app:cardCornerRadius="10dp"
+                app:contentPadding="10dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="10dp"
+                app:cardUseCompatPadding="true" >
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/piechart2"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:layout_marginBottom="80dp"
+                android:layout_height="match_parent"
                 android:layout_row="1"
                 android:layout_rowWeight="1"
                 android:layout_column="0"
                 android:layout_columnWeight="1"/>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                app:cardCornerRadius="10dp"
+                app:contentPadding="10dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="10dp"
+                app:cardUseCompatPadding="true" >
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/linechart"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
-                android:layout_height="300dp"
+                android:layout_height="match_parent"
                 android:elevation="10dp"
-                android:layout_marginBottom="80dp"
                 android:background="@color/white"
                 android:padding="10dp"
                 android:layout_row="2"
@@ -58,17 +83,26 @@
                 android:layout_column="0"
                 android:layout_columnWeight="1"
                 />
+        </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                app:cardCornerRadius="10dp"
+                app:contentPadding="10dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="10dp"
+                app:cardUseCompatPadding="true" >
             <com.github.mikephil.charting.charts.BarChart
-                android:layout_marginBottom="20dp"
                 android:layout_gravity="center"
                 android:id="@+id/barchart"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="match_parent"
                 android:layout_row="3"
                 android:layout_rowWeight="1"
                 android:layout_column="0"
                 android:layout_columnWeight="1">
             </com.github.mikephil.charting.charts.BarChart>
+            </androidx.cardview.widget.CardView>
             <!--<androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
