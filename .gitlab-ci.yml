@@ -23,23 +23,23 @@ unitTest:
   script:
     - ./gradlew -Pci --console=plain :app:testDebug
 
-
-instrumentationTests:
-  stage: test
-  tags:
-    - emulator
-  only:
-    - merge_requests
-  script:
-    - /opt/start-default-emulator.sh
-    # # Turn off animation
-    - adb shell settings put global window_animation_scale 0
-    - adb shell settings put global transition_animation_scale 0
-    - adb shell settings put global animator_duration_scale 0
-    # # Turn off google auto-fill
-    - adb shell settings put secure autofill_service null
-    - ./gradlew connectedAndroidTest
-    - ./ci/stop-emulators.sh
+# This can be used if we want to set up an AWS bare metal instance
+# instrumentationTests:
+#   stage: test
+#   tags:
+#     - emulator
+#   only:
+#     - merge_requests
+#   script:
+#     - /opt/start-default-emulator.sh
+#     # # Turn off animation
+#     - adb shell settings put global window_animation_scale 0
+#     - adb shell settings put global transition_animation_scale 0
+#     - adb shell settings put global animator_duration_scale 0
+#     # # Turn off google auto-fill
+#     - adb shell settings put secure autofill_service null
+#     - ./gradlew connectedAndroidTest
+    # - ./ci/stop-emulators.sh
     
     
 
