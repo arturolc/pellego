@@ -51,7 +51,7 @@ public class TopLevelViewsNavigationTest {
 
     @Test
     public void topLevelViewsNavigationTest() throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(3000);
 
         Amplify.Auth.fetchAuthSession(
                 result -> {
@@ -112,7 +112,7 @@ public class TopLevelViewsNavigationTest {
                     Log.e("AmplifyQuickstart", error.toString());
                 }
         );
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
         ViewInteraction textView = onView(
                 allOf(withId(R.id.text_library), withText("Library"),
@@ -258,7 +258,6 @@ public class TopLevelViewsNavigationTest {
                 allOf(withId(R.id.text_terms_and_conditions), withText("Terms and Conditions"),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
                         isDisplayed()));
-        textView7.check(matches(withText("Terms and Conditions")));
     }
 
     private static Matcher<View> childAtPosition(
