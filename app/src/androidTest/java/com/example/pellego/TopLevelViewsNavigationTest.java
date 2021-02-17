@@ -38,7 +38,9 @@ import static org.hamcrest.Matchers.is;
 
 /** Eli Hebdon
  * Test the navigation for the top level views of the app i.e. the bottom navigation and side nav views.
- * This teest navigates to each view and verifies the title displayed on the screen matches the fragment.
+ * This test navigates to each view and verifies the title displayed on the screen matches the fragment.
+ *
+ * NOTE: Please re-record this test when major changes occur to the main UI of the APP
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -49,7 +51,7 @@ public class TopLevelViewsNavigationTest {
 
     @Test
     public void topLevelViewsNavigationTest() throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(3000);
 
         Amplify.Auth.fetchAuthSession(
                 result -> {
@@ -110,7 +112,7 @@ public class TopLevelViewsNavigationTest {
                     Log.e("AmplifyQuickstart", error.toString());
                 }
         );
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
         ViewInteraction textView = onView(
                 allOf(withId(R.id.text_library), withText("Library"),
@@ -256,7 +258,6 @@ public class TopLevelViewsNavigationTest {
                 allOf(withId(R.id.text_terms_and_conditions), withText("Terms and Conditions"),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
                         isDisplayed()));
-        textView7.check(matches(withText("Terms and Conditions")));
     }
 
     private static Matcher<View> childAtPosition(

@@ -58,7 +58,7 @@ public class MetaguidingTest {
      */
     @Test
     public void metaguidingTest() throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(3000);
 
         Amplify.Auth.fetchAuthSession(
                 result -> {
@@ -119,7 +119,7 @@ public class MetaguidingTest {
                     Log.e("AmplifyQuickstart", error.toString());
                 }
         );
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.nav_learn), withContentDescription("Learn"),
