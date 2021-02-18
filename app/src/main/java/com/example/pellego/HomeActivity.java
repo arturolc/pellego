@@ -9,6 +9,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -76,8 +77,11 @@ public class HomeActivity extends AppCompatActivity {
                             error -> Log.e("AUTHENTICATION", error.toString())
                     );
                 } else {
-                    navController.navigate(id);
-                    drawer.close();
+//                    navController.navigate(id);
+                    Intent i = new Intent(HomeActivity.this,
+                            ReaderActivity.class);
+                    startActivity(i);
+//                    drawer.close();
                 }
                 return true;
             }

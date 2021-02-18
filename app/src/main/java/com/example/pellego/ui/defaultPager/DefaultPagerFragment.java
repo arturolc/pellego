@@ -121,7 +121,7 @@ public class DefaultPagerFragment extends Fragment {
 
     protected int getMaxLineCount(TextView view){
         float verticalMargin = convertDpToPx(getActivity(), getResources().getDimension(R.dimen.activity_vertical_margin) );
-        float bottomMargin = convertDpToPx(getActivity(),  getResources().getDimension(R.dimen.activity_actionbar_margin)) ;
+        float bottomMargin = convertDpToPx(getActivity(),  getResources().getDimension(R.dimen.activity_horizontal_margin)) ;
         int screenHeight = mDisplay.getHeight();
         int screenWidth = mDisplay.getWidth();
         TextPaint paint = view.getPaint();
