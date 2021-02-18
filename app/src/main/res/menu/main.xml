@@ -32,13 +32,13 @@
         android:id="@+id/action_rtl"
         android:icon="@drawable/ic_gesture_black_24dp"
         android:title="LRT"
-        app:actionViewClass="com.github.axet.bookreader.widgets.ToolbarRTLView"
+        app:actionViewClass="com.gitlab.capstone.pellego.widgets.ToolbarRTLView"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_fontsize"
         android:icon="@drawable/ic_format_size_white_24dp"
         android:title="@string/book_font"
-        app:actionViewClass="com.github.axet.bookreader.widgets.ToolbarFontSizeView"
+        app:actionViewClass="com.gitlab.capstone.pellego.widgets.ToolbarFontSizeView"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_reflow"
