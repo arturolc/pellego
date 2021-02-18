@@ -6,15 +6,12 @@
     android:layout_height="match_parent"
     android:id="@+id/home_layout"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start"
-    >
-
+    tools:openDrawer="start" >
 
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
     <com.google.android.material.navigation.NavigationView
         app:itemShapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Nav"
@@ -27,7 +24,5 @@
         android:id="@+id/side_nav_view"
         android:fitsSystemWindows="false"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu"/>
-
-
+        app:menu="@menu/drawer_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

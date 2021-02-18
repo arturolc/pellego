@@ -16,7 +16,7 @@ import com.example.pellego.R;
 /**********************************************
  Eli Hebdon
 
- Terms and Conditions Fragment
+Sign Out Fragment
  **********************************************/
 public class SignOutFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,

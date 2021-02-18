@@ -4,35 +4,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pellego.R;
 /**********************************************
- Eli Hebdon
+ Eli Hebdon and Chris Bordoy
 
- Terms and Conditions Fragment
+This fragment displays the applications EULA
  **********************************************/
 public class TermsAndConditionsFragment extends Fragment {
-    private TermsAndConditionsViewModel termsAndConditionsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        termsAndConditionsViewModel =
-                new ViewModelProvider(this).get(TermsAndConditionsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_terms_and_conditions, container, false);
-        final TextView textView = root.findViewById(R.id.text_terms_and_conditions);
-        termsAndConditionsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        final WebView w = root.findViewById(R.id.text_terms_and_conditions);
+        w.loadUrl("file:///android_asset/termsAndConditions.html");
         return root;
     }
 }

@@ -3,18 +3,20 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.example.pellego"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+    }
+    testOptions {
+        unitTests.includeAndroidResources = true
     }
 
     buildTypes {
@@ -68,5 +70,19 @@ dependencies {
     // Glide for images
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+
+    testImplementation 'org.robolectric:robolectric:4.4'
+    testImplementation 'org.mockito:mockito-core:3.3.3'
+
+    androidTestImplementation 'com.android.support:support-annotations:23.1.0'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    // Optional -- Robolectric environment
+    testImplementation 'androidx.test:core:1.0.0'
+    // Optional -- Mockito framework
+    testImplementation 'androidx.test.ext:junit:1.1.1'
+
+
 
 }
