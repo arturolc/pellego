@@ -29,6 +29,13 @@ import com.android.volley.toolbox.Volley;
 import android.util.Log;
 import android.os.Build;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**********************************************
@@ -40,7 +47,8 @@ import android.os.Build;
 
 public class ProfileFragment extends Fragment {
 
-    public String user_name;
+    private TextView textViewResult;
+    private String user_name;
 
     private ProfileViewModel profileViewModel;
 
@@ -49,23 +57,70 @@ public class ProfileFragment extends Fragment {
         profileViewModel =
                 new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        final TextView textView = root.findViewById(R.id.text_profile);
-        profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        textViewResult = root.findViewById(R.id.text_view_result);
+
+        //http://54.176.198.201:5001/
+        //http://jsonplaceholder.typicode.com/
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://jsonplaceholder.typicode.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        JsonPlaceHolderAPI jsonPlaceHolderAPI = retrofit.create(JsonPlaceHolderAPI.class);
+
+        Call<List<PostObject>> call = jsonPlaceHolderAPI.getPosts();
+        call.enqueue(new Callback<List<PostObject>>() {
+
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onResponse(Call<List<PostObject>> call, retrofit2.Response<List<PostObject>> response) {
+                //May get a response back from server but may be a 404 request so check for it
+                if (!response.isSuccessful()) {
+                    textViewResult.setText("Code: " + response.code());
+                    return;
+                }
+
+                //Else if its successful, then we populate data for PostObject
+                List<PostObject> posts = response.body();
+                for (PostObject post : posts) {
+                    String content = "";
+                    content += "ID: " + post.getId() + "\n";
+                    content += "User ID: " + post.getUserid() + "\n";
+                    content += "Title: " + post.getTitle() + "\n";
+                    content += "Text: " + post.getText();
+
+                    textViewResult.append(content);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<PostObject>> call, Throwable t) {
+                //This is a bad example, only meant for debugging purposes
+                textViewResult.setText(t.getMessage());
             }
         });
 
-        getApiData(inflater, container, new ResponseCallBack() {
-            public void onResponse(Object response) {
-                // Update UI only after response is received &
-               //set the UI
-                final TextView view = root.findViewById(R.id.user_name);
-                view.setText(user_name);
-            }
-        });
+        /*        Call<UserObject> call = jsonPlaceHolderAPI.getUserName();
+        call.enqueue(new Callback<UserObject>() {
 
+            @Override
+            public void onResponse(Call<UserObject> call, retrofit2.Response<UserObject> response) {
+                //May get a response back from server but may be a 404 request so check for it
+                if (!response.isSuccessful()) {
+                    textViewResult.setText("Code: " + response.code());
+                    return;
+                }
+
+                //Else if its successful, then we populate data for PostObject
+                UserObject user = response.body();
+                textViewResult.append(user.getUserName());
+            }
+
+            @Override
+            public void onFailure(Call<UserObject> call, Throwable t) {
+                //This is a bad example, only meant for debugging purposes
+                textViewResult.setText(t.getMessage());
+            }
+        });*/
         return root;
     }
 
@@ -77,7 +132,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    private void getApiData(@NonNull LayoutInflater inflater, ViewGroup container, ResponseCallBack responseCallBack)
+/*    private void getApiData(@NonNull LayoutInflater inflater, ViewGroup container, ResponseCallBack responseCallBack)
     {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -114,6 +169,6 @@ public class ProfileFragment extends Fragment {
 
         // Add the request to the RequestQueue.
         queue.add(jsonArrayRequest);
-    }
+    }*/
 
 }
