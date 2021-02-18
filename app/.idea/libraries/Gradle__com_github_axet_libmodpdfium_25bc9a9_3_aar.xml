@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.axet:libmodpdfium:25bc9a9-3@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/edb9eec653ff866f35894ef553e86585/libmodpdfium-25bc9a9-3/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4a8169477b1886ec49635fd809bf473b/libmodpdfium-25bc9a9-3/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4a8169477b1886ec49635fd809bf473b/libmodpdfium-25bc9a9-3/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4a8169477b1886ec49635fd809bf473b/libmodpdfium-25bc9a9-3/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

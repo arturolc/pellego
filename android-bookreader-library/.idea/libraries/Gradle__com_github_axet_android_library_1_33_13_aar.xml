@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.axet:android-library:1.33.13@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d925ef4c2eaf24fff3d16b57803e2656/android-library-1.33.13/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d925ef4c2eaf24fff3d16b57803e2656/android-library-1.33.13/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d925ef4c2eaf24fff3d16b57803e2656/android-library-1.33.13/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d925ef4c2eaf24fff3d16b57803e2656/android-library-1.33.13/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.axet/android-library/1.33.13/9256d843ba87c5a2c09fcc20a3d11deb37e50345/android-library-1.33.13-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.axet/android-library/1.33.13/3f0983b74dfae6019f82e5ea97e321c9da4e089f/android-library-1.33.13-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,4 +1,4 @@
-package com.github.axet.bookreader.activities;
+package com.github.axet.bookreader;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -41,7 +41,6 @@ import com.github.axet.androidlibrary.widgets.OpenFileDialog;
 import com.github.axet.androidlibrary.widgets.SearchView;
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.WebViewCustom;
-import com.github.axet.bookreader.R;
 import com.github.axet.bookreader.app.BookApplication;
 import com.github.axet.bookreader.app.Storage;
 import com.github.axet.bookreader.fragments.LibraryFragment;

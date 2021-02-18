@@ -41,7 +41,7 @@ import com.github.axet.androidlibrary.widgets.OpenFileDialog;
 import com.github.axet.androidlibrary.widgets.SearchView;
 import com.github.axet.androidlibrary.widgets.TextMax;
 import com.github.axet.bookreader.R;
-import com.github.axet.bookreader.activities.MainActivity;
+import com.github.axet.bookreader.MainActivity;
 import com.github.axet.bookreader.app.BookApplication;
 import com.github.axet.bookreader.app.Storage;
 import com.github.axet.bookreader.widgets.BookmarksDialog;
