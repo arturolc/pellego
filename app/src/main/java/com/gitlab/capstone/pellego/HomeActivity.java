@@ -56,30 +56,30 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        // Attach nav drawer to nav controller
-        NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
-        NavigationUI.setupWithNavController(drawerNavigationView, navController);
-
-        // TODO: refactor this so it's just a click listener for the sign out button, otherwise navigation to other views doesn't work
-        drawerNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int id = menuItem.getItemId();
-
-                if (id == R.id.nav_sign_out) {
-                    Amplify.Auth.signOut(
-                            () -> {
-                                Log.i("AUTHENTICATION", "Signed out succesfully");
-                                finish();
-                            },
-                            error -> Log.e("AUTHENTICATION", error.toString())
-                    );
-                } else {
-                    navController.navigate(id);
-                    drawer.close();
-                }
-                return true;
-            }
-        });
+//        // Attach nav drawer to nav controller
+//        NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
+//        NavigationUI.setupWithNavController(drawerNavigationView, navController);
+//
+//        // TODO: refactor this so it's just a click listener for the sign out button, otherwise navigation to other views doesn't work
+//        drawerNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                int id = menuItem.getItemId();
+//
+//                if (id == R.id.nav_sign_out) {
+//                    Amplify.Auth.signOut(
+//                            () -> {
+//                                Log.i("AUTHENTICATION", "Signed out succesfully");
+//                                finish();
+//                            },
+//                            error -> Log.e("AUTHENTICATION", error.toString())
+//                    );
+//                } else {
+//                    navController.navigate(id);
+//                    drawer.close();
+//                }
+//                return true;
+//            }
+//        });
     }
 }
