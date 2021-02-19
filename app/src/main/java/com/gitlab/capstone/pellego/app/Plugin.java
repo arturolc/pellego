@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -441,7 +442,7 @@ public interface Plugin {
                         canvas.drawBitmap(wallpaper, cw - dx, ch - dy, paint);
                 }
             } else {
-                canvas.drawColor(wallpaperColor);
+                canvas.drawColor(Color.WHITE);
             }
         }
 

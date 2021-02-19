@@ -15,6 +15,7 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -122,7 +123,7 @@ public class FBReaderView extends RelativeLayout {
     public static final String ACTION_MENU = FBReaderView.class.getCanonicalName() + ".ACTION_MENU";
 
     public static final int PAGE_OVERLAP_PERCENTS = 5; // percents
-    public static final int PAGE_PAPER_COLOR = 0x80ffffff;
+    public static final int PAGE_PAPER_COLOR = Color.WHITE;
 
     public enum Widgets {PAGING, CONTINUOUS}
 

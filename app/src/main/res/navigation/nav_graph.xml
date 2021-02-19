@@ -175,4 +175,9 @@
         android:name="com.gitlab.capstone.pellego.fragments.pellegolibrary.PellegoLibrary"
         android:label="pellego_library_fragment"
         tools:layout="@layout/pellego_library_fragment" />
+    <fragment
+        android:id="@+id/reader"
+        android:name="com.gitlab.capstone.pellego.fragments.ReaderFragment"
+        android:label="reader_fragment"
+        tools:layout="@layout/fragment_reader" />
 </navigation>

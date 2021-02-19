@@ -1,7 +1,11 @@
 package com.gitlab.capstone.pellego.fragments.settings;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -28,4 +32,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        view.setBackgroundResource(R.color.light_blue);
+        super.onViewCreated(view, savedInstanceState);
+    }
 }

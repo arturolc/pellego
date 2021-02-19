@@ -20,6 +20,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.view.MenuItemCompat;
 import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -27,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -615,6 +619,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     }
 
     public FragmentTransaction openFragment(Fragment f, String tag) {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         FragmentManager fm = getSupportFragmentManager();
         return fm.beginTransaction().replace(R.id.nav_host_fragment, f, tag);
     }

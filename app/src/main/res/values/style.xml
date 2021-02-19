@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="ShapeAppearanceOverlay.Nav" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
@@ -17,7 +17,7 @@
     <style name="PreferenceStyle">
         <item name="android:textColorPrimary">@color/light_grey</item>
         <item name="android:textColorSecondary">@color/light_grey</item>
-        <item name="android:colorAccent">@color/white</item>
+        <item name="android:colorAccent" tools:targetApi="lollipop">@color/white</item>
         <item name="android:listSeparatorTextViewStyle">@style/ListSeparatorColor</item>
 
     </style>
