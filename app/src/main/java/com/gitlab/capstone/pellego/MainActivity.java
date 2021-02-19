@@ -401,6 +401,40 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         loadBook(u, null);
     }
 
+    public void importPressed() {
+        final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
+        String last = shared.getString(BookApplication.PREFERENCE_LAST_PATH, null);
+        Uri old = null;
+        if (last != null) {
+            old = Uri.parse(last);
+            File f = Storage.getFile(old);
+            while (f != null && !f.exists())
+                f = f.getParentFile();
+            if (f != null)
+                old = Uri.fromFile(f);
+        } else {
+            old = Uri.parse(ContentResolver.SCHEME_CONTENT + Storage.CSS); // show SAF default
+        }
+        choicer = new OpenChoicer(OpenFileDialog.DIALOG_TYPE.FILE_DIALOG, true) {
+            @Override
+            public void onResult(Uri uri) {
+                String s = uri.getScheme();
+                if (s.equals(ContentResolver.SCHEME_FILE)) {
+                    File f = Storage.getFile(uri);
+                    f = f.getParentFile();
+                    SharedPreferences.Editor editor = shared.edit();
+                    editor.putString(BookApplication.PREFERENCE_LAST_PATH, f.toString());
+                    editor.commit();
+                }
+                loadBook(uri, null);
+            }
+        };
+        choicer.setStorageAccessFramework(this, RESULT_FILE);
+        choicer.setPermissionsDialog(this, Storage.PERMISSIONS_RO, RESULT_FILE);
+        choicer.show(old);
+
+    }
+
     public void loadBook(final Uri u, final Runnable success) {
         final ProgressDialog builder = new ProgressDialog(this);
         final AlertDialog d = builder.create();

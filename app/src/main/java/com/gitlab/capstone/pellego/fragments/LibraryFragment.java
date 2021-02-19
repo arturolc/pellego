@@ -13,6 +13,8 @@ import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.appcompat.widget.PopupMenu;
@@ -27,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -69,7 +72,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
 
     public static class FragmentHolder {
         RecyclerView grid;
-
+        View import_button;
         public int layout;
 
         View toolbar;
@@ -91,7 +94,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
 
         public void create(View v) {
             grid = (RecyclerView) v.findViewById(R.id.grid);
-
+            import_button = v.findViewById(R.id.button_import_book);
             // DividerItemDecoration divider = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
             // grid.addItemDecoration(divider);
 
@@ -103,11 +106,13 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
 
             toolbar.setVisibility(View.GONE);
 
+
             footer = inflater.inflate(R.layout.library_footer, null);
             footerButtons = footer.findViewById(R.id.search_footer_buttons);
             footerNext = footer.findViewById(R.id.search_footer_next);
             footerProgress = footer.findViewById(R.id.search_footer_progress);
             footerStop = footer.findViewById(R.id.search_footer_stop);
+
 
             footerNext.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -513,6 +518,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         holder = new FragmentHolder(getContext());
         books = new LibraryAdapter(holder);
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -531,6 +537,33 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
 
         final MainActivity main = (MainActivity) getActivity();
         main.toolbar.setTitle(R.string.app_name);
+        // handle import button click
+        holder.import_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.widget.PopupMenu popup = new android.widget.PopupMenu(getContext(), holder.import_button);
+                popup.setOnMenuItemClickListener((item) -> {
+                    switch (item.getItemId()) {
+                        case R.id.importFileItem:
+                            //archive(item);
+                            Log.i("LIBRARY", "import file item clicked");
+                            // Start file explorer
+                            main.importPressed();
+                            return true;
+                        case R.id.importPellegoItem:
+                            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                            navController.navigate(R.id.pellegoLibrary);
+                            return true;
+                        default:
+                            return false;
+                    }
+                } );
+
+                popup.inflate(R.menu.popup_libary);
+                popup.show();
+            }
+        });
+
         holder.grid.setAdapter(books);
         holder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
