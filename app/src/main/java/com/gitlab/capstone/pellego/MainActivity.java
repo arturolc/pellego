@@ -238,12 +238,12 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         MenuItem searchMenu = menu.findItem(R.id.action_search);
 
         final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
-        MenuItem theme = menu.findItem(R.id.action_theme);
-        String t = shared.getString(BookApplication.PREFERENCE_THEME, "");
-        String d = getString(R.string.Theme_Dark);
-        theme.setIcon(t.equals(d) ? R.drawable.ic_brightness_night_white_24dp : R.drawable.ic_brightness_day_white_24dp);
-        ResourcesMap map = new ResourcesMap(this, R.array.theme_value, R.array.theme_text);
-        theme.setTitle(map.get(getString(t.equals(d) ? R.string.Theme_Dark : R.string.Theme_Light)));
+//        MenuItem theme = menu.findItem(R.id.action_theme);
+//        String t = shared.getString(BookApplication.PREFERENCE_THEME, "");
+//        String d = getString(R.string.Theme_Dark);
+//        theme.setIcon(t.equals(d) ? R.drawable.ic_brightness_night_white_24dp : R.drawable.ic_brightness_day_white_24dp);
+//        ResourcesMap map = new ResourcesMap(this, R.array.theme_value, R.array.theme_text);
+//        theme.setTitle(map.get(getString(t.equals(d) ? R.string.Theme_Dark : R.string.Theme_Light)));
 
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenu);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -352,15 +352,15 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
             choicer.show(old);
         }
 
-        if (id == R.id.action_theme) {
-            SharedPreferences.Editor edit = shared.edit();
-            String t = shared.getString(BookApplication.PREFERENCE_THEME, "");
-            String d = getString(R.string.Theme_Dark);
-            edit.putString(BookApplication.PREFERENCE_THEME, t.equals(d) ? getString(R.string.Theme_Light) : d);
-            edit.commit();
-            restartActivity();
-            return true;
-        }
+//        if (id == R.id.action_theme) {
+//            SharedPreferences.Editor edit = shared.edit();
+//            String t = shared.getString(BookApplication.PREFERENCE_THEME, "");
+//            String d = getString(R.string.Theme_Dark);
+//            edit.putString(BookApplication.PREFERENCE_THEME, t.equals(d) ? getString(R.string.Theme_Light) : d);
+//            edit.commit();
+//            restartActivity();
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }

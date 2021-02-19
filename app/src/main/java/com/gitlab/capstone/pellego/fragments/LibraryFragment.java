@@ -639,7 +639,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         MenuItem tocMenu = menu.findItem(R.id.action_toc);
         MenuItem bookmarksMenu = menu.findItem(R.id.action_bm);
         MenuItem searchMenu = menu.findItem(R.id.action_search);
-        MenuItem reflow = menu.findItem(R.id.action_reflow);
+//        MenuItem reflow = menu.findItem(R.id.action_reflow);
         MenuItem fontsize = menu.findItem(R.id.action_fontsize);
         MenuItem debug = menu.findItem(R.id.action_debug);
         MenuItem rtl = menu.findItem(R.id.action_rtl);
@@ -662,7 +662,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
             });
         }
 
-        reflow.setVisible(false);
+//        reflow.setVisible(false);
         searchMenu.setVisible(true);
         homeMenu.setVisible(false);
         tocMenu.setVisible(false);

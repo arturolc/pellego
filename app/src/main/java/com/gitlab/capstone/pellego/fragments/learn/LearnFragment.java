@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -55,12 +56,12 @@ public class LearnFragment extends Fragment {
 
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
-
         View root = inflater.inflate(R.layout.fragment_learn, container, false);
         final TextView textView = root.findViewById(R.id.text_learn);
         textView.setText(R.string.title_learn);
         moduleList = root.findViewById(R.id.nav_module_list);
-
+//        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+//        toolbar.getMenu().setGroupVisible(R.id.group_hideable, false);
         spinner = root.findViewById(R.id.loading_spinner);
         // TODO: show spinner while modules load in
         spinner.setVisibility(View.GONE);
