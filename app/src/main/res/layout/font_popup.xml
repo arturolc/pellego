@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_remove_black_24dp"
-            android:tint="?attr/colorAccent" />
+            android:tint="@color/light_blue" />
 
         <SeekBar
             android:id="@+id/fontsize_seek"
@@ -55,6 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:progressTint="@color/light_blue"
+            android:thumbTint="@color/light_blue"
             android:max="100"
             android:progress="45" />
 
@@ -63,6 +65,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add_black_24dp"
-            android:tint="?attr/colorAccent" />
+            android:tint="@color/light_blue" />
     </LinearLayout>
 </LinearLayout>

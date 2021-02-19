@@ -268,6 +268,8 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         Context context;
         public ArrayList<FontView> ff = new ArrayList<>();
         public int selected;
+        int row_index;
+
         public AdapterView.OnItemClickListener clickListener;
 
         public FontAdapter(Context context) {
@@ -324,12 +326,22 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    row_index = position;
                     clickListener.onItemClick(null, null, holder.getAdapterPosition(), -1);
                 }
             });
+            if(row_index==position){
+                holder.tv.setCheckMarkDrawable(R.drawable.ic_checked_circle);
+            }
+            else
+            {
+                holder.tv.setCheckMarkDrawable(R.drawable.ic_empty_circle);
+            }
+//            holder.tv.setCheckMarkDrawable(R.drawable.ic_empty_circle);
             holder.tv.setChecked(selected == position);
             holder.tv.setTypeface(ff.get(position).font);
             holder.tv.setText(ff.get(position).name);
+
         }
     }
 
@@ -603,8 +615,11 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         setHasOptionsMenu(true);
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(null);
+        try {
+            Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+            toolbar.setNavigationIcon(null);
+        } catch (Exception e) {}
+
 
     }
 

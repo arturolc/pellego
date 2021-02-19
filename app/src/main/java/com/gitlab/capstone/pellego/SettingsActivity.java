@@ -63,7 +63,7 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
             setHasOptionsMenu(true);
 
             bindPreferenceSummaryToValue(findPreference(BookApplication.PREFERENCE_SCREENLOCK));
-            bindPreferenceSummaryToValue(findPreference(BookApplication.PREFERENCE_THEME));
+//            bindPreferenceSummaryToValue(findPreference(BookApplication.PREFERENCE_THEME));
             bindPreferenceSummaryToValue(findPreference(BookApplication.PREFERENCE_VIEW_MODE));
 
             StoragePathPreferenceCompat s = (StoragePathPreferenceCompat) findPreference(BookApplication.PREFERENCE_STORAGE);

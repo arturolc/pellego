@@ -40,12 +40,12 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_tts_title" />
 
-    <ListPreference
-        android:defaultValue="@string/Theme_Light"
-        android:entries="@array/theme_text"
-        android:entryValues="@array/theme_value"
-        android:key="theme"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        android:title="@string/pref_theme_title" />
+<!--    <ListPreference-->
+<!--        android:defaultValue="@string/Theme_Light"-->
+<!--        android:entries="@array/theme_text"-->
+<!--        android:entryValues="@array/theme_value"-->
+<!--        android:key="theme"-->
+<!--        android:negativeButtonText="@null"-->
+<!--        android:positiveButtonText="@null"-->
+<!--        android:title="@string/pref_theme_title" />-->
 </PreferenceScreen>
