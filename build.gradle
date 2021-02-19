@@ -1,11 +1,13 @@
 buildscript {
+    ext.kotlin_version = "1.4.30"
+    ext.supportLibVersion = "25.3.0"
     repositories {
         mavenLocal()
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:4.1.2'
         classpath 'com.github.axet:gradle-android-dx:0.0.4'
     }
 }
