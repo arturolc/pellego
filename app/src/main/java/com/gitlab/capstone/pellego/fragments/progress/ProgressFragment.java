@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,6 +31,9 @@ public class ProgressFragment extends Fragment {
                 new ViewModelProvider(this).get(ProgressViewModel.class);
         View root = inflater.inflate(R.layout.fragment_progress, container, false);
         final TextView textView = root.findViewById(R.id.text_progress);
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        setHasOptionsMenu(false);
+        toolbar.setVisibility(View.INVISIBLE);
         progressViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

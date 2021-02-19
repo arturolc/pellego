@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -35,6 +36,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         view.setBackgroundResource(R.color.light_blue);
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        setHasOptionsMenu(false);
+        toolbar.setVisibility(View.INVISIBLE);
         super.onViewCreated(view, savedInstanceState);
     }
 }

@@ -537,6 +537,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
 
         final MainActivity main = (MainActivity) getActivity();
         main.toolbar.setTitle(R.string.app_name);
+        main.toolbar.setVisibility(View.VISIBLE);
         // handle import button click
         holder.import_button.setOnClickListener(new View.OnClickListener() {
             @Override
