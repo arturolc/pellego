@@ -24,8 +24,8 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.app_bar_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setContentView(R.layout.app_bar_main_2);
+        toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
     }
 

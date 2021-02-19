@@ -196,7 +196,7 @@ public class ReaderActivity extends FullscreenActivity implements NavigationView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.app_bar_main_2);
+
         storage = new Storage(this);
         registerReceiver(receiver, new IntentFilter(FBReaderView.ACTION_MENU));
 

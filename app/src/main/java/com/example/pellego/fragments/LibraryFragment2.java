@@ -528,7 +528,6 @@ public class LibraryFragment2 extends Fragment implements ReaderActivity.SearchL
 
         holder.create(v);
         holder.footer.setVisibility(View.GONE);
-
         final ReaderActivity main = (ReaderActivity) getActivity();
         main.toolbar.setTitle(R.string.app_name);
         holder.grid.setAdapter(books);
