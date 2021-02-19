@@ -565,6 +565,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
                 popup.show();
             }
         });
+        main.findViewById(R.id.bottom_nav_view).setVisibility(View.VISIBLE);
 
         holder.grid.setAdapter(books);
         holder.setOnItemClickListener(new AdapterView.OnItemClickListener() {

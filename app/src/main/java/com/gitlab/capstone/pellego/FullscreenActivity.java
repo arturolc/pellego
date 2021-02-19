@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -28,6 +30,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
     private AppBarConfiguration appBarConfiguration;
     private DrawerLayout drawer;
     private NavController navController;
+    private CoordinatorLayout bottomContent;
     BottomNavigationView bottomNavigationView;
 
     public interface FullscreenListener {
@@ -42,10 +45,11 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         setContentView(R.layout.activity_home);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        bottomContent = findViewById(R.id.container_bottom);
         toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.ic_action_button_overflow));
         // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
-        drawer = findViewById(R.id.home_layout);
+//        drawer = findViewById(R.id.home_layout);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_settings, R.id.nav_library, R.id.nav_learn, R.id.nav_progress,
@@ -54,7 +58,6 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
                 .build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
-
         // Attach nav drawer to nav controller
 //        NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
 //        NavigationUI.setupWithNavController(drawerNavigationView, navController);
@@ -114,12 +117,14 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
     @Override
     public void hideSystemUI() {
         super.hideSystemUI();
+        bottomContent.setVisibility(View.INVISIBLE);
         setFitsSystemWindows(this, false);
     }
 
     @Override
     public void showSystemUI() {
         super.showSystemUI();
+        bottomContent.setVisibility(View.VISIBLE);
         setFitsSystemWindows(this, true);
     }
 

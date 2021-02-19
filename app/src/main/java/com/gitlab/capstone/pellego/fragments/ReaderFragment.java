@@ -690,6 +690,8 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             }
         });
 
+        main.findViewById(R.id.bottom_nav_view).setVisibility(View.INVISIBLE);
+        main.findViewById(R.id.button_play).setVisibility(View.VISIBLE);
         return v;
     }
 
