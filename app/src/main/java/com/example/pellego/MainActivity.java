@@ -1,17 +1,16 @@
 package com.example.pellego;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.WindowManager;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
+import com.example.pellego.ui.auth.AuthActivity;
 
 /**********************************************
  Eli Hebdon
@@ -21,6 +20,10 @@ import com.amplifyframework.core.Amplify;
 public class MainActivity extends AppCompatActivity {
     private static int SPLASH_SCREEN_TIME_OUT=2000;
     private Intent i;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
                     } else {
                         i = new Intent(MainActivity.this,
-                                LoginActivity.class);
+                                AuthActivity.class);
                     }
                 },
                 error -> {

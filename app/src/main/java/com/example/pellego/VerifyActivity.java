@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.amplifyframework.core.Amplify;
+import com.example.pellego.ui.auth.AuthActivity;
 
 /**********************************************
  Arturo Lara
@@ -40,7 +41,7 @@ public class VerifyActivity extends AppCompatActivity {
                 {
                     dh.addUser(new UserModel(-1, firstName, lastName, email));
                     Intent i = new Intent(VerifyActivity.this,
-                            LoginActivity.class);
+                            AuthActivity.class);
                     startActivity(i);
                     finish();
                     Log.i("AUTHENTICATION", result.toString());
