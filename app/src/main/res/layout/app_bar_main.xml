@@ -13,7 +13,7 @@
         app:titleTextColor="@color/light_blue"
         android:elevation="8dp"
         android:theme="@style/ToolbarTheme"
-        app:popupTheme="@style/AppThemeLight.PopupOverlay"
+        app:popupTheme="@style/ToolbarTheme"
         />
 
     <include layout="@layout/content_main" />

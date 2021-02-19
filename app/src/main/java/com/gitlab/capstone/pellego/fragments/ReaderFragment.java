@@ -617,8 +617,8 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         final View v = inflater.inflate(R.layout.fragment_reader, container, false);
 
         final MainActivity main = (MainActivity) getActivity();
-        fb = (FBReaderView) v.findViewById(R.id.main_view);
 
+        fb = (FBReaderView) v.findViewById(R.id.main_view);
         fb.listener = new FBReaderView.Listener() {
             @Override
             public void onScrollingFinished(ZLViewEnums.PageIndex index) {

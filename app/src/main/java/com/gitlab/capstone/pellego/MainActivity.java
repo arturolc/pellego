@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -201,9 +203,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         storage = new Storage(this);
-
         registerReceiver(receiver, new IntentFilter(FBReaderView.ACTION_MENU));
-
         if (savedInstanceState == null && getIntent().getParcelableExtra(SAVE_INSTANCE_STATE) == null) {
             openLibrary();
             openIntent(getIntent());
@@ -236,7 +236,6 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         getMenuInflater().inflate(R.menu.main, menu);
 
         MenuItem searchMenu = menu.findItem(R.id.action_search);
-
         final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
 //        MenuItem theme = menu.findItem(R.id.action_theme);
 //        String t = shared.getString(BookApplication.PREFERENCE_THEME, "");

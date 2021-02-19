@@ -67,7 +67,7 @@
             android:id="@+id/action_tts"
             android:orderInCategory="100"
             android:title="TTS"
-            app:showAsAction="ifRoom" />
+            app:showAsAction="collapseActionView" />
         <item
             android:id="@+id/action_sort"
             android:title="@string/sort_by"

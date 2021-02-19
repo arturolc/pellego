@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Process;
@@ -518,7 +520,6 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         holder = new FragmentHolder(getContext());
         books = new LibraryAdapter(holder);
         setHasOptionsMenu(true);
-
     }
 
     @Override
