@@ -19,6 +19,7 @@ import android.preference.PreferenceManager;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
 import androidx.core.view.ViewCompat;
@@ -602,6 +603,9 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         setHasOptionsMenu(true);
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(null);
+
     }
 
 
@@ -692,12 +696,16 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
 
         main.findViewById(R.id.bottom_nav_view).setVisibility(View.INVISIBLE);
         main.findViewById(R.id.button_play).setVisibility(View.VISIBLE);
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(null);
         return v;
     }
 
     void updateToolbar() {
         if (invalidateOptionsMenu != null)
             invalidateOptionsMenu.run();
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(null);
     }
 
     @Override
