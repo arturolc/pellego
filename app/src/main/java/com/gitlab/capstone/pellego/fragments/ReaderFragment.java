@@ -591,21 +591,21 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         return fonts.isEmpty() ? null : fonts;
     }
 
-    public static Bundle newInstance(Uri uri) {
+    public static Fragment newInstance(Uri uri) {
         ReaderFragment fragment = new ReaderFragment();
         Bundle args = new Bundle();
         args.putParcelable("uri", uri);
         fragment.setArguments(args);
-        return args;
+        return fragment;
     }
 
-    public static Bundle newInstance(Uri uri, FBReaderView.ZLTextIndexPosition pos) {
+    public static Fragment newInstance(Uri uri, FBReaderView.ZLTextIndexPosition pos) {
         ReaderFragment fragment = new ReaderFragment();
         Bundle args = new Bundle();
         args.putParcelable("uri", uri);
         args.putParcelable("pos", pos);
         fragment.setArguments(args);
-        return args;
+        return fragment;
     }
 
     @Override

@@ -20,6 +20,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.amplifyframework.core.Amplify;
 import com.github.axet.androidlibrary.activities.AppCompatFullscreenThemeActivity;
 import com.gitlab.capstone.pellego.app.BookApplication;
+import com.gitlab.capstone.pellego.fragments.ReaderFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -58,6 +59,16 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
                 .build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                getFragmentManager().popBackStack(ReaderFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                navController.navigate(id);
+                return true;
+            }
+        });
         // Attach nav drawer to nav controller
 //        NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
 //        NavigationUI.setupWithNavController(drawerNavigationView, navController);
