@@ -677,7 +677,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         MenuItem searchMenu = menu.findItem(R.id.action_search);
 //        MenuItem reflow = menu.findItem(R.id.action_reflow);
         MenuItem fontsize = menu.findItem(R.id.action_fontsize);
-        MenuItem debug = menu.findItem(R.id.action_debug);
+//        MenuItem debug = menu.findItem(R.id.action_debug);
         MenuItem rtl = menu.findItem(R.id.action_rtl);
         MenuItem mode = menu.findItem(R.id.action_mode);
         MenuItem sort = menu.findItem(R.id.action_sort);
@@ -704,7 +704,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         tocMenu.setVisible(false);
         bookmarksMenu.setVisible(books.hasBookmarks());
         fontsize.setVisible(false);
-        debug.setVisible(false);
+//        debug.setVisible(false);
         rtl.setVisible(false);
         mode.setVisible(false);
         tts.setVisible(false);

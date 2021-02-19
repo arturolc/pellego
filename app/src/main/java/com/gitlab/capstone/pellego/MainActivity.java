@@ -315,11 +315,11 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.action_about) {
-            AboutPreferenceCompat.buildDialog(this, R.raw.about).show();
-            return true;
-        }
+//
+//        if (id == R.id.action_about) {
+//            AboutPreferenceCompat.buildDialog(this, R.raw.about).show();
+//            return true;
+//        }
 
         if (id == R.id.action_settings) {
             SettingsActivity.startActivity(this);

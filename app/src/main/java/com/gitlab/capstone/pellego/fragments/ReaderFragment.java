@@ -869,15 +869,15 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
 //            fb.setReflow(!fb.isReflow());
 //            updateToolbar();
 //        }
-        if (id == R.id.action_debug) {
-            fb.pluginview.reflowDebug = !fb.pluginview.reflowDebug;
-            if (fb.pluginview.reflowDebug) {
-                fb.pluginview.reflow = true;
-                fb.setWidget(FBReaderView.Widgets.PAGING);
-            }
-            fb.reset();
-            updateToolbar();
-        }
+//        if (id == R.id.action_debug) {
+//            fb.pluginview.reflowDebug = !fb.pluginview.reflowDebug;
+//            if (fb.pluginview.reflowDebug) {
+//                fb.pluginview.reflow = true;
+//                fb.setWidget(FBReaderView.Widgets.PAGING);
+//            }
+//            fb.reset();
+//            updateToolbar();
+//        }
         if (id == R.id.action_fontsize) {
             if (fb.pluginview == null) {
                 fontsPopup = new FontsPopup(getContext()) {
@@ -979,7 +979,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         MenuItem tocMenu = menu.findItem(R.id.action_toc);
         searchMenu = menu.findItem(R.id.action_search);
 //        MenuItem reflow = menu.findItem(R.id.action_reflow);
-        MenuItem debug = menu.findItem(R.id.action_debug);
+//        MenuItem debug = menu.findItem(R.id.action_debug);
         MenuItem bookmarksMenu = menu.findItem(R.id.action_bm);
         final MenuItem fontsize = menu.findItem(R.id.action_fontsize);
         final MenuItem rtl = menu.findItem(R.id.action_rtl);
@@ -1012,10 +1012,10 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         searchMenu.setVisible(search);
 //        reflow.setVisible(fb.pluginview != null && !(fb.pluginview instanceof ComicsPlugin.ComicsView));
 
-        if (BuildConfig.DEBUG && fb.pluginview != null && !(fb.pluginview instanceof ComicsPlugin.ComicsView))
-            debug.setVisible(true);
-        else
-            debug.setVisible(false);
+//        if (BuildConfig.DEBUG && fb.pluginview != null && !(fb.pluginview instanceof ComicsPlugin.ComicsView))
+//            debug.setVisible(true);
+//        else
+//            debug.setVisible(false);
 
         fontsize.setVisible(fb.pluginview == null || fb.pluginview.reflow);
         if (fb.pluginview == null)
