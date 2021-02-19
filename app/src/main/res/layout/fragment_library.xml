@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    tools:context="com.github.axet.bookreader.com.capstone.axet.bookreader.fragments.LibraryFragment">
+    tools:context="com.gitlab.capstone.pellego.fragments.LibraryFragment">
 
     <include
         android:id="@+id/library_header"
@@ -18,6 +18,7 @@
         android:layout_below="@+id/library_header"
         android:numColumns="4"
         android:scrollbars="vertical"
+
         android:stretchMode="columnWidth"
         android:verticalSpacing="2dp" />
 </RelativeLayout>

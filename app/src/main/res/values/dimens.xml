@@ -7,7 +7,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="image_size">64dp</dimen>
 
-    
+
     <dimen name="activity_actionbar_margin">48dp</dimen>
 <!--    &lt;!&ndash; Default screen margins, per the Android Design guidelines. &ndash;&gt;-->
 <!--    <dimen name="activity_horizontal_margin">16dp</dimen>-->
