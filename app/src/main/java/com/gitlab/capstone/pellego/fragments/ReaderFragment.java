@@ -17,6 +17,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
@@ -577,21 +578,21 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         return fonts.isEmpty() ? null : fonts;
     }
 
-    public static ReaderFragment newInstance(Uri uri) {
+    public static Bundle newInstance(Uri uri) {
         ReaderFragment fragment = new ReaderFragment();
         Bundle args = new Bundle();
         args.putParcelable("uri", uri);
         fragment.setArguments(args);
-        return fragment;
+        return args;
     }
 
-    public static ReaderFragment newInstance(Uri uri, FBReaderView.ZLTextIndexPosition pos) {
+    public static Bundle newInstance(Uri uri, FBReaderView.ZLTextIndexPosition pos) {
         ReaderFragment fragment = new ReaderFragment();
         Bundle args = new Bundle();
         args.putParcelable("uri", uri);
         args.putParcelable("pos", pos);
         fragment.setArguments(args);
-        return fragment;
+        return args;
     }
 
     @Override
@@ -601,9 +602,9 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         setHasOptionsMenu(true);
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
+
+
 
     @Override
     public void onStart() {

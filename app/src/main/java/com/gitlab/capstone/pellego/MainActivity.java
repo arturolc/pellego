@@ -599,29 +599,37 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
 
     public void openBook(Uri uri) {
         popBackStack(ReaderFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        addFragment(ReaderFragment.newInstance(uri), ReaderFragment.TAG).commit();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController.navigate(R.id.reader, ReaderFragment.newInstance(uri));
     }
 
     public void openBook(Uri uri, FBReaderView.ZLTextIndexPosition pos) {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController.navigate(R.id.reader, ReaderFragment.newInstance(uri, pos));
+
         popBackStack(ReaderFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        addFragment(ReaderFragment.newInstance(uri, pos), ReaderFragment.TAG).commit();
+//        addFragment(ReaderFragment.newInstance(uri, pos), ReaderFragment.TAG);
     }
 
     public void openLibrary() {
         FragmentManager fm = getSupportFragmentManager();
         popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        openFragment(libraryFragment, LibraryFragment.TAG).commit();
+        openFragment(libraryFragment, LibraryFragment.TAG);
         onResume(); // update theme if changed
     }
 
-    public FragmentTransaction addFragment(Fragment f, String tag) {
-        return openFragment(f, tag).addToBackStack(tag);
+    public void addFragment(Fragment f, String tag) {
+        openFragment(f, tag);
     }
 
-    public FragmentTransaction openFragment(Fragment f, String tag) {
+    public void openFragment(Fragment f, String tag) {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         FragmentManager fm = getSupportFragmentManager();
-        return fm.beginTransaction().replace(R.id.nav_host_fragment, f, tag);
+        if (f instanceof LibraryFragment) {
+            navController.navigate(R.id.nav_library);
+        }
+
+//        return fm.beginTransaction().replace(R.id.nav_host_fragment, f, tag);
     }
 
     @Override
