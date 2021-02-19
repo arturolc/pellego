@@ -616,7 +616,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
 
     public FragmentTransaction openFragment(Fragment f, String tag) {
         FragmentManager fm = getSupportFragmentManager();
-        return fm.beginTransaction().replace(R.id.main_content, f, tag);
+        return fm.beginTransaction().replace(R.id.nav_host_fragment, f, tag);
     }
 
     @Override

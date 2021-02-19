@@ -16,10 +16,10 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:titleTextColor="@color/light_blue"
-            android:elevation="8dp"
             android:background="@color/light_blue"
-            app:theme="@style/ToolbarTheme" />
+            app:titleTextColor="@color/light_blue"
+            android:theme="@style/AppBarOverlay"
+            app:popupTheme="@style/AppThemeLight.PopupOverlay" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main" />

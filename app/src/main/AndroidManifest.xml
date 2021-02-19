@@ -17,7 +17,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Translucent">
+        android:theme="@style/Theme.Pellego">
 
         <uses-library
             android:name="org.apache.http.legacy"

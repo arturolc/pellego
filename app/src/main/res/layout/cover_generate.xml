@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.github.axet.bookreader.com.capstone.axet.bookreader.MainActivity">
+    tools:context="com.gitlab.capstone.pellego.MainActivity">
 
     <TextView
         android:id="@+id/author"
