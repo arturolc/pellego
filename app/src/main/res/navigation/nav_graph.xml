@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/nav_library"
-        android:name="com.example.pellego.ui.library.LibraryFragment"
+        android:name="com.example.pellego.fragments.LibraryFragment2"
         android:label="@string/title_library"
-        tools:layout="@layout/fragment_library" >
+        tools:layout="@layout/fragment_library_2" >
         <action
             android:id="@+id/action_container_to_nav_learn"
             app:destination="@id/nav_learn" />
