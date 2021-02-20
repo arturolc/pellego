@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Pellego_v2.iml" filepath="$PROJECT_DIR$/.idea/modules/Pellego_v2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Pellego_v2.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Pellego_v2.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Pellego.iml" filepath="$PROJECT_DIR$/.idea/modules/Pellego.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Pellego.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Pellego.app.iml" />
     </modules>
   </component>
 </project>

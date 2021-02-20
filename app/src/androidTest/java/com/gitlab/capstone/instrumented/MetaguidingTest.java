@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego;
+package com.gitlab.capstone.instrumented;
 
 
 import android.util.Log;
@@ -8,15 +8,18 @@ import android.view.ViewParent;
 
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.amplifyframework.core.Amplify;
+import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.activities.SplashActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
@@ -59,7 +62,7 @@ public class MetaguidingTest {
                     Log.i("AmplifyQuickstart", result.toString());
                     if (!result.isSignedIn()) { // sign in if not already
                         ViewInteraction appCompatEditText = onView(
-                                allOf(withId(R.id.editTextTextEmailAddress),
+                                Matchers.allOf(ViewMatchers.withId(R.id.editTextTextEmailAddress),
                                         childAtPosition(
                                                 childAtPosition(
                                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
