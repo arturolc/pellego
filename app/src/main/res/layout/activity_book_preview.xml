@@ -7,7 +7,7 @@
     android:foregroundGravity="center_horizontal|fill"
     android:requiresFadingEdge="horizontal"
     android:visibility="visible"
-    tools:context=".ui.pellegolibrary.BookPreviewActivity"
+    tools:context="com.gitlab.capstone.pellego.fragments.pellegolibrary.BookPreviewActivity"
     tools:visibility="visible">
 
     <ImageView

@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    tools:context=".ui.defaultPager.DefaultPagerFragment"
+    tools:context=".fragments.metaguiding.defaultPager.DefaultPagerFragment"
     android:background="@color/white">
 
     <FrameLayout
