@@ -60,7 +60,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        
+
 //        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 //            @Override
 //            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
