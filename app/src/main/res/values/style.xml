@@ -15,9 +15,9 @@
         <item name="colorControlNormal">@color/white</item>
     </style>
     <style name="PreferenceStyle">
-        <item name="android:textColorPrimary">@color/light_grey</item>
+        <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/light_grey</item>
-        <item name="android:colorAccent" tools:targetApi="lollipop">@color/white</item>
+        <item name="android:colorAccent" tools:targetApi="lollipop">@color/dark_blue</item>
         <item name="android:listSeparatorTextViewStyle">@style/ListSeparatorColor</item>
 
     </style>
@@ -25,5 +25,35 @@
         <item name="android:background">@color/white</item>
         <item name="android:listDivider">@color/white</item>
         <item name="android:dividerHeight">1dp</item>
+    </style>
+
+    <style name="AppThemeLight" parent="AppThemeLightLib">
+        <item name="side_nav_bar">@drawable/side_nav_bar_light</item>
+    </style>
+
+    <style name="AppThemeLight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppThemeLight.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppThemeDark" parent="AppThemeDarkLib">
+        <item name="side_nav_bar">@drawable/side_nav_bar_dark</item>
+    </style>
+
+    <style name="AppThemeDark.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppThemeDark.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+
+    <style name="toolbar_bottom_icon_text" parent="toolbar_icon_text">
+        <item name="android:layout_marginBottom">7dp</item>
+        <item name="android:maxWidth">60dp</item>
+        <item name="android:singleLine">true</item>
     </style>
 </resources>

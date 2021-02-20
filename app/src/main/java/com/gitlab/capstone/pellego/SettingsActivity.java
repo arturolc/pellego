@@ -5,11 +5,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceFragmentCompat;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 
 import com.gitlab.capstone.pellego.app.BookApplication;
 import com.gitlab.capstone.pellego.app.Storage;
@@ -37,12 +43,18 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
         return BookApplication.PREFERENCE_THEME;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         storage = new Storage(this);
+        setContentView(R.layout.fragment_settings);
         RotatePreferenceCompat.onCreate(this, BookApplication.PREFERENCE_ROTATE);
-        setupActionBar();
+//        setupActionBar();
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
+                .getColor(R.color.light_blue)));
+        Window window = this.getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(this,R.color.light_blue));
         if (savedInstanceState == null && getIntent().getParcelableExtra(SAVE_INSTANCE_STATE) == null)
             showSettingsFragment(new GeneralPreferenceFragment());
     }
@@ -75,6 +87,7 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            getActivity().setTheme(R.style.PreferenceStyle);
         }
 
         @Override
