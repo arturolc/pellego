@@ -259,6 +259,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
             public boolean onQueryTextSubmit(String query) {
                 lastSearch = query;
                 searchView.clearFocus();
+
                 FragmentManager fm = getSupportFragmentManager();
                 for (Fragment f : fm.getFragments()) {
                     if (f != null && f.isVisible() && f instanceof SearchListener) {

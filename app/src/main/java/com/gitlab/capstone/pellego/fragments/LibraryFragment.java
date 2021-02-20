@@ -15,6 +15,7 @@ import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -294,6 +295,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
                         list.add(b);
                 }
             }
+            getActivity().findViewById(R.id.nav_host_fragment);
             sort();
         }
 
