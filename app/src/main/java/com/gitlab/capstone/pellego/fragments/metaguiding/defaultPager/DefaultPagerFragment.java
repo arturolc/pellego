@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego.fragments.defaultPager;
+package com.gitlab.capstone.pellego.fragments.metaguiding.defaultPager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Paint;

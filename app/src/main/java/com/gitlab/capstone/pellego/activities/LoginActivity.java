@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego;
+package com.gitlab.capstone.pellego.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.amplifyframework.auth.AuthProvider;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
+import com.gitlab.capstone.pellego.R;
 
 /**********************************************
  Arturo Lara
@@ -42,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                             password.getText().toString(),
                             success -> {
                                 Log.i("AUTHENTICATION", success.toString());
-                                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(i);
                                 finish();
                             },

@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego.fragments.defaultPager;
+package com.gitlab.capstone.pellego.fragments.metaguiding.defaultPager;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

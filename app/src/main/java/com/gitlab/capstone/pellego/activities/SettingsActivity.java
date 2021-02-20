@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego;
+package com.gitlab.capstone.pellego.activities;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -10,13 +10,12 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceFragmentCompat;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 
+import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BookApplication;
 import com.gitlab.capstone.pellego.app.Storage;
 import com.github.axet.androidlibrary.activities.AppCompatSettingsThemeActivity;

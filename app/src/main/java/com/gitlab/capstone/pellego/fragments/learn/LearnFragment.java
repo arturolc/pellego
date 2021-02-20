@@ -69,7 +69,6 @@ public class LearnFragment extends Fragment {
         textView.setText(R.string.title_learn);
         moduleList = root.findViewById(R.id.nav_module_list);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-
         setHasOptionsMenu(false);
         toolbar.setVisibility(View.INVISIBLE);
         spinner = root.findViewById(R.id.loading_spinner);

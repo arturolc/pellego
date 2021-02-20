@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego;
+package com.gitlab.capstone.pellego.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
+import com.gitlab.capstone.pellego.R;
 
 import java.util.ArrayList;
 import java.util.List;

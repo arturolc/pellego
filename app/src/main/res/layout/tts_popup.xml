@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center"
-    tools:context="com.gitlab.capstone.pellego.MainActivity">
+    tools:context="com.gitlab.capstone.pellego.activities.MainActivity">
 
     <ImageView
         android:id="@+id/tts_left"

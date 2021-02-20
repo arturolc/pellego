@@ -1,5 +1,5 @@
 
-package com.gitlab.capstone.pellego;
+package com.gitlab.capstone.pellego.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.amplifyframework.core.Amplify;
+import com.gitlab.capstone.pellego.misc.DatabaseHelper;
+import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.misc.UserModel;
 
 
 /**********************************************

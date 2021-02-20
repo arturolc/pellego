@@ -11,8 +11,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.gitlab.capstone.pellego.BookModel;
-import com.gitlab.capstone.pellego.SingletonRequestQueue;
+import com.gitlab.capstone.pellego.misc.BookModel;
+import com.gitlab.capstone.pellego.misc.SingletonRequestQueue;
 
 import org.json.JSONArray;
 

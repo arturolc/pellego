@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego.fragments;
+package com.gitlab.capstone.pellego.reader;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -17,8 +17,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
@@ -43,7 +41,6 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.gitlab.capstone.pellego.BuildConfig;
 import com.github.axet.androidlibrary.preferences.ScreenlockPreference;
 import com.github.axet.androidlibrary.widgets.ErrorDialog;
 import com.github.axet.androidlibrary.widgets.InvalidateOptionsMenuCompat;
@@ -52,8 +49,8 @@ import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.TreeListView;
 import com.github.axet.androidlibrary.widgets.TreeRecyclerView;
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.FullscreenActivity;
-import com.gitlab.capstone.pellego.MainActivity;
+import com.gitlab.capstone.pellego.activities.FullscreenActivity;
+import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.BookApplication;
 import com.gitlab.capstone.pellego.app.ComicsPlugin;
 import com.gitlab.capstone.pellego.app.Plugin;

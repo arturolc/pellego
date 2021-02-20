@@ -24,7 +24,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.fragments.defaultPager.DefaultPagerFragment;
+import com.gitlab.capstone.pellego.fragments.metaguiding.defaultPager.DefaultPagerFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.fragments.settings.SettingsViewModel;
 

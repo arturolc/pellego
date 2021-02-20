@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego;
+package com.gitlab.capstone.pellego.misc;
 
 import android.content.ContentValues;
 import android.content.Context;

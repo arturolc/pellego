@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_library"
-        android:name="com.gitlab.capstone.pellego.fragments.LibraryFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.library.LibraryFragment"
         android:label="@string/title_library"
         tools:layout="@layout/fragment_library" >
         <action
@@ -167,7 +167,7 @@
 
     <fragment
         android:id="@+id/nav_default_pager"
-        android:name="com.gitlab.capstone.pellego.fragments.defaultPager.DefaultPagerFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.metaguiding.defaultPager.DefaultPagerFragment"
         android:label="@string/menu_title"
         tools:layout="@layout/fragment_default_pager" />
     <fragment
@@ -177,7 +177,7 @@
         tools:layout="@layout/pellego_library_fragment" />
     <fragment
         android:id="@+id/reader"
-        android:name="com.gitlab.capstone.pellego.fragments.ReaderFragment"
+        android:name="com.gitlab.capstone.pellego.reader.ReaderFragment"
         android:label="reader_fragment"
         tools:layout="@layout/fragment_reader" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego;
+package com.gitlab.capstone.pellego.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
                     Log.i("AmplifyQuickstart", result.toString());
                     if (result.isSignedIn()) {
                         i = new Intent(SplashActivity.this,
-                                HomeActivity.class);
+                                MainActivity.class);
 
                     } else {
                         i = new Intent(SplashActivity.this,

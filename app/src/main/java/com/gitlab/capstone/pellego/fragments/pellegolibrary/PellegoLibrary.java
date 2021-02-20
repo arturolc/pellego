@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gitlab.capstone.pellego.BookModel;
+import com.gitlab.capstone.pellego.misc.BookModel;
 import com.gitlab.capstone.pellego.R;
 
 import java.util.List;
