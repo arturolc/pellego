@@ -24,7 +24,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
-import com.gitlab.capstone.pellego.fragments.settings.SettingsViewModel;
 
 
 /**********************************************
@@ -34,7 +33,6 @@ import com.gitlab.capstone.pellego.fragments.settings.SettingsViewModel;
  **********************************************/
 public class RsvpModuleFragment extends Fragment {
 
-    private SettingsViewModel settingsViewModel;
     private View root;
     private Integer wpm;
     public String difficulty;
@@ -50,15 +48,11 @@ public class RsvpModuleFragment extends Fragment {
         currentActivity = getActivity();
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
-        settingsViewModel =
-                new ViewModelProvider(this).get(SettingsViewModel.class);
+
 
         root = inflater.inflate(R.layout.fragment_rsvp_module, container, false);
         final TextView textView = root.findViewById(R.id.title_rsvp);
-        settingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) { textView.setText(difficulty); }
-        });
+
 
 
         // Set the displayed text to the appropriate level

@@ -26,7 +26,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.fragments.metaguiding.defaultPager.DefaultPagerFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
-import com.gitlab.capstone.pellego.fragments.settings.SettingsViewModel;
 
 import java.util.ArrayList;
 
@@ -40,7 +39,6 @@ import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiTh
  **********************************************/
 public class MetaguidingModuleFragment extends DefaultPagerFragment {
 
-    private SettingsViewModel settingsViewModel;
     private View root;
     private Integer wpm;
     public String difficulty;
@@ -74,8 +72,6 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         currentActivity = getActivity();
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
-        settingsViewModel =
-                new ViewModelProvider(this).get(SettingsViewModel.class);
 
         root = inflater.inflate(R.layout.fragment_default_pager, container, false);
         mPager = root.findViewById(R.id.pager);

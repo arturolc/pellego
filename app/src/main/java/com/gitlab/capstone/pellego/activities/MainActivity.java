@@ -13,20 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-
-import com.gitlab.capstone.pellego.R;
-import com.google.android.material.internal.NavigationMenuItemView;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AlertDialog;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -39,11 +25,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.gitlab.capstone.pellego.app.BookApplication;
-import com.gitlab.capstone.pellego.app.Storage;
-import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
-import com.gitlab.capstone.pellego.reader.ReaderFragment;
-import com.gitlab.capstone.pellego.widgets.FBReaderView;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import com.github.axet.androidlibrary.app.FileTypeDetector;
 import com.github.axet.androidlibrary.preferences.RotatePreferenceCompat;
 import com.github.axet.androidlibrary.widgets.CacheImagesAdapter;
@@ -52,6 +41,14 @@ import com.github.axet.androidlibrary.widgets.OpenChoicer;
 import com.github.axet.androidlibrary.widgets.OpenFileDialog;
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.WebViewCustom;
+import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.BookApplication;
+import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
+import com.gitlab.capstone.pellego.reader.ReaderFragment;
+import com.gitlab.capstone.pellego.widgets.FBReaderView;
+import com.google.android.material.internal.NavigationMenuItemView;
+import com.google.android.material.navigation.NavigationView;
 
 import org.geometerplus.fbreader.fbreader.options.ImageOptions;
 import org.geometerplus.fbreader.fbreader.options.MiscOptions;
