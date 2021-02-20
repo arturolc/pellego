@@ -35,6 +35,16 @@ public class QuizViewModel extends ViewModel {
         questions = new ArrayList<>();
     }
 
+    public QuizViewModel(String quiz_name) {
+        mText = new MutableLiveData<>();
+        mText.setValue(quiz_name);
+        question_no = 0;
+        score = 0;
+        module = "";
+        wpm = 0;
+        questions = new ArrayList<>();
+    }
+
     public void setDifficulty(String diff) {
         this.difficulty = diff;
     }
