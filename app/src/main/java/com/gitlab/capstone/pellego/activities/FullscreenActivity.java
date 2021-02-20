@@ -2,8 +2,11 @@ package com.gitlab.capstone.pellego.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -14,10 +17,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.amplifyframework.core.Amplify;
 import com.github.axet.androidlibrary.activities.AppCompatFullscreenThemeActivity;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BookApplication;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
@@ -45,7 +50,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.ic_action_button_overflow));
         // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
-//        drawer = findViewById(R.id.home_layout);
+        drawer = findViewById(R.id.home_layout);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_settings, R.id.nav_library, R.id.nav_learn, R.id.nav_progress,
@@ -65,30 +70,30 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
 //            }
 //        });
         // Attach nav drawer to nav controller
-//        NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
-//        NavigationUI.setupWithNavController(drawerNavigationView, navController);
+        NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
+        NavigationUI.setupWithNavController(drawerNavigationView, navController);
 
-//        // TODO: refactor this so it's just a click listener for the sign out button, otherwise navigation to other views doesn't work
-//        drawerNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//                int id = menuItem.getItemId();
-//
-//                if (id == R.id.nav_sign_out) {
-//                    Amplify.Auth.signOut(
-//                            () -> {
-//                                Log.i("AUTHENTICATION", "Signed out succesfully");
-//                                finish();
-//                            },
-//                            error -> Log.e("AUTHENTICATION", error.toString())
-//                    );
-//                } else {
-//                    navController.navigate(id);
-//                    drawer.close();
-//                }
-//                return true;
-//            }
-//        });
+        // TODO: refactor this so it's just a click listener for the sign out button, otherwise navigation to other views doesn't work
+        drawerNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
+
+                if (id == R.id.nav_sign_out) {
+                    Amplify.Auth.signOut(
+                            () -> {
+                                Log.i("AUTHENTICATION", "Signed out succesfully");
+                                finish();
+                            },
+                            error -> Log.e("AUTHENTICATION", error.toString())
+                    );
+                } else {
+                    navController.navigate(id);
+                    drawer.close();
+                }
+                return true;
+            }
+        });
     }
 
     @Override
