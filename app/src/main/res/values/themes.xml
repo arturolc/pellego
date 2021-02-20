@@ -5,13 +5,16 @@
         <item name="colorPrimary">@color/light_blue</item>
         <item name="colorPrimaryVariant">@color/light_blue</item>
         <item name="colorOnPrimary">@color/light_blue</item>
+        <item name="colorPrimaryDark">@color/light_blue</item>
         <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/light_blue</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-    </style>
+        <item name="android:textColorSecondary">@color/white</item>
+        <!-- Styles -->
 
+    </style>
     <style name="Theme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/ic_splash_screen</item>
     </style>

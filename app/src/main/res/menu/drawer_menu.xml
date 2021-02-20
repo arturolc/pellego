@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
+    <!--This creates a divider-->
     <item android:title="">
         <menu>
 
@@ -11,18 +12,17 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile"
-            android:title="Profile"/>
-        <item android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings"
-            android:title="Settings"/>
+            android:title="Profile" />
         <item android:id="@+id/nav_terms_and_conditions"
             android:icon="@drawable/ic_terms_and_conditions"
-            android:title="Terms and Conditions"/>
+            android:title="Terms and Conditions" />
+        <item android:id="@+id/nav_privacy_policy"
+            android:icon="@drawable/ic_privacy_policy_foreground"
+            android:title="Privacy Policy" />
         <item
             android:id="@+id/nav_sign_out"
             android:icon="@drawable/ic_sign_out"
-            android:title="Sign Out"
-/>
+            android:title="Sign Out" />
     </group>
 
 </menu>
