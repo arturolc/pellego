@@ -1,27 +1,17 @@
-# Book Reader
+# Application
 
-Book Reader simple UI. Based on many open-source projects:
+Pellego android development
 
-  * FBReader (https://gitlab.com/axet/android-fbreader-library)
-  * Pdfium (https://gitlab.com/axet/android-pdfium)
-  * Djvulibre (https://gitlab.com/axet/android-djvulibre)
-  * K2PdfOpt (https://gitlab.com/axet/android-k2pdfopt)
+## Testing
 
-Supported formats: fb2, html, txt, epub, mobi, rtf, doc, pdf, djvu, cbr, cbz.
+### Unit Tests
 
-All the best in this world is free!
+Unit tests are located in the Pellego/app/src/test/java/com/example/pellego/ui/quiz folder by default. Unit tests are run in the CI/CD testing pipeline.
 
-# Manual install
+### Emulated Instrumentation Tests
 
-    gradle installDebug
+Espresso instrumented tests are located in the Pellego/app/src/androidTest/java/com/example/pellego folder. Instrumented tests require an emulator and should be ran locally before pushing up for a merge request to make sure there were no breaking changes. If your MR requires changes to the UI, you may need to update/re-record a test to reflect the changes. 
 
-# Translate
+To run instrumented tests, right click on the test folder and click run all. 
 
-If you want to translate 'Book Reader' to your language  please read following:
-
-  * [HOWTO-Translate.md](/docs/HOWTO-Translate.md)
-
-# Screenshots
-
-![shot](/docs/shot.png)
-
+To record new espresso instrumented test in Android Studio go to Run->Record Espresso Test.
