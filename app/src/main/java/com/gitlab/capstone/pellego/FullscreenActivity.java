@@ -60,15 +60,15 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                getFragmentManager().popBackStack(ReaderFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                navController.navigate(id);
-                return true;
-            }
-        });
+//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                int id = item.getItemId();
+//                getFragmentManager().popBackStack(ReaderFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//                navController.navigate(id);
+//                return true;
+//            }
+//        });
         // Attach nav drawer to nav controller
 //        NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
 //        NavigationUI.setupWithNavController(drawerNavigationView, navController);

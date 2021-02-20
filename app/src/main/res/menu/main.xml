@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:id="@+id/group_hideable">
-        <item
-            android:id="@+id/action_search"
-            android:icon="@drawable/ic_search_white_24dp"
-            android:title="@string/search"
-            app:actionViewClass="com.github.axet.androidlibrary.widgets.SearchView"
-            app:showAsAction="collapseActionView|always" />
+<!--        <item-->
+<!--            android:id="@+id/action_search"-->
+<!--            android:icon="@drawable/ic_search_white_24dp"-->
+<!--            android:title="@string/search"-->
+<!--            app:actionViewClass="com.github.axet.androidlibrary.widgets.SearchView"-->
+<!--            app:showAsAction="collapseActionView|always" />-->
         <item
             android:id="@+id/action_grid"
             android:icon="@drawable/ic_view_list_black_24dp"
-            android:title="Grid View"
-            app:showAsAction="always" />
+            android:title="Toggle Grid View"
+            app:showAsAction="collapseActionView" />
         <item
             android:id="@+id/action_toc"
             android:icon="@drawable/ic_toc_white_24dp"
@@ -65,8 +65,8 @@
         <item
             android:id="@+id/action_tts"
             android:orderInCategory="100"
-            android:title="TTS"
-            app:showAsAction="ifRoom" />
+            android:title="Text to Speech"
+            app:showAsAction="collapseActionView" />
         <item
             android:id="@+id/action_sort"
             android:title="@string/sort_by"

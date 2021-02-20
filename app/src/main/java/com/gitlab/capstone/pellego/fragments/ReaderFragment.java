@@ -591,21 +591,22 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         return fonts.isEmpty() ? null : fonts;
     }
 
-    public static Fragment newInstance(Uri uri) {
+
+    public static Bundle newInstance(Uri uri) {
         ReaderFragment fragment = new ReaderFragment();
         Bundle args = new Bundle();
         args.putParcelable("uri", uri);
         fragment.setArguments(args);
-        return fragment;
+        return args;
     }
 
-    public static Fragment newInstance(Uri uri, FBReaderView.ZLTextIndexPosition pos) {
+    public static Bundle newInstance(Uri uri, FBReaderView.ZLTextIndexPosition pos) {
         ReaderFragment fragment = new ReaderFragment();
         Bundle args = new Bundle();
         args.putParcelable("uri", uri);
         args.putParcelable("pos", pos);
         fragment.setArguments(args);
-        return fragment;
+        return args;
     }
 
     @Override
@@ -977,7 +978,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
 
         MenuItem homeMenu = menu.findItem(R.id.action_home);
         MenuItem tocMenu = menu.findItem(R.id.action_toc);
-        searchMenu = menu.findItem(R.id.action_search);
+//        searchMenu = menu.findItem(R.id.action_search);
 //        MenuItem reflow = menu.findItem(R.id.action_reflow);
 //        MenuItem debug = menu.findItem(R.id.action_debug);
         MenuItem bookmarksMenu = menu.findItem(R.id.action_bm);
@@ -1009,7 +1010,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         homeMenu.setVisible(false);
         sort.setVisible(false);
         tocMenu.setVisible(fb.app.Model != null && fb.app.Model.TOCTree != null && fb.app.Model.TOCTree.hasChildren());
-        searchMenu.setVisible(search);
+//        searchMenu.setVisible(search);
 //        reflow.setVisible(fb.pluginview != null && !(fb.pluginview instanceof ComicsPlugin.ComicsView));
 
 //        if (BuildConfig.DEBUG && fb.pluginview != null && !(fb.pluginview instanceof ComicsPlugin.ComicsView))
