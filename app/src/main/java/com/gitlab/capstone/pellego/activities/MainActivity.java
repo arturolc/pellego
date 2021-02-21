@@ -45,7 +45,7 @@ import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BookApplication;
 import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
-import com.gitlab.capstone.pellego.reader.ReaderFragment;
+import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
 import com.google.android.material.internal.NavigationMenuItemView;
 import com.google.android.material.navigation.NavigationView;

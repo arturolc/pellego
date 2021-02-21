@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -59,7 +61,10 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
                 .build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
-
+        FrameLayout constraintLayout = this.findViewById(R.id.host_fragment_container);
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
+        layoutParams.bottomToTop = R.id.container_bottom;
+        constraintLayout.setLayoutParams(layoutParams);
 
 //        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 //            @Override

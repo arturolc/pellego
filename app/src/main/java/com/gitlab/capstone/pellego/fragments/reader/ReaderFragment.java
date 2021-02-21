@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego.reader;
+package com.gitlab.capstone.pellego.fragments.reader;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
 import androidx.core.view.ViewCompat;
@@ -707,10 +708,14 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             }
         });
 
-        main.findViewById(R.id.bottom_nav_view).setVisibility(View.INVISIBLE);
-        main.findViewById(R.id.button_play).setVisibility(View.VISIBLE);
+//        main.findViewById(R.id.bottom_nav_view).setVisibility(View.INVISIBLE);
+//        main.findViewById(R.id.button_play).setVisibility(View.VISIBLE);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(null);
+        FrameLayout constraintLayout = getActivity().findViewById(R.id.host_fragment_container);
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
+        layoutParams.bottomToTop = R.id.bottom_nav_view;
+        constraintLayout.setLayoutParams(layoutParams);
         return v;
     }
 
@@ -1102,6 +1107,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
 
     @Override
     public void onFullscreenChanged(boolean f) {
+
         fb.onConfigurationChanged(null);
     }
 

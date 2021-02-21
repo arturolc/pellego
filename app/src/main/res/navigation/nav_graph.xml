@@ -177,7 +177,7 @@
         tools:layout="@layout/pellego_library_fragment" />
     <fragment
         android:id="@+id/reader"
-        android:name="com.gitlab.capstone.pellego.reader.ReaderFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.reader.ReaderFragment"
         android:label="reader_fragment"
         tools:layout="@layout/fragment_reader" />
 </navigation>

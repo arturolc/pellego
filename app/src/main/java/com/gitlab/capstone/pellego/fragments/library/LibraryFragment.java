@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
@@ -29,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -537,6 +539,11 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         final MainActivity main = (MainActivity) getActivity();
         main.toolbar.setTitle(R.string.app_name);
         main.toolbar.setVisibility(View.VISIBLE);
+        FrameLayout constraintLayout = main.findViewById(R.id.host_fragment_container);
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
+        layoutParams.bottomToTop = R.id.container_bottom;
+        layoutParams.topToTop = R.id.main_content;
+        constraintLayout.setLayoutParams(layoutParams);
         // handle import button click
         holder.import_button.setOnClickListener(new View.OnClickListener() {
             @Override
