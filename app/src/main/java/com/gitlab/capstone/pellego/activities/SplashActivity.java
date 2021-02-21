@@ -1,16 +1,23 @@
 package com.gitlab.capstone.pellego.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
+import com.gitlab.capstone.pellego.R;
 
 /**********************************************
  Eli Hebdon
@@ -18,13 +25,30 @@ import com.amplifyframework.core.Amplify;
  Displays a splash screen before navigating to the home activity.
  **********************************************/
 public class SplashActivity extends AppCompatActivity {
-    private static int SPLASH_SCREEN_TIME_OUT=2000;
+    private static int SPLASH_SCREEN_TIME_OUT=3500;
     private Intent i;
+    LottieAnimationView lottieAnimationView;
+    TextView title;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Window window = this.getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(this,R.color.light_blue));
+        setContentView(R.layout.activity_splash);
+        lottieAnimationView = findViewById(R.id.book_anim);
+        title = findViewById(R.id.title_splash);
+        title.setX(1400);
+        // animation
+        title.animate().translationX(15).setDuration(1000).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                lottieAnimationView.playAnimation();
+            }
+        });
+
         try {
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(getApplicationContext());
