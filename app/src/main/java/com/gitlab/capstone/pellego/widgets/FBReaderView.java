@@ -44,6 +44,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.misc.NavigationPopup;
 import com.gitlab.capstone.pellego.services.ImagesProvider;
 import com.github.axet.androidlibrary.net.HttpClient;
 import com.github.axet.androidlibrary.preferences.AboutPreferenceCompat;
@@ -58,7 +59,6 @@ import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.OnClickWrapper;
 import com.github.johnpersano.supertoasts.util.OnDismissWrapper;
 
-import org.geometerplus.android.fbreader.NavigationPopup;
 import org.geometerplus.android.fbreader.PopupPanel;
 import org.geometerplus.android.fbreader.SelectionPopup;
 import org.geometerplus.android.fbreader.TextSearchPopup;
