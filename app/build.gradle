@@ -8,8 +8,8 @@ android {
         applicationId "com.gitlab.capstone.pellego"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode            407
-        versionName            "1.13.28"
+        versionCode            1
+        versionName            "1.0.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
     }
@@ -19,20 +19,12 @@ android {
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
     }
-    signingConfigs {
-        release {
-            storeFile file(project.findProperty('RELEASE_STORE_FILE') ?: 'none')
-            storePassword project.findProperty('RELEASE_STORE_PASSWORD')
-            keyAlias project.findProperty('RELEASE_KEY_ALIAS')
-            keyPassword project.findProperty('RELEASE_KEY_PASSWORD')
-        }
-    }
     buildTypes {
         release {
             shrinkResources true
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
         }
     }
     applicationVariants.all { variant ->
