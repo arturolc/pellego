@@ -320,6 +320,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
 
         @Override
         public void onBindViewHolder(final FontHolder holder, int position) {
+            // select font click
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

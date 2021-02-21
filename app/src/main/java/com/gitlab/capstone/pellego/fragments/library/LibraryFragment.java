@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Process;
 import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
@@ -20,7 +22,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -676,13 +681,44 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         super.onDestroy();
         books.clearTasks();
     }
+    protected void setMenuBackground() {
+        // Log.d(TAG, "Enterting setMenuBackGround");
+        getLayoutInflater().setFactory(new LayoutInflater.Factory() {
+            public View onCreateView(String name, Context context, AttributeSet attrs) {
+                if (name.equalsIgnoreCase("com.android.internal.view.menu.IconMenuItemView")) {
+                    try { // Ask our inflater to create the view
+                        LayoutInflater f = getLayoutInflater();
+                        final View view = f.createView(name, null, attrs);
+                        /* The background gets refreshed each time a new item is added the options menu.
+                         * So each time Android applies the default background we need to set our own
+                         * background. This is done using a thread giving the background change as runnable
+                         * object */
+                        new Handler().post(new Runnable() {
+                            public void run() {
+                                // sets the background color
+                                view.setBackgroundResource(R.color.light_blue);
+                                // sets the text color
+                                ((TextView) view).setTextColor(Color.BLACK);
+                                // sets the text size
+                                ((TextView) view).setTextSize(18);
+                            }
+                        });
+                        return view;
+                    } catch (InflateException e) {
+                    } catch (ClassNotFoundException e) {
+                    }
+                }
+                return null;
+            }
+        });
+    }
 
-    @Override
+        @Override
     public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
         invalidateOptionsMenu = InvalidateOptionsMenuCompat.onCreateOptionsMenu(this, menu, inflater);
-
+//        setMenuBackground();
         MenuItem homeMenu = menu.findItem(R.id.action_home);
         MenuItem tocMenu = menu.findItem(R.id.action_toc);
         MenuItem bookmarksMenu = menu.findItem(R.id.action_bm);
@@ -700,8 +736,14 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         SubMenu sorts = sort.getSubMenu();
         for (int i = 0; i < sorts.size(); i++) {
             MenuItem m = sorts.getItem(i);
+            m.setCheckable(false);
             if (m.getItemId() == selected)
-                m.setChecked(true);
+                m.setIcon(R.drawable.ic_checked_circle);
+            else {
+                m.setIcon(R.drawable.ic_empty_circle);
+            }
+
+            // sort clicked
             m.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
