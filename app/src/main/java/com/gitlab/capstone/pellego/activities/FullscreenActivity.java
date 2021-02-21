@@ -65,16 +65,9 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
         layoutParams.bottomToTop = R.id.container_bottom;
         constraintLayout.setLayoutParams(layoutParams);
-
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                int id = item.getItemId();
-//                getFragmentManager().popBackStack(ReaderFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                navController.navigate(id);
-//                return true;
-//            }
-//        });
+        Toolbar toolbar = this.findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(null);
+        
         // Attach nav drawer to nav controller
         NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
         NavigationUI.setupWithNavController(drawerNavigationView, navController);

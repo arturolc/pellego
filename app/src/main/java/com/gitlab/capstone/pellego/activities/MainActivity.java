@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -162,6 +163,9 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
             load = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
             load.setPadding(dp10, dp10, dp10, dp10);
             load.setMax(100);
+            Drawable draw = getContext().getResources().getDrawable(R.drawable.load_progressbar);
+
+            load.setProgressDrawable(draw);
             ll.addView(load);
             text = new TextView(context);
             text.setPadding(dp10, dp10, dp10, dp10);
