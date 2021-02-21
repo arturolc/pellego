@@ -136,7 +136,6 @@ public class FBReaderView extends RelativeLayout {
     public Listener listener;
     String title;
     Window w;
-    FBFooterView footer;
     SelectionView selection;
     ZLTextPosition scrollDelayed;
     DrawerLayout drawer;
@@ -1134,8 +1133,6 @@ public class FBReaderView extends RelativeLayout {
         app.BookTextView = new CustomView(app);
         app.setView(app.BookTextView);
 
-        footer = new FBFooterView(getContext(), this);
-
         setWidget(Widgets.PAGING);
     }
 
@@ -1197,15 +1194,12 @@ public class FBReaderView extends RelativeLayout {
         }
         widget = v;
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        lp.addRule(RelativeLayout.ABOVE, footer.getId());
         addView((View) v, 0, lp);
         if (pos != null)
             gotoPosition(pos);
-        if (footer != null)
-            removeView(footer);
+
         lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        addView(footer, lp);
     }
 
     public void loadBook(Storage.FBook fbook) {
@@ -2035,16 +2029,6 @@ public class FBReaderView extends RelativeLayout {
         reset();
     }
 
-    public void invalidateFooter() {
-        if (footer == null) {
-            if (widget instanceof ScrollWidget)
-                ((ScrollWidget) widget).invalidate();
-            else
-                widget.repaint();
-        } else {
-            footer.invalidate();
-        }
-    }
 
     public void clearReflowPage() {
         pluginview.current.pageOffset = 0;

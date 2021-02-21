@@ -107,7 +107,6 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             if (d < 1000)
                 d = s60 + d;
             handler.postDelayed(this, d);
-            fb.invalidateFooter();
             savePosition();
         }
     };
@@ -736,7 +735,6 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                 int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
                 int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
                 fb.battery = level * 100 / scale;
-                fb.invalidateFooter();
             }
         };
         battery.onReceive(getContext(), getContext().registerReceiver(battery, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)));

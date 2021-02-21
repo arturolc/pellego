@@ -1135,7 +1135,6 @@ public class ScrollWidget extends RecyclerView implements ZLViewWidget {
         super.draw(c);
         updatePosition();
         drawFooter(c);
-        fb.invalidateFooter();
     }
 
     void updatePosition() { // position can vary depend on which page drawn, restore it after every draw
