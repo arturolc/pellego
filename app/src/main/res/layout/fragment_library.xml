@@ -25,6 +25,15 @@
         android:gravity="center_horizontal"
         android:textColor="@color/white"
         android:textSize="60dp" />
+        <TextView
+            android:id="@+id/text_empty_library"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/title_library"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/grid"
         android:layout_width="match_parent"

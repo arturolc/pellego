@@ -25,7 +25,7 @@ import com.gitlab.capstone.pellego.R;
  Displays a splash screen before navigating to the home activity.
  **********************************************/
 public class SplashActivity extends AppCompatActivity {
-    private static int SPLASH_SCREEN_TIME_OUT=3500;
+    private static int SPLASH_SCREEN_TIME_OUT=4000;
     private Intent i;
     LottieAnimationView lottieAnimationView;
     TextView title;
@@ -33,8 +33,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Window window = this.getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this,R.color.light_blue));
         setContentView(R.layout.activity_splash);
@@ -42,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
         title = findViewById(R.id.title_splash);
         title.setX(1400);
         // animation
-        title.animate().translationX(15).setDuration(1000).withEndAction(new Runnable() {
+        title.animate().translationX(25).setDuration(1000).withEndAction(new Runnable() {
             @Override
             public void run() {
                 lottieAnimationView.playAnimation();

@@ -527,6 +527,13 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         super.onResume();
         books.load();
         books.refresh();
+        // Emtpy library
+        TextView emptyLibraryMsg =  getActivity().findViewById(R.id.text_empty_library);
+        if (books.all.size() == 0) {
+           emptyLibraryMsg.setText(R.string.title_empty_library);
+        } else {
+            emptyLibraryMsg.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
