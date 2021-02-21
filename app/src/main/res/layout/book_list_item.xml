@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="2dp"
-        android:background="?attr/colorButtonNormal">
+        android:background="@drawable/rounded_background_transparent">
 
         <ImageView
             android:id="@+id/book_cover"
@@ -18,7 +18,7 @@
             android:layout_height="@dimen/image_size"
             android:layout_gravity="center"
             android:padding="5dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_baseline_book_24" />
 
         <ProgressBar
             android:id="@+id/book_progress"
@@ -43,6 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="@color/white_transparent"
                 android:text=""
                 android:visibility="invisible" />
 
@@ -53,6 +54,7 @@
                 <TextView
                     android:id="@+id/book_authors"
                     android:layout_width="wrap_content"
+                    android:textColor="@color/white_transparent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Authors" />
@@ -67,6 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="@color/white"
                 android:text=""
                 android:visibility="invisible" />
 
@@ -79,6 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:textColor="@color/white"
                     android:text="Title Title"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
             </com.github.axet.androidlibrary.widgets.TextMax>

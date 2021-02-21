@@ -41,7 +41,6 @@
         android:layout_below="@+id/library_header"
         android:numColumns="4"
         android:scrollbars="vertical"
-
         android:stretchMode="columnWidth"
         android:verticalSpacing="2dp" />
     </LinearLayout>
@@ -52,6 +51,5 @@
         android:backgroundTint="@color/white"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="15dp"
-        android:paddingLeft="10dp"
         app:srcCompat="@android:drawable/ic_input_add" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
