@@ -40,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
         title = findViewById(R.id.title_splash);
         title.setX(1400);
         // animation
-        title.animate().translationX(25).setDuration(1000).withEndAction(new Runnable() {
+        title.animate().translationX(55).setDuration(1000).withEndAction(new Runnable() {
             @Override
             public void run() {
                 lottieAnimationView.playAnimation();
