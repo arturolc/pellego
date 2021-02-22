@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pellego"
         android:name=".App">
-        <activity android:name=".ui.pellegolibrary.BookPreviewActivity"></activity>
+
         <activity android:name="com.amazonaws.mobileconnectors.cognitoauth.activities.CustomTabsRedirectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -28,8 +28,6 @@
                 <data android:scheme="https://development50c2b620-50c2b620-dev.auth.us-west-2.amazoncognito.com/oauth2/idpresponse" />
             </intent-filter>
         </activity>
-        <activity android:name=".VerifyActivity" />
-        <activity android:name=".RegisterActivity" />
         <activity android:name=".ui.auth.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

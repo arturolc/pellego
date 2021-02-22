@@ -1,6 +1,5 @@
 package com.example.pellego.ui.auth;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,19 +8,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.amplifyframework.auth.AuthProvider;
-import com.amplifyframework.core.Amplify;
-import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
-import com.example.pellego.RegisterActivity;
 
 
 public class LoginFragment extends Fragment {

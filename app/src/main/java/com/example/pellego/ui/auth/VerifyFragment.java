@@ -1,12 +1,12 @@
 package com.example.pellego.ui.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -14,8 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
+import com.amplifyframework.core.Amplify;
+import com.example.pellego.DatabaseHelper;
 import com.example.pellego.R;
+import com.example.pellego.UserModel;
 
 public class VerifyFragment extends Fragment {
 
@@ -61,5 +65,26 @@ public class VerifyFragment extends Fragment {
                 }
             }
         });
+    }
+
+
+    public void confirm(View view) {
+        EditText confirmationCode = findViewById(R.id.confirmCodeText);
+        DatabaseHelper dh = new DatabaseHelper(VerifyActivity.this, null, null, 1);
+        Amplify.Auth.confirmSignUp(
+                email,
+                confirmationCode.getText().toString(),
+                result ->
+                {
+                    dh.addUser(new UserModel(-1, firstName, lastName, email));
+                    Intent i = new Intent(VerifyActivity.this,
+                            AuthActivity.class);
+                    startActivity(i);
+                    finish();
+                    Log.i("AUTHENTICATION", result.toString());
+                },
+                error -> Log.e("AUTHENTICATION", error.toString())
+        );
+
     }
 }
