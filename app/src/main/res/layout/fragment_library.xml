@@ -20,18 +20,17 @@
         android:id="@+id/text_library"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="15dp"
         android:fontFamily="@font/bulletto_family"
         android:text="@string/title_library"
         android:gravity="center_horizontal"
         android:textColor="@color/white"
-        android:textSize="60dp" />
+        android:textSize="50dp" />
         <TextView
             android:id="@+id/text_empty_library"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="@string/title_library"
+            android:visibility="invisible"
             android:gravity="center_horizontal"
             android:textColor="@color/white"
             android:textSize="20dp" />

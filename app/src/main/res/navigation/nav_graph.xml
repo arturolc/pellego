@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_nav_library_to_pellegoLibrary"
             app:destination="@id/pellegoLibrary" />
+        <action
+            android:id="@+id/action_nav_library_to_reader"
+            app:destination="@id/reader" />
     </fragment>
     <fragment
         android:id="@+id/nav_learn"

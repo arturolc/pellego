@@ -14,7 +14,7 @@
     <color name="pastel_orange">#ae5a41</color>
     <color name="light_grey">#D0D3D4</color>
     <color name="dark_grey">#4D5656</color>
-    <color name="transparent_grey">#774D5656</color>
+    <color name="grey_transparent">#774D5656</color>
     <color name="dark_blue">#21618C</color>
 
 </resources>
