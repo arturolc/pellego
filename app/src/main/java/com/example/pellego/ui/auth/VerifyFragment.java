@@ -68,23 +68,23 @@ public class VerifyFragment extends Fragment {
     }
 
 
-    public void confirm(View view) {
-        EditText confirmationCode = findViewById(R.id.confirmCodeText);
-        DatabaseHelper dh = new DatabaseHelper(VerifyActivity.this, null, null, 1);
-        Amplify.Auth.confirmSignUp(
-                email,
-                confirmationCode.getText().toString(),
-                result ->
-                {
-                    dh.addUser(new UserModel(-1, firstName, lastName, email));
-                    Intent i = new Intent(VerifyActivity.this,
-                            AuthActivity.class);
-                    startActivity(i);
-                    finish();
-                    Log.i("AUTHENTICATION", result.toString());
-                },
-                error -> Log.e("AUTHENTICATION", error.toString())
-        );
-
-    }
+//    public void confirm(View view) {
+//        EditText confirmationCode = findViewById(R.id.confirmCodeText);
+//        DatabaseHelper dh = new DatabaseHelper(VerifyActivity.this, null, null, 1);
+//        Amplify.Auth.confirmSignUp(
+//                email,
+//                confirmationCode.getText().toString(),
+//                result ->
+//                {
+//                    dh.addUser(new UserModel(-1, firstName, lastName, email));
+//                    Intent i = new Intent(VerifyActivity.this,
+//                            AuthActivity.class);
+//                    startActivity(i);
+//                    finish();
+//                    Log.i("AUTHENTICATION", result.toString());
+//                },
+//                error -> Log.e("AUTHENTICATION", error.toString())
+//        );
+//
+//    }
 }

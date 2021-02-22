@@ -64,29 +64,29 @@ public class RegisterFragment extends Fragment {
         });
     }
 
-    public void register(View view) {
-        String firstName = ((EditText)findViewById(R.id.firstNameText)).getText().toString();
-        String lastName = ((EditText)findViewById(R.id.lastNameText)).getText().toString();
-        String email = ((EditText)findViewById(R.id.emailText)).getText().toString();
-        EditText password = findViewById(R.id.passwordText);
-
-        List<AuthUserAttribute> list = new ArrayList<AuthUserAttribute>();
-        list.add(new AuthUserAttribute(AuthUserAttributeKey.name(), firstName + " " + lastName));
-        list.add(new AuthUserAttribute(AuthUserAttributeKey.email(), email));
-
-        Amplify.Auth.signUp(
-                email,
-                password.getText().toString(),
-                AuthSignUpOptions.builder().userAttributes(list).build(),
-                result -> {
-                    Log.i("AUTHENTICATION", "Result: " + result.toString());
-                    Intent i  = new Intent(RegisterActivity.this, VerifyActivity.class);
-                    i.putExtra("fName", firstName);
-                    i.putExtra("lName", lastName);
-                    i.putExtra("email", email);
-                    startActivity(i);
-                },
-                error -> Log.e("AUTHENTICATION", "Sign up failed" + error.toString())
-        );
-    }
+//    public void register(View view) {
+//        String firstName = ((EditText)findViewById(R.id.firstNameText)).getText().toString();
+//        String lastName = ((EditText)findViewById(R.id.lastNameText)).getText().toString();
+//        String email = ((EditText)findViewById(R.id.emailText)).getText().toString();
+//        EditText password = findViewById(R.id.passwordText);
+//
+//        List<AuthUserAttribute> list = new ArrayList<AuthUserAttribute>();
+//        list.add(new AuthUserAttribute(AuthUserAttributeKey.name(), firstName + " " + lastName));
+//        list.add(new AuthUserAttribute(AuthUserAttributeKey.email(), email));
+//
+//        Amplify.Auth.signUp(
+//                email,
+//                password.getText().toString(),
+//                AuthSignUpOptions.builder().userAttributes(list).build(),
+//                result -> {
+//                    Log.i("AUTHENTICATION", "Result: " + result.toString());
+//                    Intent i  = new Intent(RegisterActivity.this, VerifyActivity.class);
+//                    i.putExtra("fName", firstName);
+//                    i.putExtra("lName", lastName);
+//                    i.putExtra("email", email);
+//                    startActivity(i);
+//                },
+//                error -> Log.e("AUTHENTICATION", "Sign up failed" + error.toString())
+//        );
+//    }
 }
