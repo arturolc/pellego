@@ -12,19 +12,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.pellego.R;
 
-public class EmailFragment extends Fragment {
+public class LandingFragment extends Fragment {
 
-    AuthViewModel model;
-    public EmailFragment() {
+    private AuthViewModel model;
+
+    public LandingFragment() {
         // Required empty public constructor
     }
 
-    public static EmailFragment newInstance(String param1, String param2) {
-        EmailFragment fragment = new EmailFragment();
 
+    public static LandingFragment newInstance() {
+        LandingFragment fragment = new LandingFragment();
         return fragment;
     }
 
@@ -38,7 +40,7 @@ public class EmailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_email, container, false);
+        return inflater.inflate(R.layout.fragment_landing, container, false);
     }
 
     @Override
@@ -46,11 +48,19 @@ public class EmailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         model = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
         NavController nav = Navigation.findNavController(view);
-        Button btn = view.findViewById(R.id.button7);
+        Button btn = view.findViewById(R.id.signupBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nav.navigate(R.id.action_emailFragment_to_passwordFragment);
+                nav.navigate(R.id.action_landingFragment_to_nameFragment);
+            }
+        });
+
+        TextView login = view.findViewById(R.id.textView16);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nav.navigate(R.id.action_landingFragment_to_loginFragment);
             }
         });
     }

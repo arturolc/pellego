@@ -3,13 +3,19 @@ package com.example.pellego.ui.auth;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.amplifyframework.auth.AuthProvider;
 import com.amplifyframework.core.Amplify;
@@ -20,19 +26,16 @@ import com.example.pellego.RegisterActivity;
 
 public class LoginFragment extends Fragment {
 
+    private AuthViewModel model;
+
     public LoginFragment() {
         // Required empty public constructor
     }
 
-//    // TODO: Rename and change types and number of parameters
-//    public static LoginFragment newInstance(String param1, String param2) {
-//        LoginFragment fragment = new LoginFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
+    public static LoginFragment newInstance(String param1, String param2) {
+        LoginFragment fragment = new LoginFragment();
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,19 +50,34 @@ public class LoginFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        model = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
+        NavController nav = Navigation.findNavController(view);
+
+        TextView login = view.findViewById(R.id.textView12);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nav.navigate(R.id.action_loginFragment_to_forgotPasswordFragment);
+            }
+        });
+    }
+
     public void signIn(View view) {
         EditText email = view.findViewById(R.id.editTextTextEmailAddress);
-//        EditText password = view.findViewById(R.id.editTextTextPassword);
-
-        Amplify.Auth.signIn(email.getText().toString(),
-                password.getText().toString(),
-                success -> {
-                    Log.i("AUTHENTICATION", success.toString());
-//                    Intent i = new Intent(AuthActivity.this, HomeActivity.class);
-//                    startActivity(i);
-//                    finish();
-                },
-                error -> Log.e("AUTHENTICATION", error.toString()));
+////        EditText password = view.findViewById(R.id.editTextTextPassword);
+//
+//        Amplify.Auth.signIn(email.getText().toString(),
+//                password.getText().toString(),
+//                success -> {
+//                    Log.i("AUTHENTICATION", success.toString());
+////                    Intent i = new Intent(AuthActivity.this, HomeActivity.class);
+////                    startActivity(i);
+////                    finish();
+//                },
+//                error -> Log.e("AUTHENTICATION", error.toString()));
     }
 
     public void moveToRegister(View view) {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20sp"
-    tools:context=".ui.auth.NameFragment">
+    tools:context=".ui.auth.VerifyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,19 +17,20 @@
             android:layout_height="wrap_content"
             android:text="Enter your 6-digit verification code"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/editTextNumber1"
             android:layout_width="49dp"
-            android:layout_height="41dp"
+            android:layout_height="33dp"
             android:layout_marginTop="12dp"
-            android:autoText="false"
             android:background="#BADFD5D5"
             android:ems="10"
             android:inputType="number"
             android:maxLength="1"
-            android:padding="0"
             android:textAlignment="center"
             android:textSize="24sp"
             app:layout_constraintEnd_toStartOf="@+id/editTextNumber2"
@@ -40,7 +41,7 @@
         <EditText
             android:id="@+id/editTextNumber2"
             android:layout_width="49dp"
-            android:layout_height="41dp"
+            android:layout_height="33dp"
             android:layout_marginTop="12dp"
             android:background="#BADFD5D5"
             android:ems="10"
@@ -56,7 +57,7 @@
         <EditText
             android:id="@+id/editTextNumber3"
             android:layout_width="49dp"
-            android:layout_height="41dp"
+            android:layout_height="33dp"
             android:layout_marginTop="12dp"
             android:background="#BADFD5D5"
             android:ems="10"
@@ -72,7 +73,7 @@
         <EditText
             android:id="@+id/editTextNumber4"
             android:layout_width="49dp"
-            android:layout_height="41dp"
+            android:layout_height="33dp"
             android:layout_marginTop="12dp"
             android:background="#BADFD5D5"
             android:ems="10"
@@ -88,7 +89,7 @@
         <EditText
             android:id="@+id/editTextNumber5"
             android:layout_width="49dp"
-            android:layout_height="41dp"
+            android:layout_height="33dp"
             android:layout_marginTop="12dp"
             android:background="#BADFD5D5"
             android:ems="10"
@@ -104,7 +105,7 @@
         <EditText
             android:id="@+id/editTextNumber6"
             android:layout_width="49dp"
-            android:layout_height="41dp"
+            android:layout_height="33dp"
             android:layout_marginTop="12dp"
             android:background="#BADFD5D5"
             android:ems="10"
@@ -143,7 +144,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
         <Button
-            android:id="@+id/nextBtn"
+            android:id="@+id/nextBtn2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

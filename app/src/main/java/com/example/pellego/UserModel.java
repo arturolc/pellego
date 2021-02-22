@@ -11,6 +11,14 @@ public class UserModel {
     private String lastName;
     private String email;
 
+    // initialize empty user to be filled out using setters
+    public UserModel() {
+        this.uID = 0;
+        this.firstName = "";
+        this.lastName = "";
+        this.email = "";
+    }
+
     public UserModel(int uID, String firstName, String lastName, String email) {
         this.uID = uID;
         this.firstName = firstName;
@@ -32,6 +40,23 @@ public class UserModel {
 
     public int getuID() {
         return uID;
+    }
+
+
+    public void setuID(int uID) {
+        this.uID = uID;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
