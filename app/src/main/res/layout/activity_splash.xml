@@ -33,6 +33,7 @@
             android:text="Pellego"
             android:textColor="@color/white"
             android:textAlignment="center"
+            android:fontFamily="@font/bulletto_family"
             android:gravity="center"
             android:textSize="80dp"
             tools:ignore="MissingConstraints"></TextView>
@@ -40,7 +41,6 @@
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/book_anim"
             app:lottie_loop="false"
-            android:paddingTop="15dp"
             android:layout_width="match_parent"
             app:lottie_fileName="books-appearing.json"
             android:layout_gravity="center"
