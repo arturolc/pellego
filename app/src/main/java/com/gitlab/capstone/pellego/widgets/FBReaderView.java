@@ -23,6 +23,8 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PowerManager;
+
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.ColorUtils;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -44,7 +46,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.gitlab.capstone.pellego.app.Storage;
-import com.gitlab.capstone.pellego.misc.NavigationPopup;
+import com.gitlab.capstone.pellego.app.NavigationPopup;
 import com.gitlab.capstone.pellego.services.ImagesProvider;
 import com.github.axet.androidlibrary.net.HttpClient;
 import com.github.axet.androidlibrary.preferences.AboutPreferenceCompat;
@@ -483,6 +485,8 @@ public class FBReaderView extends RelativeLayout {
         @Override
         public void setWindowTitle(String title) {
             FBReaderView.this.title = title;
+//            Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+//            toolbar.setNavigationIcon(null);
         }
 
         @Override
@@ -526,6 +530,7 @@ public class FBReaderView extends RelativeLayout {
     public class FBReaderApp extends org.geometerplus.fbreader.fbreader.FBReaderApp {
         public FBReaderApp(Context context) {
             super(new Storage.Info(context), new BookCollectionShadow());
+
         }
 
         @Override

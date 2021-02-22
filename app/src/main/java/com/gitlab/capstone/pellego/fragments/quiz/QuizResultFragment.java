@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.gitlab.capstone.pellego.misc.App;
+import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 

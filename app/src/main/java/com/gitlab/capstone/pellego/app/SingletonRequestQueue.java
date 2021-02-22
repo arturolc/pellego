@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego.misc;
+package com.gitlab.capstone.pellego.app;
 
 import android.content.Context;
 import android.graphics.Bitmap;
