@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextEmail"
+            android:id="@+id/editTextName"
             android:layout_width="368dp"
             android:layout_height="33dp"
             android:layout_marginTop="13dp"
@@ -39,12 +39,15 @@
             android:id="@+id/nextBtn2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="24dp"
+            android:clickable="false"
+            android:focusable="true"
             android:text="next"
             android:textColor="#FFFFFF"
             app:iconTint="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

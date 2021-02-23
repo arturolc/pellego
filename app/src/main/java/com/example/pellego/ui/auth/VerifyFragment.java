@@ -9,12 +9,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.amplifyframework.core.Amplify;
 import com.example.pellego.DatabaseHelper;
@@ -65,6 +68,108 @@ public class VerifyFragment extends Fragment {
                 }
             }
         });
+
+
+        EditText et0 = view.findViewById(R.id.editTextNumber0);
+        EditText et1 = view.findViewById(R.id.editTextNumber1);
+        EditText et2 = view.findViewById(R.id.editTextNumber2);
+        EditText et3 = view.findViewById(R.id.editTextNumber3);
+        EditText et4 = view.findViewById(R.id.editTextNumber4);
+        EditText et5 = view.findViewById(R.id.editTextNumber5);
+
+        et0.requestFocus();
+        et0.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                et1.requestFocus();
+            }
+        });
+
+        et1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                et2.requestFocus();
+            }
+        });
+
+
+        et2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                et3.requestFocus();
+            }
+        });
+
+        et3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                et4.requestFocus();
+            }
+        });
+
+        et4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                et5.requestFocus();
+            }
+        });
+
+        et5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                // verify code
+            }
+        });
+
+
     }
 
 
