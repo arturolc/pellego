@@ -52,7 +52,7 @@ import com.github.axet.androidlibrary.widgets.TreeRecyclerView;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.activities.FullscreenActivity;
 import com.gitlab.capstone.pellego.activities.MainActivity;
-import com.gitlab.capstone.pellego.app.BookApplication;
+import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.ComicsPlugin;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Storage;
@@ -671,7 +671,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         };
 
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String mode = shared.getString(BookApplication.PREFERENCE_VIEW_MODE, "");
+        String mode = shared.getString(App.PREFERENCE_VIEW_MODE, "");
         fb.setWidget(mode.equals(FBReaderView.Widgets.CONTINUOUS.toString()) ? FBReaderView.Widgets.CONTINUOUS : FBReaderView.Widgets.PAGING);
 
         fb.setWindow(getActivity().getWindow());
@@ -729,7 +729,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     @Override
     public void onResume() {
         super.onResume();
-        ScreenlockPreference.onResume(getActivity(), BookApplication.PREFERENCE_SCREENLOCK);
+        ScreenlockPreference.onResume(getActivity(), App.PREFERENCE_SCREENLOCK);
 
         battery = new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
@@ -749,7 +749,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public void onPause() {
         super.onPause();
         savePosition();
-        ScreenlockPreference.onPause(getActivity(), BookApplication.PREFERENCE_SCREENLOCK);
+        ScreenlockPreference.onPause(getActivity(), App.PREFERENCE_SCREENLOCK);
 
         if (battery != null) {
             getContext().unregisterReceiver(battery);
@@ -770,7 +770,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         if (fontsize != null)
             return fontsize;
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return shared.getFloat(BookApplication.PREFERENCE_FONTSIZE_REFLOW, BookApplication.PREFERENCE_FONTSIZE_REFLOW_DEFAULT);
+        return shared.getFloat(App.PREFERENCE_FONTSIZE_REFLOW, App.PREFERENCE_FONTSIZE_REFLOW_DEFAULT);
     }
 
     void savePosition() {
@@ -826,7 +826,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
 
     @Override
     public void onUserInteraction() {
-        ScreenlockPreference.onUserInteraction(getActivity(), BookApplication.PREFERENCE_SCREENLOCK);
+        ScreenlockPreference.onUserInteraction(getActivity(), App.PREFERENCE_SCREENLOCK);
     }
 
     @Override
@@ -887,7 +887,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                     public void setFont(String f) {
                         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
                         SharedPreferences.Editor edit = shared.edit();
-                        edit.putString(BookApplication.PREFERENCE_FONTFAMILY_FBREADER, f);
+                        edit.putString(App.PREFERENCE_FONTFAMILY_FBREADER, f);
                         edit.apply();
                         fb.setFontFB(f);
                         updateToolbar();
@@ -897,7 +897,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                     public void setFontsize(int f) {
                         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
                         SharedPreferences.Editor edit = shared.edit();
-                        edit.putInt(BookApplication.PREFERENCE_FONTSIZE_FBREADER, f);
+                        edit.putInt(App.PREFERENCE_FONTSIZE_FBREADER, f);
                         edit.apply();
                         fb.setFontsizeFB(f);
                         updateToolbar();
@@ -919,7 +919,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                         float p = f / 10f;
                         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
                         SharedPreferences.Editor editor = shared.edit();
-                        editor.putFloat(BookApplication.PREFERENCE_FONTSIZE_REFLOW, p);
+                        editor.putFloat(App.PREFERENCE_FONTSIZE_REFLOW, p);
                         editor.apply();
                         fb.setFontsizeReflow(p);
                         updateToolbar();
@@ -949,7 +949,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             FBReaderView.Widgets m = fb.widget instanceof ScrollWidget ? FBReaderView.Widgets.PAGING : FBReaderView.Widgets.CONTINUOUS;
             SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
             SharedPreferences.Editor edit = shared.edit();
-            edit.putString(BookApplication.PREFERENCE_VIEW_MODE, m.toString());
+            edit.putString(App.PREFERENCE_VIEW_MODE, m.toString());
             edit.apply();
             fb.setWidget(m);
             fb.reset();
@@ -1090,11 +1090,11 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(BookApplication.PREFERENCE_VIEW_MODE)) {
+        if (key.equals(App.PREFERENCE_VIEW_MODE)) {
             fb.configWidget(sharedPreferences);
             fb.showControls();
         }
-        if (key.equals(BookApplication.PREFERENCE_THEME)) {
+        if (key.equals(App.PREFERENCE_THEME)) {
             fb.configColorProfile(sharedPreferences);
         }
     }

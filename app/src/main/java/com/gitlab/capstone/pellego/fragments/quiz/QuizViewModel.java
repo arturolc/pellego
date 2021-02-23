@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.App;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,14 +1,8 @@
 package com.gitlab.capstone.pellego.fragments.learn;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,9 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.github.axet.androidlibrary.widgets.InvalidateOptionsMenuCompat;
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.BookApplication;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleListAdapter;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleListItemModel;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;

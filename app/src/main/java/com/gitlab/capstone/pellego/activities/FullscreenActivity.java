@@ -22,7 +22,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.amplifyframework.core.Amplify;
 import com.github.axet.androidlibrary.activities.AppCompatFullscreenThemeActivity;
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.BookApplication;
+import com.gitlab.capstone.pellego.app.App;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -102,12 +102,12 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
 
     @Override
     public int getAppTheme() {
-        return BookApplication.getTheme(this, R.style.AppThemeLight_NoActionBar, R.style.AppThemeDark_NoActionBar);
+        return App.getTheme(this, R.style.AppThemeLight_NoActionBar, R.style.AppThemeDark_NoActionBar);
     }
 
     @Override
     public int getAppThemePopup() {
-        return BookApplication.getTheme(this, R.style.AppThemeLight_PopupOverlay, R.style.AppThemeDark_PopupOverlay);
+        return App.getTheme(this, R.style.AppThemeLight_PopupOverlay, R.style.AppThemeDark_PopupOverlay);
     }
 
     @SuppressLint({"InlinedApi", "RestrictedApi"})

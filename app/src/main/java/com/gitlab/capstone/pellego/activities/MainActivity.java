@@ -43,7 +43,7 @@ import com.github.axet.androidlibrary.widgets.OpenFileDialog;
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.WebViewCustom;
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.BookApplication;
+import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
@@ -184,9 +184,9 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         }
 
         public void progress(long bytes, long total) {
-            String str = BookApplication.formatSize(getContext(), bytes);
+            String str = App.formatSize(getContext(), bytes);
             if (total > 0) {
-                str += " / " + BookApplication.formatSize(getContext(), total);
+                str += " / " + App.formatSize(getContext(), total);
                 load.setProgress((int) (bytes * 100 / total));
                 load.setVisibility(View.VISIBLE);
                 v.setVisibility(View.GONE);
@@ -194,7 +194,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
                 load.setVisibility(View.GONE);
                 v.setVisibility(View.VISIBLE);
             }
-            str += String.format(" (%s%s)", BookApplication.formatSize(getContext(), progress.info.getCurrentSpeed()), getContext().getString(R.string.per_second));
+            str += String.format(" (%s%s)", App.formatSize(getContext(), progress.info.getCurrentSpeed()), getContext().getString(R.string.per_second));
             text.setText(str);
             text.setVisibility(View.VISIBLE);
         }
@@ -211,7 +211,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
             openIntent(getIntent());
         }
 
-        RotatePreferenceCompat.onCreate(this, BookApplication.PREFERENCE_ROTATE);
+        RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
         Window window = this.getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this,R.color.light_blue));
     }
@@ -407,7 +407,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
 
     public void importPressed() {
         final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
-        String last = shared.getString(BookApplication.PREFERENCE_LAST_PATH, null);
+        String last = shared.getString(App.PREFERENCE_LAST_PATH, null);
         Uri old = null;
         if (last != null) {
             old = Uri.parse(last);
@@ -427,7 +427,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
                     File f = Storage.getFile(uri);
                     f = f.getParentFile();
                     SharedPreferences.Editor editor = shared.edit();
-                    editor.putString(BookApplication.PREFERENCE_LAST_PATH, f.toString());
+                    editor.putString(App.PREFERENCE_LAST_PATH, f.toString());
                     editor.commit();
                 }
                 loadBook(uri, null);
@@ -528,7 +528,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
             r.config.setValue(r.app.ImageOptions.TapAction, ImageOptions.TapActionEnum.doNothing);
 
             SharedPreferences shared = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
-            String mode = shared.getString(BookApplication.PREFERENCE_VIEW_MODE, "");
+            String mode = shared.getString(App.PREFERENCE_VIEW_MODE, "");
             r.setWidget(mode.equals(FBReaderView.Widgets.CONTINUOUS.toString()) ? FBReaderView.Widgets.CONTINUOUS : FBReaderView.Widgets.PAGING);
 
             r.loadBook(fbook);
@@ -712,7 +712,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
-        if (volumeEnabled && shared.getBoolean(BookApplication.PREFERENCE_VOLUME_KEYS, false)) {
+        if (volumeEnabled && shared.getBoolean(App.PREFERENCE_VOLUME_KEYS, false)) {
             FragmentManager fm = getSupportFragmentManager();
             for (Fragment f : fm.getFragments()) {
                 if (f != null && f.isVisible() && f instanceof ReaderFragment) {
@@ -728,7 +728,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
-        if (volumeEnabled && shared.getBoolean(BookApplication.PREFERENCE_VOLUME_KEYS, false)) {
+        if (volumeEnabled && shared.getBoolean(App.PREFERENCE_VOLUME_KEYS, false)) {
             FragmentManager fm = getSupportFragmentManager();
             for (Fragment f : fm.getFragments()) {
                 if (f != null && f.isVisible() && f instanceof ReaderFragment) {
@@ -744,7 +744,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     protected void onResume() {
         super.onResume();
         isRunning = true;
-        RotatePreferenceCompat.onResume(this, BookApplication.PREFERENCE_ROTATE);
+        RotatePreferenceCompat.onResume(this, App.PREFERENCE_ROTATE);
         CacheImagesAdapter.cacheClear(this);
     }
 }

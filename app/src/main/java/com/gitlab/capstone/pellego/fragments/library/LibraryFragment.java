@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Process;
 import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
@@ -23,9 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,7 +48,7 @@ import com.github.axet.androidlibrary.widgets.TextMax;
 import com.gitlab.capstone.pellego.R;
 
 import com.gitlab.capstone.pellego.activities.MainActivity;
-import com.gitlab.capstone.pellego.app.BookApplication;
+import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.widgets.BookmarksDialog;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
@@ -138,7 +134,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
 
         public void updateGrid() {
             final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
-            if (shared.getString(BookApplication.PREFERENCE_LIBRARY_LAYOUT + getLayout(), "").equals("book_list_item")) {
+            if (shared.getString(App.PREFERENCE_LIBRARY_LAYOUT + getLayout(), "").equals("book_list_item")) {
                 setNumColumns(1);
                 layout = R.layout.book_list_item;
             } else {
@@ -164,9 +160,9 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
             if (id == R.id.action_grid) {
                 SharedPreferences.Editor editor = shared.edit();
                 if (layout == R.layout.book_list_item)
-                    editor.putString(BookApplication.PREFERENCE_LIBRARY_LAYOUT + getLayout(), "book_item");
+                    editor.putString(App.PREFERENCE_LIBRARY_LAYOUT + getLayout(), "book_item");
                 else
-                    editor.putString(BookApplication.PREFERENCE_LIBRARY_LAYOUT + getLayout(), "book_list_item");
+                    editor.putString(App.PREFERENCE_LIBRARY_LAYOUT + getLayout(), "book_list_item");
                 editor.commit();
                 updateGrid();
                 return true;
@@ -304,7 +300,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
 
         public void sort() {
             SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
-            int selected = getContext().getResources().getIdentifier(shared.getString(BookApplication.PREFERENCE_SORT, getContext().getResources().getResourceEntryName(R.id.sort_add_ask)), "id", getContext().getPackageName());
+            int selected = getContext().getResources().getIdentifier(shared.getString(App.PREFERENCE_SORT, getContext().getResources().getResourceEntryName(R.id.sort_add_ask)), "id", getContext().getPackageName());
             if (selected == R.id.sort_name_ask) {
                 Collections.sort(list, new ByName());
             } else if (selected == R.id.sort_name_desc) {
@@ -701,7 +697,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         MenuItem tts = menu.findItem(R.id.action_tts);
 
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
-        int selected = getContext().getResources().getIdentifier(shared.getString(BookApplication.PREFERENCE_SORT, getContext().getResources().getResourceEntryName(R.id.sort_add_ask)), "id", getContext().getPackageName());
+        int selected = getContext().getResources().getIdentifier(shared.getString(App.PREFERENCE_SORT, getContext().getResources().getResourceEntryName(R.id.sort_add_ask)), "id", getContext().getPackageName());
         SubMenu sorts = sort.getSubMenu();
         for (int i = 0; i < sorts.size(); i++) {
             MenuItem m = sorts.getItem(i);
@@ -744,7 +740,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         int id = item.getItemId();
         if (id == R.id.sort_add_ask || id == R.id.sort_add_desc || id == R.id.sort_name_ask || id == R.id.sort_name_desc || id == R.id.sort_open_ask || id == R.id.sort_open_desc) {
-            shared.edit().putString(BookApplication.PREFERENCE_SORT, getContext().getResources().getResourceEntryName(item.getItemId())).commit();
+            shared.edit().putString(App.PREFERENCE_SORT, getContext().getResources().getResourceEntryName(item.getItemId())).commit();
             books.sort();
             invalidateOptionsMenu.run();
             return true;

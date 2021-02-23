@@ -24,7 +24,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PowerManager;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.ColorUtils;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -53,7 +52,7 @@ import com.github.axet.androidlibrary.preferences.AboutPreferenceCompat;
 import com.github.axet.androidlibrary.widgets.PinchView;
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.BookApplication;
+import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Reflow;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
@@ -1142,7 +1141,7 @@ public class FBReaderView extends RelativeLayout {
     }
 
     public void configColorProfile(SharedPreferences shared) {
-        if (shared.getString(BookApplication.PREFERENCE_THEME, "").equals(getContext().getString(R.string.Theme_Dark))) {
+        if (shared.getString(App.PREFERENCE_THEME, "").equals(getContext().getString(R.string.Theme_Dark))) {
             config.setValue(app.ViewOptions.ColorProfileName, ColorProfile.NIGHT);
         } else {
             config.setValue(app.ViewOptions.ColorProfileName, ColorProfile.DAY);
@@ -1155,7 +1154,7 @@ public class FBReaderView extends RelativeLayout {
     }
 
     public void configWidget(SharedPreferences shared) {
-        String mode = shared.getString(BookApplication.PREFERENCE_VIEW_MODE, "");
+        String mode = shared.getString(App.PREFERENCE_VIEW_MODE, "");
         setWidget(mode.equals(FBReaderView.Widgets.CONTINUOUS.toString()) ? FBReaderView.Widgets.CONTINUOUS : FBReaderView.Widgets.PAGING);
     }
 
@@ -1163,10 +1162,10 @@ public class FBReaderView extends RelativeLayout {
         SharedPreferences shared = android.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
         configColorProfile(shared);
 
-        int d = shared.getInt(BookApplication.PREFERENCE_FONTSIZE_FBREADER, app.ViewOptions.getTextStyleCollection().getBaseStyle().FontSizeOption.getValue());
+        int d = shared.getInt(App.PREFERENCE_FONTSIZE_FBREADER, app.ViewOptions.getTextStyleCollection().getBaseStyle().FontSizeOption.getValue());
         config.setValue(app.ViewOptions.getTextStyleCollection().getBaseStyle().FontSizeOption, d);
 
-        String f = shared.getString(BookApplication.PREFERENCE_FONTFAMILY_FBREADER, app.ViewOptions.getTextStyleCollection().getBaseStyle().FontFamilyOption.getValue());
+        String f = shared.getString(App.PREFERENCE_FONTFAMILY_FBREADER, app.ViewOptions.getTextStyleCollection().getBaseStyle().FontFamilyOption.getValue());
         config.setValue(app.ViewOptions.getTextStyleCollection().getBaseStyle().FontFamilyOption, f);
 
         config.setValue(app.MiscOptions.AllowScreenBrightnessAdjustment, false);
