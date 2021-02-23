@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -45,6 +46,7 @@ public class ProfileFragment extends Fragment {
                 new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         final TextView textView = root.findViewById(R.id.text_profile);
+
         profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -60,6 +62,9 @@ public class ProfileFragment extends Fragment {
                 view.setText(user_name);
             }
         });
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        setHasOptionsMenu(false);
+        toolbar.setVisibility(View.INVISIBLE);
 
         return root;
     }
