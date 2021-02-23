@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -47,7 +48,9 @@ public class QuizResultFragment extends Fragment {
         });
 
         // TODO: POST quiz result data
-
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        setHasOptionsMenu(false);
+        toolbar.setVisibility(View.INVISIBLE);
         // Display score
         TextView txt = root.findViewById(R.id.text_results);
         txt.setText(quizViewModel.getFinalScore());

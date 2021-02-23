@@ -105,7 +105,7 @@ public class QuizViewModel extends ViewModel {
 
     public void clear() {
         mText = new MutableLiveData<>();
-        mText.setValue(getResourceString(R.string.quiz_perfect_score));
+        mText.setValue(getResourceString(R.string.quiz_name));
         question_no = 0;
         score = 0;
         module = "";

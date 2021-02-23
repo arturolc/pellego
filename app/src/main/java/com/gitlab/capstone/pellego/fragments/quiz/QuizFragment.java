@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -49,6 +50,9 @@ public class QuizFragment extends Fragment {
                 textView.setText(s);
             }
         });
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        setHasOptionsMenu(false);
+        toolbar.setVisibility(View.INVISIBLE);
         // Set view model parameters
         quizViewModel.setDifficulty(getArguments().getString("difficulty"));
         quizViewModel.setWPM(Integer.parseInt(getArguments().getString("wpm")));
