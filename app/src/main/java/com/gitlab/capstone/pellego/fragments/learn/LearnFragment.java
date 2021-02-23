@@ -110,15 +110,19 @@ public class LearnFragment extends Fragment {
                 switch(position) {
                     case 0: // rsvp
                         moduleViewModel.setViewModelVars(getResources().getString(R.string.title_rsvp), getResources().getString(R.string.description_rsvp), R.id.nav_rsvp_intro, R.array.intro_rsvp_content, R.array.intro_rsvp_header, R.id.nav_rsvp_module);
+                        navController.navigate(R.id.nav_module_overview);
                         break;
                     case 1:
                     case 2:
                         break;
                     case 3: // metaguiding
                         moduleViewModel.setViewModelVars(getResources().getString(R.string.title_meta_guiding), getResources().getString(R.string.description_metaguiding), R.id.nav_metaguiding_intro, R.array.intro_metaguiding_content, R.array.intro_metaguiding_header, R.id.nav_metaguiding_module);
+                        navController.navigate(R.id.nav_module_overview);
+                        break;
+                    case 4:
                         break;
                 }
-                navController.navigate(R.id.nav_module_overview);
+
             }
         });
         return root;
