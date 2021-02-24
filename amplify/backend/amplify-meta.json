@@ -18,7 +18,7 @@
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
-      "lastPushTimeStamp": "2021-02-10T05:46:15.674Z",
+      "lastPushTimeStamp": "2021-02-24T05:52:03.927Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-development-dev-222922-deployment/amplify-cfn-templates/auth/developmentcc1895dd-cloudformation-template.yml",
         "logicalId": "authdevelopmentcc1895dd"
@@ -30,9 +30,11 @@
         "AppClientID": "1dad87dqdvbgdnsc09agqsh2qp",
         "HostedUIDomain": "development50c2b620-50c2b620-dev",
         "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"pellego://com.example.pellego/login/\"],\"LogoutURLs\":[\"pellego://com.example.pellego/logout/\"]}",
-        "UserPoolName": "developmentcc1895dd_userpool_cc1895dd"
+        "UserPoolName": "developmentcc1895dd_userpool_cc1895dd",
+        "IdentityPoolId": "us-west-2:59973f48-0bab-4622-9bcf-c33703a1a85e",
+        "IdentityPoolName": "developmentcc1895dd_identitypool_a8db3b43__dev"
       },
-      "lastPushDirHash": "FZe1Vl5hRfgiD0K9CXDggV/wfp0="
+      "lastPushDirHash": "ShpvYXIIjbAeM871i3YCQeU+qfo="
     }
   }
 }

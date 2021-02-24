@@ -21,7 +21,10 @@ import com.amplifyframework.core.Amplify;
 import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
 
-
+/**********************************************
+ Arturo Lara
+ Login screen
+ **********************************************/
 public class LoginFragment extends Fragment {
 
     private AuthViewModel model;

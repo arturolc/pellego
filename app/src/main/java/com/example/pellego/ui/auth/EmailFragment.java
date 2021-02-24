@@ -28,6 +28,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**********************************************
+ Arturo Lara
+ Email Fragment prompting the user for their email address
+ **********************************************/
 public class EmailFragment extends Fragment {
 
     AuthViewModel model;

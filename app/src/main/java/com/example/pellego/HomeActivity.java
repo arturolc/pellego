@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 //import com.example.pellego.ui.rsvp.RsvpIntroFragment;
 import com.amplifyframework.auth.options.AuthSignOutOptions;
+import com.amplifyframework.auth.options.AuthWebUISignInOptions;
 import com.amplifyframework.core.Amplify;
 
 import com.example.pellego.ui.auth.AuthActivity;
@@ -46,15 +47,6 @@ public class HomeActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Amplify.Auth.fetchAuthSession(
-                result -> {
-                    Log.d("AmplifyQuickstart", result.toString());
-                },
-                error -> {
-                    Log.e("AmplifyQuickstart", error.toString());
-                }
-        );
-        
         // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
         drawer = findViewById(R.id.home_layout);

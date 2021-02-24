@@ -27,7 +27,10 @@ import java.util.Deque;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**********************************************
+ Arturo Lara
+ Prompts the user for email address to recover password
+ **********************************************/
 public class ForgotPasswordFragment extends Fragment {
 
     AuthViewModel model;

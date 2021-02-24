@@ -24,7 +24,10 @@ import com.example.pellego.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**********************************************
+ Arturo Lara
+ User authentication using AWS Amplify and AWS Cognito
+ **********************************************/
 public class RegisterFragment extends Fragment {
 
     private AuthViewModel model;

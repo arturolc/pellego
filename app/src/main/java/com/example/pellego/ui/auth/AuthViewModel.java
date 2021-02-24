@@ -11,9 +11,6 @@ import com.example.pellego.UserModel;
  * user data collection for Pellego Remote and Local Databases.
  *****************************************/
 public class AuthViewModel extends ViewModel {
-
-//    private final MutableLiveData<UserModel> data;
-
     private String name;
     private String email;
     private String password;
@@ -22,14 +19,7 @@ public class AuthViewModel extends ViewModel {
 
     public AuthViewModel() {
 
-//        this.data = new MutableLiveData<>(user);
-//        this.user = new UserModel();
     }
-
-//    public void updateUser() {
-//        data.setValue
-//    }
-
 
     public String getName() {
         return name;

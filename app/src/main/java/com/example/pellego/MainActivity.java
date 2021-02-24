@@ -13,7 +13,7 @@ import com.amplifyframework.core.Amplify;
 import com.example.pellego.ui.auth.AuthActivity;
 
 /**********************************************
- Eli Hebdon
+ Eli Hebdon & Arturo Lara
  The main entry point for the app on startup.
  Displays a splash screen before navigating to the home activity.
  **********************************************/
@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (AmplifyException error) {
             Log.e("Amplify", "Could not initialize Amplify", error);
         }
-
-//        Log.d("CURRENT", Amplify.Auth.getCurrentUser().toString());
 
         Amplify.Auth.fetchAuthSession(
                 result -> {

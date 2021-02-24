@@ -31,7 +31,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**********************************************
+ Arturo Lara
+ email verification
+ **********************************************/
 public class VerifyFragment extends Fragment {
 
     AuthViewModel model;

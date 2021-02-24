@@ -18,7 +18,10 @@ import android.widget.TextView;
 import com.amplifyframework.auth.AuthProvider;
 import com.amplifyframework.core.Amplify;
 import com.example.pellego.R;
-
+/**********************************************
+ Arturo Lara
+ Main landing screen when user opens the app for the first time
+ **********************************************/
 public class LandingFragment extends Fragment {
 
     private AuthViewModel model;
@@ -77,8 +80,22 @@ public class LandingFragment extends Fragment {
                         result -> Log.i("AUTHENTICATION", result.toString()),
                         error -> Log.e("AUTHENTICATION", error.toString())
                 );
-//                Amplify.Auth.s
             }
         });
+
+        Button btnFacebook = view.findViewById(R.id.facebookBtn);
+        btnFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Amplify.Auth.signInWithSocialWebUI(
+                        AuthProvider.facebook(),
+                        getActivity(),
+                        result -> Log.i("AuthQuickstart", result.toString()),
+                        error -> Log.e("AuthQuickstart", error.toString())
+                );
+            }
+        });
+
+
     }
 }

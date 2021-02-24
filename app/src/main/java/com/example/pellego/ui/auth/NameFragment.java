@@ -21,7 +21,10 @@ import android.widget.TextView;
 
 import com.example.pellego.R;
 
-
+/**********************************************
+ Arturo Lara
+ Prompts the user for their name
+ **********************************************/
 public class NameFragment extends Fragment {
 
     private AuthViewModel model;

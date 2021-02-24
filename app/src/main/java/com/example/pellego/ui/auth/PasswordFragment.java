@@ -24,7 +24,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**********************************************
+ Arturo Lara
+ prompts the user for their password
+ **********************************************/
 public class PasswordFragment extends Fragment {
 
     private AuthViewModel model;
