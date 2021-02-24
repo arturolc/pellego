@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -20,7 +22,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.amplifyframework.core.Amplify;
 import com.github.axet.androidlibrary.activities.AppCompatFullscreenThemeActivity;
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.BookApplication;
+import com.gitlab.capstone.pellego.app.App;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -59,16 +61,13 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
                 .build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
-
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                int id = item.getItemId();
-//                getFragmentManager().popBackStack(ReaderFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                navController.navigate(id);
-//                return true;
-//            }
-//        });
+        FrameLayout constraintLayout = this.findViewById(R.id.host_fragment_container);
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
+        layoutParams.bottomToTop = R.id.container_bottom;
+        constraintLayout.setLayoutParams(layoutParams);
+        Toolbar toolbar = this.findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(null);
+        
         // Attach nav drawer to nav controller
         NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
         NavigationUI.setupWithNavController(drawerNavigationView, navController);
@@ -103,12 +102,12 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
 
     @Override
     public int getAppTheme() {
-        return BookApplication.getTheme(this, R.style.AppThemeLight_NoActionBar, R.style.AppThemeDark_NoActionBar);
+        return App.getTheme(this, R.style.AppThemeLight_NoActionBar, R.style.AppThemeDark_NoActionBar);
     }
 
     @Override
     public int getAppThemePopup() {
-        return BookApplication.getTheme(this, R.style.AppThemeLight_PopupOverlay, R.style.AppThemeDark_PopupOverlay);
+        return App.getTheme(this, R.style.AppThemeLight_PopupOverlay, R.style.AppThemeDark_PopupOverlay);
     }
 
     @SuppressLint({"InlinedApi", "RestrictedApi"})

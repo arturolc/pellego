@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="light_blue">#609DE5</color>
+    <color name="transparent_blue">#77609DE5</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#E74C3C</color>
     <color name="green">#28B463</color>
@@ -13,6 +14,7 @@
     <color name="pastel_orange">#ae5a41</color>
     <color name="light_grey">#D0D3D4</color>
     <color name="dark_grey">#4D5656</color>
+    <color name="grey_transparent">#774D5656</color>
     <color name="dark_blue">#21618C</color>
 
 </resources>

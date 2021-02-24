@@ -20,11 +20,20 @@
         android:id="@+id/text_library"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="15dp"
+        android:fontFamily="@font/bulletto_family"
         android:text="@string/title_library"
         android:gravity="center_horizontal"
         android:textColor="@color/white"
-        android:textSize="60dp" />
+        android:textSize="50dp" />
+        <TextView
+            android:id="@+id/text_empty_library"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:visibility="invisible"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/grid"
         android:layout_width="match_parent"
@@ -32,7 +41,6 @@
         android:layout_below="@+id/library_header"
         android:numColumns="4"
         android:scrollbars="vertical"
-
         android:stretchMode="columnWidth"
         android:verticalSpacing="2dp" />
     </LinearLayout>
@@ -43,6 +51,5 @@
         android:backgroundTint="@color/white"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="15dp"
-        android:paddingLeft="10dp"
         app:srcCompat="@android:drawable/ic_input_add" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

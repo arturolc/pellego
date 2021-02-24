@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.BookApplication;
+import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Storage;
 import com.github.axet.androidlibrary.activities.AppCompatSettingsThemeActivity;
 import com.github.axet.androidlibrary.preferences.RotatePreferenceCompat;
@@ -34,12 +34,12 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
 
     @Override
     public int getAppTheme() {
-        return BookApplication.getTheme(this, R.style.AppThemeLight, R.style.AppThemeDark);
+        return App.getTheme(this, R.style.AppThemeLight, R.style.AppThemeDark);
     }
 
     @Override
     public String getAppThemeKey() {
-        return BookApplication.PREFERENCE_THEME;
+        return App.PREFERENCE_THEME;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -48,7 +48,7 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
         super.onCreate(savedInstanceState);
         storage = new Storage(this);
         setContentView(R.layout.fragment_settings);
-        RotatePreferenceCompat.onCreate(this, BookApplication.PREFERENCE_ROTATE);
+        RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
 //        setupActionBar();
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
                 .getColor(R.color.light_blue)));
@@ -61,7 +61,7 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         super.onSharedPreferenceChanged(sharedPreferences, key);
-        if (key.equals(BookApplication.PREFERENCE_STORAGE))
+        if (key.equals(App.PREFERENCE_STORAGE))
             storage.migrateLocalStorageDialog(this);
     }
 
@@ -73,11 +73,11 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
-            bindPreferenceSummaryToValue(findPreference(BookApplication.PREFERENCE_SCREENLOCK));
+            bindPreferenceSummaryToValue(findPreference(App.PREFERENCE_SCREENLOCK));
 //            bindPreferenceSummaryToValue(findPreference(BookApplication.PREFERENCE_THEME));
-            bindPreferenceSummaryToValue(findPreference(BookApplication.PREFERENCE_VIEW_MODE));
+            bindPreferenceSummaryToValue(findPreference(App.PREFERENCE_VIEW_MODE));
 
-            StoragePathPreferenceCompat s = (StoragePathPreferenceCompat) findPreference(BookApplication.PREFERENCE_STORAGE);
+            StoragePathPreferenceCompat s = (StoragePathPreferenceCompat) findPreference(App.PREFERENCE_STORAGE);
             s.setStorage(new Storage(getContext()));
             s.setPermissionsDialog(this, Storage.PERMISSIONS_RW, RESULT_STORAGE);
             if (Build.VERSION.SDK_INT >= 21)
@@ -92,14 +92,14 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
         @Override
         public void onResume() {
             super.onResume();
-            RotatePreferenceCompat r = (RotatePreferenceCompat) findPreference(BookApplication.PREFERENCE_ROTATE);
+            RotatePreferenceCompat r = (RotatePreferenceCompat) findPreference(App.PREFERENCE_ROTATE);
             r.onResume();
         }
 
         @Override
         public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            StoragePathPreferenceCompat s = (StoragePathPreferenceCompat) findPreference(BookApplication.PREFERENCE_STORAGE);
+            StoragePathPreferenceCompat s = (StoragePathPreferenceCompat) findPreference(App.PREFERENCE_STORAGE);
             switch (requestCode) {
                 case RESULT_STORAGE:
                     s.onRequestPermissionsResult(permissions, grantResults);
@@ -110,7 +110,7 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
-            StoragePathPreferenceCompat s = (StoragePathPreferenceCompat) findPreference(BookApplication.PREFERENCE_STORAGE);
+            StoragePathPreferenceCompat s = (StoragePathPreferenceCompat) findPreference(App.PREFERENCE_STORAGE);
             switch (requestCode) {
                 case RESULT_STORAGE:
                     s.onActivityResult(resultCode, data);

@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_nav_library_to_pellegoLibrary"
             app:destination="@id/pellegoLibrary" />
+        <action
+            android:id="@+id/action_nav_library_to_reader"
+            app:destination="@id/reader" />
     </fragment>
     <fragment
         android:id="@+id/nav_learn"
@@ -177,7 +180,7 @@
         tools:layout="@layout/pellego_library_fragment" />
     <fragment
         android:id="@+id/reader"
-        android:name="com.gitlab.capstone.pellego.reader.ReaderFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.reader.ReaderFragment"
         android:label="reader_fragment"
         tools:layout="@layout/fragment_reader" />
 </navigation>

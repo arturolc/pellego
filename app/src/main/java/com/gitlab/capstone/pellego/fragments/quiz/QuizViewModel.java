@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.gitlab.capstone.pellego.misc.App;
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.App;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -105,7 +105,7 @@ public class QuizViewModel extends ViewModel {
 
     public void clear() {
         mText = new MutableLiveData<>();
-        mText.setValue(getResourceString(R.string.quiz_perfect_score));
+        mText.setValue(getResourceString(R.string.quiz_name));
         question_no = 0;
         score = 0;
         module = "";

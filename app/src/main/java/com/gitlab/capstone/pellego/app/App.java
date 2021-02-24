@@ -1,6 +1,7 @@
 package com.gitlab.capstone.pellego.app;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import com.github.axet.androidlibrary.app.MainApplication;
 import com.github.axet.androidlibrary.net.HttpClient;
@@ -8,7 +9,7 @@ import com.gitlab.capstone.pellego.R;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
-public class BookApplication extends MainApplication {
+public class App extends MainApplication {
     public static String PREFERENCE_THEME = "theme";
     public static String PREFERENCE_FONTFAMILY_FBREADER = "fontfamily_fb";
     public static String PREFERENCE_FONTSIZE_FBREADER = "fontsize_fb";
@@ -26,6 +27,11 @@ public class BookApplication extends MainApplication {
 
     public ZLAndroidApplication zlib;
 
+    private static Resources resources;
+
+    public static Resources getAppResources() {
+        return resources;
+    }
     public static int getTheme(Context context, int light, int dark) {
         return MainApplication.getTheme(context, PREFERENCE_THEME, light, dark, context.getString(R.string.Theme_Dark));
     }
@@ -33,9 +39,11 @@ public class BookApplication extends MainApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        resources = getResources();
+
         zlib = new ZLAndroidApplication() {
             {
-                attachBaseContext(BookApplication.this);
+                attachBaseContext(App.this);
                 onCreate();
             }
         };

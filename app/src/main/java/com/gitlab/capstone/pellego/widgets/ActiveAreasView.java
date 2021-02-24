@@ -23,6 +23,9 @@ import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 
 import java.util.HashMap;
 
+/**
+ * Displays book reader controls and then fades out
+ */
 public class ActiveAreasView extends RelativeLayout {
     public static int PERC = 10000; // precision
     public static int BACKGROUND = 0x22333333;
@@ -53,7 +56,7 @@ public class ActiveAreasView extends RelativeLayout {
             g = new GradientDrawable();
             g.setCornerRadius(ThemeUtils.dp2px(context, 20));
             g.setGradientType(GradientDrawable.LINEAR_GRADIENT);
-            g.setColor(BACKGROUND);
+            g.setColor(getResources().getColor(R.color.grey_transparent));
             setBackgroundDrawable(g);
             MarginLayoutParams lp = new MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             setLayoutParams(lp);

@@ -20,7 +20,7 @@ import com.github.axet.androidlibrary.sound.TTS;
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.Toast;
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.BookApplication;
+import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Reflow;
 import com.gitlab.capstone.pellego.app.Storage;
@@ -417,7 +417,7 @@ public class TTSPopup {
             public Locale getUserLocale() {
                 SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
 
-                String lang = shared.getString(BookApplication.PREFERENCE_LANGUAGE, ""); // take user lang preferences
+                String lang = shared.getString(App.PREFERENCE_LANGUAGE, ""); // take user lang preferences
 
                 Locale locale;
 
