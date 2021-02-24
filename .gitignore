@@ -10,7 +10,7 @@ app/src/main/assets/*.dex
 /.idea/
 
 
-#amplify
+amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/logs
