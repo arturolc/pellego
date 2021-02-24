@@ -134,6 +134,11 @@ public class VerifyFragment extends Fragment {
         et5.setText("");
 
         et0.requestFocus();
+        addTextListeners(nav, et0, et1, et2, et3, et4, et5);
+    }
+
+    private void addTextListeners(NavController nav, EditText et0, EditText et1,
+                                  EditText et2, EditText et3, EditText et4, EditText et5) {
         et0.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {

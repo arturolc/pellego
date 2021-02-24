@@ -66,13 +66,4 @@ public class RegisterFragment extends Fragment {
             }
         });
     }
-
-//    public void register(View view) {
-//        String firstName = ((EditText)findViewById(R.id.firstNameText)).getText().toString();
-//        String lastName = ((EditText)findViewById(R.id.lastNameText)).getText().toString();
-//        String email = ((EditText)findViewById(R.id.emailText)).getText().toString();
-//        EditText password = findViewById(R.id.passwordText);
-//
-
-//    }
 }
