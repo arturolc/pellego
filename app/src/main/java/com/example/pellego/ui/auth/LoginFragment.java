@@ -1,5 +1,6 @@
 package com.example.pellego.ui.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,12 +9,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.amplifyframework.core.Amplify;
+import com.example.pellego.HomeActivity;
 import com.example.pellego.R;
 
 
@@ -49,43 +54,34 @@ public class LoginFragment extends Fragment {
         model = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
         NavController nav = Navigation.findNavController(view);
 
-        TextView login = view.findViewById(R.id.textView12);
-        login.setOnClickListener(new View.OnClickListener() {
+        TextView forgotPW = view.findViewById(R.id.textView12);
+        forgotPW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 nav.navigate(R.id.action_loginFragment_to_forgotPasswordFragment);
             }
         });
+
+        Button loginBtn = view.findViewById(R.id.button2);
+        EditText email = view.findViewById(R.id.editTextEmailLogin);
+        EditText password = view.findViewById(R.id.editTextPasswordLogin);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Amplify.Auth.signIn(email.getText().toString(),
+                        password.getText().toString(),
+                        success -> {
+                            Log.i("AUTHENTICATION", success.toString());
+                            Intent i = new Intent(getActivity(), HomeActivity.class);
+                            startActivity(i);
+                            getActivity().finish();
+                        },
+                        error -> Log.e("AUTHENTICATION", error.toString()));
+
+            }
+        });
     }
 
-    public void signIn(View view) {
-        EditText email = view.findViewById(R.id.editTextTextEmailAddress);
-////        EditText password = view.findViewById(R.id.editTextTextPassword);
-//
-//        Amplify.Auth.signIn(email.getText().toString(),
-//                password.getText().toString(),
-//                success -> {
-//                    Log.i("AUTHENTICATION", success.toString());
-////                    Intent i = new Intent(AuthActivity.this, HomeActivity.class);
-////                    startActivity(i);
-////                    finish();
-//                },
-//                error -> Log.e("AUTHENTICATION", error.toString()));
-    }
 
-    public void moveToRegister(View view) {
-//        Intent i = new Intent(AuthActivity.this,
-//                RegisterActivity.class);
-//        startActivity(i);
-//        finish();
-    }
 
-    public void googleSignIn(View view) {
-//        Amplify.Auth.signInWithSocialWebUI(
-//                AuthProvider.google(),
-//                this,
-//                result -> Log.i("AUTHENTICATION", result.toString()),
-//                error -> Log.e("AUTHENTICATION", error.toString())
-//        );
-    }
 }

@@ -13,25 +13,53 @@ import com.example.pellego.UserModel;
 public class AuthViewModel extends ViewModel {
 
 //    private final MutableLiveData<UserModel> data;
-    UserModel user;
+
+    private String name;
+    private String email;
+    private String password;
+    private String confirmationCode;
+
+
     public AuthViewModel() {
 
 //        this.data = new MutableLiveData<>(user);
-        this.user = new UserModel();
+//        this.user = new UserModel();
     }
 
 //    public void updateUser() {
 //        data.setValue
 //    }
 
-    public void setUser(UserModel user) {
-        this.user = user;
+
+    public String getName() {
+        return name;
     }
 
-    public UserModel getUser() {
-        return user;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmationCode() {
+        return confirmationCode;
+    }
+
+    public void setConfirmationCode(String confirmationCode) {
+        this.confirmationCode = confirmationCode;
+    }
 }

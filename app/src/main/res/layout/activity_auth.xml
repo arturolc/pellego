@@ -17,5 +17,6 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/auth_nav"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        tools:layout_editor_absoluteY="0dp"
+       />
 </androidx.constraintlayout.widget.ConstraintLayout>

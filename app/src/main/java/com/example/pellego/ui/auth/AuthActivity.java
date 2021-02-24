@@ -30,17 +30,10 @@ public class AuthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
-//        model = new ViewModelProvider(this).get(AuthViewModel.class);
+        model = new ViewModelProvider(this).get(AuthViewModel.class);
 
         Button btn = findViewById(R.id.signupBtn);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                nav.navigate(R.id.action_authActivity_to_nameFragment);
-//
-//            }
-//        });
+
     }
 
 

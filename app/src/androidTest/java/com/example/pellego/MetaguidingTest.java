@@ -7,12 +7,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import androidx.test.espresso.DataInteraction;
-import androidx.test.espresso.PerformException;
-import androidx.test.espresso.UiController;
-import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.util.HumanReadables;
-import androidx.test.espresso.util.TreeIterables;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -26,8 +21,6 @@ import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.concurrent.TimeoutException;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -65,7 +58,7 @@ public class MetaguidingTest {
                     Log.i("AmplifyQuickstart", result.toString());
                     if (!result.isSignedIn()) { // sign in if not already
                         ViewInteraction appCompatEditText = onView(
-                                allOf(withId(R.id.editTextTextEmailAddress),
+                                allOf(withId(R.id.editTextEmailLogin),
                                         childAtPosition(
                                                 childAtPosition(
                                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
@@ -75,7 +68,7 @@ public class MetaguidingTest {
                         appCompatEditText.perform(replaceText("elihebdon@gmail.com"), closeSoftKeyboard());
 
                         ViewInteraction appCompatEditText2 = onView(
-                                allOf(withId(R.id.editTextTextPassword),
+                                allOf(withId(R.id.editTextPasswordLogin),
                                         childAtPosition(
                                                 childAtPosition(
                                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
@@ -85,7 +78,7 @@ public class MetaguidingTest {
                         appCompatEditText2.perform(replaceText(""), closeSoftKeyboard());
 
                         ViewInteraction appCompatEditText3 = onView(
-                                allOf(withId(R.id.editTextTextPassword),
+                                allOf(withId(R.id.editTextPasswordLogin),
                                         childAtPosition(
                                                 childAtPosition(
                                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
@@ -95,7 +88,7 @@ public class MetaguidingTest {
                         appCompatEditText3.perform(click());
 
                         ViewInteraction appCompatEditText4 = onView(
-                                allOf(withId(R.id.editTextTextPassword),
+                                allOf(withId(R.id.editTextPasswordLogin),
                                         childAtPosition(
                                                 childAtPosition(
                                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),

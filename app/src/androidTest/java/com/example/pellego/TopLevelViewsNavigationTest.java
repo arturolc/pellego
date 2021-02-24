@@ -1,7 +1,6 @@
 package com.example.pellego;
 
 
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +57,7 @@ public class TopLevelViewsNavigationTest {
                     Log.i("AmplifyQuickstart", result.toString());
                     if (!result.isSignedIn()) { // sign in if not already
                         ViewInteraction appCompatEditText = onView(
-                                allOf(withId(R.id.editTextTextEmailAddress),
+                                allOf(withId(R.id.editTextEmailLogin),
                                         childAtPosition(
                                                 childAtPosition(
                                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
@@ -68,7 +67,7 @@ public class TopLevelViewsNavigationTest {
                         appCompatEditText.perform(replaceText("elihebdon@gmail.com"), closeSoftKeyboard());
 
                         ViewInteraction appCompatEditText2 = onView(
-                                allOf(withId(R.id.editTextTextPassword),
+                                allOf(withId(R.id.editTextPasswordLogin),
                                         childAtPosition(
                                                 childAtPosition(
                                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
@@ -78,7 +77,7 @@ public class TopLevelViewsNavigationTest {
                         appCompatEditText2.perform(replaceText(""), closeSoftKeyboard());
 
                         ViewInteraction appCompatEditText3 = onView(
-                                allOf(withId(R.id.editTextTextPassword),
+                                allOf(withId(R.id.editTextPasswordLogin),
                                         childAtPosition(
                                                 childAtPosition(
                                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
@@ -88,7 +87,7 @@ public class TopLevelViewsNavigationTest {
                         appCompatEditText3.perform(click());
 
                         ViewInteraction appCompatEditText4 = onView(
-                                allOf(withId(R.id.editTextTextPassword),
+                                allOf(withId(R.id.editTextPasswordLogin),
                                         childAtPosition(
                                                 childAtPosition(
                                                         withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),

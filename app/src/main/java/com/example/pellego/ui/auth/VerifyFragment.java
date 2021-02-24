@@ -19,14 +19,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.amplifyframework.auth.AuthUserAttribute;
+import com.amplifyframework.auth.AuthUserAttributeKey;
+import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
 import com.example.pellego.DatabaseHelper;
 import com.example.pellego.R;
 import com.example.pellego.UserModel;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class VerifyFragment extends Fragment {
 
     AuthViewModel model;
+
     public VerifyFragment() {
         // Required empty public constructor
     }
@@ -55,6 +64,26 @@ public class VerifyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         model = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
         NavController nav = Navigation.findNavController(view);
+
+        // send verification code
+        List<AuthUserAttribute> list = new ArrayList<AuthUserAttribute>();
+        list.add(new AuthUserAttribute(AuthUserAttributeKey.name(), model.getName()));
+        list.add(new AuthUserAttribute(AuthUserAttributeKey.email(), model.getEmail()));
+
+        if ("REGISTRATION".equals(getArguments().get("type"))) {
+            Amplify.Auth.signUp(
+                    model.getEmail(),
+                    model.getPassword(),
+                    AuthSignUpOptions.builder().userAttributes(list).build(),
+                    result -> {
+                        Log.i("AUTHENTICATION", "Result: " + result.toString());
+
+
+                    },
+                    error -> Log.e("AUTHENTICATION", "Sign up failed" + error.toString())
+            );
+        }
+
         Button btn = view.findViewById(R.id.nextBtn2);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,13 +91,30 @@ public class VerifyFragment extends Fragment {
 
                 if ("REGISTRATION".equals(getArguments().get("type"))) {
                     nav.navigate(R.id.action_verifyFragment_to_registerFragment);
-                }
-                else {
+                } else {
                     nav.navigate(R.id.action_verifyFragment_to_passwordFragment);
                 }
             }
         });
+        btn.setEnabled(false);
 
+        TextView tv = view.findViewById(R.id.textViewSendNewCode);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // send a new code
+                Amplify.Auth.resendUserAttributeConfirmationCode(AuthUserAttributeKey.email(),
+                        result -> Log.i("AuthDemo", "Code was sent again: " + result.toString()),
+                        error -> Log.e("AuthDemo", "Failed to resend code.", error)
+                );
+
+                Amplify.Auth.resendSignUpCode(model.getEmail(),
+                        success -> Snackbar.make(view, "Verification code resent.",
+                                BaseTransientBottomBar.LENGTH_SHORT).show(),
+                        error -> Snackbar.make(view, "Failed to send verification code",
+                                BaseTransientBottomBar.LENGTH_SHORT).show());
+            }
+        });
 
         EditText et0 = view.findViewById(R.id.editTextNumber0);
         EditText et1 = view.findViewById(R.id.editTextNumber1);
@@ -77,14 +123,23 @@ public class VerifyFragment extends Fragment {
         EditText et4 = view.findViewById(R.id.editTextNumber4);
         EditText et5 = view.findViewById(R.id.editTextNumber5);
 
+        et0.setText("");
+        et1.setText("");
+        et2.setText("");
+        et3.setText("");
+        et4.setText("");
+        et5.setText("");
+
         et0.requestFocus();
         et0.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {}
+                                          int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start,
@@ -95,11 +150,13 @@ public class VerifyFragment extends Fragment {
 
         et1.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {}
+                                          int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start,
@@ -111,11 +168,13 @@ public class VerifyFragment extends Fragment {
 
         et2.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {}
+                                          int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start,
@@ -126,11 +185,13 @@ public class VerifyFragment extends Fragment {
 
         et3.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {}
+                                          int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start,
@@ -141,11 +202,13 @@ public class VerifyFragment extends Fragment {
 
         et4.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {}
+                                          int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start,
@@ -156,40 +219,43 @@ public class VerifyFragment extends Fragment {
 
         et5.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(et0.getText().toString());
+                sb.append(et1.getText().toString());
+                sb.append(et2.getText().toString());
+                sb.append(et3.getText().toString());
+                sb.append(et4.getText().toString());
+                sb.append(et5.getText().toString());
+
+                String confirmationCode = sb.toString();
+
+                if ("REGISTRATION".equals(getArguments().get("type"))) {
+
+                    Amplify.Auth.confirmSignUp(
+                            model.getEmail(),
+                            confirmationCode,
+                            result ->
+                            {
+                                nav.navigate(R.id.action_verifyFragment_to_registerFragment);
+                            },
+                            error -> Log.e("AUTHENTICATION", error.toString())
+                    );
+                } else {
+                    model.setConfirmationCode(confirmationCode);
+                    nav.navigate(R.id.action_verifyFragment_to_passwordFragment);
+                }
+            }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {}
+                                          int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
-                // verify code
             }
         });
-
-
     }
-
-
-//    public void confirm(View view) {
-//        EditText confirmationCode = findViewById(R.id.confirmCodeText);
-//        DatabaseHelper dh = new DatabaseHelper(VerifyActivity.this, null, null, 1);
-//        Amplify.Auth.confirmSignUp(
-//                email,
-//                confirmationCode.getText().toString(),
-//                result ->
-//                {
-//                    dh.addUser(new UserModel(-1, firstName, lastName, email));
-//                    Intent i = new Intent(VerifyActivity.this,
-//                            AuthActivity.class);
-//                    startActivity(i);
-//                    finish();
-//                    Log.i("AUTHENTICATION", result.toString());
-//                },
-//                error -> Log.e("AUTHENTICATION", error.toString())
-//        );
-//
-//    }
 }

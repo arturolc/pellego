@@ -85,6 +85,7 @@ public class NameFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                model.setName(et.getText().toString());
                 nav.navigate(R.id.action_nameFragment_to_emailFragment);
             }
         });

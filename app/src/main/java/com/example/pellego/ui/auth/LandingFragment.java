@@ -63,5 +63,15 @@ public class LandingFragment extends Fragment {
                 nav.navigate(R.id.action_landingFragment_to_loginFragment);
             }
         });
+
+
+    }
+    public void googleSignIn(View view) {
+//        Amplify.Auth.signInWithSocialWebUI(
+//                AuthProvider.google(),
+//                this,
+//                result -> Log.i("AUTHENTICATION", result.toString()),
+//                error -> Log.e("AUTHENTICATION", error.toString())
+//        );
     }
 }

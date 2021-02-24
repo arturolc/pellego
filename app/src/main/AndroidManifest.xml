@@ -28,7 +28,8 @@
                 <data android:scheme="https://development50c2b620-50c2b620-dev.auth.us-west-2.amazoncognito.com/oauth2/idpresponse" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.auth.AuthActivity">
+        <activity android:name=".ui.auth.AuthActivity"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

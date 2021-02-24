@@ -17,7 +17,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.amplifyframework.core.Amplify;
 import com.example.pellego.R;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PasswordFragment extends Fragment {
 
@@ -51,19 +57,7 @@ public class PasswordFragment extends Fragment {
         model = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
         NavController nav = Navigation.findNavController(view);
         Button btn = view.findViewById(R.id.button8);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("PasswordFragment", getArguments().get("type").toString());
-                if("REGISTRATION".equals(getArguments().get("type"))) {
-                    nav.navigate(R.id.action_passwordFragment_to_verifyFragment);
-                }
-                else {
-                    nav.navigate(R.id.action_passwordFragment_to_registerFragment);
-                }
 
-            }
-        });
         btn.setEnabled(false);
 
         TextView et = view.findViewById(R.id.editTextPassword);
@@ -83,6 +77,34 @@ public class PasswordFragment extends Fragment {
                 }
                 else {
                     btn.setEnabled(false);
+                }
+            }
+        });
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // verify with regex if it's a valid password
+                String password = et.getText().toString();
+
+                if (password.length() < 8) {
+                    Snackbar.make(view, "Password must contain at least 8 characters.",
+                            BaseTransientBottomBar.LENGTH_SHORT).show();
+                }
+                else {
+                    model.setPassword(password);
+                    Log.d("PasswordFragment", getArguments().get("type").toString());
+                    if("REGISTRATION".equals(getArguments().get("type"))) {
+                        nav.navigate(R.id.action_passwordFragment_to_verifyFragment);
+                    }
+                    else {
+                        Amplify.Auth.confirmResetPassword(model.getPassword(),
+                                model.getConfirmationCode(),
+                                () -> nav.navigate(R.id.action_passwordFragment_to_registerFragment),
+                                error -> Snackbar.make(view,
+                                        error.getRecoverySuggestion(),
+                                        BaseTransientBottomBar.LENGTH_SHORT).show());
+                    }
                 }
             }
         });
