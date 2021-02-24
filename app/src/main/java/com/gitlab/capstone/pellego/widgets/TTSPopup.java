@@ -16,7 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.github.axet.androidlibrary.sound.TTS;
+import com.gitlab.capstone.pellego.app.TTS;
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.Toast;
 import com.gitlab.capstone.pellego.R;
