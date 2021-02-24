@@ -23,6 +23,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PowerManager;
+
 import androidx.core.graphics.ColorUtils;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -44,13 +45,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.app.NavigationPopup;
 import com.gitlab.capstone.pellego.services.ImagesProvider;
 import com.github.axet.androidlibrary.net.HttpClient;
 import com.github.axet.androidlibrary.preferences.AboutPreferenceCompat;
 import com.github.axet.androidlibrary.widgets.PinchView;
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.BookApplication;
+import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Reflow;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
@@ -58,7 +60,6 @@ import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.OnClickWrapper;
 import com.github.johnpersano.supertoasts.util.OnDismissWrapper;
 
-import org.geometerplus.android.fbreader.NavigationPopup;
 import org.geometerplus.android.fbreader.PopupPanel;
 import org.geometerplus.android.fbreader.SelectionPopup;
 import org.geometerplus.android.fbreader.TextSearchPopup;
@@ -136,7 +137,6 @@ public class FBReaderView extends RelativeLayout {
     public Listener listener;
     String title;
     Window w;
-    FBFooterView footer;
     SelectionView selection;
     ZLTextPosition scrollDelayed;
     DrawerLayout drawer;
@@ -484,6 +484,8 @@ public class FBReaderView extends RelativeLayout {
         @Override
         public void setWindowTitle(String title) {
             FBReaderView.this.title = title;
+//            Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+//            toolbar.setNavigationIcon(null);
         }
 
         @Override
@@ -527,6 +529,7 @@ public class FBReaderView extends RelativeLayout {
     public class FBReaderApp extends org.geometerplus.fbreader.fbreader.FBReaderApp {
         public FBReaderApp(Context context) {
             super(new Storage.Info(context), new BookCollectionShadow());
+
         }
 
         @Override
@@ -1134,24 +1137,24 @@ public class FBReaderView extends RelativeLayout {
         app.BookTextView = new CustomView(app);
         app.setView(app.BookTextView);
 
-        footer = new FBFooterView(getContext(), this);
-
         setWidget(Widgets.PAGING);
     }
 
     public void configColorProfile(SharedPreferences shared) {
-        if (shared.getString(BookApplication.PREFERENCE_THEME, "").equals(getContext().getString(R.string.Theme_Dark))) {
+        if (shared.getString(App.PREFERENCE_THEME, "").equals(getContext().getString(R.string.Theme_Dark))) {
             config.setValue(app.ViewOptions.ColorProfileName, ColorProfile.NIGHT);
         } else {
             config.setValue(app.ViewOptions.ColorProfileName, ColorProfile.DAY);
             ColorProfile p = ColorProfile.get(ColorProfile.DAY);
-            config.setValue(p.BackgroundOption, 0xF5E5CC);
+            // sets background color
+//            config.setValue(p.BackgroundOption, 0xF5E5CC);
+            config.setValue(p.BackgroundOption, 0xFFFFFF);
             config.setValue(p.WallpaperOption, "");
         }
     }
 
     public void configWidget(SharedPreferences shared) {
-        String mode = shared.getString(BookApplication.PREFERENCE_VIEW_MODE, "");
+        String mode = shared.getString(App.PREFERENCE_VIEW_MODE, "");
         setWidget(mode.equals(FBReaderView.Widgets.CONTINUOUS.toString()) ? FBReaderView.Widgets.CONTINUOUS : FBReaderView.Widgets.PAGING);
     }
 
@@ -1159,10 +1162,10 @@ public class FBReaderView extends RelativeLayout {
         SharedPreferences shared = android.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
         configColorProfile(shared);
 
-        int d = shared.getInt(BookApplication.PREFERENCE_FONTSIZE_FBREADER, app.ViewOptions.getTextStyleCollection().getBaseStyle().FontSizeOption.getValue());
+        int d = shared.getInt(App.PREFERENCE_FONTSIZE_FBREADER, app.ViewOptions.getTextStyleCollection().getBaseStyle().FontSizeOption.getValue());
         config.setValue(app.ViewOptions.getTextStyleCollection().getBaseStyle().FontSizeOption, d);
 
-        String f = shared.getString(BookApplication.PREFERENCE_FONTFAMILY_FBREADER, app.ViewOptions.getTextStyleCollection().getBaseStyle().FontFamilyOption.getValue());
+        String f = shared.getString(App.PREFERENCE_FONTFAMILY_FBREADER, app.ViewOptions.getTextStyleCollection().getBaseStyle().FontFamilyOption.getValue());
         config.setValue(app.ViewOptions.getTextStyleCollection().getBaseStyle().FontFamilyOption, f);
 
         config.setValue(app.MiscOptions.AllowScreenBrightnessAdjustment, false);
@@ -1195,15 +1198,12 @@ public class FBReaderView extends RelativeLayout {
         }
         widget = v;
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        lp.addRule(RelativeLayout.ABOVE, footer.getId());
         addView((View) v, 0, lp);
         if (pos != null)
             gotoPosition(pos);
-        if (footer != null)
-            removeView(footer);
+
         lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        addView(footer, lp);
     }
 
     public void loadBook(Storage.FBook fbook) {
@@ -2033,16 +2033,6 @@ public class FBReaderView extends RelativeLayout {
         reset();
     }
 
-    public void invalidateFooter() {
-        if (footer == null) {
-            if (widget instanceof ScrollWidget)
-                ((ScrollWidget) widget).invalidate();
-            else
-                widget.repaint();
-        } else {
-            footer.invalidate();
-        }
-    }
 
     public void clearReflowPage() {
         pluginview.current.pageOffset = 0;

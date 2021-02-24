@@ -10,9 +10,9 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.amplifyframework.core.Amplify;
-import com.gitlab.capstone.pellego.misc.DatabaseHelper;
+import com.gitlab.capstone.pellego.app.DatabaseHelper;
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.misc.UserModel;
+import com.gitlab.capstone.pellego.app.UserModel;
 
 
 /**********************************************

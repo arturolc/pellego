@@ -8,8 +8,8 @@ android {
         applicationId "com.gitlab.capstone.pellego"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode            407
-        versionName            "1.13.28"
+        versionCode            1
+        versionName            "1.0.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
     }
@@ -19,20 +19,12 @@ android {
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
     }
-    signingConfigs {
-        release {
-            storeFile file(project.findProperty('RELEASE_STORE_FILE') ?: 'none')
-            storePassword project.findProperty('RELEASE_STORE_PASSWORD')
-            keyAlias project.findProperty('RELEASE_KEY_ALIAS')
-            keyPassword project.findProperty('RELEASE_KEY_PASSWORD')
-        }
-    }
     buildTypes {
         release {
             shrinkResources true
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
         }
     }
     applicationVariants.all { variant ->
@@ -106,11 +98,8 @@ dependencies {
     // Glide for images
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
-
-
     testImplementation 'org.robolectric:robolectric:4.4'
     testImplementation 'org.mockito:mockito-core:3.3.3'
-
     androidTestImplementation 'com.android.support:support-annotations:23.1.0'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -119,7 +108,9 @@ dependencies {
     // Optional -- Mockito framework
     testImplementation 'androidx.test.ext:junit:1.1.1'
 
-
+    // splash screen animation
+    // https://lottiefiles.com/
+    implementation "com.airbnb.android:lottie:3.5.0"
 
 
 }

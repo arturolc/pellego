@@ -118,7 +118,7 @@ public class Reflow {
 
     void create() {
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
-        Float old = shared.getFloat(BookApplication.PREFERENCE_FONTSIZE_REFLOW, BookApplication.PREFERENCE_FONTSIZE_REFLOW_DEFAULT);
+        Float old = shared.getFloat(App.PREFERENCE_FONTSIZE_REFLOW, App.PREFERENCE_FONTSIZE_REFLOW_DEFAULT);
         if (info.fontsize != null)
             old = info.fontsize / 100f;
         if (k2 != null) {
