@@ -37,9 +37,11 @@ public class MainActivity extends AppCompatActivity {
             Log.e("Amplify", "Could not initialize Amplify", error);
         }
 
+//        Log.d("CURRENT", Amplify.Auth.getCurrentUser().toString());
+
         Amplify.Auth.fetchAuthSession(
                 result -> {
-                    Log.i("AmplifyQuickstart", result.toString());
+                    Log.d("AmplifyQuickstart", result.toString());
                     if (result.isSignedIn()) {
                         i = new Intent(MainActivity.this,
                                 HomeActivity.class);

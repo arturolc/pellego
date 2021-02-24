@@ -9,6 +9,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import com.amplifyframework.auth.options.AuthSignOutOptions;
 import com.amplifyframework.core.Amplify;
 
+import com.example.pellego.ui.auth.AuthActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -43,6 +45,15 @@ public class HomeActivity extends AppCompatActivity {
         // Set toolbar as action bar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Amplify.Auth.fetchAuthSession(
+                result -> {
+                    Log.d("AmplifyQuickstart", result.toString());
+                },
+                error -> {
+                    Log.e("AmplifyQuickstart", error.toString());
+                }
+        );
         
         // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);

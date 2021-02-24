@@ -8,12 +8,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.amplifyframework.auth.AuthProvider;
+import com.amplifyframework.core.Amplify;
 import com.example.pellego.R;
 
 public class LandingFragment extends Fragment {
@@ -64,14 +67,18 @@ public class LandingFragment extends Fragment {
             }
         });
 
-
-    }
-    public void googleSignIn(View view) {
-//        Amplify.Auth.signInWithSocialWebUI(
-//                AuthProvider.google(),
-//                this,
-//                result -> Log.i("AUTHENTICATION", result.toString()),
-//                error -> Log.e("AUTHENTICATION", error.toString())
-//        );
+        Button btnGoogle = view.findViewById(R.id.googleBtn);
+        btnGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Amplify.Auth.signInWithSocialWebUI(
+                        AuthProvider.google(),
+                        getActivity(),
+                        result -> Log.i("AUTHENTICATION", result.toString()),
+                        error -> Log.e("AUTHENTICATION", error.toString())
+                );
+//                Amplify.Auth.s
+            }
+        });
     }
 }
