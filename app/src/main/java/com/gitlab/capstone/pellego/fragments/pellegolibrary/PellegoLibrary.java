@@ -1,21 +1,28 @@
-package com.gitlab.capstone.pellego.fragments.pellegolibrary;
+package com.example.pellego.ui.pellegolibrary;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
+import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gitlab.capstone.pellego.app.BookModel;
-import com.gitlab.capstone.pellego.R;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.example.pellego.BookModel;
+import com.example.pellego.R;
+
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 /**********************************************

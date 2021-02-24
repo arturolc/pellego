@@ -2,12 +2,14 @@ package com.gitlab.capstone.pellego.activities;
 
 import android.content.Intent;
 import android.os.Build;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,17 +21,22 @@ import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.gitlab.capstone.pellego.R;
 
+import com.example.pellego.ui.auth.AuthActivity;
+
+
 /**********************************************
- Eli Hebdon
+ Eli Hebdon & Arturo Lara
  The main entry point for the app on startup.
  Displays a splash screen before navigating to the home activity.
  **********************************************/
 public class SplashActivity extends AppCompatActivity {
     private static int SPLASH_SCREEN_TIME_OUT=4000;
     private Intent i;
+
     LottieAnimationView lottieAnimationView;
     TextView title;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,14 +64,16 @@ public class SplashActivity extends AppCompatActivity {
 
         Amplify.Auth.fetchAuthSession(
                 result -> {
-                    Log.i("AmplifyQuickstart", result.toString());
+                    Log.d("AmplifyQuickstart", result.toString());
                     if (result.isSignedIn()) {
                         i = new Intent(SplashActivity.this,
                                 MainActivity.class);
 
                     } else {
+
                         i = new Intent(SplashActivity.this,
-                                LoginActivity.class);
+                                AuthActivity.class);
+
                     }
                 },
                 error -> {

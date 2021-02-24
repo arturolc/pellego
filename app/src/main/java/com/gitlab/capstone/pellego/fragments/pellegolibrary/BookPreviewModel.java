@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego.fragments.pellegolibrary;
+package com.example.pellego.ui.pellegolibrary;
 
 import android.app.Application;
 import android.util.Log;
@@ -11,9 +11,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.gitlab.capstone.pellego.app.SingletonRequestQueue;
+import com.example.pellego.BookModel;
+import com.example.pellego.SingletonRequestQueue;
 
 import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**********************************************
  Arturo Lara
