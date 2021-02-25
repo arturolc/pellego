@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 
 
 /**********************************************
@@ -21,7 +22,7 @@ import com.gitlab.capstone.pellego.R;
 
     The Progress Component
  **********************************************/
-public class ProgressFragment extends Fragment {
+public class ProgressFragment extends BaseFragment {
 
     private ProgressViewModel progressViewModel;
 
@@ -31,9 +32,6 @@ public class ProgressFragment extends Fragment {
                 new ViewModelProvider(this).get(ProgressViewModel.class);
         View root = inflater.inflate(R.layout.fragment_progress, container, false);
         final TextView textView = root.findViewById(R.id.text_progress);
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        setHasOptionsMenu(false);
-        toolbar.setVisibility(View.INVISIBLE);
         progressViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

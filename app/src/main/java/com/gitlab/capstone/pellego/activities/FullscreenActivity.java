@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -50,14 +51,19 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         setSupportActionBar(toolbar);
         bottomContent = findViewById(R.id.container_bottom);
         toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.ic_action_button_overflow));
+
+        setTheme(R.style.Theme_Pellego);
         // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
         drawer = findViewById(R.id.home_layout);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_settings, R.id.nav_library, R.id.nav_learn, R.id.nav_progress,
                 R.id.nav_profile, R.id.nav_terms_and_conditions, R.id.nav_privacy_policy,
                 R.id.nav_sign_out)
+                .setDrawerLayout(drawer)
                 .build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
@@ -65,8 +71,6 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
         layoutParams.bottomToTop = R.id.container_bottom;
         constraintLayout.setLayoutParams(layoutParams);
-        Toolbar toolbar = this.findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(null);
         
         // Attach nav drawer to nav controller
         NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);

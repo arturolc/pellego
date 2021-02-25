@@ -10,13 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 
 /**********************************************
  Eli Hebdon and Chris Bordoy
 
 This fragment displays the applications EULA
  **********************************************/
-public class TermsAndConditionsFragment extends Fragment {
+public class TermsAndConditionsFragment extends BaseFragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

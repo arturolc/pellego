@@ -108,7 +108,6 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
 
             toolbar.setVisibility(View.GONE);
 
-
             footer = inflater.inflate(R.layout.library_footer, null);
             footerButtons = footer.findViewById(R.id.search_footer_buttons);
             footerNext = footer.findViewById(R.id.search_footer_next);
@@ -143,7 +142,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
             }
         }
 
-        void onCreateOptionsMenu(Menu menu) {
+        public void onCreateOptionsMenu(Menu menu) {
             MenuItem grid = menu.findItem(R.id.action_grid);
 
             updateGrid();

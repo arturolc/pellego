@@ -13,13 +13,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 
 /**********************************************
  Eli Hebdon
 
  The Clump Reading Fragment
  **********************************************/
-public class ClumpReadingFragment extends Fragment {
+public class ClumpReadingFragment extends BaseFragment {
 
     private ClumpReadingViewModel clumpReadingViewModel;
 

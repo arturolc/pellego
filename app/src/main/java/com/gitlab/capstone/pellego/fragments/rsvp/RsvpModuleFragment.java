@@ -23,6 +23,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 
 
@@ -31,7 +32,7 @@ import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 
  RSVP module fragment that displays words, one at a time, at 'wpm'
  **********************************************/
-public class RsvpModuleFragment extends Fragment {
+public class RsvpModuleFragment extends BaseFragment {
 
     private View root;
     private Integer wpm;

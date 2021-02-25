@@ -1,8 +1,14 @@
 package com.gitlab.capstone.pellego.fragments.learn;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,7 +29,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.axet.androidlibrary.widgets.InvalidateOptionsMenuCompat;
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.App;
+import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleListAdapter;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleListItemModel;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
@@ -42,13 +53,14 @@ import static androidx.navigation.Navigation.findNavController;
 
     The Learn Modules Component
  **********************************************/
-public class LearnFragment extends Fragment {
+public class LearnFragment extends BaseFragment {
 
     private ModuleViewModel moduleViewModel;
     private ListView moduleList;
     private ArrayList<ModuleListItemModel> mNavItems;
     ProgressBar spinner;
     NavigationView modulesView;
+    LibraryFragment.FragmentHolder holder;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,9 +72,6 @@ public class LearnFragment extends Fragment {
         final TextView textView = root.findViewById(R.id.text_learn);
         textView.setText(R.string.title_learn);
         moduleList = root.findViewById(R.id.nav_module_list);
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        setHasOptionsMenu(false);
-        toolbar.setVisibility(View.INVISIBLE);
         spinner = root.findViewById(R.id.loading_spinner);
         // TODO: show spinner while modules load in
         spinner.setVisibility(View.GONE);
@@ -119,6 +128,7 @@ public class LearnFragment extends Fragment {
         });
         return root;
     }
+
 
     /**
      * Interface to to update UI after response from server is received

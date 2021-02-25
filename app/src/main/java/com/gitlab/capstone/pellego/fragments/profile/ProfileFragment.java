@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +35,7 @@ import org.json.JSONObject;
  **********************************************/
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends BaseFragment {
 
     public String user_name;
 
@@ -62,9 +63,7 @@ public class ProfileFragment extends Fragment {
                 view.setText(user_name);
             }
         });
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        setHasOptionsMenu(false);
-        toolbar.setVisibility(View.INVISIBLE);
+
 
         return root;
     }

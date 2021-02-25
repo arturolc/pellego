@@ -614,12 +614,6 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         setHasOptionsMenu(true);
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
-        try {
-            Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-            toolbar.setNavigationIcon(null);
-        } catch (Exception e) {}
-
-
     }
 
 
@@ -708,10 +702,6 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             }
         });
 
-//        main.findViewById(R.id.bottom_nav_view).setVisibility(View.INVISIBLE);
-//        main.findViewById(R.id.button_play).setVisibility(View.VISIBLE);
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(null);
         FrameLayout constraintLayout = getActivity().findViewById(R.id.host_fragment_container);
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
         layoutParams.bottomToTop = R.id.bottom_nav_view;
@@ -722,8 +712,6 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     void updateToolbar() {
         if (invalidateOptionsMenu != null)
             invalidateOptionsMenu.run();
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(null);
     }
 
     @Override

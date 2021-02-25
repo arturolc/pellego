@@ -21,6 +21,7 @@ import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ import java.util.Map;
  *
  * based on AndroidReader here: https://github.com/koros/AndroidReader
  */
-public class DefaultPagerFragment extends Fragment {
+public class DefaultPagerFragment extends BaseFragment {
 
     //pager
     protected ViewPager mPager;
