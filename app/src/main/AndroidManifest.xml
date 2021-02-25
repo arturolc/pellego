@@ -40,7 +40,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="com.example.pellego"
+                    android:host="com.gitlab.capstone.pellego"
                     android:pathPrefix="/login"
                     android:scheme="pellego" />
             </intent-filter>
@@ -282,7 +282,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="com.example.pellego"
+                    android:host="com.gitlab.capstone.pellego"
                     android:pathPrefix="/logout"
                     android:scheme="pellego" />
             </intent-filter>

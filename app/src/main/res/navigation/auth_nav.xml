@@ -42,7 +42,7 @@
             app:destination="@id/registerFragment" />
         <argument
             android:name="type"
-            app:argType="com.example.pellego.ui.auth.VerificationType" />
+            app:argType="com.gitlab.capstone.pellego.fragments.auth.VerificationType" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -78,7 +78,7 @@
         </action>
         <argument
             android:name="type"
-            app:argType="com.example.pellego.ui.auth.VerificationType" />
+            app:argType="com.gitlab.capstone.pellego.fragments.auth.VerificationType" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
