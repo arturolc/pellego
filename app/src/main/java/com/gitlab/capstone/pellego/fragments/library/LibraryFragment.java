@@ -682,14 +682,10 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         super.onCreateOptionsMenu(menu, inflater);
 
         invalidateOptionsMenu = InvalidateOptionsMenuCompat.onCreateOptionsMenu(this, menu, inflater);
-//        setMenuBackground();
         MenuItem homeMenu = menu.findItem(R.id.action_home);
         MenuItem tocMenu = menu.findItem(R.id.action_toc);
         MenuItem bookmarksMenu = menu.findItem(R.id.action_bm);
-//        MenuItem searchMenu = menu.findItem(R.id.action_search);
-//        MenuItem reflow = menu.findItem(R.id.action_reflow);
         MenuItem fontsize = menu.findItem(R.id.action_fontsize);
-//        MenuItem debug = menu.findItem(R.id.action_debug);
         MenuItem rtl = menu.findItem(R.id.action_rtl);
         MenuItem mode = menu.findItem(R.id.action_mode);
         MenuItem sort = menu.findItem(R.id.action_sort);
