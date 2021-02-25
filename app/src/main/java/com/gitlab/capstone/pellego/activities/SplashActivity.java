@@ -21,7 +21,7 @@ import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.gitlab.capstone.pellego.R;
 
-import com.example.pellego.ui.auth.AuthActivity;
+import com.gitlab.capstone.pellego.fragments.auth.AuthActivity;
 
 
 /**********************************************

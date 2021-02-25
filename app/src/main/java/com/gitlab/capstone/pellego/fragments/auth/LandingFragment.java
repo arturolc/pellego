@@ -1,4 +1,4 @@
-package com.example.pellego.ui.auth;
+package com.gitlab.capstone.pellego.fragments.auth;
 
 import android.os.Bundle;
 
@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.amplifyframework.auth.AuthProvider;
 import com.amplifyframework.core.Amplify;
-import com.example.pellego.R;
+import com.gitlab.capstone.pellego.R;
 /**********************************************
  Arturo Lara
  Main landing screen when user opens the app for the first time

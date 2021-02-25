@@ -1,4 +1,4 @@
-package com.example.pellego.ui.auth;
+package com.gitlab.capstone.pellego.fragments.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,9 +23,9 @@ import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
-import com.example.pellego.DatabaseHelper;
-import com.example.pellego.R;
-import com.example.pellego.UserModel;
+import com.gitlab.capstone.pellego.app.DatabaseHelper;
+import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.UserModel;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 

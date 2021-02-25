@@ -1,4 +1,4 @@
-package com.example.pellego.ui.auth;
+package com.gitlab.capstone.pellego.fragments.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,7 +14,7 @@ import android.widget.Button;
 
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
-import com.example.pellego.R;
+import com.gitlab.capstone.pellego.R;
 
 import static androidx.navigation.Navigation.findNavController;
 

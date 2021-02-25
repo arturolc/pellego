@@ -1,4 +1,4 @@
-package com.example.pellego.ui.auth;
+package com.gitlab.capstone.pellego.fragments.auth;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -19,7 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.pellego.R;
+import com.gitlab.capstone.pellego.R;
 
 /**********************************************
  Arturo Lara

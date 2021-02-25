@@ -1,4 +1,4 @@
-package com.example.pellego.ui.auth;
+package com.gitlab.capstone.pellego.fragments.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +18,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.amplifyframework.core.Amplify;
-import com.example.pellego.HomeActivity;
-import com.example.pellego.R;
+import com.gitlab.capstone.pellego.activities.MainActivity;
+import com.gitlab.capstone.pellego.R;
 
 /**********************************************
  Arturo Lara
@@ -75,7 +75,7 @@ public class LoginFragment extends Fragment {
                         password.getText().toString(),
                         success -> {
                             Log.i("AUTHENTICATION", success.toString());
-                            Intent i = new Intent(getActivity(), HomeActivity.class);
+                            Intent i = new Intent(getActivity(), MainActivity.class);
                             startActivity(i);
                             getActivity().finish();
                         },

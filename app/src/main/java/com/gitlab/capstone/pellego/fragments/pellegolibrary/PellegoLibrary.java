@@ -1,4 +1,4 @@
-package com.example.pellego.ui.pellegolibrary;
+package com.gitlab.capstone.pellego.fragments.pellegolibrary;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,8 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.pellego.BookModel;
-import com.example.pellego.R;
+import com.gitlab.capstone.pellego.app.BookModel;
+import com.gitlab.capstone.pellego.R;
 
 import java.io.InputStream;
 import java.net.URL;

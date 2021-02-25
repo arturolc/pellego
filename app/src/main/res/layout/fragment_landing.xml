@@ -7,7 +7,7 @@
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".ui.auth.LandingFragment">
+    tools:context=".fragments.auth.LandingFragment">
 
     <ImageView
         android:id="@+id/imageView"

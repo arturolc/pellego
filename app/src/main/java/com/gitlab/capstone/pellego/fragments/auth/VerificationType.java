@@ -1,4 +1,4 @@
-package com.example.pellego.ui.auth;
+package com.gitlab.capstone.pellego.fragments.auth;
 /**********************************************
  Arturo Lara
  Enum for navigation transition arguments

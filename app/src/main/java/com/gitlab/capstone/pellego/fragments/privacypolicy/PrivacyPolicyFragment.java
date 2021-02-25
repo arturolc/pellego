@@ -9,7 +9,7 @@ import android.webkit.WebView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.pellego.R;
+import com.gitlab.capstone.pellego.R;
 
 /*********************************************************
  Eli Hebdon and Chris Bordoy

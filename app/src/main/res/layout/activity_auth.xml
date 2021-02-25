@@ -7,7 +7,7 @@
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".ui.auth.AuthActivity">
+    tools:context="com.gitlab.capstone.pellego.fragments.auth.AuthActivity">
 
     <fragment
         android:id="@+id/fragment6"

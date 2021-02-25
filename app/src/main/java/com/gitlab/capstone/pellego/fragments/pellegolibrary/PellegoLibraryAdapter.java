@@ -1,4 +1,4 @@
-package com.example.pellego.ui.pellegolibrary;
+package com.gitlab.capstone.pellego.fragments.pellegolibrary;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.pellego.R;
+import com.gitlab.capstone.pellego.R;
 
 /**********************************************
  Arturo Lara

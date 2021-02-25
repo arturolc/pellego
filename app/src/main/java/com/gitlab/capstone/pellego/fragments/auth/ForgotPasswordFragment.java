@@ -1,4 +1,4 @@
-package com.example.pellego.ui.auth;
+package com.gitlab.capstone.pellego.fragments.auth;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import android.widget.EditText;
 
 import com.amplifyframework.auth.AuthException;
 import com.amplifyframework.core.Amplify;
-import com.example.pellego.R;
+import com.gitlab.capstone.pellego.R;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 

@@ -6,7 +6,7 @@
     app:startDestination="@id/landingFragment">
     <fragment
         android:id="@+id/emailFragment"
-        android:name="com.example.pellego.ui.auth.EmailFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.auth.EmailFragment"
         android:label="fragment_email"
         tools:layout="@layout/fragment_email" >
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/passwordFragment"
-        android:name="com.example.pellego.ui.auth.PasswordFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.auth.PasswordFragment"
         android:label="fragment_password"
         tools:layout="@layout/fragment_password" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.pellego.ui.auth.RegisterFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.auth.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -59,7 +59,7 @@
     </fragment>
     <fragment
         android:id="@+id/verifyFragment"
-        android:name="com.example.pellego.ui.auth.VerifyFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.auth.VerifyFragment"
         android:label="fragment_verify"
         tools:layout="@layout/fragment_verify" >
         <action
@@ -82,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.pellego.ui.auth.LoginFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.auth.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -91,7 +91,7 @@
     </fragment>
     <fragment
         android:id="@+id/nameFragment"
-        android:name="com.example.pellego.ui.auth.NameFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.auth.NameFragment"
         android:label="fragment_name"
         tools:layout="@layout/fragment_name" >
         <action
@@ -104,7 +104,7 @@
     </fragment>
     <fragment
         android:id="@+id/landingFragment"
-        android:name="com.example.pellego.ui.auth.LandingFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.auth.LandingFragment"
         android:label="fragment_landing"
         tools:layout="@layout/fragment_landing" >
         <action
@@ -124,7 +124,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.example.pellego.ui.auth.ForgotPasswordFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.auth.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" >
         <action

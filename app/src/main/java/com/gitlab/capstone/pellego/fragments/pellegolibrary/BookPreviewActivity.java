@@ -1,4 +1,4 @@
-package com.example.pellego.ui.pellegolibrary;
+package com.gitlab.capstone.pellego.fragments.pellegolibrary;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +17,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
-import com.example.pellego.BookModel;
-import com.example.pellego.R;
+import com.gitlab.capstone.pellego.app.BookModel;
+import com.gitlab.capstone.pellego.R;
 import com.example.pellego.SingletonRequestQueue;
 
 import java.util.List;

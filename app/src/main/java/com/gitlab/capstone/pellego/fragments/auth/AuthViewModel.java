@@ -1,9 +1,7 @@
-package com.example.pellego.ui.auth;
+package com.gitlab.capstone.pellego.fragments.auth;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.example.pellego.UserModel;
 
 /*****************************************
  * Arturo Lara
