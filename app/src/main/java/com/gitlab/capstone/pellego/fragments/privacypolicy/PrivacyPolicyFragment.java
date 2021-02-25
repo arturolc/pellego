@@ -1,4 +1,4 @@
-package com.example.pellego.ui.privacypolicy;
+package com.gitlab.capstone.pellego.fragments.privacypolicy;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
