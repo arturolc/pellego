@@ -41,7 +41,7 @@ public class PellegoLibraryViewModel extends AndroidViewModel {
         super(application);
         books = new MutableLiveData<List<BookModel>>();
         // Formulate the request and handle the response.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://54.176.198.201:5000/library",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://54.245.202.132/library",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

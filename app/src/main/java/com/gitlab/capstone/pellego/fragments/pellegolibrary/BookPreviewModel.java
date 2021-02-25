@@ -32,7 +32,7 @@ public class BookPreviewModel extends AndroidViewModel {
         this.id = id;
         synopsis = new MutableLiveData<>();
         // Formulate the request and handle the response.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://54.176.198.201:5000/library/synopsis/" + id,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://54.245.202.132/library/synopsis/" + id,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
