@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego.fragments.privacypolicy;
+package com.example.pellego.ui.privacypolicy;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
-
 
 /*********************************************************
  Eli Hebdon and Chris Bordoy

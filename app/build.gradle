@@ -1,3 +1,4 @@
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.axet.dxplugin'
 
@@ -84,8 +85,8 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     // Amplify core dependency
-    implementation 'com.amplifyframework:core:1.6.9'
-    implementation "com.amazonaws:aws-android-sdk-core:2.6.31"
+    implementation 'com.amplifyframework:core:1.16.13'
+    implementation "com.amazonaws:aws-android-sdk-core:2.16.4"
     androidTestImplementation 'androidx.test:rules:1.3.0-beta01'
     implementation 'androidx.preference:preference:1.1.0'
     // Support for Java 8 features

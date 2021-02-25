@@ -8,6 +8,7 @@
     android:requiresFadingEdge="horizontal"
     android:visibility="visible"
     tools:context="com.gitlab.capstone.pellego.fragments.pellegolibrary.BookPreviewActivity"
+
     tools:visibility="visible">
 
     <ImageView

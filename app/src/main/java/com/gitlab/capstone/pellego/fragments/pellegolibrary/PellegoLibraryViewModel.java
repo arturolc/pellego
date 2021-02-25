@@ -2,20 +2,28 @@ package com.gitlab.capstone.pellego.fragments.pellegolibrary;
 
 import android.app.Application;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.gitlab.capstone.pellego.app.BookModel;
-import com.gitlab.capstone.pellego.app.SingletonRequestQueue;
+import com.example.pellego.SingletonRequestQueue;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
