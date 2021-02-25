@@ -618,7 +618,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         setHasOptionsMenu(true);
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
-        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_arrow_back_white, null);
+        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_arrow_back, null);
         drawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTint(drawable, Color.WHITE);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(drawable);

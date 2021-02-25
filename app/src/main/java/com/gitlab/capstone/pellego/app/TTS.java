@@ -309,7 +309,7 @@ public class TTS extends Sound {
             params.putInt(TextToSpeech.Engine.KEY_PARAM_STREAM, getSoundChannel().streamType);
             params.putFloat(KEY_PARAM_VOLUME, getVolume());
             params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "DONE");
-            params.putFloat(KEY_PARAM_VOLUME, 0.0f);
+//            params.putFloat(KEY_PARAM_VOLUME, 0.0f);
 
             if (tts.speak(speak, TextToSpeech.QUEUE_FLUSH, params, UUID.randomUUID().toString()) != TextToSpeech.SUCCESS)
                 return false;
