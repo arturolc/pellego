@@ -4,26 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_weight="3"
     tools:context="com.gitlab.capstone.pellego.fragments.progress.ProgressFragment"
-    android:background="@color/light_blue">
+    android:background="@color/white">
 
-        <TextView
-            android:id="@+id/text_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="center_horizontal"
-            android:fontFamily="@font/bulletto_family"
-            android:textColor="@color/white"
-            android:textSize="50dp" />
+<!--    <TextView
+        android:id="@+id/text_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:textColor="@color/black"
+        android:textSize="14dp" />-->
+
+    <ImageView
+        android:id="@+id/progress_header_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/progress_grid"
+        android:alpha=".8"
+        android:src="@drawable/progress_header_bg" />
 
         <GridLayout
+            android:id="@+id/progress_grid"
             android:layout_width="match_parent"
-            android:layout_height="546dp"
-            android:layout_below="@+id/text_progress"
+            android:layout_height="400dp"
             android:layout_alignParentBottom="true"
             android:columnCount="2"
             android:rowCount="2"
