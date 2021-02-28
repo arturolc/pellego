@@ -73,12 +73,18 @@ public class VerifyFragment extends Fragment {
         list.add(new AuthUserAttribute(AuthUserAttributeKey.name(), model.getName()));
         list.add(new AuthUserAttribute(AuthUserAttributeKey.email(), model.getEmail()));
 
+
+        DatabaseHelper dh = new DatabaseHelper(getActivity(), null, null, 1);
+
+
         if ("REGISTRATION".equals(getArguments().get("type"))) {
             Amplify.Auth.signUp(
                     model.getEmail(),
                     model.getPassword(),
                     AuthSignUpOptions.builder().userAttributes(list).build(),
                     result -> {
+                        dh.addUser(new UserModel(-1, model.getName(), "", model.getEmail()));
+
                         Log.i("AUTHENTICATION", "Result: " + result.toString());
 
 

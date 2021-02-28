@@ -101,7 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(ctx);
-        String url ="http://54.176.198.201/user/add";
+        String url ="http://54.245.202.132/user/add";
         JSONObject user = new JSONObject();
         try {
             user.put("email", email);
