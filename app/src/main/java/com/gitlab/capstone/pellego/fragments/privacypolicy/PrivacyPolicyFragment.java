@@ -10,13 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 
 /*********************************************************
  Eli Hebdon and Chris Bordoy
 
  This fragment displays the application's privacy policy.
  *********************************************************/
-public class PrivacyPolicyFragment extends Fragment {
+public class PrivacyPolicyFragment extends BaseFragment {
 
         public View onCreateView(@NonNull LayoutInflater inflater,
                                  ViewGroup container, Bundle savedInstanceState) {

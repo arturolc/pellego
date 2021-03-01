@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -28,8 +29,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -214,6 +220,15 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
         Window window = this.getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this,R.color.light_blue));
+
+//        DrawerLayout drawerLayout = findViewById(R.id.home_layout);
+//        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+//        actionBarDrawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
+//        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_menu, null);
+//        drawable = DrawableCompat.wrap(drawable);
+//        DrawableCompat.setTint(drawable, Color.WHITE);
+//        getSupportActionBar().setHomeAsUpIndicator(drawable);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @SuppressLint("RestrictedApi")

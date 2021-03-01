@@ -10,6 +10,8 @@
         <item>@string/view_mode_paging</item>
         <item>@string/view_mode_continuous</item>
     </string-array>
+    <string name="drawer_open" translatable="false">Loading Book</string>
+    <string name="drawer_close" translatable="false">Loading Book</string>
 
     <string name="loading_book">Loading Book</string>
     <string name="open_file">Open File</string>

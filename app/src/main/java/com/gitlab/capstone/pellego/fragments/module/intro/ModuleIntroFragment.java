@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
@@ -24,7 +25,7 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
  *
  *  The Module Introduction Fragment
  **************************************************/
-public class ModuleIntroFragment extends Fragment {
+public class ModuleIntroFragment extends BaseFragment {
     private ModuleViewModel moduleViewModel;
     RelativeLayout parent_view;
     ViewPager2 viewPager2;

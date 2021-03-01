@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Bundle;
@@ -17,8 +18,11 @@ import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
 import androidx.core.view.ViewCompat;
@@ -614,12 +618,11 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         setHasOptionsMenu(true);
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
-        try {
-            Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-            toolbar.setNavigationIcon(null);
-        } catch (Exception e) {}
-
-
+//        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_arrow_back, null);
+//        drawable = DrawableCompat.wrap(drawable);
+//        DrawableCompat.setTint(drawable, Color.WHITE);
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(drawable);
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -708,10 +711,6 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             }
         });
 
-//        main.findViewById(R.id.bottom_nav_view).setVisibility(View.INVISIBLE);
-//        main.findViewById(R.id.button_play).setVisibility(View.VISIBLE);
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(null);
         FrameLayout constraintLayout = getActivity().findViewById(R.id.host_fragment_container);
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
         layoutParams.bottomToTop = R.id.bottom_nav_view;
@@ -722,8 +721,6 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     void updateToolbar() {
         if (invalidateOptionsMenu != null)
             invalidateOptionsMenu.run();
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(null);
     }
 
     @Override

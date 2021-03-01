@@ -6,12 +6,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
@@ -108,7 +113,6 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
 
             toolbar.setVisibility(View.GONE);
 
-
             footer = inflater.inflate(R.layout.library_footer, null);
             footerButtons = footer.findViewById(R.id.search_footer_buttons);
             footerNext = footer.findViewById(R.id.search_footer_next);
@@ -143,7 +147,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
             }
         }
 
-        void onCreateOptionsMenu(Menu menu) {
+        public void onCreateOptionsMenu(Menu menu) {
             MenuItem grid = menu.findItem(R.id.action_grid);
 
             updateGrid();
@@ -535,6 +539,11 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         } else {
             emptyLibraryMsg.setVisibility(View.INVISIBLE);
         }
+//        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_menu, null);
+//        drawable = DrawableCompat.wrap(drawable);
+//        DrawableCompat.setTint(drawable, Color.WHITE);
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(drawable);
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -683,14 +692,10 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         super.onCreateOptionsMenu(menu, inflater);
 
         invalidateOptionsMenu = InvalidateOptionsMenuCompat.onCreateOptionsMenu(this, menu, inflater);
-//        setMenuBackground();
         MenuItem homeMenu = menu.findItem(R.id.action_home);
         MenuItem tocMenu = menu.findItem(R.id.action_toc);
         MenuItem bookmarksMenu = menu.findItem(R.id.action_bm);
-//        MenuItem searchMenu = menu.findItem(R.id.action_search);
-//        MenuItem reflow = menu.findItem(R.id.action_reflow);
         MenuItem fontsize = menu.findItem(R.id.action_fontsize);
-//        MenuItem debug = menu.findItem(R.id.action_debug);
         MenuItem rtl = menu.findItem(R.id.action_rtl);
         MenuItem mode = menu.findItem(R.id.action_mode);
         MenuItem sort = menu.findItem(R.id.action_sort);

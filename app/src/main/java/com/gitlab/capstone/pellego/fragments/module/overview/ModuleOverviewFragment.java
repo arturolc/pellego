@@ -16,6 +16,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
  of the technique.
  **********************************************/
 
-public class ModuleOverviewFragment extends Fragment {
+public class ModuleOverviewFragment extends BaseFragment {
 
     private ModuleViewModel moduleViewModel;
     ArrayList<ModuleListItemModel> mNavItems;

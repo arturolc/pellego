@@ -19,6 +19,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 
  Quiz fragment that contains logic for learning submodule quizes
  **********************************************/
-public class QuizFragment extends Fragment {
+public class QuizFragment extends BaseFragment {
 
     private QuizViewModel quizViewModel;
     private ListView moduleList;
@@ -50,9 +51,7 @@ public class QuizFragment extends Fragment {
                 textView.setText(s);
             }
         });
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        setHasOptionsMenu(false);
-        toolbar.setVisibility(View.INVISIBLE);
+
         // Set view model parameters
         quizViewModel.setDifficulty(getArguments().getString("difficulty"));
         quizViewModel.setWPM(Integer.parseInt(getArguments().getString("wpm")));
