@@ -18,6 +18,7 @@ import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 
 
@@ -26,7 +27,7 @@ import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 
  Quiz Results Fragment
  **********************************************/
-public class QuizResultFragment extends Fragment {
+public class QuizResultFragment extends BaseFragment {
 
     private QuizViewModel quizViewModel;
     private ModuleViewModel moduleViewModel;
@@ -48,9 +49,6 @@ public class QuizResultFragment extends Fragment {
         });
 
         // TODO: POST quiz result data
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        setHasOptionsMenu(false);
-        toolbar.setVisibility(View.INVISIBLE);
         // Display score
         TextView txt = root.findViewById(R.id.text_results);
         txt.setText(quizViewModel.getFinalScore());
