@@ -96,7 +96,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public static final int FONT_END = 100;
     public static final int REFLOW_START = 3;
     public static final int REFLOW_END = 15;
-
+    public static boolean playing = false;
     Handler handler = new Handler();
     Storage storage;
     Storage.Book book;
@@ -626,19 +626,29 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
         getActivity().findViewById(R.id.bottom_nav_view).setVisibility(INVISIBLE);
+
+        // play pressed
         FloatingActionButton myFab = (FloatingActionButton) getActivity().findViewById(R.id.button_play);
         myFab.setOnClickListener((View.OnClickListener) v -> {
-            getActivity().findViewById(R.id.rsvp_reader_container).setVisibility(View.VISIBLE);
+
+            getActivity().findViewById(R.id.rsvp_reader).setVisibility(View.VISIBLE);
             getActivity().findViewById(R.id.main_view).setVisibility(INVISIBLE);
 
-//            View view;
-//            LayoutInflater inflater = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            view = inflater.inflate(R.layout.fragment_rsvp_module, null);
-
+            togglePlay(myFab);
             RsvpWidget rsvpWidget = fb.rsvpOpen();
             RsvpModuleFragment rsvpModuleFragment = new RsvpModuleFragment();
-            rsvpModuleFragment.startAutoRead(rsvpWidget, v);
+            rsvpModuleFragment.startAutoRead(rsvpWidget, v, getActivity());
         });
+
+    }
+
+    public void togglePlay(FloatingActionButton fab) {
+        playing = !playing;
+        if ( playing ) {
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_outline_pause_24));
+        } else {
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_outline_play_arrow_24));
+        }
 
     }
 
@@ -653,7 +663,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_reader, container, false);
-
+        playing = false;
         final MainActivity main = (MainActivity) getActivity();
 
         fb = (FBReaderView) v.findViewById(R.id.main_view);

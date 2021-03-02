@@ -1,5 +1,6 @@
 package com.gitlab.capstone.pellego.fragments.rsvp;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -23,6 +24,7 @@ import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
+import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
 import com.gitlab.capstone.pellego.widgets.RsvpWidget;
 import com.gitlab.capstone.pellego.widgets.TTSPopup;
@@ -41,8 +43,8 @@ public class RsvpModuleFragment extends BaseFragment {
     private static AsyncUpdateText asyncUpdateText;
     private String content;
     private ModuleViewModel moduleViewModel;
-    private View currentView;
-
+    private FragmentActivity currentView;
+    private RsvpWidget rsvpWidget;
     public FBReaderView fb;
     TTSPopup.Fragment fragment;
     public Storage.Bookmarks marks = new Storage.Bookmarks();
@@ -65,7 +67,7 @@ public class RsvpModuleFragment extends BaseFragment {
                 break;
         }
 
-        currentView = getActivity().findViewById(R.id.rsvp_container);
+        currentView = getActivity();
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
 
@@ -111,7 +113,7 @@ public class RsvpModuleFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                NavController navController = Navigation.findNavController(currentView, R.id.nav_host_fragment);
                 Bundle args = new Bundle();
                 args.putString("difficulty", difficulty);
                 args.putString("wpm", String.valueOf(wpm));
@@ -123,9 +125,11 @@ public class RsvpModuleFragment extends BaseFragment {
         moduleViewModel.showPopupDialog = false;
     }
 
-    public void startAutoRead(RsvpWidget rsvpWidget, View v) {
-        currentView = v;
+    public void startAutoRead(RsvpWidget rsvpWidget, View v, Activity a) {
+        currentView = (FragmentActivity) a;
+        this.rsvpWidget = rsvpWidget;
         content = rsvpWidget.selectNext();
+
         asyncUpdateText = new AsyncUpdateText(); // start thread on ok
         asyncUpdateText.execute(150);
     }
@@ -148,8 +152,9 @@ public class RsvpModuleFragment extends BaseFragment {
             long delay = (long) ((60.0 / (float) ints[0]) * 1000);
             for (String word : words) {
                 // Verify that user has not navigated away from the RSVP fragment
-                NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-                if (!navHostFragment.getChildFragmentManager().getFragments().get(0).toString().contains("RsvpModuleFragment")) {
+                NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
+                if (!currFragment.contains("RsvpModuleFragment") && (!currFragment.contains("ReaderFragment") || !ReaderFragment.playing)) {
                     cancel(true);
                     return 0;
                 } else {
@@ -168,6 +173,11 @@ public class RsvpModuleFragment extends BaseFragment {
         @Override
         protected void onPostExecute(Integer result) {
             try {
+                if (ReaderFragment.playing) {
+                    content = rsvpWidget.selectNext();
+                    asyncUpdateText = new AsyncUpdateText();
+                    asyncUpdateText.execute(150);
+                }
                 showQuizPopupDialog();
             } catch (Exception e) {
                 Log.d("error" , e.getMessage());
@@ -175,5 +185,6 @@ public class RsvpModuleFragment extends BaseFragment {
 
         }
     }
+
 }
 
