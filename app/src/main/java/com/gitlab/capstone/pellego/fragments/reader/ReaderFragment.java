@@ -27,6 +27,8 @@ import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
 import androidx.core.view.ViewCompat;
 import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -60,10 +62,12 @@ import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.ComicsPlugin;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 import com.gitlab.capstone.pellego.widgets.BookmarksDialog;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
 import com.gitlab.capstone.pellego.widgets.ScrollWidget;
 import com.gitlab.capstone.pellego.widgets.ToolbarButtonView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.ActionCode;
@@ -79,6 +83,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
+
+import static android.view.View.INVISIBLE;
 
 public class ReaderFragment extends Fragment implements MainActivity.SearchListener, SharedPreferences.OnSharedPreferenceChangeListener, FullscreenActivity.FullscreenListener, MainActivity.OnBackPressed {
     public static final String TAG = ReaderFragment.class.getSimpleName();
@@ -407,7 +413,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             TOCTree tt = (TOCTree) t.tag;
             ImageView ex = (ImageView) h.itemView.findViewById(R.id.expand);
             if (t.nodes.isEmpty())
-                ex.setVisibility(View.INVISIBLE);
+                ex.setVisibility(INVISIBLE);
             else
                 ex.setVisibility(View.VISIBLE);
             ex.setImageResource(t.expanded ? R.drawable.ic_expand_less_black_24dp : R.drawable.ic_expand_more_black_24dp);
@@ -618,11 +624,14 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         setHasOptionsMenu(true);
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
-//        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_arrow_back, null);
-//        drawable = DrawableCompat.wrap(drawable);
-//        DrawableCompat.setTint(drawable, Color.WHITE);
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(drawable);
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActivity().findViewById(R.id.bottom_nav_view).setVisibility(INVISIBLE);
+        FloatingActionButton myFab = (FloatingActionButton) getActivity().findViewById(R.id.button_play);
+        myFab.setOnClickListener((View.OnClickListener) v -> {
+            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+            String txt = RsvpModuleFragment.selectNextChunk();
+            navController.navigate(R.id.nav_rsvp_module);
+        });
+
     }
 
 
@@ -713,7 +722,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
 
         FrameLayout constraintLayout = getActivity().findViewById(R.id.host_fragment_container);
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
-        layoutParams.bottomToTop = R.id.bottom_nav_view;
+//        layoutParams.bottomToTop = R.id.bottom_nav_view;
         constraintLayout.setLayoutParams(layoutParams);
         return v;
     }

@@ -2,10 +2,12 @@ package com.gitlab.capstone.pellego.fragments.rsvp;
 
 import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,25 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.app.Plugin;
+import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
+import com.gitlab.capstone.pellego.widgets.FBReaderView;
+import com.gitlab.capstone.pellego.widgets.PagerWidget;
+import com.gitlab.capstone.pellego.widgets.ScrollWidget;
+import com.gitlab.capstone.pellego.widgets.SelectionView;
+import com.gitlab.capstone.pellego.widgets.TTSPopup;
+
+import org.geometerplus.zlibrary.text.view.ZLTextElement;
+import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextParagraphCursor;
+import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextWord;
+import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 
 /**********************************************
@@ -42,10 +62,35 @@ public class RsvpModuleFragment extends BaseFragment {
     private ModuleViewModel moduleViewModel;
     private FragmentActivity currentActivity;
 
+    public static FBReaderView fb;
+    static TTSPopup.Fragment fragment;
+    public static Storage.Bookmarks marks = new Storage.Bookmarks();
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        wpm = Integer.parseInt(getArguments().getString("wpm"));
-        difficulty = getArguments().getString("difficulty");
+        try {
+            wpm = Integer.parseInt(getArguments().getString("wpm"));
+            difficulty = getArguments().getString("difficulty");
+            // Set the displayed text to the appropriate level
+            switch(difficulty) {
+                case "Beginner Submodule":
+                    content = getString(R.string.content_rsvp_beginner);
+                    break;
+                case "Intermediate Submodule":
+                    content = getString(R.string.content_rsvp_intermediate);
+                    break;
+                case "Advanced Submodule":
+                    content = getString(R.string.content_rsvp_advanced);
+                    break;
+            }
+        } catch (Exception e) {
+
+            content = selectNextChunk();
+            Log.d("chunk" , content);
+
+        }
+
         currentActivity = getActivity();
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
@@ -56,22 +101,121 @@ public class RsvpModuleFragment extends BaseFragment {
 
 
 
-        // Set the displayed text to the appropriate level
-        switch(difficulty) {
-            case "Beginner Submodule":
-                content = getString(R.string.content_rsvp_beginner);
-                break;
-            case "Intermediate Submodule":
-                content = getString(R.string.content_rsvp_intermediate);
-                break;
-            case "Advanced Submodule":
-                content = getString(R.string.content_rsvp_advanced);
-                break;
-        }
         // Only show popup if user navigated to the Rsvp module
        if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
         return root;
     }
+
+    // Get the next chunk of text
+    public static String selectNextChunk() {
+        marks.clear();
+        if (fragment == null) {
+            if (fb.widget instanceof ScrollWidget) {
+                int first = ((ScrollWidget) fb.widget).findFirstPage();
+                ScrollWidget.ScrollAdapter.PageCursor c = ((ScrollWidget) fb.widget).adapter.pages.get(first);
+                Storage.Bookmark bm = TTSPopup.expandWord(new Storage.Bookmark("", c.start, c.start));
+                fragment = new TTSPopup.Fragment(bm);
+            }
+            if (fb.widget instanceof PagerWidget) {
+                ZLTextPosition position = fb.getPosition();
+                Storage.Bookmark bm = TTSPopup.expandWord(new Storage.Bookmark("", position, position));
+                fragment = new TTSPopup.Fragment(bm);
+            }
+        } else {
+            Storage.Bookmark bm = selectNextChunk(fragment.fragment);
+            fragment = new TTSPopup.Fragment(bm);
+        }
+        marks.add(fragment.fragment);
+
+        return fragment.fragmentText;
+    }
+
+    public static Storage.Bookmark selectNextChunk(Storage.Bookmark bm) {
+        if (fb.pluginview != null) {
+            ZLTextPosition start = bm.end;
+            TTSPopup.PluginWordCursor k = new TTSPopup.PluginWordCursor(start);
+            if (k.nextWord()) {
+                ZLTextPosition end = TTSPopup.expandRight(k);
+                bm = new Storage.Bookmark(k.getText(), start, end);
+            }
+            k.close();
+            return bm;
+        } else {
+            ZLTextPosition start = bm.end;
+            ZLTextParagraphCursor paragraphCursor = new ZLTextParagraphCursor(fb.app.Model.getTextModel(), start.getParagraphIndex());
+            ZLTextWordCursor wordCursor = new ZLTextWordCursor(paragraphCursor);
+            wordCursor.moveTo(start);
+            if (wordCursor.isEndOfParagraph())
+                wordCursor.nextParagraph();
+            else
+                wordCursor.nextWord();
+            start = wordCursor;
+            ZLTextPosition end = TTSPopup.expandRight(start);
+            return new Storage.Bookmark(bm.text, start, end);
+        }
+    }
+
+
+//    public Fragment(Storage.Bookmark bm) {
+//        String str = "";
+//        ArrayList<TTSPopup.Fragment.Bookmark> list = new ArrayList<>();
+//        if (fb.pluginview != null) {
+//            ZLTextPosition start = bm.start;
+//            ZLTextPosition end = bm.end;
+//            TTSPopup.PluginWordCursor k = new TTSPopup.PluginWordCursor(start);
+//            if (k.nextWord()) {
+//                while (k.compareTo(end) <= 0) {
+//                    TTSPopup.Fragment.Bookmark b = new TTSPopup.Fragment.Bookmark(k.getText(), new ZLTextFixedPosition(start), new ZLTextFixedPosition(k));
+//                    b.strStart = str.length();
+//                    str += k.getText();
+//                    b.strEnd = str.length();
+//                    str += " ";
+//                    list.add(b);
+//                    start = new ZLTextFixedPosition(k);
+//                    k.nextWord();
+//                }
+//            }
+//            k.close();
+//        } else {
+//            ZLTextParagraphCursor paragraphCursor = new ZLTextParagraphCursor(fb.app.Model.getTextModel(), bm.start.getParagraphIndex());
+//            ZLTextWordCursor wordCursor = new ZLTextWordCursor(paragraphCursor);
+//            wordCursor.moveTo(bm.start);
+//            for (ZLTextElement e = wordCursor.getElement(); wordCursor.compareTo(bm.end) < 0; e = wordCursor.getElement()) {
+//                if (e instanceof ZLTextWord) {
+//                    String z = ((ZLTextWord) e).getString();
+//                    TTSPopup.Fragment.Bookmark b = new TTSPopup.Fragment.Bookmark(z, new ZLTextFixedPosition(wordCursor), new ZLTextFixedPosition(wordCursor.getParagraphIndex(), wordCursor.getElementIndex(), wordCursor.getCharIndex() + ((ZLTextWord) e).Length));
+//                    b.strStart = str.length();
+//                    str += z;
+//                    b.strEnd = str.length();
+//                    str += " ";
+//                    list.add(b);
+//                }
+//                wordCursor.nextWord();
+//            }
+//        }
+//        fragmentText = str;
+//        fragmentWords = list;
+//        fragment = new Storage.Bookmark(bm);
+//        fragment.color = TTS_BG_COLOR;
+//        word = null;
+//    }
+//
+//    public Storage.Bookmark findWord(int start, int end) {
+//        for (TTSPopup.Fragment.Bookmark bm : fragmentWords) {
+//            if (bm.strStart == start)
+//                return bm;
+//        }
+//        return null;
+//    }
+//
+//    public boolean isEmpty() {
+//        if (fragment == null || fragmentText == null)
+//            return true;
+//        return fragmentText.trim().length() == 0;
+//    }
+//}
+
+
 
     private void showSubmodulePopupDialog() {
         // Setup the custom dialog
