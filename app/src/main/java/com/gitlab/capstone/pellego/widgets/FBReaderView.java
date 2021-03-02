@@ -2168,6 +2168,11 @@ public class FBReaderView extends RelativeLayout {
         ttsUpdate();
     }
 
+    public RsvpWidget rsvpOpen() {
+        return new RsvpWidget(this);
+    }
+
+
     public void searchClose() {
         app.hideActivePopup();
         if (widget instanceof ScrollWidget)

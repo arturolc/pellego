@@ -65,6 +65,7 @@ import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 import com.gitlab.capstone.pellego.widgets.BookmarksDialog;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
+import com.gitlab.capstone.pellego.widgets.RsvpWidget;
 import com.gitlab.capstone.pellego.widgets.ScrollWidget;
 import com.gitlab.capstone.pellego.widgets.ToolbarButtonView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -627,9 +628,16 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         getActivity().findViewById(R.id.bottom_nav_view).setVisibility(INVISIBLE);
         FloatingActionButton myFab = (FloatingActionButton) getActivity().findViewById(R.id.button_play);
         myFab.setOnClickListener((View.OnClickListener) v -> {
-            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-            String txt = RsvpModuleFragment.selectNextChunk();
-            navController.navigate(R.id.nav_rsvp_module);
+            getActivity().findViewById(R.id.rsvp_reader_container).setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.main_view).setVisibility(INVISIBLE);
+
+//            View view;
+//            LayoutInflater inflater = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            view = inflater.inflate(R.layout.fragment_rsvp_module, null);
+
+            RsvpWidget rsvpWidget = fb.rsvpOpen();
+            RsvpModuleFragment rsvpModuleFragment = new RsvpModuleFragment();
+            rsvpModuleFragment.startAutoRead(rsvpWidget, v);
         });
 
     }

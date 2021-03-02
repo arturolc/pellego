@@ -6,6 +6,49 @@
     android:background="@color/light_grey"
     tools:context="com.gitlab.capstone.pellego.activities.MainActivity">
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:id="@+id/rsvp_reader_container"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="92dp"
+        tools:layout_editor_absoluteY="146dp"
+        android:background="@color/light_blue">
+        <TextView
+            android:id="@+id/title_rsvp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="45dp" />
+
+        <TextView
+            android:id="@+id/text_rsvp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="50dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_gravity="center"
+            android:textSize="25dp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/white_transparent">
+        </TextView>
+
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <com.gitlab.capstone.pellego.widgets.FBReaderView
         android:id="@+id/main_view"
         android:layout_width="match_parent"
