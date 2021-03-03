@@ -26,20 +26,67 @@
         app:layout_constraintRight_toRightOf="parent"
         android:orientation="horizontal">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_play"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:backgroundTint="@color/light_grey"
-            app:srcCompat="@android:drawable/ic_media_play" />
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:textSize="10dp"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/button_wpm"
+                android:backgroundTint="@color/white"
+                android:text="wpm"></com.google.android.material.button.MaterialButton>
+            <ImageView
+                android:id="@+id/button_prev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                app:tint="@color/white" />
+            <!--    Play button in the reader    -->
+            <ImageView
+                android:id="@+id/button_play"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_outline_play_arrow_24"
+                app:tint="@color/white" />
+
+            <ImageView
+                android:id="@+id/button_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:src="@drawable/ic_arrow_forward_black_24dp"
+                app:tint="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/button_technique"
+                android:textSize="10dp"
+                android:scrollHorizontally="true"
+                android:backgroundTint="@color/white"
+                android:text="Technique">
+            </com.google.android.material.button.MaterialButton>
+
+        </LinearLayout>
+
+
+
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             android:background="@color/white"
             app:itemIconTint="@color/light_blue"
             app:itemTextColor="@color/light_blue"

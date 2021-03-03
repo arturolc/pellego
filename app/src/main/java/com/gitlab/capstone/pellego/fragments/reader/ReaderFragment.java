@@ -11,6 +11,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Bundle;
@@ -41,12 +42,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.axet.androidlibrary.preferences.ScreenlockPreference;
 import com.github.axet.androidlibrary.widgets.ErrorDialog;
@@ -97,6 +101,9 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public static final int REFLOW_START = 3;
     public static final int REFLOW_END = 15;
     public static boolean playing = false;
+    public RsvpWidget rsvpWidget;
+    public int technique_id;
+
     Handler handler = new Handler();
     Storage storage;
     Storage.Book book;
@@ -626,23 +633,76 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
         getActivity().findViewById(R.id.bottom_nav_view).setVisibility(INVISIBLE);
+        // technique selector pressed
+        Button techniqueSelector = (Button) getActivity().findViewById(R.id.button_technique);
+        techniqueSelector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(getActivity(), techniqueSelector);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.techniques_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        technique_id = item.getItemId();
+                        item.setChecked(true);
+                        switch(item.getItemId()) {
+                            case R.id.rsvp_menu_item:
+                                getActivity().findViewById(R.id.rsvp_reader).setVisibility(View.VISIBLE);
+                                getActivity().findViewById(R.id.main_view).setVisibility(INVISIBLE);
+                                rsvpWidget = fb.rsvpOpen();
+                                break;
+                            case R.id.none_menu_item:
+                                getActivity().findViewById(R.id.rsvp_reader).setVisibility(INVISIBLE);
+                                getActivity().findViewById(R.id.main_view).setVisibility(View.VISIBLE);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show(); //showing popup menu
+            }
+        });
+
+        // wpm pressed
+        Button wpmSelector = (Button) getActivity().findViewById(R.id.button_wpm);
+        wpmSelector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(getActivity(), wpmSelector);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.wpm_menu, popup.getMenu());
+
+                popup.show(); //showing popup menu
+            }
+        });
 
         // play pressed
-        FloatingActionButton myFab = (FloatingActionButton) getActivity().findViewById(R.id.button_play);
+        ImageView myFab = getActivity().findViewById(R.id.button_play);
         myFab.setOnClickListener((View.OnClickListener) v -> {
+            switch (technique_id) {
+                case R.id.rsvp_menu_item:
+                    RsvpModuleFragment rsvpModuleFragment = new RsvpModuleFragment();
+                    rsvpModuleFragment.startAutoRead(rsvpWidget, v, getActivity());
+                    togglePlay(myFab);
+                    break;
+                default:
+                    break;
+            }
 
-            getActivity().findViewById(R.id.rsvp_reader).setVisibility(View.VISIBLE);
-            getActivity().findViewById(R.id.main_view).setVisibility(INVISIBLE);
 
-            togglePlay(myFab);
-            RsvpWidget rsvpWidget = fb.rsvpOpen();
-            RsvpModuleFragment rsvpModuleFragment = new RsvpModuleFragment();
-            rsvpModuleFragment.startAutoRead(rsvpWidget, v, getActivity());
         });
 
     }
 
-    public void togglePlay(FloatingActionButton fab) {
+    public void togglePlay(ImageView fab) {
         playing = !playing;
         if ( playing ) {
             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_outline_pause_24));
