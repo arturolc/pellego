@@ -56,7 +56,20 @@
         android:name="com.gitlab.capstone.pellego.fragments.progress.ProgressFragment"
         android:label="@string/title_progress"
         tools:layout="@layout/fragment_progress"
-        />
+        >
+        <action
+            android:id="@+id/action_nav_progress_to_fragment_wpm"
+            app:destination="@id/fragment_wpm" />
+        <action
+            android:id="@+id/action_nav_progress_to_moduleProgressFragment"
+            app:destination="@id/moduleProgressFragment" />
+        <action
+            android:id="@+id/action_nav_progress_to_quizProgressFragment"
+            app:destination="@id/quizProgressFragment" />
+        <action
+            android:id="@+id/action_nav_progress_to_wordsReadFragment2"
+            app:destination="@id/wordsReadFragment2" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_settings"
@@ -183,4 +196,40 @@
         android:name="com.gitlab.capstone.pellego.fragments.reader.ReaderFragment"
         android:label="reader_fragment"
         tools:layout="@layout/fragment_reader" />
+    <fragment
+        android:id="@+id/fragment_wpm"
+        android:name="com.gitlab.capstone.pellego.fragments.progress.WpmFragment"
+        android:label="fragment_wpm"
+        tools:layout="@layout/fragment_wpm" >
+        <action
+            android:id="@+id/action_fragment_wpm_to_nav_progress"
+            app:destination="@id/nav_progress" />
+    </fragment>
+    <fragment
+        android:id="@+id/moduleProgressFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.progress.ModuleProgressFragment"
+        android:label="fragment_module_progress"
+        tools:layout="@layout/fragment_module_progress" >
+        <action
+            android:id="@+id/action_moduleProgressFragment_to_nav_progress"
+            app:destination="@id/nav_progress" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizProgressFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.progress.QuizProgressFragment"
+        android:label="fragment_quiz_progress"
+        tools:layout="@layout/fragment_quiz_progress" >
+        <action
+            android:id="@+id/action_quizProgressFragment_to_nav_progress"
+            app:destination="@id/nav_progress" />
+    </fragment>
+    <fragment
+        android:id="@+id/wordsReadFragment2"
+        android:name="com.gitlab.capstone.pellego.fragments.progress.WordsReadFragment"
+        android:label="fragment_words_read"
+        tools:layout="@layout/fragment_words_read" >
+        <action
+            android:id="@+id/action_wordsReadFragment2_to_nav_progress"
+            app:destination="@id/nav_progress" />
+    </fragment>
 </navigation>

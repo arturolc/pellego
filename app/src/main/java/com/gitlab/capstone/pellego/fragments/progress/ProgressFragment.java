@@ -14,9 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
 
@@ -29,6 +32,7 @@ import com.gitlab.capstone.pellego.R;
 public class ProgressFragment extends Fragment {
 
     private ProgressViewModel progressViewModel;
+    private NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +56,39 @@ public class ProgressFragment extends Fragment {
                 textView.setText("Progress Reports");
             }
         });*/
+
+        final CardView wpmView = root.findViewById(R.id.progress_wpm);
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        wpmView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                navController.navigate(R.id.action_nav_progress_to_fragment_wpm);
+            }
+        });
+
+        final CardView wordsReadView = root.findViewById(R.id.progress_words_read);
+        wordsReadView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                navController.navigate(R.id.action_nav_progress_to_wordsReadFragment2);
+            }
+        });
+
+        final CardView modulesView = root.findViewById(R.id.progress_modules);
+        modulesView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                navController.navigate(R.id.action_nav_progress_to_moduleProgressFragment);
+            }
+        });
+
+        final CardView quizView = root.findViewById(R.id.progress_quiz);
+        quizView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                navController.navigate(R.id.action_nav_progress_to_quizProgressFragment);
+            }
+        });
         return root;
     }
 
