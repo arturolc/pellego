@@ -2,14 +2,11 @@ package com.gitlab.capstone.pellego.widgets;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,11 +18,9 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 
-import com.gitlab.capstone.pellego.app.TTS;
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.Toast;
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Reflow;
 import com.gitlab.capstone.pellego.app.Storage;
@@ -45,7 +40,6 @@ import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Locale;
 
 import static android.view.View.INVISIBLE;
 
@@ -56,6 +50,7 @@ public class TechniqueWidget {
     public static boolean playing = false;
     public int technique_id;
     public Activity activity;
+    private RsvpModuleFragment rsvpModuleFragment;
 
     public Context context;
     public static FBReaderView fb;
@@ -409,20 +404,28 @@ public class TechniqueWidget {
         this.activity = activity;
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.tts_popup, null);
-        View left = view.findViewById(R.id.tts_left);
-        left.setOnClickListener(new View.OnClickListener() {
+
+        // skip back button pressed
+        View left = activity.findViewById(R.id.tts_left);
+        View right = activity.findViewById(R.id.tts_right);
+
+        View prev = activity.findViewById(R.id.button_prev);
+        prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stop();
-                selectPrev();
+                rsvpModuleFragment.stop();
+                rsvpModuleFragment.startPrev();
+
             }
         });
-        View right = view.findViewById(R.id.tts_right);
-        right.setOnClickListener(new View.OnClickListener() {
+        // skip forward button pressed
+        View next = activity.findViewById(R.id.button_next);
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stop();
-                selectNext();
+                rsvpModuleFragment.stop();
+                rsvpModuleFragment.startNext();
+
             }
         });
 
@@ -446,6 +449,8 @@ public class TechniqueWidget {
                             case R.id.rsvp_menu_item:
                                 activity.findViewById(R.id.rsvp_reader).setVisibility(View.VISIBLE);
                                 activity.findViewById(R.id.main_view).setVisibility(INVISIBLE);
+                                rsvpModuleFragment = new RsvpModuleFragment();
+                                rsvpModuleFragment.initRsvpReader(TechniqueWidget.this, v, activity);
                                 break;
                             case R.id.none_menu_item:
                                 activity.findViewById(R.id.rsvp_reader).setVisibility(INVISIBLE);
@@ -481,8 +486,7 @@ public class TechniqueWidget {
         myFab.setOnClickListener((View.OnClickListener) fb -> {
             switch (technique_id) {
                 case R.id.rsvp_menu_item:
-                    RsvpModuleFragment rsvpModuleFragment = new RsvpModuleFragment();
-                    rsvpModuleFragment.startAutoRead(this, v, activity);
+                    rsvpModuleFragment.startNext();
                     togglePlay(myFab);
                     break;
                 default:
@@ -491,7 +495,7 @@ public class TechniqueWidget {
 
 
         });
-        
+
         int dp20 = ThemeUtils.dp2px(context, 20);
         FrameLayout f = new FrameLayout(context);
         FrameLayout round = new FrameLayout(context);
@@ -502,11 +506,6 @@ public class TechniqueWidget {
         f.setPadding(dp20, dp20, dp20, dp20);
         this.view = f;
         this.panel = round;
-    }
-
-    void stop() {
-        // stop on forward/backward pressed
-
     }
 
     public void togglePlay(ImageView fab) {
@@ -524,7 +523,7 @@ public class TechniqueWidget {
     }
 
 
-    public void selectPrev() {
+    public String selectPrev() {
         marks.clear();
         if (fragment == null) {
             if (fb.widget instanceof ScrollWidget) {
@@ -547,7 +546,7 @@ public class TechniqueWidget {
             ScrollWidget.ScrollAdapter.PageCursor nc;
             int pos = ((ScrollWidget) fb.widget).adapter.findPage(fragment.fragment.start);
             if (pos == -1)
-                return;
+                return "";
             nc = ((ScrollWidget) fb.widget).adapter.pages.get(pos);
             int first = ((ScrollWidget) fb.widget).findFirstPage();
             ScrollWidget.ScrollAdapter.PageCursor cur = ((ScrollWidget) fb.widget).adapter.pages.get(first);
@@ -618,7 +617,7 @@ public class TechniqueWidget {
                 }
             }
         }
-        fb.ttsUpdate();
+        return fragment.fragmentText;
     }
 
     // Get the next chunk of text

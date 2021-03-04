@@ -125,14 +125,28 @@ public class RsvpModuleFragment extends BaseFragment {
         moduleViewModel.showPopupDialog = false;
     }
 
-    public void startAutoRead(TechniqueWidget techniqueWidget, View v, Activity a) {
+    public void initRsvpReader(TechniqueWidget techniqueWidget, View v, Activity a) {
         currentView = (FragmentActivity) a;
         this.techniqueWidget = techniqueWidget;
-        content = techniqueWidget.selectNext();
+    }
 
+    public void startNext() {
+        content = techniqueWidget.selectNext();
         asyncUpdateText = new AsyncUpdateText(); // start thread on ok
         asyncUpdateText.execute(150);
     }
+
+    public void startPrev() {
+        content = techniqueWidget.selectPrev();
+        asyncUpdateText = new AsyncUpdateText(); // start thread on ok
+        asyncUpdateText.execute(150);
+    }
+
+    public void stop() {
+        asyncUpdateText.cancel(true);
+    }
+
+
 
     /**
      * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
