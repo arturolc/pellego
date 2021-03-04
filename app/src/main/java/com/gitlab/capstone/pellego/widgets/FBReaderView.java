@@ -2168,8 +2168,8 @@ public class FBReaderView extends RelativeLayout {
         ttsUpdate();
     }
 
-    public RsvpWidget rsvpOpen() {
-        return new RsvpWidget(this);
+    public TechniqueWidget openTechnique(Activity activity) {
+        return new TechniqueWidget(this, activity);
     }
 
 

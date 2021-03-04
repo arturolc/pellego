@@ -10,8 +10,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Bundle;
@@ -19,17 +17,11 @@ import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
 import androidx.core.view.ViewCompat;
 import androidx.appcompat.app.AlertDialog;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -50,7 +42,6 @@ import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.axet.androidlibrary.preferences.ScreenlockPreference;
 import com.github.axet.androidlibrary.widgets.ErrorDialog;
@@ -69,10 +60,9 @@ import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 import com.gitlab.capstone.pellego.widgets.BookmarksDialog;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
-import com.gitlab.capstone.pellego.widgets.RsvpWidget;
+import com.gitlab.capstone.pellego.widgets.TechniqueWidget;
 import com.gitlab.capstone.pellego.widgets.ScrollWidget;
 import com.gitlab.capstone.pellego.widgets.ToolbarButtonView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.ActionCode;
@@ -100,9 +90,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public static final int FONT_END = 100;
     public static final int REFLOW_START = 3;
     public static final int REFLOW_END = 15;
-    public static boolean playing = false;
-    public RsvpWidget rsvpWidget;
-    public int technique_id;
+
 
     Handler handler = new Handler();
     Storage storage;
@@ -633,84 +621,10 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
         getActivity().findViewById(R.id.bottom_nav_view).setVisibility(INVISIBLE);
-        // technique selector pressed
-        Button techniqueSelector = (Button) getActivity().findViewById(R.id.button_technique);
-        techniqueSelector.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(getActivity(), techniqueSelector);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater()
-                        .inflate(R.menu.techniques_menu, popup.getMenu());
-
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        technique_id = item.getItemId();
-                        item.setChecked(true);
-                        switch(item.getItemId()) {
-                            case R.id.rsvp_menu_item:
-                                getActivity().findViewById(R.id.rsvp_reader).setVisibility(View.VISIBLE);
-                                getActivity().findViewById(R.id.main_view).setVisibility(INVISIBLE);
-                                rsvpWidget = fb.rsvpOpen();
-                                break;
-                            case R.id.none_menu_item:
-                                getActivity().findViewById(R.id.rsvp_reader).setVisibility(INVISIBLE);
-                                getActivity().findViewById(R.id.main_view).setVisibility(View.VISIBLE);
-                            default:
-                                break;
-                        }
-                        return true;
-                    }
-                });
-
-                popup.show(); //showing popup menu
-            }
-        });
-
-        // wpm pressed
-        Button wpmSelector = (Button) getActivity().findViewById(R.id.button_wpm);
-        wpmSelector.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(getActivity(), wpmSelector);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater()
-                        .inflate(R.menu.wpm_menu, popup.getMenu());
-
-                popup.show(); //showing popup menu
-            }
-        });
-
-        // play pressed
-        ImageView myFab = getActivity().findViewById(R.id.button_play);
-        myFab.setOnClickListener((View.OnClickListener) v -> {
-            switch (technique_id) {
-                case R.id.rsvp_menu_item:
-                    RsvpModuleFragment rsvpModuleFragment = new RsvpModuleFragment();
-                    rsvpModuleFragment.startAutoRead(rsvpWidget, v, getActivity());
-                    togglePlay(myFab);
-                    break;
-                default:
-                    break;
-            }
-
-
-        });
 
     }
 
-    public void togglePlay(ImageView fab) {
-        playing = !playing;
-        if ( playing ) {
-            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_outline_pause_24));
-        } else {
-            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_outline_play_arrow_24));
-        }
 
-    }
 
 
 
@@ -723,10 +637,10 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_reader, container, false);
-        playing = false;
         final MainActivity main = (MainActivity) getActivity();
 
         fb = (FBReaderView) v.findViewById(R.id.main_view);
+        fb.openTechnique(getActivity());
         fb.listener = new FBReaderView.Listener() {
             @Override
             public void onScrollingFinished(ZLViewEnums.PageIndex index) {

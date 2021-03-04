@@ -26,7 +26,7 @@ import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
-import com.gitlab.capstone.pellego.widgets.RsvpWidget;
+import com.gitlab.capstone.pellego.widgets.TechniqueWidget;
 import com.gitlab.capstone.pellego.widgets.TTSPopup;
 
 
@@ -44,7 +44,7 @@ public class RsvpModuleFragment extends BaseFragment {
     private String content;
     private ModuleViewModel moduleViewModel;
     private FragmentActivity currentView;
-    private RsvpWidget rsvpWidget;
+    private TechniqueWidget techniqueWidget;
     public FBReaderView fb;
     TTSPopup.Fragment fragment;
     public Storage.Bookmarks marks = new Storage.Bookmarks();
@@ -125,10 +125,10 @@ public class RsvpModuleFragment extends BaseFragment {
         moduleViewModel.showPopupDialog = false;
     }
 
-    public void startAutoRead(RsvpWidget rsvpWidget, View v, Activity a) {
+    public void startAutoRead(TechniqueWidget techniqueWidget, View v, Activity a) {
         currentView = (FragmentActivity) a;
-        this.rsvpWidget = rsvpWidget;
-        content = rsvpWidget.selectNext();
+        this.techniqueWidget = techniqueWidget;
+        content = techniqueWidget.selectNext();
 
         asyncUpdateText = new AsyncUpdateText(); // start thread on ok
         asyncUpdateText.execute(150);
@@ -154,7 +154,7 @@ public class RsvpModuleFragment extends BaseFragment {
                 // Verify that user has not navigated away from the RSVP fragment
                 NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
                 String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
-                if (!currFragment.contains("RsvpModuleFragment") && (!currFragment.contains("ReaderFragment") || !ReaderFragment.playing)) {
+                if (!currFragment.contains("RsvpModuleFragment") && (!currFragment.contains("ReaderFragment") || !TechniqueWidget.playing)) {
                     cancel(true);
                     return 0;
                 } else {
@@ -173,8 +173,8 @@ public class RsvpModuleFragment extends BaseFragment {
         @Override
         protected void onPostExecute(Integer result) {
             try {
-                if (ReaderFragment.playing) {
-                    content = rsvpWidget.selectNext();
+                if (TechniqueWidget.playing) {
+                    content = techniqueWidget.selectNext();
                     asyncUpdateText = new AsyncUpdateText();
                     asyncUpdateText.execute(150);
                 }

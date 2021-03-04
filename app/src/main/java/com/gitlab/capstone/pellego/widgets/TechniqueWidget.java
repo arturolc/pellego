@@ -1,7 +1,9 @@
 package com.gitlab.capstone.pellego.widgets;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
@@ -10,10 +12,13 @@ import android.speech.tts.TextToSpeech;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 
 import com.gitlab.capstone.pellego.app.TTS;
@@ -24,6 +29,7 @@ import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Reflow;
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 
 import org.geometerplus.fbreader.fbreader.TextBuildTraverser;
 import org.geometerplus.zlibrary.core.view.ZLViewEnums;
@@ -41,16 +47,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Locale;
 
-public class RsvpWidget {
+import static android.view.View.INVISIBLE;
+
+public class TechniqueWidget {
     public static String[] EOL = {"\n", "\r"};
     public static String[] STOPS = {".", ";"}; // ",", "\"", "'", "!", "?", "“", "”", ":", "(", ")"};
     public static int MAX_COUNT = getMaxSpeechInputLength(200);
-    public static int TTS_BG_COLOR = 0xaaaaaa00;
-    public static int TTS_BG_ERROR_COLOR = 0xaaff0000;
-    public static int TTS_WORD_COLOR = 0x33333333;
+    public static boolean playing = false;
+    public int technique_id;
+    public Activity activity;
 
     public Context context;
-    public TTS tts;
     public static FBReaderView fb;
     Fragment fragment;
     public Storage.Bookmarks marks = new Storage.Bookmarks();
@@ -66,19 +73,6 @@ public class RsvpWidget {
             FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) panel.getLayoutParams();
             lp.gravity = gravity;
             panel.setLayoutParams(lp);
-        }
-    };
-    Runnable speakNext = new Runnable() {
-        @Override
-        public void run() {
-            selectNext();
-            speakNext();
-        }
-    };
-    Runnable speakRetry = new Runnable() {
-        @Override
-        public void run() {
-            speakNext();
         }
     };
 
@@ -185,7 +179,7 @@ public class RsvpWidget {
 
             public Bookmark(String z, ZLTextPosition s, ZLTextPosition e) {
                 super(z, s, e);
-                color = TTS_WORD_COLOR;
+                color = Color.BLACK;
             }
         }
 
@@ -229,7 +223,7 @@ public class RsvpWidget {
             fragmentText = str;
             fragmentWords = list;
             fragment = new Storage.Bookmark(bm);
-            fragment.color = TTS_BG_COLOR;
+            fragment.color = Color.BLACK;
             word = null;
         }
 
@@ -409,84 +403,10 @@ public class RsvpWidget {
         }
     }
 
-    public RsvpWidget(FBReaderView v) {
+    public TechniqueWidget(FBReaderView v, Activity activity) {
         this.context = v.getContext();
         fb = v;
-        tts = new TTS(context) {
-            @Override
-            public Locale getUserLocale() {
-                SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
-
-                String lang = shared.getString(App.PREFERENCE_LANGUAGE, ""); // take user lang preferences
-
-                Locale locale;
-
-                if (lang.isEmpty()) // use system locale (system language)
-                    locale = Locale.getDefault();
-                else
-                    locale = new Locale(lang);
-
-                return locale;
-            }
-
-            @Override
-            public void onRangeStart(String utteranceId, int start, int end, int frame) {
-                if (fb.tts == null)
-                    return;
-                marks.clear();
-                marks.add(fragment.fragment);
-                Storage.Bookmark bm = fragment.findWord(start, end);
-                if (bm != null) {// words starting with STOP symbols are missing
-                    marks.add(bm);
-                    fragment.word = bm;
-                } // else do not clear 'word', to prevent page scroll jumping
-                if (fb.widget instanceof ScrollWidget && ((ScrollWidget) fb.widget).getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
-                    Storage.Bookmark page = isEmpty(fragment.word) ? fragment.fragment : fragment.word;
-                    int pos = ((ScrollWidget) fb.widget).adapter.findPage(page.start);
-                    if (pos != -1) {
-                        ScrollWidget.ScrollAdapter.PageCursor c = ((ScrollWidget) fb.widget).adapter.pages.get(pos);
-                        int first = ((ScrollWidget) fb.widget).findFirstPage();
-                        if (first != -1) {
-                            ScrollWidget.ScrollAdapter.PageCursor cur = ((ScrollWidget) fb.widget).adapter.pages.get(first);
-                            if (!c.equals(cur)) {
-                                Runnable gravity = new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        updateGravity();
-                                    }
-                                };
-                                if (c.end != null && cur.start != null && c.end.compareTo(cur.start) <= 0) {
-                                    onScrollFinished.add(gravity);
-                                    fb.scrollPrevPage();
-                                }
-                                if (c.start != null && cur.end != null && c.start.compareTo(cur.end) >= 0) {
-                                    onScrollFinished.add(gravity);
-                                    fb.scrollNextPage();
-                                }
-                            } else {
-                                ensureVisible(page);
-                            }
-                        }
-                    }
-                }
-                fb.ttsUpdate();
-            }
-
-            @Override
-            public void onError(String utteranceId, Runnable done) {
-                if (!fragment.isEmpty() && fragment.retry < 2) {
-                    dones.remove(delayed);
-                    handler.removeCallbacks(delayed);
-                    delayed = null;
-                    dones.remove(speakNext); // remove done
-                    fragment.retry++;
-                    ttsShowError("TTS Unknown error", 2000, speakRetry);
-                } else {
-                    done.run(); // speakNext
-                }
-            }
-        };
-        tts.ttsCreate();
+        this.activity = activity;
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.tts_popup, null);
         View left = view.findViewById(R.id.tts_left);
@@ -505,23 +425,73 @@ public class RsvpWidget {
                 selectNext();
             }
         });
-        play = (ImageView) view.findViewById(R.id.tts_play);
-        play.setOnClickListener(new View.OnClickListener() {
+
+        // technique selector pressed
+        Button techniqueSelector = (Button) activity.findViewById(R.id.button_technique);
+        techniqueSelector.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tts.dones.contains(speakNext))
-                    stop();
-                else
-                    speakNext();
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(activity, techniqueSelector);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.techniques_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        technique_id = item.getItemId();
+                        item.setChecked(true);
+                        switch(item.getItemId()) {
+                            case R.id.rsvp_menu_item:
+                                activity.findViewById(R.id.rsvp_reader).setVisibility(View.VISIBLE);
+                                activity.findViewById(R.id.main_view).setVisibility(INVISIBLE);
+                                break;
+                            case R.id.none_menu_item:
+                                activity.findViewById(R.id.rsvp_reader).setVisibility(INVISIBLE);
+                                activity.findViewById(R.id.main_view).setVisibility(View.VISIBLE);
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show(); //showing popup menu
             }
         });
-        View close = view.findViewById(R.id.tts_close);
-        close.setOnClickListener(new View.OnClickListener() {
+
+        // wpm pressed
+        Button wpmSelector = (Button) activity.findViewById(R.id.button_wpm);
+        wpmSelector.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(activity, wpmSelector);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.wpm_menu, popup.getMenu());
+
+                popup.show(); //showing popup menu
             }
         });
+
+        // play pressed
+        ImageView myFab = activity.findViewById(R.id.button_play);
+        myFab.setOnClickListener((View.OnClickListener) fb -> {
+            switch (technique_id) {
+                case R.id.rsvp_menu_item:
+                    RsvpModuleFragment rsvpModuleFragment = new RsvpModuleFragment();
+                    rsvpModuleFragment.startAutoRead(this, v, activity);
+                    togglePlay(myFab);
+                    break;
+                default:
+                    break;
+            }
+
+
+        });
+        
         int dp20 = ThemeUtils.dp2px(context, 20);
         FrameLayout f = new FrameLayout(context);
         FrameLayout round = new FrameLayout(context);
@@ -535,42 +505,24 @@ public class RsvpWidget {
     }
 
     void stop() {
-        tts.close();
-        tts.dones.remove(speakNext);
-        updatePlay();
+        // stop on forward/backward pressed
+
+    }
+
+    public void togglePlay(ImageView fab) {
+        playing = !playing;
+        if ( playing ) {
+            fab.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_outline_pause_24));
+        } else {
+            fab.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_outline_play_arrow_24));
+        }
+
     }
 
     public Context getContext() {
         return context;
     }
 
-    public void speakNext() {
-        if (fragment == null)
-            selectNext();
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                fragment.last = System.currentTimeMillis();
-                tts.playSpeech(new TTS.Speak(tts.getTTSLocale(), fragment.fragmentText), speakNext);
-                String txt = fragment.fragmentText;
-                updatePlay();
-            }
-        };
-        if (fb.widget instanceof ScrollWidget) {
-            if (((ScrollWidget) fb.widget).getScrollState() == RecyclerView.SCROLL_STATE_IDLE)
-                onScrollingFinished(ZLViewEnums.PageIndex.current);
-        }
-        if (onScrollFinished.isEmpty())
-            r.run();
-        else
-            onScrollFinished.add(r);
-    }
-
-    public void updatePlay() {
-        boolean p = tts.dones.contains(speakNext);
-        play.setImageResource(p ? R.drawable.ic_outline_pause_24 : R.drawable.ic_outline_play_arrow_24);
-        fb.listener.ttsStatus(p);
-    }
 
     public void selectPrev() {
         marks.clear();
@@ -827,17 +779,11 @@ public class RsvpWidget {
     }
 
     public void close() {
-        if (fb.listener != null)
-            fb.listener.ttsStatus(false);
-        view.setVisibility(View.GONE);
-        fb.removeView(view);
-        fb.ttsClose();
-        tts.close();
+
     }
 
     public void dismiss() {
         close();
-        fb.tts = null;
     }
 
     public void ensureVisible(Storage.Bookmark bm) { // same page
@@ -1113,15 +1059,15 @@ public class RsvpWidget {
         return new Storage.Bookmark(getText(start, end), start, end);
     }
 
-    public void ttsShowError(String text, int delay, final Runnable done) {
+    public void showError (String text, int delay, final Runnable done) {
         for (Storage.Bookmark m : marks)
-            m.color = TTS_BG_ERROR_COLOR;
+            m.color = Color.BLUE;
         fb.ttsUpdate();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 for (Storage.Bookmark m : marks)
-                    m.color = TTS_BG_COLOR;
+                    m.color = Color.BLUE;
                 fb.ttsUpdate();
                 done.run();
             }
@@ -1129,4 +1075,3 @@ public class RsvpWidget {
         Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
     }
 }
-
