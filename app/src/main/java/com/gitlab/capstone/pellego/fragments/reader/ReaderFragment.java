@@ -9,7 +9,9 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Bundle;
@@ -38,6 +40,7 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
@@ -641,6 +644,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
 
         fb = (FBReaderView) v.findViewById(R.id.main_view);
         fb.openTechnique(getActivity());
+
         fb.listener = new FBReaderView.Listener() {
             @Override
             public void onScrollingFinished(ZLViewEnums.PageIndex index) {
@@ -969,12 +973,83 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         fb.updateTheme();
     }
 
+    private SeekBar addDropDownSeekBar(Context context, Menu menu, String title) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        View contentView = inflater.inflate(R.layout.dropdown_seek_bar, null);
+        SeekBar seekBar = (SeekBar) contentView.findViewById(R.id.drop_down_seek_bar);
+
+        final PopupWindow popupWindow = new PopupWindow(context, null,
+                android.R.attr.actionDropDownStyle);
+        popupWindow.setFocusable(true); // seems to take care of dismissing on click outside
+        popupWindow.setContentView(contentView);
+        setPopupSize(popupWindow);
+
+        final int paddingTop = getPaddingTop(popupWindow);
+
+        MenuItem menuItem = menu.add("");
+        FrameLayout button = createActionButton(context, title);
+        menuItem.setActionView(button);
+        menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // compensate for PopupWindow's internal padding
+                popupWindow.showAsDropDown(v, 0, -paddingTop);
+            }
+        });
+
+        return seekBar;
+    }
+
+    private FrameLayout createActionButton(Context context, String title) {
+        FrameLayout frame = new FrameLayout(context, null, android.R.attr.actionButtonStyle);
+        frame.setLayoutParams(new LinearLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
+        TextView text = new TextView(context, null, android.R.attr.actionMenuTextAppearance);
+        text.setGravity(Gravity.CENTER_VERTICAL);
+        text.setText(title);
+        frame.addView(text);
+        return frame;
+    }
+
+    private void setPopupSize(PopupWindow popupWindow) {
+        View contentView = popupWindow.getContentView();
+
+        int unspecified = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        contentView.measure(unspecified, unspecified);
+
+        int width = contentView.getMeasuredWidth();
+        int height = contentView.getMeasuredHeight();
+
+        Drawable background = popupWindow.getBackground();
+        if (background != null) {
+            Rect rect = new Rect();
+            background.getPadding(rect);
+            width += rect.left + rect.right;
+            height += rect.top + rect.bottom;
+        }
+
+        popupWindow.setWidth(width);
+        popupWindow.setHeight(height);
+    }
+
+    private int getPaddingTop(PopupWindow popupWindow) {
+        Drawable background = popupWindow.getBackground();
+        if (background == null)
+            return 0;
+
+        Rect padding = new Rect();
+        background.getPadding(padding);
+        return padding.top;
+    }
+
     @Override
     public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
+//        addDropDownSeekBar(getActivity(), menu, "wpm");
         invalidateOptionsMenu = InvalidateOptionsMenuCompat.onCreateOptionsMenu(this, menu, inflater);
-
         MenuItem homeMenu = menu.findItem(R.id.action_home);
         MenuItem tocMenu = menu.findItem(R.id.action_toc);
 //        searchMenu = menu.findItem(R.id.action_search);

@@ -41,7 +41,7 @@ public class RsvpModuleFragment extends BaseFragment {
     private Integer wpm;
     public String difficulty;
     private static AsyncUpdateText asyncUpdateText;
-    private String content;
+    private String content = "";
     private ModuleViewModel moduleViewModel;
     private FragmentActivity currentView;
     private TechniqueWidget techniqueWidget;
@@ -130,16 +130,27 @@ public class RsvpModuleFragment extends BaseFragment {
         this.techniqueWidget = techniqueWidget;
     }
 
+    public void play() {
+        if (content == "") {
+            techniqueWidget.selectNext();
+        }
+        if (TechniqueWidget.playing) {
+            asyncUpdateText = new AsyncUpdateText(); // start thread on ok
+            asyncUpdateText.execute(TechniqueWidget.wpm);
+        }
+
+    }
+
     public void startNext() {
         content = techniqueWidget.selectNext();
         asyncUpdateText = new AsyncUpdateText(); // start thread on ok
-        asyncUpdateText.execute(150);
+        asyncUpdateText.execute(TechniqueWidget.wpm);
     }
 
     public void startPrev() {
         content = techniqueWidget.selectPrev();
         asyncUpdateText = new AsyncUpdateText(); // start thread on ok
-        asyncUpdateText.execute(150);
+        asyncUpdateText.execute(TechniqueWidget.wpm);
     }
 
     public void stop() {
@@ -154,7 +165,7 @@ public class RsvpModuleFragment extends BaseFragment {
     private class AsyncUpdateText extends AsyncTask<Integer, String, Integer> {
 
         TextView rsvp_text;
-        String[] words = content.split ("\\W+"); // split on non-word characters
+        String[] words = content.split (" "); // split on non-word characters
 
         @Override
         protected void onPreExecute() {
@@ -173,6 +184,7 @@ public class RsvpModuleFragment extends BaseFragment {
                     return 0;
                 } else {
                     rsvp_text.setText(word);
+                    content = content.replaceFirst(word, "");
                 }
                 try {
                     Thread.sleep(delay);
@@ -190,7 +202,7 @@ public class RsvpModuleFragment extends BaseFragment {
                 if (TechniqueWidget.playing) {
                     content = techniqueWidget.selectNext();
                     asyncUpdateText = new AsyncUpdateText();
-                    asyncUpdateText.execute(150);
+                    asyncUpdateText.execute(TechniqueWidget.wpm);
                 }
                 showQuizPopupDialog();
             } catch (Exception e) {

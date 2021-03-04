@@ -4,19 +4,27 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.Toast;
@@ -48,9 +56,11 @@ public class TechniqueWidget {
     public static String[] STOPS = {".", ";"}; // ",", "\"", "'", "!", "?", "“", "”", ":", "(", ")"};
     public static int MAX_COUNT = getMaxSpeechInputLength(200);
     public static boolean playing = false;
-    public int technique_id;
+    public int technique_id = -1;
     public Activity activity;
     private RsvpModuleFragment rsvpModuleFragment;
+    private TextView progressTextView;
+    public static int wpm = 250;
 
     public Context context;
     public static FBReaderView fb;
@@ -58,7 +68,6 @@ public class TechniqueWidget {
     public Storage.Bookmarks marks = new Storage.Bookmarks();
     public View panel;
     public View view;
-    ImageView play;
     ArrayList<Runnable> onScrollFinished = new ArrayList<>();
     Handler handler = new Handler();
     int gravity;
@@ -398,12 +407,14 @@ public class TechniqueWidget {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public TechniqueWidget(FBReaderView v, Activity activity) {
         this.context = v.getContext();
         fb = v;
         this.activity = activity;
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.tts_popup, null);
+        ImageView myFab = activity.findViewById(R.id.button_play);
 
         // skip back button pressed
         View left = activity.findViewById(R.id.tts_left);
@@ -413,8 +424,19 @@ public class TechniqueWidget {
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rsvpModuleFragment.stop();
-                rsvpModuleFragment.startPrev();
+                switch (technique_id) {
+                    case R.id.rsvp_menu_item:
+                        if (playing) {
+                            rsvpModuleFragment.stop();
+                        } else {
+                            togglePlay(myFab);
+                        }
+                        rsvpModuleFragment.startPrev();
+                        break;
+                    default:
+                        break;
+                }
+
 
             }
         });
@@ -423,8 +445,18 @@ public class TechniqueWidget {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rsvpModuleFragment.stop();
-                rsvpModuleFragment.startNext();
+                switch (technique_id) {
+                    case R.id.rsvp_menu_item:
+                        if (playing) {
+                            rsvpModuleFragment.stop();
+                        } else {
+                            togglePlay(myFab);
+                        }
+                        rsvpModuleFragment.startNext();
+                        break;
+                    default:
+                        break;
+                }
 
             }
         });
@@ -439,7 +471,10 @@ public class TechniqueWidget {
                 //Inflating the Popup using xml file
                 popup.getMenuInflater()
                         .inflate(R.menu.techniques_menu, popup.getMenu());
-
+                if (playing) {
+                    rsvpModuleFragment.stop();
+                    togglePlay(myFab);
+                }
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
@@ -468,32 +503,18 @@ public class TechniqueWidget {
 
         // wpm pressed
         Button wpmSelector = (Button) activity.findViewById(R.id.button_wpm);
-        wpmSelector.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(activity, wpmSelector);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater()
-                        .inflate(R.menu.wpm_menu, popup.getMenu());
-
-                popup.show(); //showing popup menu
-            }
-        });
+        addDropDownSeekBar(wpmSelector);
 
         // play pressed
-        ImageView myFab = activity.findViewById(R.id.button_play);
         myFab.setOnClickListener((View.OnClickListener) fb -> {
             switch (technique_id) {
                 case R.id.rsvp_menu_item:
-                    rsvpModuleFragment.startNext();
                     togglePlay(myFab);
+                    rsvpModuleFragment.play();
                     break;
                 default:
                     break;
             }
-
-
         });
 
         int dp20 = ThemeUtils.dp2px(context, 20);
@@ -506,6 +527,108 @@ public class TechniqueWidget {
         f.setPadding(dp20, dp20, dp20, dp20);
         this.view = f;
         this.panel = round;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private SeekBar addDropDownSeekBar(Button wpmSelector) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        View contentView = inflater.inflate(R.layout.dropdown_seek_bar, null);
+        SeekBar seekBar = (SeekBar) contentView.findViewById(R.id.drop_down_seek_bar);
+        seekBar.setMin(50);
+        seekBar.setMax(700);
+        seekBar.setProgress(wpm);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                int val = (progress * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
+                progressTextView = contentView.findViewById(R.id.progress_text);
+                progressTextView.setText(String.valueOf(wpm));
+                progressTextView.setText(String.valueOf(progress));
+                wpm = progress;
+                int width = seekBar.getWidth() - seekBar.getPaddingLeft() - seekBar.getPaddingRight();
+                int thumbPos = seekBar.getPaddingLeft() + width * seekBar.getProgress() / seekBar.getMax();
+
+                progressTextView.measure(0, 0);
+                int txtW = progressTextView.getMeasuredWidth();
+                int delta = txtW / 2;
+                progressTextView.setX(seekBar.getX() + thumbPos - delta);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        final PopupWindow popupWindow = new PopupWindow(context, null,
+                android.R.attr.actionDropDownStyle);
+        popupWindow.setFocusable(true); // seems to take care of dismissing on click outside
+        popupWindow.setContentView(contentView);
+        setPopupSize(popupWindow);
+
+        wpmSelector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // compensate for PopupWindow's internal padding
+                popupWindow.showAsDropDown(v, 0, -95);
+            }
+        });
+
+        return seekBar;
+    }
+
+    private FrameLayout createActionButton(Context context, String title) {
+        FrameLayout frame = new FrameLayout(context, null, android.R.attr.actionButtonStyle);
+        frame.setLayoutParams(new LinearLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
+        TextView text = new TextView(context, null, android.R.attr.actionMenuTextAppearance);
+        text.setGravity(Gravity.CENTER_VERTICAL);
+        text.setText(title);
+        frame.addView(text);
+        return frame;
+    }
+
+    private void setPopupSize(PopupWindow popupWindow) {
+        View contentView = popupWindow.getContentView();
+
+        int unspecified = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        contentView.measure(unspecified, unspecified);
+
+        int width = contentView.getMeasuredWidth();
+        int height = contentView.getMeasuredHeight();
+
+        Drawable background = popupWindow.getBackground();
+        if (background != null) {
+            Rect rect = new Rect();
+            background.getPadding(rect);
+            width += rect.left + rect.right;
+            height += rect.top + rect.bottom;
+        }
+
+        popupWindow.setWidth(width);
+        popupWindow.setHeight(height);
+    }
+
+    private int getPaddingTop(PopupWindow popupWindow) {
+        Drawable background = popupWindow.getBackground();
+        if (background == null)
+            return 0;
+
+        Rect padding = new Rect();
+        background.getPadding(padding);
+        return padding.top;
+    }
+
+    public void setPlaying(ImageView fab) {
+        playing = !playing;
+        fab.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_outline_pause_24));
     }
 
     public void togglePlay(ImageView fab) {
