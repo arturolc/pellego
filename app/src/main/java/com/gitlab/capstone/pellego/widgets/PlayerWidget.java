@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +31,7 @@ import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Reflow;
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 
 import org.geometerplus.fbreader.fbreader.TextBuildTraverser;
@@ -51,7 +51,7 @@ import java.util.Collections;
 
 import static android.view.View.INVISIBLE;
 
-public class TechniqueWidget {
+public class PlayerWidget {
     public static String[] EOL = {"\n", "\r"};
     public static String[] STOPS = {".", ";"}; // ",", "\"", "'", "!", "?", "“", "”", ":", "(", ")"};
     public static int MAX_COUNT = getMaxSpeechInputLength(200);
@@ -408,7 +408,7 @@ public class TechniqueWidget {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public TechniqueWidget(FBReaderView v, Activity activity) {
+    public PlayerWidget(FBReaderView v, Activity activity) {
         this.context = v.getContext();
         fb = v;
         this.activity = activity;
@@ -417,9 +417,6 @@ public class TechniqueWidget {
         ImageView myFab = activity.findViewById(R.id.button_play);
 
         // skip back button pressed
-        View left = activity.findViewById(R.id.tts_left);
-        View right = activity.findViewById(R.id.tts_right);
-
         View prev = activity.findViewById(R.id.button_prev);
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -480,16 +477,19 @@ public class TechniqueWidget {
                     public boolean onMenuItemClick(MenuItem item) {
                         technique_id = item.getItemId();
                         item.setChecked(true);
+                        ReaderFragment.hideOptionsMenu();
                         switch(item.getItemId()) {
                             case R.id.rsvp_menu_item:
                                 activity.findViewById(R.id.rsvp_reader).setVisibility(View.VISIBLE);
                                 activity.findViewById(R.id.main_view).setVisibility(INVISIBLE);
                                 rsvpModuleFragment = new RsvpModuleFragment();
-                                rsvpModuleFragment.initRsvpReader(TechniqueWidget.this, v, activity);
+                                rsvpModuleFragment.initRsvpReader(PlayerWidget.this, v, activity);
                                 break;
                             case R.id.none_menu_item:
+                                ReaderFragment.showOptionsMenu();
                                 activity.findViewById(R.id.rsvp_reader).setVisibility(INVISIBLE);
                                 activity.findViewById(R.id.main_view).setVisibility(View.VISIBLE);
+                                break;
                             default:
                                 break;
                         }
@@ -513,6 +513,8 @@ public class TechniqueWidget {
                     rsvpModuleFragment.play();
                     break;
                 default:
+                    Toast.makeText(activity, "Select a technique to start speed reading",
+                            Toast.LENGTH_SHORT).show();
                     break;
             }
         });
@@ -539,12 +541,13 @@ public class TechniqueWidget {
         seekBar.setMin(50);
         seekBar.setMax(700);
         seekBar.setProgress(wpm);
+        progressTextView = contentView.findViewById(R.id.progress_text);
+        progressTextView.setText(String.valueOf(wpm));
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
                 int val = (progress * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
-                progressTextView = contentView.findViewById(R.id.progress_text);
-                progressTextView.setText(String.valueOf(wpm));
                 progressTextView.setText(String.valueOf(progress));
                 wpm = progress;
                 int width = seekBar.getWidth() - seekBar.getPaddingLeft() - seekBar.getPaddingRight();

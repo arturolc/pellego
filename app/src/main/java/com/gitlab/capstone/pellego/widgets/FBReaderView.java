@@ -2168,8 +2168,8 @@ public class FBReaderView extends RelativeLayout {
         ttsUpdate();
     }
 
-    public TechniqueWidget openTechnique(Activity activity) {
-        return new TechniqueWidget(this, activity);
+    public PlayerWidget openTechnique(Activity activity) {
+        return new PlayerWidget(this, activity);
     }
 
 

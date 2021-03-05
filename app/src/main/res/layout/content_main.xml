@@ -31,14 +31,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal">
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:textSize="10dp"
+                android:layout_height="60dp"
+                android:textSize="12dp"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/button_wpm"
-                android:backgroundTint="@color/white"
-                android:text="wpm"></Button>
+                android:drawableTint="@color/white"
+                android:backgroundTint="@color/light_blue"
+                android:text="wpm"
+                android:textColor="@color/white"
+                style="?android:attr/borderlessButtonStyle"
+                android:drawableTop="@drawable/ic_speedometer_24"
+                ></androidx.appcompat.widget.AppCompatButton>
             <ImageView
                 android:id="@+id/button_prev"
                 android:layout_width="wrap_content"
@@ -65,21 +70,24 @@
                 android:src="@drawable/ic_arrow_forward_black_24dp"
                 app:tint="@color/white" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/button_technique"
-                android:textSize="10dp"
                 android:scrollHorizontally="true"
-                android:backgroundTint="@color/white"
-                android:text="Technique">
-            </Button>
+                android:backgroundTint="@color/light_blue"
+                android:drawableTint="@color/white"
+                android:text="Technique"
+                android:textColor="@color/white"
+                android:drawablePadding="0dp"
+                android:textSize="12dp"
+                style="?android:attr/borderlessButtonStyle"
+                android:drawableTop="@drawable/ic_book_24"
+                >
+            </androidx.appcompat.widget.AppCompatButton>
 
         </LinearLayout>
-
-
-
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

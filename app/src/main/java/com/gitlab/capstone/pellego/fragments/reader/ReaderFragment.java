@@ -36,12 +36,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -60,10 +58,8 @@ import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.ComicsPlugin;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Storage;
-import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 import com.gitlab.capstone.pellego.widgets.BookmarksDialog;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
-import com.gitlab.capstone.pellego.widgets.TechniqueWidget;
 import com.gitlab.capstone.pellego.widgets.ScrollWidget;
 import com.gitlab.capstone.pellego.widgets.ToolbarButtonView;
 
@@ -93,13 +89,15 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public static final int FONT_END = 100;
     public static final int REFLOW_START = 3;
     public static final int REFLOW_END = 15;
+    public static Menu optionsMenu;
+    public Activity activity;
 
 
     Handler handler = new Handler();
     Storage storage;
     Storage.Book book;
     Storage.FBook fbook;
-    FBReaderView fb;
+    public static FBReaderView fb;
     AlertDialog tocdialog;
     boolean showRTL;
     FontsPopup fontsPopup;
@@ -124,19 +122,21 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         return getOverflowMenuButton((ViewGroup) a.findViewById(R.id.toolbar));
     }
 
-    public static View getOverflowMenuButton(ViewGroup p) {
-        for (int i = 0; i < p.getChildCount(); i++) {
-            View v = p.getChildAt(i);
-            if (v.getClass().getCanonicalName().contains("OverflowMenuButton"))
-                return v;
-            if (v instanceof ViewGroup) {
-                v = getOverflowMenuButton((ViewGroup) v);
-                if (v != null)
-                    return v;
-            }
-        }
-        return null;
+    public static void hideOptionsMenu() {
+        MenuItem tocMenu = ReaderFragment.optionsMenu.findItem(R.id.action_toc);
+        MenuItem homeMenu =ReaderFragment.optionsMenu.findItem(R.id.action_home);
+        MenuItem bookmarksMenu = ReaderFragment.optionsMenu.findItem(R.id.action_bm);
+        final MenuItem fontsize = ReaderFragment.optionsMenu.findItem(R.id.action_fontsize);
+        final MenuItem rtl = ReaderFragment.optionsMenu.findItem(R.id.action_rtl);
+        MenuItem tts = ReaderFragment.optionsMenu.findItem(R.id.action_tts);
+        tocMenu.setVisible(false);
+        homeMenu.setVisible(false);
+        bookmarksMenu.setVisible(false);
+        fontsize.setVisible(false);
+        rtl.setVisible(false);
+        tts.setVisible(false);
     }
+
 
     public static class FontsPopup extends PopupWindow {
         FontAdapter fonts;
@@ -624,7 +624,31 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
         getActivity().findViewById(R.id.bottom_nav_view).setVisibility(INVISIBLE);
+    }
 
+    public static void showOptionsMenu() {
+        MenuItem tocMenu = ReaderFragment.optionsMenu.findItem(R.id.action_toc);
+        MenuItem bookmarksMenu = ReaderFragment.optionsMenu.findItem(R.id.action_bm);
+        final MenuItem fontsize = ReaderFragment.optionsMenu.findItem(R.id.action_fontsize);
+        MenuItem tts = ReaderFragment.optionsMenu.findItem(R.id.action_tts);
+        tocMenu.setVisible(fb.app.Model != null && fb.app.Model.TOCTree != null && fb.app.Model.TOCTree.hasChildren());
+        bookmarksMenu.setVisible(true);
+        fontsize.setVisible(true);
+        tts.setVisible(true);
+    }
+
+    public static View getOverflowMenuButton(ViewGroup p) {
+        for (int i = 0; i < p.getChildCount(); i++) {
+            View v = p.getChildAt(i);
+            if (v.getClass().getCanonicalName().contains("OverflowMenuButton"))
+                return v;
+            if (v instanceof ViewGroup) {
+                v = getOverflowMenuButton((ViewGroup) v);
+                if (v != null)
+                    return v;
+            }
+        }
+        return null;
     }
 
 
@@ -1048,6 +1072,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     @Override
     public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        optionsMenu = menu;
 //        addDropDownSeekBar(getActivity(), menu, "wpm");
         invalidateOptionsMenu = InvalidateOptionsMenuCompat.onCreateOptionsMenu(this, menu, inflater);
         MenuItem homeMenu = menu.findItem(R.id.action_home);

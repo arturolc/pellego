@@ -24,9 +24,8 @@ import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
-import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
-import com.gitlab.capstone.pellego.widgets.TechniqueWidget;
+import com.gitlab.capstone.pellego.widgets.PlayerWidget;
 import com.gitlab.capstone.pellego.widgets.TTSPopup;
 
 
@@ -44,7 +43,7 @@ public class RsvpModuleFragment extends BaseFragment {
     private String content = "";
     private ModuleViewModel moduleViewModel;
     private FragmentActivity currentView;
-    private TechniqueWidget techniqueWidget;
+    private PlayerWidget playerWidget;
     public FBReaderView fb;
     TTSPopup.Fragment fragment;
     public Storage.Bookmarks marks = new Storage.Bookmarks();
@@ -125,32 +124,32 @@ public class RsvpModuleFragment extends BaseFragment {
         moduleViewModel.showPopupDialog = false;
     }
 
-    public void initRsvpReader(TechniqueWidget techniqueWidget, View v, Activity a) {
+    public void initRsvpReader(PlayerWidget playerWidget, View v, Activity a) {
         currentView = (FragmentActivity) a;
-        this.techniqueWidget = techniqueWidget;
+        this.playerWidget = playerWidget;
     }
 
     public void play() {
         if (content == "") {
-            techniqueWidget.selectNext();
+            playerWidget.selectNext();
         }
-        if (TechniqueWidget.playing) {
+        if (PlayerWidget.playing) {
             asyncUpdateText = new AsyncUpdateText(); // start thread on ok
-            asyncUpdateText.execute(TechniqueWidget.wpm);
+            asyncUpdateText.execute(PlayerWidget.wpm);
         }
 
     }
 
     public void startNext() {
-        content = techniqueWidget.selectNext();
+        content = playerWidget.selectNext();
         asyncUpdateText = new AsyncUpdateText(); // start thread on ok
-        asyncUpdateText.execute(TechniqueWidget.wpm);
+        asyncUpdateText.execute(PlayerWidget.wpm);
     }
 
     public void startPrev() {
-        content = techniqueWidget.selectPrev();
+        content = playerWidget.selectPrev();
         asyncUpdateText = new AsyncUpdateText(); // start thread on ok
-        asyncUpdateText.execute(TechniqueWidget.wpm);
+        asyncUpdateText.execute(PlayerWidget.wpm);
     }
 
     public void stop() {
@@ -179,7 +178,7 @@ public class RsvpModuleFragment extends BaseFragment {
                 // Verify that user has not navigated away from the RSVP fragment
                 NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
                 String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
-                if (!currFragment.contains("RsvpModuleFragment") && (!currFragment.contains("ReaderFragment") || !TechniqueWidget.playing)) {
+                if (!currFragment.contains("RsvpModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing)) {
                     cancel(true);
                     return 0;
                 } else {
@@ -199,10 +198,10 @@ public class RsvpModuleFragment extends BaseFragment {
         @Override
         protected void onPostExecute(Integer result) {
             try {
-                if (TechniqueWidget.playing) {
-                    content = techniqueWidget.selectNext();
+                if (PlayerWidget.playing) {
+                    content = playerWidget.selectNext();
                     asyncUpdateText = new AsyncUpdateText();
-                    asyncUpdateText.execute(TechniqueWidget.wpm);
+                    asyncUpdateText.execute(PlayerWidget.wpm);
                 }
                 showQuizPopupDialog();
             } catch (Exception e) {
