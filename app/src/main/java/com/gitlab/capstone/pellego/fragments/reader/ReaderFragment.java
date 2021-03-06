@@ -337,7 +337,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                     clickListener.onItemClick(null, null, holder.getAdapterPosition(), -1);
                 }
             });
-            if(row_index==position){
+            if(selected==position){
                 holder.tv.setCheckMarkDrawable(R.drawable.ic_checked_circle);
             }
             else
