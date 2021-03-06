@@ -118,15 +118,6 @@ public class PlayerWidget {
         return false;
     }
 
-    public static boolean isEOL(Plugin.View.Selection s) {
-        String str = s.getText();
-        for (String e : EOL) {
-            if (str.equals(e))
-                return true;
-        }
-        return false;
-    }
-
     public static boolean stopOnLeft(ZLTextElement e) {
         if (e instanceof ZLTextWord) {
             String str = ((ZLTextWord) e).getString();
@@ -619,20 +610,6 @@ public class PlayerWidget {
         popupWindow.setHeight(height);
     }
 
-    private int getPaddingTop(PopupWindow popupWindow) {
-        Drawable background = popupWindow.getBackground();
-        if (background == null)
-            return 0;
-
-        Rect padding = new Rect();
-        background.getPadding(padding);
-        return padding.top;
-    }
-
-    public void setPlaying(ImageView fab) {
-        playing = !playing;
-        fab.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_outline_pause_24));
-    }
 
     public void togglePlay(ImageView fab) {
         playing = !playing;
@@ -903,13 +880,6 @@ public class PlayerWidget {
         view.setVisibility(View.VISIBLE);
     }
 
-    public void close() {
-
-    }
-
-    public void dismiss() {
-        close();
-    }
 
     public void ensureVisible(Storage.Bookmark bm) { // same page
         int pos = ((ScrollWidget) fb.widget).adapter.findPage(bm.start);
@@ -940,13 +910,6 @@ public class PlayerWidget {
         ((ScrollWidget) fb.widget).smoothScrollBy(0, dy);
     }
 
-    public void scrollVerticallyBy(int dy) {
-        if (dy > 0)
-            gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
-        else
-            gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
-        updateGravity();
-    }
 
     public void updateGravity(int g) {
         gravity = g;
@@ -1029,7 +992,6 @@ public class PlayerWidget {
             Plugin.View.Selection s = fb.pluginview.select(start, end);
             if (s != null) {
                 String str = s.getText();
-//                String test = fb.pluginview.select(0, 20).getText();
                 s.close();
                 return str;
             }
@@ -1041,73 +1003,7 @@ public class PlayerWidget {
         }
     }
 
-    public void selectionOpen(Plugin.View.Selection s) {
-        marks.clear();
-        Storage.Bookmark bm = new Storage.Bookmark(s.getText(), s.getStart(), s.getEnd());
-        bm = expandWord(bm);
-        fragment = new Fragment(bm);
-        marks.add(fragment.fragment);
-        updateGravity();
-        fb.ttsUpdate();
-    }
 
-    public void selectionOpen(int x, int y) { // pager only
-        Storage.Bookmark bm = selectWord(fb.app.BookTextView.myCurrentPage.TextElementMap, x, y);
-        bm = expandWord(bm);
-        marks.clear();
-        if (!isEmpty(bm)) {
-            fragment = new Fragment(bm);
-            marks.add(fragment.fragment);
-        }
-        updateGravity();
-        fb.ttsUpdate();
-    }
-
-    public void selectionOpen(ScrollWidget.ScrollAdapter.PageCursor c, int x, int y) { // scrollwidget only
-        ScrollWidget.ScrollAdapter.PageView v = ((ScrollWidget) fb.widget).findViewPage(c);
-        Storage.Bookmark bm = selectWord(v.text, x, y);
-        bm = expandWord(bm);
-        marks.clear();
-        if (!isEmpty(bm)) {
-            fragment = new Fragment(bm);
-            marks.add(fragment.fragment);
-        }
-        updateGravity();
-        fb.ttsUpdate();
-    }
-
-    public void selectionClose() {
-        marks.clear();
-        fb.ttsUpdate();
-    }
-
-    public void onScrollingFinished(ZLViewEnums.PageIndex pageIndex) {
-        for (Runnable r : onScrollFinished)
-            r.run();
-        onScrollFinished.clear();
-        updateGravity();
-    }
-
-    public Storage.Bookmark selectWord(ZLTextElementAreaVector text, int x, int y) {
-        ZLTextPosition start = null;
-        ZLTextPosition end = null;
-        for (ZLTextElementArea a : text.areas()) {
-            if (a.XStart < x && a.XEnd > x && a.YStart < y && a.YEnd > y) {
-                if (start == null)
-                    start = a;
-                if (end == null)
-                    end = a;
-                if (start.compareTo(a) > 0)
-                    start = a;
-                if (end.compareTo(a) < 0)
-                    end = a;
-            }
-        }
-        if (start == null || end == null)
-            return new Storage.Bookmark();
-        else
-            return new Storage.Bookmark(getText(start, end), start, end);
-    }
 
     public static ZLTextPosition expandLeft(ZLTextPosition start) {
         if (fb.pluginview != null) {
@@ -1182,21 +1078,5 @@ public class PlayerWidget {
         ZLTextPosition start = expandLeft(bm.start);
         ZLTextPosition end = expandRight(bm.end);
         return new Storage.Bookmark(getText(start, end), start, end);
-    }
-
-    public void showError (String text, int delay, final Runnable done) {
-        for (Storage.Bookmark m : marks)
-            m.color = Color.BLUE;
-        fb.ttsUpdate();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for (Storage.Bookmark m : marks)
-                    m.color = Color.BLUE;
-                fb.ttsUpdate();
-                done.run();
-            }
-        }, delay);
-        Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
     }
 }
