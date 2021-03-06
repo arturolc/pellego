@@ -21,6 +21,7 @@
         <item name="android:listSeparatorTextViewStyle">@style/ListSeparatorColor</item>
 
     </style>
+
     <style name="ListSeparatorColor">
         <item name="android:background">@color/white</item>
         <item name="android:listDivider">@color/white</item>
@@ -29,11 +30,24 @@
 
     <style name="AppThemeLight" parent="AppThemeLightLib">
         <item name="side_nav_bar">@drawable/side_nav_bar_light</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
     </style>
 
     <style name="AppThemeLight.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
+    </style>
+
+    <style name="AlertDialogStyle" parent="AlertDialog.AppCompat">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/light_blue</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:popupBackground">@color/white</item>
+        <item name="android:windowBackground">@color/grey_transparent</item>
+        <item name="android:itemBackground">@color/light_blue</item>
     </style>
 
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -44,6 +58,7 @@
     <style name="AppThemeDark.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
     </style>
 
     <style name="AppThemeDark.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
