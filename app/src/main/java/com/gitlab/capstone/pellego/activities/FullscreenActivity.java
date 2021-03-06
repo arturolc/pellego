@@ -75,7 +75,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
         FrameLayout constraintLayout = this.findViewById(R.id.host_fragment_container);
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
-        layoutParams.bottomToTop = R.id.container_bottom;
+//        layoutParams.bottomToTop = R.id.container_bottom;
         constraintLayout.setLayoutParams(layoutParams);
         
         // Attach nav drawer to nav controller
@@ -111,6 +111,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         super.onResume();
     }
 
+    // TODO: update theme to pellego theme
     @Override
     public int getAppTheme() {
         return App.getTheme(this, R.style.AppThemeLight_NoActionBar, R.style.AppThemeDark_NoActionBar);
@@ -138,7 +139,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
     @Override
     public void hideSystemUI() {
         super.hideSystemUI();
-        bottomContent.setVisibility(View.INVISIBLE);
+//        bottomContent.setVisibility(View.INVISIBLE);
         setFitsSystemWindows(this, false);
     }
 

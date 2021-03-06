@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
+import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 import android.view.MenuItem;
 import android.view.Window;
@@ -74,7 +75,7 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
             setHasOptionsMenu(true);
 
             bindPreferenceSummaryToValue(findPreference(App.PREFERENCE_SCREENLOCK));
-//            bindPreferenceSummaryToValue(findPreference(BookApplication.PREFERENCE_THEME));
+//            bindPreferenceSummaryToValue(findPreference(App.PREFERENCE_THEME));
             bindPreferenceSummaryToValue(findPreference(App.PREFERENCE_VIEW_MODE));
 
             StoragePathPreferenceCompat s = (StoragePathPreferenceCompat) findPreference(App.PREFERENCE_STORAGE);
@@ -89,12 +90,12 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
             getActivity().setTheme(R.style.PreferenceStyle);
         }
 
-        @Override
-        public void onResume() {
-            super.onResume();
-            RotatePreferenceCompat r = (RotatePreferenceCompat) findPreference(App.PREFERENCE_ROTATE);
-            r.onResume();
-        }
+//        @Override
+//        public void onResume() {
+//            super.onResume();
+//            RotatePreferenceCompat r = (RotatePreferenceCompat) findPreference(App.PREFERENCE_ROTATE);
+//            r.onResume();
+//        }
 
         @Override
         public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

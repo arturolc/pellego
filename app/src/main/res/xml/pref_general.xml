@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="General">
+        android:title="Reader">
         <com.gitlab.capstone.pellego.widgets.StoragePathPreferenceCompat
             android:defaultValue="My Readings"
             android:key="storage_path"
@@ -15,6 +15,26 @@
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:title="@string/view_mode" />
+
+        <!--        Reader Theme -->
+        <ListPreference
+            android:defaultValue="@string/Theme_Light"
+            android:entries="@array/reader_theme_text"
+            android:entryValues="@array/reader_theme_value"
+            android:key="readerTheme"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="Reader Theme" />
+
+        <!--        App Theme -->
+<!--        <ListPreference-->
+<!--            android:defaultValue="@string/Theme_Light"-->
+<!--            android:entries="@array/theme_text"-->
+<!--            android:entryValues="@array/theme_value"-->
+<!--            android:key="theme"-->
+<!--            android:negativeButtonText="@null"-->
+<!--            android:positiveButtonText="@null"-->
+<!--            android:title="@string/pref_theme_title" />-->
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
@@ -30,11 +50,11 @@
             android:summary=""
             android:title="@string/pref_screenlock_title" />
 
-        <com.github.axet.androidlibrary.preferences.RotatePreferenceCompat
-            android:defaultValue="false"
-            android:key="rotate"
-            android:summary="@string/pref_rotate_summary"
-            android:title="@string/pref_rotate_title" />
+<!--        <com.github.axet.androidlibrary.preferences.RotatePreferenceCompat-->
+<!--            android:defaultValue="false"-->
+<!--            android:key="rotate"-->
+<!--            android:summary="@string/pref_rotate_summary"-->
+<!--            android:title="@string/pref_rotate_title" />-->
 
         <com.github.axet.androidlibrary.preferences.TTSPreferenceCompat
             android:key="tts_pref"
@@ -64,12 +84,4 @@
 
     </PreferenceCategory>
 
-<!--    <ListPreference-->
-<!--        android:defaultValue="@string/Theme_Light"-->
-<!--        android:entries="@array/theme_text"-->
-<!--        android:entryValues="@array/theme_value"-->
-<!--        android:key="theme"-->
-<!--        android:negativeButtonText="@null"-->
-<!--        android:positiveButtonText="@null"-->
-<!--        android:title="@string/pref_theme_title" />-->
 </PreferenceScreen>

@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -18,11 +19,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
 import androidx.core.view.ViewCompat;
@@ -42,6 +39,7 @@ import android.widget.AdapterView;
 import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -80,6 +78,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 
+import static android.view.View.INVISIBLE;
+
 public class ReaderFragment extends Fragment implements MainActivity.SearchListener, SharedPreferences.OnSharedPreferenceChangeListener, FullscreenActivity.FullscreenListener, MainActivity.OnBackPressed {
     public static final String TAG = ReaderFragment.class.getSimpleName();
 
@@ -89,12 +89,15 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public static final int FONT_END = 100;
     public static final int REFLOW_START = 3;
     public static final int REFLOW_END = 15;
+    public static Menu optionsMenu;
+    public Activity activity;
+
 
     Handler handler = new Handler();
     Storage storage;
     Storage.Book book;
     Storage.FBook fbook;
-    FBReaderView fb;
+    public static FBReaderView fb;
     AlertDialog tocdialog;
     boolean showRTL;
     FontsPopup fontsPopup;
@@ -119,19 +122,21 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         return getOverflowMenuButton((ViewGroup) a.findViewById(R.id.toolbar));
     }
 
-    public static View getOverflowMenuButton(ViewGroup p) {
-        for (int i = 0; i < p.getChildCount(); i++) {
-            View v = p.getChildAt(i);
-            if (v.getClass().getCanonicalName().contains("OverflowMenuButton"))
-                return v;
-            if (v instanceof ViewGroup) {
-                v = getOverflowMenuButton((ViewGroup) v);
-                if (v != null)
-                    return v;
-            }
-        }
-        return null;
+    public static void hideOptionsMenu() {
+        MenuItem tocMenu = ReaderFragment.optionsMenu.findItem(R.id.action_toc);
+        MenuItem homeMenu =ReaderFragment.optionsMenu.findItem(R.id.action_home);
+        MenuItem bookmarksMenu = ReaderFragment.optionsMenu.findItem(R.id.action_bm);
+        final MenuItem fontsize = ReaderFragment.optionsMenu.findItem(R.id.action_fontsize);
+        final MenuItem rtl = ReaderFragment.optionsMenu.findItem(R.id.action_rtl);
+        MenuItem tts = ReaderFragment.optionsMenu.findItem(R.id.action_tts);
+        tocMenu.setVisible(false);
+        homeMenu.setVisible(false);
+        bookmarksMenu.setVisible(false);
+        fontsize.setVisible(false);
+        rtl.setVisible(false);
+        tts.setVisible(false);
     }
+
 
     public static class FontsPopup extends PopupWindow {
         FontAdapter fonts;
@@ -332,7 +337,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                     clickListener.onItemClick(null, null, holder.getAdapterPosition(), -1);
                 }
             });
-            if(row_index==position){
+            if(selected==position){
                 holder.tv.setCheckMarkDrawable(R.drawable.ic_checked_circle);
             }
             else
@@ -407,7 +412,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             TOCTree tt = (TOCTree) t.tag;
             ImageView ex = (ImageView) h.itemView.findViewById(R.id.expand);
             if (t.nodes.isEmpty())
-                ex.setVisibility(View.INVISIBLE);
+                ex.setVisibility(INVISIBLE);
             else
                 ex.setVisibility(View.VISIBLE);
             ex.setImageResource(t.expanded ? R.drawable.ic_expand_less_black_24dp : R.drawable.ic_expand_more_black_24dp);
@@ -618,12 +623,35 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         setHasOptionsMenu(true);
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
-//        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_arrow_back, null);
-//        drawable = DrawableCompat.wrap(drawable);
-//        DrawableCompat.setTint(drawable, Color.WHITE);
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(drawable);
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActivity().findViewById(R.id.bottom_nav_view).setVisibility(INVISIBLE);
     }
+
+    public static void showOptionsMenu() {
+        MenuItem tocMenu = ReaderFragment.optionsMenu.findItem(R.id.action_toc);
+        MenuItem bookmarksMenu = ReaderFragment.optionsMenu.findItem(R.id.action_bm);
+        final MenuItem fontsize = ReaderFragment.optionsMenu.findItem(R.id.action_fontsize);
+        MenuItem tts = ReaderFragment.optionsMenu.findItem(R.id.action_tts);
+        tocMenu.setVisible(fb.app.Model != null && fb.app.Model.TOCTree != null && fb.app.Model.TOCTree.hasChildren());
+        bookmarksMenu.setVisible(true);
+        fontsize.setVisible(true);
+        tts.setVisible(true);
+    }
+
+    public static View getOverflowMenuButton(ViewGroup p) {
+        for (int i = 0; i < p.getChildCount(); i++) {
+            View v = p.getChildAt(i);
+            if (v.getClass().getCanonicalName().contains("OverflowMenuButton"))
+                return v;
+            if (v instanceof ViewGroup) {
+                v = getOverflowMenuButton((ViewGroup) v);
+                if (v != null)
+                    return v;
+            }
+        }
+        return null;
+    }
+
+
 
 
 
@@ -636,10 +664,11 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_reader, container, false);
-
         final MainActivity main = (MainActivity) getActivity();
 
         fb = (FBReaderView) v.findViewById(R.id.main_view);
+        fb.openTechnique(getActivity());
+
         fb.listener = new FBReaderView.Listener() {
             @Override
             public void onScrollingFinished(ZLViewEnums.PageIndex index) {
@@ -713,7 +742,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
 
         FrameLayout constraintLayout = getActivity().findViewById(R.id.host_fragment_container);
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
-        layoutParams.bottomToTop = R.id.bottom_nav_view;
+//        layoutParams.bottomToTop = R.id.bottom_nav_view;
         constraintLayout.setLayoutParams(layoutParams);
         return v;
     }
@@ -968,12 +997,84 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         fb.updateTheme();
     }
 
+    private SeekBar addDropDownSeekBar(Context context, Menu menu, String title) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        View contentView = inflater.inflate(R.layout.dropdown_seek_bar, null);
+        SeekBar seekBar = (SeekBar) contentView.findViewById(R.id.drop_down_seek_bar);
+
+        final PopupWindow popupWindow = new PopupWindow(context, null,
+                android.R.attr.actionDropDownStyle);
+        popupWindow.setFocusable(true); // seems to take care of dismissing on click outside
+        popupWindow.setContentView(contentView);
+        setPopupSize(popupWindow);
+
+        final int paddingTop = getPaddingTop(popupWindow);
+
+        MenuItem menuItem = menu.add("");
+        FrameLayout button = createActionButton(context, title);
+        menuItem.setActionView(button);
+        menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // compensate for PopupWindow's internal padding
+                popupWindow.showAsDropDown(v, 0, -paddingTop);
+            }
+        });
+
+        return seekBar;
+    }
+
+    private FrameLayout createActionButton(Context context, String title) {
+        FrameLayout frame = new FrameLayout(context, null, android.R.attr.actionButtonStyle);
+        frame.setLayoutParams(new LinearLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
+        TextView text = new TextView(context, null, android.R.attr.actionMenuTextAppearance);
+        text.setGravity(Gravity.CENTER_VERTICAL);
+        text.setText(title);
+        frame.addView(text);
+        return frame;
+    }
+
+    private void setPopupSize(PopupWindow popupWindow) {
+        View contentView = popupWindow.getContentView();
+
+        int unspecified = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        contentView.measure(unspecified, unspecified);
+
+        int width = contentView.getMeasuredWidth();
+        int height = contentView.getMeasuredHeight();
+
+        Drawable background = popupWindow.getBackground();
+        if (background != null) {
+            Rect rect = new Rect();
+            background.getPadding(rect);
+            width += rect.left + rect.right;
+            height += rect.top + rect.bottom;
+        }
+
+        popupWindow.setWidth(width);
+        popupWindow.setHeight(height);
+    }
+
+    private int getPaddingTop(PopupWindow popupWindow) {
+        Drawable background = popupWindow.getBackground();
+        if (background == null)
+            return 0;
+
+        Rect padding = new Rect();
+        background.getPadding(padding);
+        return padding.top;
+    }
+
     @Override
     public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
+        optionsMenu = menu;
+//        addDropDownSeekBar(getActivity(), menu, "wpm");
         invalidateOptionsMenu = InvalidateOptionsMenuCompat.onCreateOptionsMenu(this, menu, inflater);
-
         MenuItem homeMenu = menu.findItem(R.id.action_home);
         MenuItem tocMenu = menu.findItem(R.id.action_toc);
 //        searchMenu = menu.findItem(R.id.action_search);
@@ -1091,7 +1192,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             fb.configWidget(sharedPreferences);
             fb.showControls();
         }
-        if (key.equals(App.PREFERENCE_THEME)) {
+        if (key.equals(App.READER_THEME)) {
             fb.configColorProfile(sharedPreferences);
         }
     }

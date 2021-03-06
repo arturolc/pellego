@@ -51,7 +51,7 @@ public class TTSPopup {
 
     public Context context;
     public TTS tts;
-    public FBReaderView fb;
+    public static FBReaderView fb;
     Fragment fragment;
     public Storage.Bookmarks marks = new Storage.Bookmarks();
     public View panel;
@@ -171,7 +171,7 @@ public class TTSPopup {
         return bm.start == null || bm.end == null;
     }
 
-    public class Fragment {
+    public static class Fragment {
         public Storage.Bookmark fragment; // paragraph or line
         public String fragmentText;
         public ArrayList<Bookmark> fragmentWords;
@@ -248,7 +248,7 @@ public class TTSPopup {
         }
     }
 
-    public class PluginWordCursor extends ZLTextPosition {
+    public static class PluginWordCursor extends ZLTextPosition {
         int p, e, c; // points to symbol
         Plugin.View.Selection all;
         String allText;
@@ -552,6 +552,7 @@ public class TTSPopup {
             public void run() {
                 fragment.last = System.currentTimeMillis();
                 tts.playSpeech(new TTS.Speak(tts.getTTSLocale(), fragment.fragmentText), speakNext);
+                String txt = fragment.fragmentText;
                 updatePlay();
             }
         };
@@ -668,6 +669,7 @@ public class TTSPopup {
         fb.ttsUpdate();
     }
 
+    // Get the next chunk of text
     public void selectNext() {
         marks.clear();
         if (fragment == null) {
@@ -951,11 +953,12 @@ public class TTSPopup {
         }
     }
 
-    public String getText(ZLTextPosition start, ZLTextPosition end) {
+    public static String getText(ZLTextPosition start, ZLTextPosition end) {
         if (fb.pluginview != null) {
             Plugin.View.Selection s = fb.pluginview.select(start, end);
             if (s != null) {
                 String str = s.getText();
+//                String test = fb.pluginview.select(0, 20).getText();
                 s.close();
                 return str;
             }
@@ -1035,7 +1038,7 @@ public class TTSPopup {
             return new Storage.Bookmark(getText(start, end), start, end);
     }
 
-    public ZLTextPosition expandLeft(ZLTextPosition start) {
+    public static ZLTextPosition expandLeft(ZLTextPosition start) {
         if (fb.pluginview != null) {
             ZLTextPosition last;
             PluginWordCursor k = new PluginWordCursor(start);
@@ -1074,7 +1077,7 @@ public class TTSPopup {
         }
     }
 
-    public ZLTextPosition expandRight(ZLTextPosition end) {
+    public static ZLTextPosition expandRight(ZLTextPosition end) {
         if (fb.pluginview != null) {
             PluginWordCursor k = new PluginWordCursor(end);
             int count = 0;
@@ -1102,7 +1105,7 @@ public class TTSPopup {
         }
     }
 
-    public Storage.Bookmark expandWord(Storage.Bookmark bm) {
+    public static Storage.Bookmark expandWord(Storage.Bookmark bm) {
         if (isEmpty(bm))
             return bm;
         ZLTextPosition start = expandLeft(bm.start);
