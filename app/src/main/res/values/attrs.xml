@@ -14,6 +14,7 @@
     <string-array name="theme_value" translatable="false">
         <item>@string/Theme_Light</item>
         <item>@string/Theme_Dark</item>
+        <item>@string/Theme_Parchment</item>
     </string-array>
 
     <string-array name="viewmode_value" translatable="false">

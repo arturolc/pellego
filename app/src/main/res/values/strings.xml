@@ -2,8 +2,9 @@
 <resources>
 
     <string-array name="theme_text">
-        <item>Theme Light</item>
-        <item>Theme Dark</item>
+        <item>Light</item>
+        <item>Dark</item>
+        <item>Parchment</item>
     </string-array>
 
     <string-array name="viewmode_text">
@@ -14,6 +15,7 @@
     <string name="drawer_close" translatable="false">Loading Book</string>
 
     <string name="loading_book">Loading Book</string>
+    <string name="Theme_Parchment" translatable="false">Parchment</string>
     <string name="open_file">Open File</string>
     <string name="catalog_home">Home</string>
     <string name="book_toc">TOC</string>

@@ -11,6 +11,7 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 public class App extends MainApplication {
     public static String PREFERENCE_THEME = "theme";
+    public static String READER_THEME= "readerTheme";
     public static String PREFERENCE_FONTFAMILY_FBREADER = "fontfamily_fb";
     public static String PREFERENCE_FONTSIZE_FBREADER = "fontsize_fb";
     public static String PREFERENCE_FONTSIZE_REFLOW = "fontsize_reflow";

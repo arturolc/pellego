@@ -1192,7 +1192,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             fb.configWidget(sharedPreferences);
             fb.showControls();
         }
-        if (key.equals(App.PREFERENCE_THEME)) {
+        if (key.equals(App.READER_THEME)) {
             fb.configColorProfile(sharedPreferences);
         }
     }
