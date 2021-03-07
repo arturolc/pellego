@@ -12,7 +12,8 @@
         android:id="@+id/toolbar"
         app:titleTextColor="?colorPrimary"
         android:background="?colorPrimary"
-        android:elevation="8dp"
+        app:elevation="0dp"
+        style="@style/ToolbarTheme"
         />
 
     <include layout="@layout/content_main" />
