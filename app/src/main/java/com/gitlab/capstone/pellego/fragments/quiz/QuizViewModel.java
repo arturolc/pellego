@@ -1,5 +1,7 @@
 package com.gitlab.capstone.pellego.fragments.quiz;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -113,17 +115,24 @@ public class QuizViewModel extends ViewModel {
         questions = new ArrayList<>();
     }
 
+
+
     public void populateQuestionBank() {
         this.questions = new ArrayList<>();
         // TODO: query DB for quiz questions based on learning module and difficulty
         switch(this.difficulty) {
 //            case "Beginner Submodule":
             default:
-                this.questions.add(new QuizQuestion(getResourceString(R.string.rsvp_beginner_quiz_question_one), new ArrayList<String>(
-                        Arrays.asList(getResourceString(R.string.rsvp_beginner_quiz_answer_one_a),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_one_b),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_one_c),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_one_d))), 2));
+                String question = "question_rsvp_beginner_";
+                String answers = "answers_rsvp_beginner_";
+                int q0 = App.getStringIdentifier(question + '0');
+                int answersId = App.getArrayIdentifier(answers + '0');
+                String[] answersArray = App.getAppResources().getStringArray(answersId);
+                this.questions.add(new QuizQuestion(getResourceString(q0), new ArrayList<String>(
+                        Arrays.asList(answersArray[0],
+                                answersArray[1],
+                                answersArray[2],
+                                answersArray[3])), Integer.parseInt(answersArray[4])));
                 this.questions.add(new QuizQuestion(getResourceString(R.string.rsvp_beginner_quiz_question_two), new ArrayList<String>(
                         Arrays.asList(getResourceString(R.string.rsvp_beginner_quiz_answer_two_a),
                                 getResourceString(R.string.rsvp_beginner_quiz_answer_two_b),
@@ -153,6 +162,7 @@ public class QuizViewModel extends ViewModel {
     private String getResourceString(int resString) {
         return App.getAppResources().getString(resString);
     }
+
 
     private class QuizQuestion {
         public String question;
