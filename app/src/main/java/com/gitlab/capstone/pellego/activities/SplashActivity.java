@@ -84,8 +84,8 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // Errors with amplify
-                if (i == null) i = new Intent(SplashActivity.this,
-                        MainActivity.class);
+//                if (i == null) i = new Intent(SplashActivity.this,
+//                        MainActivity.class);
                 startActivity(i);
                 finish();
             }
