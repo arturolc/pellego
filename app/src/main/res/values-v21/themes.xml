@@ -14,10 +14,11 @@
         <item name="colorSecondaryVariant">@color/light_blue</item>
         <item name="itemTextColor">@color/bottom_nav_color_light</item>
         <item name="itemIconTint">@color/bottom_nav_color_light</item>
+        <item name="alertDialogTheme">@style/DialogThemeLight</item>
 
         <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/light_blue</item>
-        <item name="popupMenuBackground">@color/light_blue</item>
+<!--        <item name="popupMenuBackground">@color/light_blue</item>-->
         <item name="android:itemTextAppearance">@style/LightActionBar.MenuTextStyle</item>
 
         <!-- Status bar color. -->
@@ -40,7 +41,20 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <!--    This is the theme that's actually used -->
+    <style name="DialogThemeLight" parent="android:Theme.Material.Dialog.Alert">
+        <item name="android:colorBackground">@color/primary_white</item>
+        <item name="android:colorAccent">@color/light_blue</item>
+        <item name="android:colorPrimary">@color/light_blue</item>
+        <item name="android:textColorSecondary">@color/dark_grey</item>
+        <item name="textColorAlertDialogListItem">@color/gray_card</item>
+        <item name="color">@color/light_blue</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+
     <style name="Theme.Pellego_Dark" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/dark_grey</item>
@@ -56,6 +70,7 @@
         <item name="android:itemTextAppearance">@style/DarkActionBar.MenuTextStyle</item>
         <item name="itemTextColor">@color/bottom_nav_color_dark</item>
         <item name="itemIconTint">@color/bottom_nav_color_dark</item>
+        <item name="alertDialogTheme">@style/DialogThemeDark</item>
 
         <!-- Styles -->
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
@@ -73,6 +88,18 @@
 
     <style name="DarkActionBar.MenuTextStyle">
         <item name="android:textColor">@color/primary_white</item>
+    </style>
+
+    <style name="DialogThemeDark" parent="android:Theme.Material.Dialog.Alert">
+        <item name="android:colorBackground">@color/gray_hover</item>
+        <item name="android:colorAccent">@color/light_blue</item>
+        <item name="android:colorPrimary">@color/light_blue</item>
+        <item name="android:textColorSecondary">@color/secondary_white</item>
+        <item name="textColorAlertDialogListItem">@color/primary_white</item>
+        <item name="color">@color/light_blue</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
 
