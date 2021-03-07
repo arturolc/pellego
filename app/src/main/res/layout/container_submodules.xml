@@ -24,6 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:choiceMode="singleChoice"
-        android:background="#ffffffff" />
+        android:background="?colorAccent" />
 
 </com.google.android.material.navigation.NavigationView>
