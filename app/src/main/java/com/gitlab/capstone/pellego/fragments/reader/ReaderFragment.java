@@ -997,35 +997,6 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         fb.updateTheme();
     }
 
-    private SeekBar addDropDownSeekBar(Context context, Menu menu, String title) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        View contentView = inflater.inflate(R.layout.dropdown_seek_bar, null);
-        SeekBar seekBar = (SeekBar) contentView.findViewById(R.id.drop_down_seek_bar);
-
-        final PopupWindow popupWindow = new PopupWindow(context, null,
-                android.R.attr.actionDropDownStyle);
-        popupWindow.setFocusable(true); // seems to take care of dismissing on click outside
-        popupWindow.setContentView(contentView);
-        setPopupSize(popupWindow);
-
-        final int paddingTop = getPaddingTop(popupWindow);
-
-        MenuItem menuItem = menu.add("");
-        FrameLayout button = createActionButton(context, title);
-        menuItem.setActionView(button);
-        menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // compensate for PopupWindow's internal padding
-                popupWindow.showAsDropDown(v, 0, -paddingTop);
-            }
-        });
-
-        return seekBar;
-    }
 
     private FrameLayout createActionButton(Context context, String title) {
         FrameLayout frame = new FrameLayout(context, null, android.R.attr.actionButtonStyle);
@@ -1077,6 +1048,8 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         invalidateOptionsMenu = InvalidateOptionsMenuCompat.onCreateOptionsMenu(this, menu, inflater);
         MenuItem homeMenu = menu.findItem(R.id.action_home);
         MenuItem tocMenu = menu.findItem(R.id.action_toc);
+        MenuItem settings = menu.findItem(R.id.action_settings);
+        settings.setVisible(false);
 //        searchMenu = menu.findItem(R.id.action_search);
 //        MenuItem reflow = menu.findItem(R.id.action_reflow);
 //        MenuItem debug = menu.findItem(R.id.action_debug);
