@@ -12,15 +12,6 @@
     </style>
 
 
-
-    <style name="PreferenceStyle">
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/light_grey</item>
-        <item name="android:colorAccent" tools:targetApi="lollipop">@color/dark_blue</item>
-        <item name="android:listSeparatorTextViewStyle">@style/ListSeparatorColor</item>
-
-    </style>
-
     <style name="ListSeparatorColor">
         <item name="android:background">@color/white</item>
         <item name="android:listDivider">@color/white</item>

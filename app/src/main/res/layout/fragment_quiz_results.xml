@@ -39,7 +39,7 @@
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
             android:textAlignment="center"
-            android:textColor="@color/light_blue"
+            android:textColor="?colorPrimary"
             android:textSize="50dp"></TextView>
 
         <TextView

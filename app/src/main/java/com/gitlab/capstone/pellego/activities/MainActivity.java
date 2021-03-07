@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -219,7 +220,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
 
         RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
         Window window = this.getWindow();
-        window.setStatusBarColor(ContextCompat.getColor(this,R.color.light_blue));
+        TypedValue typedValue = new TypedValue();
 
 //        DrawerLayout drawerLayout = findViewById(R.id.home_layout);
 //        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);

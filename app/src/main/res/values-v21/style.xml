@@ -2,9 +2,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="PreferenceStyle">
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/light_grey</item>
-        <item name="android:colorAccent">@color/dark_blue</item>
+        <item name="android:textColorPrimary">@color/primary_white</item>
+        <item name="android:textColorSecondary">@color/secondary_white</item>
+        <item name="android:colorAccent">@color/gray_hover</item>
         <item name="android:listSeparatorTextViewStyle">@style/ListSeparatorColor</item>
     </style>
     <style name="AppThemeLight.NoActionBar">
