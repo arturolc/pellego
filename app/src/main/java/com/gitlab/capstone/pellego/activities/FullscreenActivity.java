@@ -60,7 +60,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         bottomContent = findViewById(R.id.container_bottom);
         toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.ic_action_button_overflow));
 
-        setTheme(R.style.Theme_Pellego);
+
         // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
         drawer = findViewById(R.id.home_layout);
