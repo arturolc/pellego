@@ -6,6 +6,7 @@
             android:key="storage_path"
             android:summary="@string/pref_storagepath_summary"
             android:title="@string/pref_storagepath_title" />
+
         <ListPreference
             android:defaultValue="PAGING"
             android:entries="@array/viewmode_text"
@@ -17,7 +18,7 @@
 
         <!--        Reader Theme -->
         <ListPreference
-            android:defaultValue="@string/Theme_Light"
+            android:defaultValue="@string/Theme_Parchment"
             android:entries="@array/reader_theme_text"
             android:entryValues="@array/reader_theme_value"
             android:key="readerTheme"

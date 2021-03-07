@@ -75,6 +75,7 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
 
             bindPreferenceSummaryToValue(findPreference(App.PREFERENCE_SCREENLOCK));
             bindPreferenceSummaryToValue(findPreference(App.PREFERENCE_THEME));
+            bindPreferenceSummaryToValue(findPreference(App.READER_THEME));
             bindPreferenceSummaryToValue(findPreference(App.PREFERENCE_VIEW_MODE));
 
             StoragePathPreferenceCompat s = (StoragePathPreferenceCompat) findPreference(App.PREFERENCE_STORAGE);
