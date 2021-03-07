@@ -21,9 +21,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="0dp"
             android:fontFamily="@font/bulletto_family"
+            android:textColor="@color/primary_white"
             android:layout_marginEnd="8dp"
             android:gravity="center_horizontal"
-            android:textColor="@color/white"
             android:textSize="35dp" />
 
         <TextView
@@ -31,7 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
-            android:textColor="@color/black"
             android:layout_marginTop="40dp"
             android:paddingBottom="15dp"
             android:paddingLeft="10dp"
@@ -39,8 +38,7 @@
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/white">
+            android:background="@drawable/rounded_background">
         </TextView>
 
         <!-- Here is the inserted layout -->

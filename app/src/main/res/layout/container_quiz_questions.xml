@@ -19,7 +19,6 @@
         android:id="@+id/nav_question_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:choiceMode="singleChoice"
-        android:background="#ffffffff" />
+        android:choiceMode="singleChoice" />
 
 </com.google.android.material.navigation.NavigationView>
