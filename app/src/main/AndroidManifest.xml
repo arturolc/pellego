@@ -253,10 +253,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.gitlab.capstone.pellego.activities.SettingsActivity"
-            android:label="@string/menu_settings"
-            android:theme="@style/Theme.Pellego" />
-
+            android:name="com.gitlab.capstone.pellego.activities.SettingsActivity" />
+            android:label="@string/menu_settings" />
         <provider
             android:name="com.github.axet.androidlibrary.services.FileProvider"
             android:authorities="com.github.axet.bookreader.files"

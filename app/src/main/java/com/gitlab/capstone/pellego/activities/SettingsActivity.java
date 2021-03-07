@@ -51,9 +51,7 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
         storage = new Storage(this);
         setContentView(R.layout.fragment_settings);
         RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
-//        setupActionBar();
-//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
-//                .getColor(R.color.light_blue)));
+        setupActionBar();
         if (savedInstanceState == null && getIntent().getParcelableExtra(SAVE_INSTANCE_STATE) == null)
             showSettingsFragment(new GeneralPreferenceFragment());
     }
