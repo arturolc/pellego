@@ -13,7 +13,6 @@
         app:titleTextColor="?colorPrimary"
         android:background="?colorPrimary"
         app:elevation="0dp"
-        style="@style/ToolbarTheme"
         />
 
     <include layout="@layout/content_main" />

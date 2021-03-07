@@ -36,7 +36,7 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
 
     @Override
     public int getAppTheme() {
-        return App.getTheme(this, R.style.Theme_Pellego, R.style.Theme_Pellego_Dark);
+        return App.getTheme(this, R.style.PreferenceStyle, R.style.Theme_Pellego_Dark);
     }
 
     @Override
