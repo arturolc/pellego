@@ -19,12 +19,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Joanna Lowry"
+        android:textColor="@color/white"
         android:paddingTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
     <TextView
         android:layout_width="wrap_content"
         android:paddingTop="3dp"
         android:layout_gravity="center"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:text="1.4k Words Read"/>
 </LinearLayout>

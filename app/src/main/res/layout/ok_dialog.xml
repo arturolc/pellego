@@ -9,14 +9,12 @@
         android:id="@+id/text_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
         android:layout_marginTop="40dp"
         android:paddingBottom="25dp"
         android:gravity="center"
         android:layout_gravity="center"
         android:textSize="20dp"
-        android:background="@drawable/rounded_background"
-        android:backgroundTint="@color/white_transparent">
+        android:background="@drawable/rounded_background">
     </TextView>
 
     <Button

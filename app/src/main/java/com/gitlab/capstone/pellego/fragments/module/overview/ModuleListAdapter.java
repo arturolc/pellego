@@ -60,7 +60,6 @@ public class ModuleListAdapter extends BaseAdapter {
         TextView titleView = (TextView) view.findViewById(R.id.title);
         TextView subtitleView = (TextView) view.findViewById(R.id.subTitle);
         ImageView iconView = (ImageView) view.findViewById(R.id.icon);
-        subtitleView.setTextColor(R.color.black);
 
         titleView.setText( mNavItems.get(position).getTitle() );
         subtitleView.setText( mNavItems.get(position).getSubtitle() );

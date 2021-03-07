@@ -563,6 +563,7 @@ public class PlayerWidget {
 
         final PopupWindow popupWindow = new PopupWindow(context, null,
                 android.R.attr.actionDropDownStyle);
+        popupWindow.setBackgroundDrawable(activity.getDrawable(R.drawable.rounded_background));
         popupWindow.setFocusable(true); // seems to take care of dismissing on click outside
         popupWindow.setContentView(contentView);
         setPopupSize(popupWindow);
@@ -571,7 +572,7 @@ public class PlayerWidget {
             @Override
             public void onClick(View v) {
                 // compensate for PopupWindow's internal padding
-                popupWindow.showAsDropDown(v, 0, -95);
+                popupWindow.showAsDropDown(v, 0, -120);
             }
         });
 
