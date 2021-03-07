@@ -1,24 +1,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Pellego" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/light_blue</item>
-        <item name="colorPrimaryVariant">@color/light_blue</item>
-        <item name="colorOnPrimary">@color/light_blue</item>
-        <item name="colorPrimaryDark">@color/light_blue</item>
-        <!-- Secondary brand color. -->
-        <item name="colorOnSecondary">@color/light_blue</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-        <item name="android:textColorSecondary">@color/white</item>
-        <!-- Styles -->
-        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowIsFloating">false</item>
+<!--    <style name="Theme.Pellego" parent="Theme.AppCompat.Light.DarkActionBar">-->
+<!--        &lt;!&ndash; Primary brand color. &ndash;&gt;-->
+<!--        <item name="colorPrimary">@color/light_blue</item>-->
+<!--        <item name="colorPrimaryVariant">@color/light_blue</item>-->
+<!--        <item name="colorOnPrimary">@color/light_blue</item>-->
+<!--        <item name="colorPrimaryDark">@color/light_blue</item>-->
+<!--        &lt;!&ndash; Secondary brand color. &ndash;&gt;-->
+<!--        <item name="colorOnSecondary">@color/light_blue</item>-->
+<!--        &lt;!&ndash; Status bar color. &ndash;&gt;-->
+<!--        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="android:textColorSecondary">@color/white</item>-->
+<!--        &lt;!&ndash; Styles &ndash;&gt;-->
+<!--        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>-->
+<!--        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>-->
+<!--        <item name="android:windowIsTranslucent">false</item>-->
+<!--        <item name="android:windowIsFloating">false</item>-->
 
-    </style>
+<!--    </style>-->
 
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
