@@ -183,7 +183,7 @@ public class RsvpModuleFragment extends BaseFragment {
                     return 0;
                 } else {
                     rsvp_text.setText(word);
-                    content = content.replaceFirst(word, "");
+                    if (PlayerWidget.playing) content = content.replaceFirst(word, "");
                 }
                 try {
                     Thread.sleep(delay);

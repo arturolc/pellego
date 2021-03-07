@@ -114,7 +114,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
     // TODO: update theme to pellego theme
     @Override
     public int getAppTheme() {
-        return App.getTheme(this, R.style.AppThemeLight_NoActionBar, R.style.AppThemeDark_NoActionBar);
+        return App.getTheme(this, R.style.Theme_Pellego, R.style.Theme_Pellego_Dark);
     }
 
     @Override
