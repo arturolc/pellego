@@ -10,10 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:id="@+id/toolbar"
-        app:titleTextColor="@color/light_blue"
+        app:titleTextColor="?colorPrimary"
+        android:background="?colorPrimary"
         android:elevation="8dp"
-        android:theme="@style/ToolbarThemeLight"
-        app:popupTheme="@style/ToolbarThemeLight"
         />
 
     <include layout="@layout/content_main" />
