@@ -623,7 +623,6 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         setHasOptionsMenu(true);
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
-        getActivity().findViewById(R.id.bottom_nav_view).setVisibility(INVISIBLE);
     }
 
     public static void showOptionsMenu() {
@@ -665,6 +664,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_reader, container, false);
         final MainActivity main = (MainActivity) getActivity();
+        main.findViewById(R.id.bottom_nav_view).setVisibility(INVISIBLE);
 
         fb = (FBReaderView) v.findViewById(R.id.main_view);
         fb.openTechnique(getActivity());

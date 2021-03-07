@@ -61,6 +61,7 @@ public class LearnFragment extends BaseFragment {
     ProgressBar spinner;
     NavigationView modulesView;
     LibraryFragment.FragmentHolder holder;
+    
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

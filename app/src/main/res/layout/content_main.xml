@@ -12,7 +12,7 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/container_bottom"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="100dp"
@@ -75,7 +76,7 @@
                 android:layout_gravity="center_vertical"
                 android:id="@+id/button_technique"
                 android:scrollHorizontally="true"
-                android:backgroundTint="@color/light_blue"
+                android:backgroundTint="?colorSecondary"
                 android:drawableTint="@color/white"
                 android:text="Technique"
                 android:textColor="@color/white"
@@ -93,10 +94,9 @@
             android:id="@+id/bottom_nav_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:background="@color/white"
-            app:itemIconTint="@color/light_blue"
-            app:itemTextColor="@color/light_blue"
+            android:background="?colorAccent"
+            app:itemIconTint="?colorPrimary"
+            app:itemTextColor="?colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

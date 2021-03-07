@@ -11,7 +11,7 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="92dp"
         tools:layout_editor_absoluteY="146dp"
-        android:background="@color/light_blue">
+        android:background="?colorPrimary">
         <TextView
             android:id="@+id/text_clump_reading"
             android:layout_width="match_parent"
