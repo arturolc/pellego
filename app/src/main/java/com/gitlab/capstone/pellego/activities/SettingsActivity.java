@@ -54,8 +54,6 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
 //        setupActionBar();
 //        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
 //                .getColor(R.color.light_blue)));
-        Window window = this.getWindow();
-        window.setStatusBarColor(ContextCompat.getColor(this,R.color.light_blue));
         if (savedInstanceState == null && getIntent().getParcelableExtra(SAVE_INSTANCE_STATE) == null)
             showSettingsFragment(new GeneralPreferenceFragment());
     }
