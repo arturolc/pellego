@@ -76,17 +76,17 @@ public class ModuleOverviewFragment extends BaseFragment {
                         navController.navigate(moduleViewModel.getIntro_id());
                         break;
                     case 1:
-                        args.putString("difficulty", "Beginner Submodule");
+                        args.putString("difficulty", "beginner");
                         args.putString("wpm", "120");
                         navController.navigate(moduleViewModel.getModule_id(), args);
                         break;
                     case 2:
-                        args.putString("difficulty", "Intermediate Submodule");
+                        args.putString("difficulty", "intermediate");
                         args.putString("wpm", "250");
                         navController.navigate(moduleViewModel.getModule_id(), args);
                         break;
                     case 3:
-                        args.putString("difficulty", "Advanced Submodule");
+                        args.putString("difficulty", "advanced");
                         args.putString("wpm", "500");
                         navController.navigate(moduleViewModel.getModule_id(), args);
                         break;

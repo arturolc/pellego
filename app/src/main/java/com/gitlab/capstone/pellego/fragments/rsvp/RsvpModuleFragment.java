@@ -55,13 +55,13 @@ public class RsvpModuleFragment extends BaseFragment {
         difficulty = getArguments().getString("difficulty");
         // Set the displayed text to the appropriate level
         switch(difficulty) {
-            case "Beginner Submodule":
+            case "beginner":
                 content = getString(R.string.content_rsvp_beginner);
                 break;
-            case "Intermediate Submodule":
+            case "intermediate":
                 content = getString(R.string.content_rsvp_intermediate);
                 break;
-            case "Advanced Submodule":
+            case "advanced":
                 content = getString(R.string.content_rsvp_advanced);
                 break;
         }
