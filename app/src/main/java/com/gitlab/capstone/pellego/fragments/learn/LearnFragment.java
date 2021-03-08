@@ -1,5 +1,6 @@
 package com.gitlab.capstone.pellego.fragments.learn;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -111,6 +112,7 @@ public class LearnFragment extends BaseFragment {
                 // TODO: navigate to fragment based on click id
                 switch(position) {
                     case 0: // rsvp
+                        moduleViewModel.setTechnique("rsvp");
                         moduleViewModel.setViewModelVars(getResources().getString(R.string.title_rsvp), getResources().getString(R.string.description_rsvp), R.id.nav_rsvp_intro, R.array.intro_rsvp_content, R.array.intro_rsvp_header, R.id.nav_rsvp_module);
                         navController.navigate(R.id.nav_module_overview);
                         break;
@@ -118,6 +120,7 @@ public class LearnFragment extends BaseFragment {
                     case 2:
                         break;
                     case 3: // metaguiding
+                        moduleViewModel.setTechnique("metaguiding");
                         moduleViewModel.setViewModelVars(getResources().getString(R.string.title_meta_guiding), getResources().getString(R.string.description_metaguiding), R.id.nav_metaguiding_intro, R.array.intro_metaguiding_content, R.array.intro_metaguiding_header, R.id.nav_metaguiding_module);
                         navController.navigate(R.id.nav_module_overview);
                         break;
@@ -129,7 +132,6 @@ public class LearnFragment extends BaseFragment {
         });
         return root;
     }
-
 
     /**
      * Interface to to update UI after response from server is received
@@ -187,14 +189,21 @@ public class LearnFragment extends BaseFragment {
      */
     private void useDefaultData() {
         //TODO use shared preferences to populate list using data stored locally on the device
-        mNavItems.add(new ModuleListItemModel("Rapid Serial Visual Presentation", "1 out of 4 submodules completed", R.drawable.ic_rsvp));
-        mNavItems.add(new ModuleListItemModel("Clump Reading", "0 out of 4 submodules completed", R.drawable.ic_clump_reading));
-        mNavItems.add(new ModuleListItemModel("Reducing Subvocalization", "3 out of 4 submodules completed", R.drawable.ic_reducing_subvocalization));
-        mNavItems.add(new ModuleListItemModel("Meta Guiding", "2 out of 4 submodules completed", R.drawable.ic_meta_guiding));
-        mNavItems.add(new ModuleListItemModel("Pre-Reading", "1 out of 4 submodules completed", R.drawable.ic_pre_reading));
+        mNavItems.add(new ModuleListItemModel("Rapid Serial Visual Presentation", retrieveModuleProgress("rsvp"), R.drawable.ic_rsvp));
+        mNavItems.add(new ModuleListItemModel("Clump Reading", retrieveModuleProgress("clumpreading"), R.drawable.ic_clump_reading));
+        mNavItems.add(new ModuleListItemModel("Reducing Subvocalization", retrieveModuleProgress("reducingsubvocalization"), R.drawable.ic_reducing_subvocalization));
+        mNavItems.add(new ModuleListItemModel("Meta Guiding", retrieveModuleProgress("metaguiding"), R.drawable.ic_meta_guiding));
+        mNavItems.add(new ModuleListItemModel("Pre-Reading", retrieveModuleProgress("prereading"), R.drawable.ic_pre_reading));
         // Populate the Navigation Drawer with options
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
+    }
+
+    private String retrieveModuleProgress(String technique) {
+        // TODO: query DB for module progress and default to local data if connection can't be established
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String key = technique + "_submodule_progress";
+        return sharedPref.getInt(key, 0) + " out of 4 submodules completed";
     }
 
 

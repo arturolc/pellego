@@ -54,6 +54,7 @@ public class RsvpModuleFragment extends BaseFragment {
         wpm = Integer.parseInt(getArguments().getString("wpm"));
         difficulty = getArguments().getString("difficulty");
         // Set the displayed text to the appropriate level
+        // TODO: Query the DB for content
         switch(difficulty) {
             case "beginner":
                 content = getString(R.string.content_rsvp_beginner);

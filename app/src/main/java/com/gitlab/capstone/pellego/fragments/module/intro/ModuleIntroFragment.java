@@ -1,5 +1,7 @@
 package com.gitlab.capstone.pellego.fragments.module.intro;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,7 @@ public class ModuleIntroFragment extends BaseFragment {
     DotsIndicator dotsIndicator;
     Button btn_register;
     private NavController navController;
+    private SharedPreferences sharedPref;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +67,13 @@ public class ModuleIntroFragment extends BaseFragment {
                         public void onClick(View view){
                             NavController navController = Navigation.findNavController(getActivity(),
                                     R.id.nav_host_fragment);
+                            // TODO: update DB that intro was completed
+                            // Store results in shared preference
+                            sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putBoolean(moduleViewModel.getTechnique() + "_intro_complete", true);
+                            editor.apply();
+                            updateModuleProgress();
                             navController.navigateUp();
                             return;
                         }
@@ -76,5 +86,14 @@ public class ModuleIntroFragment extends BaseFragment {
         viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
 
         return root;
+    }
+
+    public void updateModuleProgress() {
+        String key = moduleViewModel.getTechnique() + "_submodule_progress";
+        int count = sharedPref.getInt(key, 0);
+        // Store results in shared preference
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(key, ++count);
+        editor.apply();
     }
 }

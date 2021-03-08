@@ -76,7 +76,7 @@ public class BookmarksDialog extends AlertDialog.Builder { // bookmarks list dia
                 ex.setVisibility(View.INVISIBLE);
             else
                 ex.setVisibility(View.VISIBLE);
-            ex.setImageResource(t.expanded ? R.drawable.ic_expand_less_black_24dp : R.drawable.ic_expand_more_black_24dp);
+            ex.setImageResource(t.expanded ? R.drawable.ic_expand_less_black_24dp : R.drawable.ic_expand_more_blue_24dp);
             h.itemView.setPadding(20 * t.level, 0, 0, 0);
             if (t.selected) {
                 h.text.setTypeface(null, Typeface.BOLD);
@@ -218,7 +218,7 @@ public class BookmarksDialog extends AlertDialog.Builder { // bookmarks list dia
                     ex.setVisibility(View.INVISIBLE);
                 else
                     ex.setVisibility(View.VISIBLE);
-                ex.setImageResource(t.expanded ? R.drawable.ic_expand_less_black_24dp : R.drawable.ic_expand_more_black_24dp);
+                ex.setImageResource(t.expanded ? R.drawable.ic_expand_less_black_24dp : R.drawable.ic_expand_more_blue_24dp);
                 h.itemView.setPadding(20 * t.level, 0, 0, 0);
                 if (t.selected) {
                     h.text.setTypeface(null, Typeface.BOLD);
