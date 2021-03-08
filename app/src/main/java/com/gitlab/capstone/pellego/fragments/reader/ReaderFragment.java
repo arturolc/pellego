@@ -415,10 +415,11 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                 ex.setVisibility(INVISIBLE);
             else
                 ex.setVisibility(View.VISIBLE);
-            ex.setImageResource(t.expanded ? R.drawable.ic_expand_less_black_24dp : R.drawable.ic_expand_more_black_24dp);
+            ex.setImageResource(t.expanded ? R.drawable.ic_expand_less_black_24dp : R.drawable.ic_expand_more_blue_24dp);
             h.itemView.setPadding(20 * t.level, 0, 0, 0);
             if (t.selected) {
                 h.textView.setTypeface(null, Typeface.BOLD);
+                h.textView.setTextColor(Color.parseColor("#609DE5"));
                 h.i.setColorFilter(null);
             } else {
                 h.i.setColorFilter(Color.GRAY);

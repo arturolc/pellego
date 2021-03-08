@@ -1,6 +1,7 @@
 package com.gitlab.capstone.pellego.fragments.quiz;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -73,12 +74,22 @@ public class QuizViewModel extends ViewModel {
     public String getFinalMessage() {
         if (score == questions.size()) {
             return getResourceString(R.string.quiz_perfect_score);
-        } else if ((float)score / questions.size() > 0.6) {
+        } else if ((float)score / questions.size() >= 0.75) {
             return getResourceString(R.string.quiz_mediocre_score);
         } else {
             return getResourceString(R.string.quiz_bad_score);
         }
     }
+
+    public boolean quizPassed() {
+        if ((float)score / questions.size() >= 0.75) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     public ArrayList<QuizQuestionModel> getNextAnswers() {
         ArrayList<QuizQuestionModel> mNavItems = new ArrayList<>();
@@ -134,6 +145,10 @@ public class QuizViewModel extends ViewModel {
                             answersArray[3])), Integer.parseInt(answersArray[4])));
         }
 
+    }
+
+    public String generateSubmoduleCompleteKey() {
+        return getModule() +"_" + getDifficulty() + "_complete";
     }
 
     private String getResourceString(int resString) {
