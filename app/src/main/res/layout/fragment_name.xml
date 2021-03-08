@@ -43,6 +43,7 @@
             android:clickable="false"
             android:focusable="true"
             android:text="next"
+            android:backgroundTint="@color/light_blue"
             android:textColor="#FFFFFF"
             app:iconTint="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"

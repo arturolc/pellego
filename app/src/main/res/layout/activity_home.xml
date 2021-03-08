@@ -22,7 +22,7 @@
         android:background="@drawable/nav_side_drawer_background"
         app:itemTextColor="@color/white"
         android:id="@+id/side_nav_view"
-        app:itemBackground="?colorPrimary"
+        app:itemBackground="?colorPrimaryDark"
         android:fitsSystemWindows="false"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu" />
