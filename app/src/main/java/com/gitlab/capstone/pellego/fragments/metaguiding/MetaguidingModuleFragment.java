@@ -56,13 +56,13 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         difficulty = getArguments().getString("difficulty");
         // Set the displayed text to the appropriate level
         switch(difficulty) {
-            case "Beginner Submodule":
+            case "beginner":
                 getArguments().putInt("string_id", R.string.content_metaguiding_beginner);
                 break;
-            case "Intermediate Submodule":
+            case "intermediate":
                 getArguments().putInt("string_id", R.string.content_metaguiding_intermediate);
                 break;
-            case "Advanced Submodule":
+            case "advanced":
                 getArguments().putInt("string_id", R.string.content_metaguiding_advanced);
 
                 break;
