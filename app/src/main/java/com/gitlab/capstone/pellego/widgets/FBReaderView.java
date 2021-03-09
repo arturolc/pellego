@@ -486,8 +486,6 @@ public class FBReaderView extends RelativeLayout {
         @Override
         public void setWindowTitle(String title) {
             FBReaderView.this.title = title;
-//            Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-//            toolbar.setNavigationIcon(null);
         }
 
         @Override

@@ -634,7 +634,8 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         final MenuItem fontsize = ReaderFragment.optionsMenu.findItem(R.id.action_fontsize);
         MenuItem tts = ReaderFragment.optionsMenu.findItem(R.id.action_tts);
         tocMenu.setVisible(fb.app.Model != null && fb.app.Model.TOCTree != null && fb.app.Model.TOCTree.hasChildren());
-        bookmarksMenu.setVisible(true);
+        if (fb.book != null) // call before onCreateView
+            bookmarksMenu.setVisible(fb.book.info.bookmarks != null && fb.book.info.bookmarks.size() > 0);
         fontsize.setVisible(true);
         tts.setVisible(true);
     }

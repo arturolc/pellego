@@ -145,11 +145,8 @@ public final class NavigationPopup extends ZLApplication.PopupPanel {
 
         final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
         btnOk.setText(buttonResource.getResource("ok").getValue());
-//        btnOk.setTextColor(Color.BLACK);
         btnOk.setBackgroundColor(Color.rgb(96, 157, 229));
         btnCancel.setText(buttonResource.getResource("cancel").getValue());
-//        btnCancel.setTextColor(Color.BLACK);
-//        btnCancel.setBackgroundColor(Color.rgb(96, 157, 229));
     }
 
     private void setupNavigation() {

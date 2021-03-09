@@ -222,14 +222,6 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         Window window = this.getWindow();
         TypedValue typedValue = new TypedValue();
 
-//        DrawerLayout drawerLayout = findViewById(R.id.home_layout);
-//        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
-//        actionBarDrawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
-//        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_menu, null);
-//        drawable = DrawableCompat.wrap(drawable);
-//        DrawableCompat.setTint(drawable, Color.WHITE);
-//        getSupportActionBar().setHomeAsUpIndicator(drawable);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @SuppressLint("RestrictedApi")
