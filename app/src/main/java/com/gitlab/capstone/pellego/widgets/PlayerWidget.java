@@ -63,10 +63,8 @@ public class PlayerWidget {
     private RsvpModuleFragment rsvpModuleFragment;
     private TextView progressTextView;
     public static int wpm = 250;
-    private ImageView playButton;
     private AnimatedVectorDrawableCompat avd;
     private AnimatedVectorDrawable avd2;
-    private int swtichNum = 0;
     public Context context;
     public static FBReaderView fb;
     Fragment fragment;
