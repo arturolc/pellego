@@ -6,12 +6,4 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?colorPrimary">
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/settings_toolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="?attr/actionBarSize"-->
-<!--        android:elevation="10dp"-->
-<!--        android:background="?attr/colorPrimary">-->
-<!--    </androidx.appcompat.widget.Toolbar>-->
-
 </RelativeLayout>

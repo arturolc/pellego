@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!--    Splash Theme -->
     <style name="Theme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/ic_splash_screen</item>
         <item name="android:statusBarColor">@color/light_blue</item>
     </style>
 
-    <!--    This is the theme that's actually used -->
+    <!--    Light Theme -->
     <style name="Theme.Pellego" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/light_blue</item>
         <item name="colorSecondary">@color/gray_card</item>
         <item name="colorAccent">@color/white</item>
@@ -17,13 +16,9 @@
         <item name="itemTextColor">@color/bottom_nav_color_light</item>
         <item name="itemIconTint">@color/bottom_nav_color_light</item>
         <item name="alertDialogTheme">@style/DialogThemeLight</item>
-
-        <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/gray_hover</item>
-<!--        <item name="popupMenuBackground">@color/light_blue</item>-->
         <item name="android:itemTextAppearance">@style/LightActionBar.MenuTextStyle</item>
 
-        <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/light_blue</item>
         <item name="android:textColor">@color/gray_hover</item>
         <item name="android:textColorSecondary">@color/grey_transparent</item>
@@ -59,7 +54,6 @@
 
     <!--  Dark Theme Styles   -->
     <style name="Theme.Pellego_Dark" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/dark_grey</item>
         <item name="colorSecondary">@color/light_blue</item>
         <item name="colorAccent">@color/gray_hover</item>
@@ -67,9 +61,7 @@
         <item name="android:textColor">@color/primary_white</item>
         <item name="colorPrimaryDark">@color/gray_hover</item>
         <item name="android:textColorSecondary">@color/secondary_white</item>
-        <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/gray_hover</item>
-        <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/dark_grey</item>
         <item name="android:itemTextAppearance">@style/DarkActionBar.MenuTextStyle</item>
         <item name="itemTextColor">@color/bottom_nav_color_dark</item>
