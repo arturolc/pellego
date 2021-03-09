@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
@@ -24,6 +25,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.Toast;
@@ -61,7 +63,10 @@ public class PlayerWidget {
     private RsvpModuleFragment rsvpModuleFragment;
     private TextView progressTextView;
     public static int wpm = 250;
-
+    private ImageView playButton;
+    private AnimatedVectorDrawableCompat avd;
+    private AnimatedVectorDrawable avd2;
+    private int swtichNum = 0;
     public Context context;
     public static FBReaderView fb;
     Fragment fragment;
@@ -71,6 +76,7 @@ public class PlayerWidget {
     ArrayList<Runnable> onScrollFinished = new ArrayList<>();
     Handler handler = new Handler();
     int gravity;
+
     Runnable updateGravity = new Runnable() {
         @Override
         public void run() {
@@ -405,7 +411,7 @@ public class PlayerWidget {
         this.activity = activity;
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.tts_popup, null);
-        ImageView myFab = activity.findViewById(R.id.button_play);
+        ImageView playButton = activity.findViewById(R.id.button_play);
 
         // skip back button pressed
         View prev = activity.findViewById(R.id.button_prev);
@@ -417,7 +423,7 @@ public class PlayerWidget {
                         if (playing) {
                             rsvpModuleFragment.stop();
                         } else {
-                            togglePlay(myFab);
+                            togglePlay(playButton);
                         }
                         rsvpModuleFragment.startPrev();
                         break;
@@ -438,7 +444,7 @@ public class PlayerWidget {
                         if (playing) {
                             rsvpModuleFragment.stop();
                         } else {
-                            togglePlay(myFab);
+                            togglePlay(playButton);
                         }
                         rsvpModuleFragment.startNext();
                         break;
@@ -461,7 +467,7 @@ public class PlayerWidget {
                         .inflate(R.menu.techniques_menu, popup.getMenu());
                 if (playing) {
                     rsvpModuleFragment.stop();
-                    togglePlay(myFab);
+                    togglePlay(playButton);
                 }
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -497,10 +503,10 @@ public class PlayerWidget {
         addDropDownSeekBar(wpmSelector);
 
         // play pressed
-        myFab.setOnClickListener((View.OnClickListener) fb -> {
+        playButton.setOnClickListener((View.OnClickListener) fb -> {
             switch (technique_id) {
                 case R.id.rsvp_menu_item:
-                    togglePlay(myFab);
+                    togglePlay(playButton);
                     rsvpModuleFragment.play();
                     break;
                 default:
@@ -612,12 +618,23 @@ public class PlayerWidget {
     }
 
 
-    public void togglePlay(ImageView fab) {
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void togglePlay(ImageView playBtn) {
         playing = !playing;
         if ( playing ) {
-            fab.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_outline_pause_24));
+            playBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.avd_play_to_pause));
         } else {
-            fab.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_outline_play_arrow_24));
+            playBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.avd_pause_to_play));
+        }
+
+        // Display animation
+        Drawable drawable = playBtn.getDrawable();
+        if (drawable instanceof AnimatedVectorDrawableCompat) {
+            avd = (AnimatedVectorDrawableCompat) drawable;
+            avd.start();
+        } else if (drawable instanceof AnimatedVectorDrawable) {
+            avd2 = (AnimatedVectorDrawable) drawable;
+            avd2.start();
         }
 
     }
