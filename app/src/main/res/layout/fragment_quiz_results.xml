@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_blue"
+        android:background="?colorPrimary"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="111dp"
         tools:layout_editor_absoluteY="16dp">
@@ -22,8 +22,8 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="8dp"
             android:gravity="center_horizontal"
+            android:textColor="@color/primary_white"
             android:fontFamily="@font/bulletto_family"
-            android:textColor="@color/white"
             android:textSize="70dp" />
 
         <TextView
@@ -35,7 +35,6 @@
             android:layout_marginRight="130dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/white"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
             android:textAlignment="center"
@@ -44,6 +43,7 @@
 
         <TextView
             android:id="@+id/text_results_message"
+            android:textColor="@color/primary_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -55,7 +55,6 @@
             android:paddingRight="8dp"
             android:paddingBottom="15dp"
             android:textAlignment="center"
-            android:textColor="@color/white"
             android:textSize="50dp"></TextView>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -67,7 +66,6 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/white"
             android:textColor="@color/light_blue"
             android:clickable="true">
 
@@ -81,7 +79,6 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/white"
             android:clickable="true"
             android:textColor="@color/light_blue">
 

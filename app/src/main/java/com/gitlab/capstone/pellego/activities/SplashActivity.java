@@ -40,8 +40,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Window window = this.getWindow();
-        window.setStatusBarColor(ContextCompat.getColor(this,R.color.light_blue));
         setContentView(R.layout.activity_splash);
         lottieAnimationView = findViewById(R.id.book_anim);
         title = findViewById(R.id.title_splash);

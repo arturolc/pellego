@@ -12,7 +12,7 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="92dp"
         tools:layout_editor_absoluteY="146dp"
-        android:background="@color/light_blue">
+        android:background="?colorPrimary">
         <TextView
             android:id="@+id/title_quiz"
             android:layout_width="match_parent"
@@ -30,7 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
-            android:textColor="@color/black"
             android:layout_marginTop="20dp"
             android:textSize="18dp"
             android:textAlignment="center"
@@ -41,7 +40,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/white"
             android:gravity="center_horizontal">
         </TextView>
 

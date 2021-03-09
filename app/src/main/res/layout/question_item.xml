@@ -33,7 +33,6 @@
 
         android:layout_toRightOf="@+id/icon"
         android:text="Line 1"
-        android:textColor="#000"
         android:textSize="18sp"
         android:textStyle="bold" />
 

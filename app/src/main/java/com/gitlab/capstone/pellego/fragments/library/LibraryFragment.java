@@ -535,7 +535,8 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         // Emtpy library
         TextView emptyLibraryMsg =  getActivity().findViewById(R.id.text_empty_library);
         if (books.all.size() == 0) {
-           emptyLibraryMsg.setText(R.string.title_empty_library);
+            emptyLibraryMsg.setVisibility(View.VISIBLE);
+            emptyLibraryMsg.setText(R.string.title_empty_library);
         } else {
             emptyLibraryMsg.setVisibility(View.INVISIBLE);
         }
@@ -700,7 +701,8 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         MenuItem mode = menu.findItem(R.id.action_mode);
         MenuItem sort = menu.findItem(R.id.action_sort);
         MenuItem tts = menu.findItem(R.id.action_tts);
-
+        MenuItem settings = menu.findItem(R.id.action_settings);
+        settings.setVisible(true);
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         int selected = getContext().getResources().getIdentifier(shared.getString(App.PREFERENCE_SORT, getContext().getResources().getResourceEntryName(R.id.sort_add_ask)), "id", getContext().getPackageName());
         SubMenu sorts = sort.getSubMenu();

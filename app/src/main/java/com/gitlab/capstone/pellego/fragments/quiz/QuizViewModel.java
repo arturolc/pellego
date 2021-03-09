@@ -1,5 +1,8 @@
 package com.gitlab.capstone.pellego.fragments.quiz;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -71,12 +74,22 @@ public class QuizViewModel extends ViewModel {
     public String getFinalMessage() {
         if (score == questions.size()) {
             return getResourceString(R.string.quiz_perfect_score);
-        } else if ((float)score / questions.size() > 0.6) {
+        } else if ((float)score / questions.size() >= 0.75) {
             return getResourceString(R.string.quiz_mediocre_score);
         } else {
             return getResourceString(R.string.quiz_bad_score);
         }
     }
+
+    public boolean quizPassed() {
+        if ((float)score / questions.size() >= 0.75) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     public ArrayList<QuizQuestionModel> getNextAnswers() {
         ArrayList<QuizQuestionModel> mNavItems = new ArrayList<>();
@@ -113,46 +126,35 @@ public class QuizViewModel extends ViewModel {
         questions = new ArrayList<>();
     }
 
+
+
     public void populateQuestionBank() {
         this.questions = new ArrayList<>();
         // TODO: query DB for quiz questions based on learning module and difficulty
-        switch(this.difficulty) {
-//            case "Beginner Submodule":
-            default:
-                this.questions.add(new QuizQuestion(getResourceString(R.string.rsvp_beginner_quiz_question_one), new ArrayList<String>(
-                        Arrays.asList(getResourceString(R.string.rsvp_beginner_quiz_answer_one_a),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_one_b),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_one_c),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_one_d))), 2));
-                this.questions.add(new QuizQuestion(getResourceString(R.string.rsvp_beginner_quiz_question_two), new ArrayList<String>(
-                        Arrays.asList(getResourceString(R.string.rsvp_beginner_quiz_answer_two_a),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_two_b),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_two_c),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_two_d))), 1));
-                this.questions.add(new QuizQuestion(getResourceString(R.string.rsvp_beginner_quiz_question_three), new ArrayList<String>(
-                        Arrays.asList(getResourceString(R.string.rsvp_beginner_quiz_answer_three_a),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_three_b),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_three_c),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_three_d))), 0));
-                this.questions.add(new QuizQuestion(getResourceString(R.string.rsvp_beginner_quiz_question_four), new ArrayList<String>(
-                        Arrays.asList(getResourceString(R.string.rsvp_beginner_quiz_answer_four_a),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_four_b),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_four_c),
-                                getResourceString(R.string.rsvp_beginner_quiz_answer_four_d))), 3));
-//                break;
-//            case "Intermediate Submodule":
-//
-//                break;
-//            case "Advanced Submodule":
-//                break;
-//            default:
-//                break;
+        String question = "question_" + getModule() +"_" + this.difficulty + "_";
+        String answers = "answers_" + getModule() + "_" + this.difficulty + "_";
+
+        for (int i = 0; i < 4; i ++) {
+            int q = App.getStringIdentifier(question + i);
+            int a = App.getArrayIdentifier(answers + i);
+            String[] answersArray = App.getAppResources().getStringArray(a);
+            this.questions.add(new QuizQuestion(getResourceString(q), new ArrayList<String>(
+                    Arrays.asList(answersArray[0],
+                            answersArray[1],
+                            answersArray[2],
+                            answersArray[3])), Integer.parseInt(answersArray[4])));
         }
+
+    }
+
+    public String generateSubmoduleCompleteKey() {
+        return getModule() +"_" + getDifficulty() + "_complete";
     }
 
     private String getResourceString(int resString) {
         return App.getAppResources().getString(resString);
     }
+
 
     private class QuizQuestion {
         public String question;

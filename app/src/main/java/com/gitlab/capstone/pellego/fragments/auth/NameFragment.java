@@ -61,7 +61,6 @@ public class NameFragment extends Fragment {
         NavController nav = Navigation.findNavController(view);
 
         Button btn = view.findViewById(R.id.nextBtn2);
-        btn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
         btn.setEnabled(false);
 
         EditText et = view.findViewById(R.id.editTextName);

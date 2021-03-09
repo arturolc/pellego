@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
@@ -24,6 +25,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.Toast;
@@ -61,7 +63,8 @@ public class PlayerWidget {
     private RsvpModuleFragment rsvpModuleFragment;
     private TextView progressTextView;
     public static int wpm = 250;
-
+    private AnimatedVectorDrawableCompat avd;
+    private AnimatedVectorDrawable avd2;
     public Context context;
     public static FBReaderView fb;
     Fragment fragment;
@@ -71,6 +74,7 @@ public class PlayerWidget {
     ArrayList<Runnable> onScrollFinished = new ArrayList<>();
     Handler handler = new Handler();
     int gravity;
+
     Runnable updateGravity = new Runnable() {
         @Override
         public void run() {
@@ -113,15 +117,6 @@ public class PlayerWidget {
             return true;
         for (String s : STOPS) {
             if (str.contains(s))
-                return true;
-        }
-        return false;
-    }
-
-    public static boolean isEOL(Plugin.View.Selection s) {
-        String str = s.getText();
-        for (String e : EOL) {
-            if (str.equals(e))
                 return true;
         }
         return false;
@@ -414,7 +409,7 @@ public class PlayerWidget {
         this.activity = activity;
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.tts_popup, null);
-        ImageView myFab = activity.findViewById(R.id.button_play);
+        ImageView playButton = activity.findViewById(R.id.button_play);
 
         // skip back button pressed
         View prev = activity.findViewById(R.id.button_prev);
@@ -426,7 +421,7 @@ public class PlayerWidget {
                         if (playing) {
                             rsvpModuleFragment.stop();
                         } else {
-                            togglePlay(myFab);
+                            togglePlay(playButton);
                         }
                         rsvpModuleFragment.startPrev();
                         break;
@@ -447,7 +442,7 @@ public class PlayerWidget {
                         if (playing) {
                             rsvpModuleFragment.stop();
                         } else {
-                            togglePlay(myFab);
+                            togglePlay(playButton);
                         }
                         rsvpModuleFragment.startNext();
                         break;
@@ -470,7 +465,7 @@ public class PlayerWidget {
                         .inflate(R.menu.techniques_menu, popup.getMenu());
                 if (playing) {
                     rsvpModuleFragment.stop();
-                    togglePlay(myFab);
+                    togglePlay(playButton);
                 }
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -506,10 +501,10 @@ public class PlayerWidget {
         addDropDownSeekBar(wpmSelector);
 
         // play pressed
-        myFab.setOnClickListener((View.OnClickListener) fb -> {
+        playButton.setOnClickListener((View.OnClickListener) fb -> {
             switch (technique_id) {
                 case R.id.rsvp_menu_item:
-                    togglePlay(myFab);
+                    togglePlay(playButton);
                     rsvpModuleFragment.play();
                     break;
                 default:
@@ -572,6 +567,7 @@ public class PlayerWidget {
 
         final PopupWindow popupWindow = new PopupWindow(context, null,
                 android.R.attr.actionDropDownStyle);
+        popupWindow.setBackgroundDrawable(activity.getDrawable(R.drawable.rounded_background));
         popupWindow.setFocusable(true); // seems to take care of dismissing on click outside
         popupWindow.setContentView(contentView);
         setPopupSize(popupWindow);
@@ -580,7 +576,7 @@ public class PlayerWidget {
             @Override
             public void onClick(View v) {
                 // compensate for PopupWindow's internal padding
-                popupWindow.showAsDropDown(v, 0, -95);
+                popupWindow.showAsDropDown(v, 0, -120);
             }
         });
 
@@ -619,27 +615,24 @@ public class PlayerWidget {
         popupWindow.setHeight(height);
     }
 
-    private int getPaddingTop(PopupWindow popupWindow) {
-        Drawable background = popupWindow.getBackground();
-        if (background == null)
-            return 0;
 
-        Rect padding = new Rect();
-        background.getPadding(padding);
-        return padding.top;
-    }
-
-    public void setPlaying(ImageView fab) {
-        playing = !playing;
-        fab.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_outline_pause_24));
-    }
-
-    public void togglePlay(ImageView fab) {
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void togglePlay(ImageView playBtn) {
         playing = !playing;
         if ( playing ) {
-            fab.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_outline_pause_24));
+            playBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.avd_play_to_pause));
         } else {
-            fab.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_outline_play_arrow_24));
+            playBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.avd_pause_to_play));
+        }
+
+        // Display animation
+        Drawable drawable = playBtn.getDrawable();
+        if (drawable instanceof AnimatedVectorDrawableCompat) {
+            avd = (AnimatedVectorDrawableCompat) drawable;
+            avd.start();
+        } else if (drawable instanceof AnimatedVectorDrawable) {
+            avd2 = (AnimatedVectorDrawable) drawable;
+            avd2.start();
         }
 
     }
@@ -903,13 +896,6 @@ public class PlayerWidget {
         view.setVisibility(View.VISIBLE);
     }
 
-    public void close() {
-
-    }
-
-    public void dismiss() {
-        close();
-    }
 
     public void ensureVisible(Storage.Bookmark bm) { // same page
         int pos = ((ScrollWidget) fb.widget).adapter.findPage(bm.start);
@@ -940,13 +926,6 @@ public class PlayerWidget {
         ((ScrollWidget) fb.widget).smoothScrollBy(0, dy);
     }
 
-    public void scrollVerticallyBy(int dy) {
-        if (dy > 0)
-            gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
-        else
-            gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
-        updateGravity();
-    }
 
     public void updateGravity(int g) {
         gravity = g;
@@ -1029,7 +1008,6 @@ public class PlayerWidget {
             Plugin.View.Selection s = fb.pluginview.select(start, end);
             if (s != null) {
                 String str = s.getText();
-//                String test = fb.pluginview.select(0, 20).getText();
                 s.close();
                 return str;
             }
@@ -1041,73 +1019,7 @@ public class PlayerWidget {
         }
     }
 
-    public void selectionOpen(Plugin.View.Selection s) {
-        marks.clear();
-        Storage.Bookmark bm = new Storage.Bookmark(s.getText(), s.getStart(), s.getEnd());
-        bm = expandWord(bm);
-        fragment = new Fragment(bm);
-        marks.add(fragment.fragment);
-        updateGravity();
-        fb.ttsUpdate();
-    }
 
-    public void selectionOpen(int x, int y) { // pager only
-        Storage.Bookmark bm = selectWord(fb.app.BookTextView.myCurrentPage.TextElementMap, x, y);
-        bm = expandWord(bm);
-        marks.clear();
-        if (!isEmpty(bm)) {
-            fragment = new Fragment(bm);
-            marks.add(fragment.fragment);
-        }
-        updateGravity();
-        fb.ttsUpdate();
-    }
-
-    public void selectionOpen(ScrollWidget.ScrollAdapter.PageCursor c, int x, int y) { // scrollwidget only
-        ScrollWidget.ScrollAdapter.PageView v = ((ScrollWidget) fb.widget).findViewPage(c);
-        Storage.Bookmark bm = selectWord(v.text, x, y);
-        bm = expandWord(bm);
-        marks.clear();
-        if (!isEmpty(bm)) {
-            fragment = new Fragment(bm);
-            marks.add(fragment.fragment);
-        }
-        updateGravity();
-        fb.ttsUpdate();
-    }
-
-    public void selectionClose() {
-        marks.clear();
-        fb.ttsUpdate();
-    }
-
-    public void onScrollingFinished(ZLViewEnums.PageIndex pageIndex) {
-        for (Runnable r : onScrollFinished)
-            r.run();
-        onScrollFinished.clear();
-        updateGravity();
-    }
-
-    public Storage.Bookmark selectWord(ZLTextElementAreaVector text, int x, int y) {
-        ZLTextPosition start = null;
-        ZLTextPosition end = null;
-        for (ZLTextElementArea a : text.areas()) {
-            if (a.XStart < x && a.XEnd > x && a.YStart < y && a.YEnd > y) {
-                if (start == null)
-                    start = a;
-                if (end == null)
-                    end = a;
-                if (start.compareTo(a) > 0)
-                    start = a;
-                if (end.compareTo(a) < 0)
-                    end = a;
-            }
-        }
-        if (start == null || end == null)
-            return new Storage.Bookmark();
-        else
-            return new Storage.Bookmark(getText(start, end), start, end);
-    }
 
     public static ZLTextPosition expandLeft(ZLTextPosition start) {
         if (fb.pluginview != null) {
@@ -1182,21 +1094,5 @@ public class PlayerWidget {
         ZLTextPosition start = expandLeft(bm.start);
         ZLTextPosition end = expandRight(bm.end);
         return new Storage.Bookmark(getText(start, end), start, end);
-    }
-
-    public void showError (String text, int delay, final Runnable done) {
-        for (Storage.Bookmark m : marks)
-            m.color = Color.BLUE;
-        fb.ttsUpdate();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for (Storage.Bookmark m : marks)
-                    m.color = Color.BLUE;
-                fb.ttsUpdate();
-                done.run();
-            }
-        }, delay);
-        Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
     }
 }

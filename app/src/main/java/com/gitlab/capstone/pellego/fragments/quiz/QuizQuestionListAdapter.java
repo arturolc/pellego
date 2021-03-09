@@ -1,6 +1,8 @@
 package com.gitlab.capstone.pellego.fragments.quiz;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +58,6 @@ public class QuizQuestionListAdapter extends BaseAdapter {
 
         TextView titleView = (TextView) view.findViewById(R.id.title);
         TextView iconView = (TextView) view.findViewById(R.id.icon);
-
         titleView.setText( mNavItems.get(position).mTitle );
         iconView.setText(mNavItems.get(position).mIcon);
 

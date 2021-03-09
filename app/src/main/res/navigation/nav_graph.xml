@@ -60,7 +60,7 @@
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.gitlab.capstone.pellego.fragments.settings.SettingsFragment"
+        android:name="com.gitlab.capstone.pellego.activities.SettingsActivity$GeneralPreferenceFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 

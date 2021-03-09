@@ -54,14 +54,15 @@ public class RsvpModuleFragment extends BaseFragment {
         wpm = Integer.parseInt(getArguments().getString("wpm"));
         difficulty = getArguments().getString("difficulty");
         // Set the displayed text to the appropriate level
+        // TODO: Query the DB for content
         switch(difficulty) {
-            case "Beginner Submodule":
+            case "beginner":
                 content = getString(R.string.content_rsvp_beginner);
                 break;
-            case "Intermediate Submodule":
+            case "intermediate":
                 content = getString(R.string.content_rsvp_intermediate);
                 break;
-            case "Advanced Submodule":
+            case "advanced":
                 content = getString(R.string.content_rsvp_advanced);
                 break;
         }
@@ -183,7 +184,7 @@ public class RsvpModuleFragment extends BaseFragment {
                     return 0;
                 } else {
                     rsvp_text.setText(word);
-                    content = content.replaceFirst(word, "");
+                    if (PlayerWidget.playing) content = content.replaceFirst(word, "");
                 }
                 try {
                     Thread.sleep(delay);

@@ -1,5 +1,4 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
     <PreferenceCategory
         android:title="Reader">
         <com.gitlab.capstone.pellego.widgets.StoragePathPreferenceCompat
@@ -7,6 +6,7 @@
             android:key="storage_path"
             android:summary="@string/pref_storagepath_summary"
             android:title="@string/pref_storagepath_title" />
+
         <ListPreference
             android:defaultValue="PAGING"
             android:entries="@array/viewmode_text"
@@ -18,7 +18,7 @@
 
         <!--        Reader Theme -->
         <ListPreference
-            android:defaultValue="@string/Theme_Light"
+            android:defaultValue="@string/Theme_Parchment"
             android:entries="@array/reader_theme_text"
             android:entryValues="@array/reader_theme_value"
             android:key="readerTheme"
@@ -27,14 +27,14 @@
             android:title="Reader Theme" />
 
         <!--        App Theme -->
-<!--        <ListPreference-->
-<!--            android:defaultValue="@string/Theme_Light"-->
-<!--            android:entries="@array/theme_text"-->
-<!--            android:entryValues="@array/theme_value"-->
-<!--            android:key="theme"-->
-<!--            android:negativeButtonText="@null"-->
-<!--            android:positiveButtonText="@null"-->
-<!--            android:title="@string/pref_theme_title" />-->
+        <ListPreference
+            android:defaultValue="@string/Theme_Light"
+            android:entries="@array/theme_text"
+            android:entryValues="@array/theme_value"
+            android:key="theme"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_theme_title" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"

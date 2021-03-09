@@ -8,18 +8,18 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.gitlab.capstone.pellego.activities.MainActivity"
     tools:showIn="@layout/app_bar_main"
-    android:background="@color/light_blue"
     android:paddingTop="?attr/actionBarSize">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/container_bottom"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="@color/light_blue"
-        app:itemIconTint="@color/light_blue"
-        app:itemTextColor="@color/light_blue"
+        android:background="?colorPrimary"
+        app:itemIconTint="?colorSecondary"
+        app:itemTextColor="?colorSecondary"
         android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -30,15 +30,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="100dp"
                 android:layout_height="60dp"
-                android:textSize="12dp"
+                android:textSize="10dp"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/button_wpm"
                 android:drawableTint="@color/white"
-                android:backgroundTint="@color/light_blue"
+                android:backgroundTint="?colorPrimary"
                 android:text="wpm"
                 android:textColor="@color/white"
                 style="?android:attr/borderlessButtonStyle"
@@ -57,8 +58,8 @@
                 android:id="@+id/button_play"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_outline_play_arrow_24"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/avd_play_to_pause"
                 app:tint="@color/white" />
 
             <ImageView
@@ -76,12 +77,12 @@
                 android:layout_gravity="center_vertical"
                 android:id="@+id/button_technique"
                 android:scrollHorizontally="true"
-                android:backgroundTint="@color/light_blue"
+                android:backgroundTint="?colorSecondary"
                 android:drawableTint="@color/white"
                 android:text="Technique"
                 android:textColor="@color/white"
                 android:drawablePadding="0dp"
-                android:textSize="12dp"
+                android:textSize="10dp"
                 style="?android:attr/borderlessButtonStyle"
                 android:drawableTop="@drawable/ic_book_24"
                 >
@@ -95,9 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            android:background="@color/white"
-            app:itemIconTint="@color/light_blue"
-            app:itemTextColor="@color/light_blue"
+            android:background="?colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -110,7 +109,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/container_bottom"
-        android:background="@color/light_blue"
+        android:background="?colorPrimary"
         android:layout_height="0dp"
         tools:ignore="MissingConstraints">
 

@@ -24,6 +24,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PowerManager;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.graphics.ColorUtils;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -46,7 +47,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.gitlab.capstone.pellego.app.Storage;
-import com.gitlab.capstone.pellego.app.NavigationPopup;
+import com.gitlab.capstone.pellego.fragments.reader.ReaderNavigationPopup;
 import com.gitlab.capstone.pellego.services.ImagesProvider;
 import com.github.axet.androidlibrary.net.HttpClient;
 import com.github.axet.androidlibrary.preferences.AboutPreferenceCompat;
@@ -485,8 +486,6 @@ public class FBReaderView extends RelativeLayout {
         @Override
         public void setWindowTitle(String title) {
             FBReaderView.this.title = title;
-//            Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-//            toolbar.setNavigationIcon(null);
         }
 
         @Override
@@ -1114,8 +1113,8 @@ public class FBReaderView extends RelativeLayout {
         if (app.getPopupById(TextSearchPopup.ID) == null) {
             new TextSearchPopup(app);
         }
-        if (app.getPopupById(NavigationPopup.ID) == null) {
-            new NavigationPopup(app);
+        if (app.getPopupById(ReaderNavigationPopup.ID) == null) {
+            new ReaderNavigationPopup(app);
         }
         if (app.getPopupById(SelectionPopup.ID) == null) {
             new SelectionPopup(app) {
@@ -1565,7 +1564,7 @@ public class FBReaderView extends RelativeLayout {
 
             @Override
             protected void run(Object... params) {
-                ((NavigationPopup) app.getPopupById(NavigationPopup.ID)).runNavigation();
+                ((ReaderNavigationPopup) app.getPopupById(ReaderNavigationPopup.ID)).runNavigation();
             }
         });
         app.addAction(ActionCode.SELECTION_SHOW_PANEL, new FBAction(app) {
@@ -1830,7 +1829,7 @@ public class FBReaderView extends RelativeLayout {
         });
 
         ((PopupPanel) app.getPopupById(TextSearchPopup.ID)).setPanelInfo(a, this);
-        ((NavigationPopup) app.getPopupById(NavigationPopup.ID)).setPanelInfo(a, this);
+        ((ReaderNavigationPopup) app.getPopupById(ReaderNavigationPopup.ID)).setPanelInfo(a, this);
         ((PopupPanel) app.getPopupById(SelectionPopup.ID)).setPanelInfo(a, this);
     }
 
@@ -2177,6 +2176,7 @@ public class FBReaderView extends RelativeLayout {
         ttsUpdate();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public PlayerWidget openTechnique(Activity activity) {
         return new PlayerWidget(this, activity);
     }

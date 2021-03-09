@@ -56,10 +56,11 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         setContentView(R.layout.activity_home);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         bottomContent = findViewById(R.id.container_bottom);
         toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.ic_action_button_overflow));
 
-        setTheme(R.style.Theme_Pellego);
+
         // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
         drawer = findViewById(R.id.home_layout);
@@ -114,7 +115,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
     // TODO: update theme to pellego theme
     @Override
     public int getAppTheme() {
-        return App.getTheme(this, R.style.AppThemeLight_NoActionBar, R.style.AppThemeDark_NoActionBar);
+        return App.getTheme(this, R.style.Theme_Pellego, R.style.Theme_Pellego_Dark);
     }
 
     @Override

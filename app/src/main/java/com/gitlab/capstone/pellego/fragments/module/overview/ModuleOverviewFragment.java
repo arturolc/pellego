@@ -1,4 +1,6 @@
 package com.gitlab.capstone.pellego.fragments.module.overview;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,10 +52,10 @@ public class ModuleOverviewFragment extends BaseFragment {
         });
         mNavItems = new ArrayList<>();
         // Add nav items to the list of submodules
-        mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_intro), getResources().getString(R.string.descr_module_intro), R.drawable.ic_checked_circle));
-        mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_beginner), getResources().getString(R.string.descr_module_beginner), R.drawable.ic_empty_circle));
-        mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_intermediate), getResources().getString(R.string.descr_module_intermediate), R.drawable.ic_empty_circle));
-        mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_advanced), getResources().getString(R.string.descr_module_advanced), R.drawable.ic_empty_circle));
+        mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_intro), getResources().getString(R.string.descr_module_intro), getDrawable("intro")));
+        mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_beginner), getResources().getString(R.string.descr_module_beginner), getDrawable("beginner")));
+        mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_intermediate), getResources().getString(R.string.descr_module_intermediate), getDrawable("intermediate")));
+        mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_advanced), getResources().getString(R.string.descr_module_advanced), getDrawable("advanced")));
         TextView rsvDescription = (TextView) root.findViewById(R.id.text_module_description);
         rsvDescription.setText(moduleViewModel.getModuleDescription());
 
@@ -76,17 +78,17 @@ public class ModuleOverviewFragment extends BaseFragment {
                         navController.navigate(moduleViewModel.getIntro_id());
                         break;
                     case 1:
-                        args.putString("difficulty", "Beginner Submodule");
+                        args.putString("difficulty", "beginner");
                         args.putString("wpm", "120");
                         navController.navigate(moduleViewModel.getModule_id(), args);
                         break;
                     case 2:
-                        args.putString("difficulty", "Intermediate Submodule");
+                        args.putString("difficulty", "intermediate");
                         args.putString("wpm", "250");
                         navController.navigate(moduleViewModel.getModule_id(), args);
                         break;
                     case 3:
-                        args.putString("difficulty", "Advanced Submodule");
+                        args.putString("difficulty", "advanced");
                         args.putString("wpm", "500");
                         navController.navigate(moduleViewModel.getModule_id(), args);
                         break;
@@ -97,6 +99,14 @@ public class ModuleOverviewFragment extends BaseFragment {
         return root;
     }
 
-
+    public int getDrawable(String difficulty) {
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        boolean complete = sharedPref.getBoolean(moduleViewModel.getTechnique() + "_" + difficulty + "_complete", false);
+        if (complete) {
+           return  R.drawable.ic_checked_circle;
+        } else {
+            return  R.drawable.ic_empty_circle;
+        }
+    }
 
 }

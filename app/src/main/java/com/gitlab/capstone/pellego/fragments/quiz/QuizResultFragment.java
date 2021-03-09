@@ -1,5 +1,7 @@
 package com.gitlab.capstone.pellego.fragments.quiz;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,7 @@ public class QuizResultFragment extends BaseFragment {
     private QuizViewModel quizViewModel;
     private ModuleViewModel moduleViewModel;
     private NavController navController;
+    private SharedPreferences sharedPref;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,10 +51,21 @@ public class QuizResultFragment extends BaseFragment {
             }
         });
 
-        // TODO: POST quiz result data
+        // TODO: POST quiz result data to DB
         // Display score
         TextView txt = root.findViewById(R.id.text_results);
         txt.setText(quizViewModel.getFinalScore());
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        // Store results in shared preference
+        if (quizViewModel.quizPassed()) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean(quizViewModel.generateSubmoduleCompleteKey(), quizViewModel.quizPassed());
+            updateModuleProgress();
+            editor.apply();
+        }
+
+
         // Display message
         TextView msg = root.findViewById(R.id.text_results_message);
         msg.setText(quizViewModel.getFinalMessage());
@@ -89,6 +103,16 @@ public class QuizResultFragment extends BaseFragment {
         });
 
         return root;
+    }
+
+    public void updateModuleProgress() {
+        // TODO: post to DB and default to local data if connection can't be established
+        String key = moduleViewModel.getTechnique() + "_submodule_progress";
+        int count = sharedPref.getInt(key, 0);
+        // Store results in shared preference
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(key, ++count);
+        editor.apply();
     }
 
 }

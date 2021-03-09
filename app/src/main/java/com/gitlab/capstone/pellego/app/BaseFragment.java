@@ -25,23 +25,6 @@ public class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         LibraryFragment.FragmentHolder holder = new LibraryFragment.FragmentHolder(getContext());
         setHasOptionsMenu(true);
-
-//        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-//        DrawerLayout drawerLayout = getActivity().findViewById(R.id.home_layout);
-//        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
-//        actionBarDrawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
-//        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_menu, null);
-//        drawable = DrawableCompat.wrap(drawable);
-//        DrawableCompat.setTint(drawable, Color.WHITE);
-//        getSupportActionBar().setHomeAsUpIndicator(drawable);
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-//        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_menu, null);
-//        drawable = DrawableCompat.wrap(drawable);
-//        DrawableCompat.setTint(drawable, Color.WHITE);
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(drawable);
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

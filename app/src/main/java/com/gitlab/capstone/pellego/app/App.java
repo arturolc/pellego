@@ -25,6 +25,7 @@ public class App extends MainApplication {
     public static String PREFERENCE_STORAGE = "storage_path";
     public static String PREFERENCE_SORT = "sort";
     public static String PREFERENCE_LANGUAGE = "tts_pref";
+    public static String PACKAGE_NAME;
 
     public ZLAndroidApplication zlib;
 
@@ -37,10 +38,19 @@ public class App extends MainApplication {
         return MainApplication.getTheme(context, PREFERENCE_THEME, light, dark, context.getString(R.string.Theme_Dark));
     }
 
+    public static int getStringIdentifier(String name) {
+        return resources.getIdentifier(name, "string", PACKAGE_NAME);
+    }
+
+    public static int getArrayIdentifier(String name) {
+        return resources.getIdentifier(name, "array", PACKAGE_NAME);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         resources = getResources();
+        PACKAGE_NAME = getApplicationContext().getPackageName();
 
         zlib = new ZLAndroidApplication() {
             {

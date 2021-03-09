@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego.app;
+package com.gitlab.capstone.pellego.fragments.reader;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -14,12 +14,12 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 
-import org.geometerplus.zlibrary.ui.android.R;
+import com.gitlab.capstone.pellego.R;
 
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-public final class NavigationPopup extends ZLApplication.PopupPanel {
+public final class ReaderNavigationPopup extends ZLApplication.PopupPanel {
     public final static String ID = "NavigationPopup";
 
     private volatile NavigationWindow myWindow;
@@ -29,7 +29,7 @@ public final class NavigationPopup extends ZLApplication.PopupPanel {
     private final FBReaderApp myFBReader;
     private volatile boolean myIsInProgress;
 
-    public NavigationPopup(FBReaderApp fbReader) {
+    public ReaderNavigationPopup(FBReaderApp fbReader) {
         super(fbReader);
         myFBReader = fbReader;
     }
@@ -84,7 +84,7 @@ public final class NavigationPopup extends ZLApplication.PopupPanel {
             return;
         }
 
-        activity.getLayoutInflater().inflate(R.layout.navigation_panel, root);
+        activity.getLayoutInflater().inflate(R.layout.reader_navigation_panel, root);
         myWindow = (NavigationWindow)root.findViewById(R.id.navigation_panel);
 
         final SeekBar slider = (SeekBar)myWindow.findViewById(R.id.navigation_slider);
@@ -145,7 +145,6 @@ public final class NavigationPopup extends ZLApplication.PopupPanel {
 
         final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
         btnOk.setText(buttonResource.getResource("ok").getValue());
-        btnOk.setBackgroundColor(Color.rgb(96, 157, 229));
         btnCancel.setText(buttonResource.getResource("cancel").getValue());
     }
 

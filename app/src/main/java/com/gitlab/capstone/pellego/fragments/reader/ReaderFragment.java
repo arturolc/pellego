@@ -14,11 +14,13 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.BatteryManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
@@ -415,10 +417,11 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                 ex.setVisibility(INVISIBLE);
             else
                 ex.setVisibility(View.VISIBLE);
-            ex.setImageResource(t.expanded ? R.drawable.ic_expand_less_black_24dp : R.drawable.ic_expand_more_black_24dp);
+            ex.setImageResource(t.expanded ? R.drawable.ic_expand_less_black_24dp : R.drawable.ic_expand_more_blue_24dp);
             h.itemView.setPadding(20 * t.level, 0, 0, 0);
             if (t.selected) {
                 h.textView.setTypeface(null, Typeface.BOLD);
+                h.textView.setTextColor(Color.parseColor("#609DE5"));
                 h.i.setColorFilter(null);
             } else {
                 h.i.setColorFilter(Color.GRAY);
@@ -623,7 +626,6 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         setHasOptionsMenu(true);
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
         shared.registerOnSharedPreferenceChangeListener(this);
-        getActivity().findViewById(R.id.bottom_nav_view).setVisibility(INVISIBLE);
     }
 
     public static void showOptionsMenu() {
@@ -632,7 +634,8 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         final MenuItem fontsize = ReaderFragment.optionsMenu.findItem(R.id.action_fontsize);
         MenuItem tts = ReaderFragment.optionsMenu.findItem(R.id.action_tts);
         tocMenu.setVisible(fb.app.Model != null && fb.app.Model.TOCTree != null && fb.app.Model.TOCTree.hasChildren());
-        bookmarksMenu.setVisible(true);
+        if (fb.book != null) // call before onCreateView
+            bookmarksMenu.setVisible(fb.book.info.bookmarks != null && fb.book.info.bookmarks.size() > 0);
         fontsize.setVisible(true);
         tts.setVisible(true);
     }
@@ -660,11 +663,13 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         super.onStart();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_reader, container, false);
         final MainActivity main = (MainActivity) getActivity();
+        main.findViewById(R.id.bottom_nav_view).setVisibility(INVISIBLE);
 
         fb = (FBReaderView) v.findViewById(R.id.main_view);
         fb.openTechnique(getActivity());
@@ -997,35 +1002,6 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         fb.updateTheme();
     }
 
-    private SeekBar addDropDownSeekBar(Context context, Menu menu, String title) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        View contentView = inflater.inflate(R.layout.dropdown_seek_bar, null);
-        SeekBar seekBar = (SeekBar) contentView.findViewById(R.id.drop_down_seek_bar);
-
-        final PopupWindow popupWindow = new PopupWindow(context, null,
-                android.R.attr.actionDropDownStyle);
-        popupWindow.setFocusable(true); // seems to take care of dismissing on click outside
-        popupWindow.setContentView(contentView);
-        setPopupSize(popupWindow);
-
-        final int paddingTop = getPaddingTop(popupWindow);
-
-        MenuItem menuItem = menu.add("");
-        FrameLayout button = createActionButton(context, title);
-        menuItem.setActionView(button);
-        menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // compensate for PopupWindow's internal padding
-                popupWindow.showAsDropDown(v, 0, -paddingTop);
-            }
-        });
-
-        return seekBar;
-    }
 
     private FrameLayout createActionButton(Context context, String title) {
         FrameLayout frame = new FrameLayout(context, null, android.R.attr.actionButtonStyle);
@@ -1077,6 +1053,8 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         invalidateOptionsMenu = InvalidateOptionsMenuCompat.onCreateOptionsMenu(this, menu, inflater);
         MenuItem homeMenu = menu.findItem(R.id.action_home);
         MenuItem tocMenu = menu.findItem(R.id.action_toc);
+        MenuItem settings = menu.findItem(R.id.action_settings);
+        settings.setVisible(false);
 //        searchMenu = menu.findItem(R.id.action_search);
 //        MenuItem reflow = menu.findItem(R.id.action_reflow);
 //        MenuItem debug = menu.findItem(R.id.action_debug);

@@ -19,6 +19,15 @@ public class ModuleViewModel extends ViewModel {
     private int intro_header_id;
     private int intro_content_id;
     private int module_id;
+    public String technique;
+
+    public String getTechnique() {
+        return technique;
+    }
+
+    public void setTechnique(String technique) {
+        this.technique = technique;
+    }
 
     public int getIntro_header_id() {
         return intro_header_id;
