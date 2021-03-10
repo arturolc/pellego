@@ -103,4 +103,7 @@ public class ModuleViewModel extends ViewModel {
 
         return  moduleTitle;
     }
+
+    //Methods for getting the data
+
 }

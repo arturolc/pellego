@@ -170,30 +170,6 @@ public class LearnFragment extends Fragment {
         // Add the request to the RequestQueue.
         queue.add(jsonArrayRequest);
     }
-
-    /*
-     * Returns an array with the number of modules a user has completed out of the number of modules available
-     * arr[0] = number completed
-     * arr[1] = number available
-     */
-    private int[] ModulesCompleted(String User, String LearningModule)
-    {
-        //contact the database
-        //do some logic
-        return null;
-    }
-
-    private String GetIntro(String LearningModule)
-    {
-        //contact the database
-        return "";
-    }
-
-    private String GetDescription(String LearningModule)
-    {
-        return "";
-    }
-
     /**
      * Populates the learning module list with default data.
      */
