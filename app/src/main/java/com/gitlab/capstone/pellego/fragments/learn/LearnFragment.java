@@ -50,6 +50,9 @@ public class LearnFragment extends Fragment {
     ProgressBar spinner;
     NavigationView modulesView;
 
+
+    String rsvp_description = "";
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mNavItems = new ArrayList<>();
@@ -101,7 +104,17 @@ public class LearnFragment extends Fragment {
                 // TODO: navigate to fragment based on click id
                 switch(position) {
                     case 0: // rsvp - need to get the intro from the database
-                        moduleViewModel.setViewModelVars(getResources().getString(R.string.title_rsvp), getResources().getString(R.string.description_rsvp), R.id.nav_rsvp_intro, R.array.intro_rsvp_content, R.array.intro_rsvp_header, R.id.nav_rsvp_module);
+                        //second param is the description, which we also need from the database
+                        //intro_rsvp_header and intro_rsvp_content are string id's
+                        //they need to be strings (which we get from the database)
+                        getDescriptionAPI("RSVP", inflater, container, new ResponseCallBack() {
+                                    @Override
+                                    public void onResponse(Object response) {
+                                        //curr_description = response.toString();
+                                    }
+                                }
+                        );
+                        moduleViewModel.setViewModelVars(getResources().getString(R.string.title_rsvp), rsvp_description, R.id.nav_rsvp_intro, R.array.intro_rsvp_content, R.array.intro_rsvp_header, R.id.nav_rsvp_module);
                         navController.navigate(R.id.nav_module_overview);
                         break;
                     case 1:
@@ -126,6 +139,44 @@ public class LearnFragment extends Fragment {
     public interface ResponseCallBack{
         void onResponse(Object response);
     }
+
+
+    private void getDescriptionAPI(String lm, @NonNull LayoutInflater inflater, ViewGroup container, ResponseCallBack responseCallBack)
+    {
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url ="http://54.245.202.132:5001/modules/description/"+ lm;
+//        spinner.setVisibility(View.GONE);
+        // Request a json response from the provided URL.
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("response", response.toString());
+
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject item = response.getJSONObject(i);
+                                rsvp_description = item.get("Description").toString();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        responseCallBack.onResponse(response);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("error", error.toString());
+                        // Load the default data from shared preferences
+                        spinner.setVisibility(View.GONE);
+                    }
+                });
+
+        // Add the request to the RequestQueue.
+        queue.add(jsonArrayRequest);
+    }
+
 
     /**
      * Query the DB for learning modules. If no connection can be established, use the default data
