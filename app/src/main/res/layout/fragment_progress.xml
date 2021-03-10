@@ -4,23 +4,295 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gitlab.capstone.pellego.fragments.progress.ProgressFragment"
-    android:background="?colorPrimary">
+    android:background="?colorPrimary"
+    tools:context="com.gitlab.capstone.pellego.fragments.progress.ProgressFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/text_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bulletto_family"
+                android:gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:layout_alignParentTop="true" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/progress_animation"
+                android:layout_width="250dp"
+                android:layout_height="140dp"
+                android:layout_alignTop="@+id/text_progress"
+                android:layout_marginTop="52dp"
+                android:layout_centerInParent="true"
+                android:scaleType="centerInside"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="false"
+                app:lottie_rawRes="@raw/analytics_animation" />
+
+            <TextView
+                android:id="@+id/text_today_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Today"
+                android:textColor="@color/white"
+                android:layout_alignBottom="@+id/progress_animation"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp" />
+
+            <View
+                android:id="@+id/centerShim"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:visibility="invisible"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/today_words_read_label"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Words Read"
+                android:layout_below="@+id/text_today_title"
+                android:layout_toLeftOf="@+id/centerShim"/>
+
+            <TextView
+                android:id="@+id/today_words_read_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="118"
+                android:layout_below="@+id/today_words_read_label"
+                android:layout_toLeftOf="@+id/centerShim"/>
+
+            <TextView
+                android:id="@+id/today_wpm_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/centerShim"
+                android:layout_below="@+id/text_today_title"
+                android:text="WPM" />
+
+            <TextView
+                android:id="@+id/today_wpm_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/centerShim"
+                android:layout_below="@+id/today_wpm_label"
+                android:text="236" />
+
+            <TextView
+                android:id="@+id/text_last_week_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:text="Last Week"
+                android:textColor="@color/white"
+                android:layout_below="@+id/today_words_read_description"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:id="@+id/last_week_words_read_label"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Words Read"
+                android:layout_below="@+id/text_last_week_title"
+                android:layout_toLeftOf="@+id/centerShim"/>
+
+            <TextView
+                android:id="@+id/last_week_words_read_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="118"
+                android:layout_below="@+id/last_week_words_read_label"
+                android:layout_toLeftOf="@+id/centerShim"/>
+
+            <TextView
+                android:id="@+id/last_week_wpm_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/centerShim"
+                android:layout_below="@+id/text_last_week_title"
+                android:text="WPM" />
+
+            <TextView
+                android:id="@+id/last_week_wpm_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/centerShim"
+                android:layout_below="@+id/last_week_wpm_label"
+                android:text="236" />
+
+            <TextView
+                android:id="@+id/text_lifetime_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:text="Lifetime"
+                android:textColor="@color/white"
+                android:layout_below="@+id/last_week_words_read_description"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:id="@+id/lifetime_words_read_label"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Words Read"
+                android:layout_below="@+id/text_lifetime_title"
+                android:layout_toLeftOf="@+id/centerShim"/>
+
+            <TextView
+                android:id="@+id/lifetime_words_read_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="118"
+                android:layout_below="@+id/lifetime_words_read_label"
+                android:layout_toLeftOf="@+id/centerShim"/>
+
+            <TextView
+                android:id="@+id/lifetime_wpm_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/centerShim"
+                android:layout_below="@+id/text_lifetime_title"
+                android:text="WPM" />
+
+            <TextView
+                android:id="@+id/lifetime_wpm_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/centerShim"
+                android:layout_below="@+id/lifetime_wpm_label"
+                android:text="236" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+    <!--<GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="1"
+        android:padding="10dp"
+        android:rowCount="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/text_progress"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="8dp"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:fontFamily="@font/bulletto_family"
             android:gravity="center_horizontal"
             android:textColor="@color/white"
-            android:fontFamily="@font/bulletto_family"
-            android:textSize="50dp" />
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/text_today_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:text="Today" />
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/gridLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:columnCount="2"
+        android:padding="50dp"
+        android:rowCount="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout">
 
         <GridLayout
+            android:id="@+id/gridLayout3"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:columnCount="1"
+            android:rowCount="2">
+
+            <TextView
+                android:id="@+id/words_read_label"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:text="Words Read" />
+
+            <TextView
+                android:id="@+id/words_read_description"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:text="118" />
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/gridLayout4"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:columnCount="1"
+            android:rowCount="2">
+
+            <TextView
+                android:id="@+id/wpm_label"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:text="WPM" />
+
+            <TextView
+                android:id="@+id/wpm_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:text="236" />
+        </GridLayout>
+    </GridLayout>-->
+
+    <!--<TextView
+        android:id="@+id/text_last_week_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Last Week"/>
+    <TextView
+        android:id="@+id/text_lifetime_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Lifetime"/>-->
+
+    <!--<GridLayout
             android:layout_width="match_parent"
             android:layout_height="546dp"
             android:layout_below="@+id/text_progress"
@@ -174,5 +446,5 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-        </GridLayout>
+        </GridLayout>-->
 </RelativeLayout>

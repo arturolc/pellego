@@ -112,7 +112,7 @@ dependencies {
 
     // splash screen animation
     // https://lottiefiles.com/
-    implementation "com.airbnb.android:lottie:3.5.0"
+    implementation "com.airbnb.android:lottie:3.6.1"
 
 
 }
