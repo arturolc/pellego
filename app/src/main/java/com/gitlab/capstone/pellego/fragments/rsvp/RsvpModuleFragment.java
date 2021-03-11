@@ -44,9 +44,6 @@ public class RsvpModuleFragment extends BaseFragment {
     private ModuleViewModel moduleViewModel;
     private FragmentActivity currentView;
     private PlayerWidget playerWidget;
-    public FBReaderView fb;
-    TTSPopup.Fragment fragment;
-    public Storage.Bookmarks marks = new Storage.Bookmarks();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,

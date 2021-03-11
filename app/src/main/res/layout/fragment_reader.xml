@@ -9,6 +9,7 @@
 
     <include android:id="@+id/rsvp_reader" layout="@layout/fragment_rsvp_module" android:visibility="invisible"></include>
 
+    <include android:id="@+id/metaguiding_reader" layout="@layout/fragment_metaguiding_module" android:visibility="invisible"></include>
 
 <!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
     <com.gitlab.capstone.pellego.widgets.FBReaderView

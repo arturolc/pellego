@@ -82,8 +82,6 @@ public class DefaultPagerFragment extends BaseFragment {
         // TODO: read the file by URI
         try {
             mContentString = getArguments().getString("uri");
-//            LibraryFragment libraryFragment = new LibraryFragment();
-//            mContentString = libraryFragment.readTextFile(Uri.parse(uri));
         } catch (Exception e) {
             Log.d("error: ", e.getMessage());
         }
@@ -127,25 +125,8 @@ public class DefaultPagerFragment extends BaseFragment {
         textHeight = Math.abs(textHeight);
 
         int maxLineCount = (int) ((screenHeight - verticalMargin - bottomMargin) / (textHeight1));
-//        int maxChars = (int) (((screenHeight - verticalMargin - bottomMargin) * screenWidth) / (textHeight1 * textHeight1));
-        // add extra spaces at the bottom, remove 4 lines
 
         maxLineCount -= padding;
-
-//        float verticalMargin = getResources().getDimension(R.dimen.activity_vertical_margin) * 2;
-//        int screenHeight = mDisplay.getHeight();
-//        TextPaint paint = view.getPaint();
-//
-//        //Working Out How Many Lines Can Be Entered In The Screen
-//        Paint.FontMetrics fm = paint.getFontMetrics();
-//        float textHeight = fm.top - fm.bottom;
-//        textHeight = Math.abs(textHeight);
-//
-//        int maxLineCount = (int) ((screenHeight - verticalMargin ) / textHeight);
-//
-//        // add extra spaces at the bottom, remove 4 lines
-//        maxLineCount -= 4;
-//
 
         return maxLineCount;
     }
