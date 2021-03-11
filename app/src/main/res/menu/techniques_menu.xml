@@ -4,6 +4,8 @@
         android:title="None" />
     <item android:id="@+id/rsvp_menu_item"
         android:title="RSVP" />
+    <item android:id="@+id/metaguiding_menu_item"
+        android:title="Meta-guiding" />
     <item android:id="@+id/clump_reading_menu_item"
         android:title="Clump Reading" />
     <item android:id="@+id/reducing_subvocalization_menu_item"

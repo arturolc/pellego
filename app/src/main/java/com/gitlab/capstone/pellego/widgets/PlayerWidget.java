@@ -33,6 +33,7 @@ import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Reflow;
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.fragments.metaguiding.MetaguidingModuleFragment;
 import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 
@@ -61,6 +62,7 @@ public class PlayerWidget {
     public int technique_id = -1;
     public Activity activity;
     private RsvpModuleFragment rsvpModuleFragment;
+    private MetaguidingModuleFragment metaguidingModuleFragment;
     private TextView progressTextView;
     public static int wpm = 250;
     private AnimatedVectorDrawableCompat avd;
@@ -425,6 +427,14 @@ public class PlayerWidget {
                         }
                         rsvpModuleFragment.startPrev();
                         break;
+                    case R.id.metaguiding_menu_item:
+                        if (playing) {
+                            metaguidingModuleFragment.stop();
+                        } else {
+                            togglePlay(playButton);
+                        }
+                        metaguidingModuleFragment.startPrev();
+                        break;
                     default:
                         break;
                 }
@@ -445,6 +455,13 @@ public class PlayerWidget {
                             togglePlay(playButton);
                         }
                         rsvpModuleFragment.startNext();
+                    case R.id.metaguiding_menu_item:
+                        if (playing) {
+                            metaguidingModuleFragment.stop();
+                        } else {
+                            togglePlay(playButton);
+                        }
+                        metaguidingModuleFragment.startNext();
                         break;
                     default:
                         break;
@@ -465,6 +482,7 @@ public class PlayerWidget {
                         .inflate(R.menu.techniques_menu, popup.getMenu());
                 if (playing) {
                     rsvpModuleFragment.stop();
+                    metaguidingModuleFragment.stop();
                     togglePlay(playButton);
                 }
                 //registering popup with OnMenuItemClickListener
@@ -480,9 +498,16 @@ public class PlayerWidget {
                                 rsvpModuleFragment = new RsvpModuleFragment();
                                 rsvpModuleFragment.initRsvpReader(PlayerWidget.this, v, activity);
                                 break;
+                            case R.id.metaguiding_menu_item:
+                                activity.findViewById(R.id.metaguiding_reader).setVisibility(View.VISIBLE);
+                                activity.findViewById(R.id.main_view).setVisibility(INVISIBLE);
+                                metaguidingModuleFragment = new MetaguidingModuleFragment();
+                                metaguidingModuleFragment.initMetaguidingReader(PlayerWidget.this, v, activity);
+                                break;
                             case R.id.none_menu_item:
                                 ReaderFragment.showOptionsMenu();
                                 activity.findViewById(R.id.rsvp_reader).setVisibility(INVISIBLE);
+                                activity.findViewById(R.id.metaguiding_reader).setVisibility(INVISIBLE);
                                 activity.findViewById(R.id.main_view).setVisibility(View.VISIBLE);
                                 break;
                             default:
@@ -506,6 +531,10 @@ public class PlayerWidget {
                 case R.id.rsvp_menu_item:
                     togglePlay(playButton);
                     rsvpModuleFragment.play();
+                    break;
+                case R.id.metaguiding_menu_item:
+                    togglePlay(playButton);
+                    metaguidingModuleFragment.play();
                     break;
                 default:
                     Toast.makeText(activity, "Select a technique to start speed reading",
@@ -726,6 +755,100 @@ public class PlayerWidget {
                             }
                         });
                         fb.scrollPrevPage();
+                    } else {
+                        Rect r = SelectionView.union(Arrays.asList(bounds.rr));
+                        if (((PagerWidget) fb.widget).getHeight() / 2 < r.centerY())
+                            updateGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+                        else
+                            updateGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
+                    }
+                }
+            }
+        }
+        return fragment.fragmentText;
+    }
+
+    // Get the next chunk of text
+    public String selectNextPage() {
+        marks.clear();
+        if (fragment == null) {
+            if (fb.widget instanceof ScrollWidget) {
+                int first = ((ScrollWidget) fb.widget).findFirstPage();
+                ScrollWidget.ScrollAdapter.PageCursor c = ((ScrollWidget) fb.widget).adapter.pages.get(first);
+                Storage.Bookmark bm = expandWord(new Storage.Bookmark("", c.start, c.start));
+                fragment = new Fragment(bm);
+            }
+            if (fb.widget instanceof PagerWidget) {
+                ZLTextPosition position = fb.getPosition();
+                Storage.Bookmark bm = expandWord(new Storage.Bookmark("", position, position));
+                fragment = new Fragment(bm);
+            }
+        } else {
+            Storage.Bookmark bm = selectNext(fragment.fragment);
+            fragment = new Fragment(bm);
+        }
+        marks.add(fragment.fragment);
+        if (fb.widget instanceof ScrollWidget) {
+            int pos = ((ScrollWidget) fb.widget).adapter.findPage(fragment.fragment.start);
+            if (pos == -1)
+                return "";
+            ScrollWidget.ScrollAdapter.PageCursor nc = ((ScrollWidget) fb.widget).adapter.pages.get(pos);
+            int first = ((ScrollWidget) fb.widget).findFirstPage();
+            ScrollWidget.ScrollAdapter.PageCursor cur = ((ScrollWidget) fb.widget).adapter.pages.get(first);
+            if (!nc.equals(cur)) {
+                int page = ((ScrollWidget) fb.widget).adapter.findPage(nc);
+                onScrollFinished.add(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateGravity();
+                    }
+                });
+                ((ScrollWidget) fb.widget).smoothScrollToPosition(page);
+            } else {
+                ensureVisible(fragment.fragment);
+                updateGravity();
+            }
+        }
+        if (fb.widget instanceof PagerWidget) {
+            if (fb.pluginview == null) {
+                ZLTextPosition end;
+                end = fb.app.BookTextView.getEndCursor();
+                if (end.compareTo(fragment.fragment.start) <= 0) {
+                    onScrollFinished.add(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateGravity();
+                        }
+                    });
+                    fb.scrollNextPage();
+                } else {
+                    updateGravity();
+                }
+            } else {
+                Plugin.View.Selection s = fb.pluginview.select(fragment.fragment.start, fragment.fragment.end);
+                Rect dst = ((PagerWidget) fb.widget).getPageRect();
+                ZLTextPosition px = fb.pluginview.getPosition();
+                if (px.getParagraphIndex() < fragment.fragment.start.getParagraphIndex()) {
+                    fb.scrollNextPage();
+                } else {
+                    Plugin.View.Selection.Page page = fb.pluginview.selectPage(px, ((PagerWidget) fb.widget).getInfo(), dst.width(), dst.height());
+                    Plugin.View.Selection.Bounds bounds = s.getBounds(page);
+                    if (fb.pluginview.reflow) {
+                        bounds.rr = fb.pluginview.boundsUpdate(bounds.rr, ((PagerWidget) fb.widget).getInfo());
+                        bounds.start = true;
+                        bounds.end = true;
+                    }
+                    ArrayList<Rect> ii = new ArrayList<>(Arrays.asList(bounds.rr));
+                    Collections.sort(ii, new SelectionView.LinesUL(ii));
+                    s.close();
+                    if (ii.get(0).bottom > ((PagerWidget) fb.widget).getBottom() + fb.pluginview.current.pageOffset / fb.pluginview.current.ratio) {
+                        onScrollFinished.add(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateGravity();
+                            }
+                        });
+                        fb.scrollNextPage();
                     } else {
                         Rect r = SelectionView.union(Arrays.asList(bounds.rr));
                         if (((PagerWidget) fb.widget).getHeight() / 2 < r.centerY())
