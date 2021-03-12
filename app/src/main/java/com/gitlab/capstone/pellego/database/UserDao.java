@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego.database.entities;
+package com.gitlab.capstone.pellego.database;
 
 import androidx.room.Dao;
 
