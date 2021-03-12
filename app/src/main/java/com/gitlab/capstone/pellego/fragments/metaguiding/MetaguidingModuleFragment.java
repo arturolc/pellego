@@ -8,11 +8,14 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Layout;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +48,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
     private static AsyncUpdateText asyncUpdateText;
     private static AsyncUpdateReaderText asyncUpdateReaderText;
     private TextView mtext;
+    private ScrollView scroller;
     private String content = "";
     private ModuleViewModel moduleViewModel;
     private int idx =0;
@@ -131,6 +135,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
     public void initMetaguidingReader(PlayerWidget playerWidget, View v, Activity a) {
         currentView = (FragmentActivity) a;
         mtext = currentView.findViewById(R.id.mText);
+        scroller = currentView.findViewById(R.id.mscroller);
         this.playerWidget = playerWidget;
         color = a.getResources().getColor(R.color.light_blue);
     }
@@ -150,7 +155,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
 
     public String getNextPage() {
         String txt = "";
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             txt += playerWidget.selectNext();
         }
         return txt;
@@ -158,7 +163,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
 
     public String getPrevPage() {
         String txt = "";
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             txt += playerWidget.selectPrev();
         }
         return txt;
@@ -174,7 +179,6 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
 
     public void startPrev() {
         content = getPrevPage();
-        TextView mtext = currentView.findViewById(R.id.mText);
         mtext.setText(content);
         idx = 0;
         asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText(); // start thread on ok
@@ -199,8 +203,6 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
 
         @Override
         protected Integer doInBackground(Integer... ints) {
-            // This delay requires some fine tuning because word length varies
-            long delay = (long) (((60.0 / (float) ints[0]) * 70));
             String pageTxt = content;
             while (idx < pageTxt.length() - 9) {
                 runOnUiThread(new Runnable() {
@@ -211,6 +213,8 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
                             String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
                             if (currFragment.contains("MetaguidingModuleFragment") || (currFragment.contains("ReaderFragment") && PlayerWidget.playing)) {
                                 mtext.setText(Html.fromHtml(pageTxt.substring(0, idx) + "<u><font color='" + color + "'>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9)));
+                                Layout layout = mtext.getLayout();
+                                scroller.smoothScrollTo(0, layout.getLineTop(layout.getLineForOffset(idx)));
                             }
                         }
                     }
@@ -223,7 +227,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
                     return 0;
                 }
                 try {
-                    Thread.sleep(delay);
+                    Thread.sleep((long) (((60.0 / (float) PlayerWidget.wpm) * 70)));
                 } catch (InterruptedException e) {
                     cancel(true);
                     e.printStackTrace();
