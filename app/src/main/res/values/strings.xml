@@ -625,7 +625,11 @@ dangerous behavior</item>
     <string name="description_text_size">The default text size displayed in the reader</string>
     <string name="default_text_size">medium</string>
     <string name="title_wpm">WPM</string>
+    <string name="title_words_read">Words Read</string>
     <string name="description_wpm">The default wpm used in the reader</string>
+    <string name="title_today">Today</string>
+    <string name="title_last_week">Last Week</string>
+    <string name="title_last_year">Last Year</string>
 
 
 </resources>

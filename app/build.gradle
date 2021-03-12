@@ -47,6 +47,10 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -112,10 +116,12 @@ dependencies {
     // Optional -- Mockito framework
     testImplementation 'androidx.test.ext:junit:1.1.1'
 
-    // splash screen animation
+    // splash screen and progress reports animation
     // https://lottiefiles.com/
     implementation "com.airbnb.android:lottie:3.6.1"
 
+    //MPAndroidCharts
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 
