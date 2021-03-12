@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amplifyframework.core.Amplify;
 import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.R;
@@ -75,6 +76,12 @@ public class LoginFragment extends Fragment {
                         password.getText().toString(),
                         success -> {
                             Log.i("AUTHENTICATION", success.toString());
+                            AWSMobileClient mobileClient = (AWSMobileClient) Amplify.Auth.getPlugin("awsCognitoAuthPlugin").getEscapeHatch();
+                            try {
+                                Log.i("AUTHENTICATION", mobileClient.getTokens().getIdToken().getTokenString());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             Intent i = new Intent(getActivity(), MainActivity.class);
                             startActivity(i);
                             getActivity().finish();

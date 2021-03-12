@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
@@ -80,6 +81,8 @@ public class SplashActivity extends AppCompatActivity {
                     Log.e("AmplifyQuickstart", error.toString());
                 }
         );
+
+
 
         // delay transition to home activity with splash screen
         new Handler().postDelayed(new Runnable() {
