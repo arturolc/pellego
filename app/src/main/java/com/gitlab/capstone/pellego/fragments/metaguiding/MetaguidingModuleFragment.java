@@ -214,7 +214,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
                             if (currFragment.contains("MetaguidingModuleFragment") || (currFragment.contains("ReaderFragment") && PlayerWidget.playing)) {
                                 mtext.setText(Html.fromHtml(pageTxt.substring(0, idx) + "<u><font color='" + color + "'>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9)));
                                 Layout layout = mtext.getLayout();
-                                scroller.smoothScrollTo(0, layout.getLineTop(layout.getLineForOffset(idx)));
+                                scroller.smoothScrollTo(0, layout.getLineBottom(layout.getLineForOffset(idx)));
                             }
                         }
                     }
