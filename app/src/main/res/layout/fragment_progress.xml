@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?colorPrimary"
+    android:background="?colorPrimaryDark"
     tools:context="com.gitlab.capstone.pellego.fragments.progress.ProgressFragment">
 
     <ScrollView
@@ -41,7 +41,7 @@
                 android:id="@+id/text_today_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Today"
+                android:text="@string/title_today"
                 android:textColor="@color/white"
                 android:layout_alignBottom="@+id/progress_animation"
                 android:layout_marginTop="5dp"
@@ -59,7 +59,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Words Read"
+                android:text="@string/title_words_read"
+                android:textSize="10sp"
+                android:textColor="@color/white"
                 android:layout_below="@+id/text_today_title"
                 android:layout_toLeftOf="@+id/centerShim"/>
 
@@ -68,7 +70,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:textColor="@color/green"
                 android:text="118"
+                android:textSize="18sp"
                 android:layout_below="@+id/today_words_read_label"
                 android:layout_toLeftOf="@+id/centerShim"/>
 
@@ -76,26 +80,30 @@
                 android:id="@+id/today_wpm_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:layout_toRightOf="@+id/centerShim"
                 android:layout_below="@+id/text_today_title"
-                android:text="WPM" />
+                android:text="@string/title_wpm" />
 
             <TextView
                 android:id="@+id/today_wpm_description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:textColor="@color/purple"
                 android:layout_toRightOf="@+id/centerShim"
                 android:layout_below="@+id/today_wpm_label"
-                android:text="236" />
+                android:text="236"
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/text_last_week_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:text="Last Week"
+                android:text="@string/title_last_week"
                 android:textColor="@color/white"
                 android:layout_below="@+id/today_words_read_description"
                 android:layout_marginLeft="5dp" />
@@ -105,7 +113,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Words Read"
+                android:text="@string/title_words_read"
+                android:textSize="10sp"
+                android:textColor="@color/white"
                 android:layout_below="@+id/text_last_week_title"
                 android:layout_toLeftOf="@+id/centerShim"/>
 
@@ -115,6 +125,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="118"
+                android:textColor="@color/green"
+                android:textSize="18sp"
                 android:layout_below="@+id/last_week_words_read_label"
                 android:layout_toLeftOf="@+id/centerShim"/>
 
@@ -123,328 +135,94 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textSize="10sp"
+                android:textColor="@color/white"
                 android:layout_toRightOf="@+id/centerShim"
                 android:layout_below="@+id/text_last_week_title"
-                android:text="WPM" />
+                android:text="@string/title_wpm" />
 
             <TextView
                 android:id="@+id/last_week_wpm_description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:textColor="@color/purple"
                 android:layout_toRightOf="@+id/centerShim"
                 android:layout_below="@+id/last_week_wpm_label"
-                android:text="236" />
+                android:text="236"
+                android:textSize="18sp" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/last_week_barChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:layout_below="@+id/last_week_wpm_description"/>
 
             <TextView
-                android:id="@+id/text_lifetime_title"
+                android:id="@+id/text_last_year_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:text="Lifetime"
+                android:text="@string/title_last_year"
                 android:textColor="@color/white"
-                android:layout_below="@+id/last_week_words_read_description"
+                android:layout_below="@+id/last_week_barChart"
                 android:layout_marginLeft="5dp" />
 
             <TextView
-                android:id="@+id/lifetime_words_read_label"
+                android:id="@+id/last_year_words_read_label"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Words Read"
-                android:layout_below="@+id/text_lifetime_title"
+                android:text="@string/title_words_read"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:layout_below="@+id/text_last_year_title"
                 android:layout_toLeftOf="@+id/centerShim"/>
 
             <TextView
-                android:id="@+id/lifetime_words_read_description"
+                android:id="@+id/last_year_words_read_description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="118"
-                android:layout_below="@+id/lifetime_words_read_label"
+                android:textSize="18sp"
+                android:textColor="@color/green"
+                android:layout_below="@+id/last_year_words_read_label"
                 android:layout_toLeftOf="@+id/centerShim"/>
 
             <TextView
-                android:id="@+id/lifetime_wpm_label"
+                android:id="@+id/last_year_wpm_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="10sp"
                 android:layout_toRightOf="@+id/centerShim"
-                android:layout_below="@+id/text_lifetime_title"
-                android:text="WPM" />
+                android:layout_below="@+id/text_last_year_title"
+                android:text="@string/title_wpm" />
 
             <TextView
-                android:id="@+id/lifetime_wpm_description"
+                android:id="@+id/last_year_wpm_description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_toRightOf="@+id/centerShim"
-                android:layout_below="@+id/lifetime_wpm_label"
-                android:text="236" />
+                android:layout_below="@+id/last_year_wpm_label"
+                android:text="236"
+                android:textSize="18sp"
+                android:textColor="@color/purple"/>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/last_year_lineChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center"
+                android:layout_below="@+id/last_year_wpm_description"/>
 
         </RelativeLayout>
-
     </ScrollView>
-    <!--<GridLayout
-        android:id="@+id/gridLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="1"
-        android:padding="10dp"
-        android:rowCount="3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <TextView
-            android:id="@+id/text_progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:fontFamily="@font/bulletto_family"
-            android:gravity="center_horizontal"
-            android:textColor="@color/white"
-            android:textSize="40sp" />
-
-        <TextView
-            android:id="@+id/text_today_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_column="0"
-            android:text="Today" />
-    </GridLayout>
-
-    <GridLayout
-        android:id="@+id/gridLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="50dp"
-        android:columnCount="2"
-        android:padding="50dp"
-        android:rowCount="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout">
-
-        <GridLayout
-            android:id="@+id/gridLayout3"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:columnCount="1"
-            android:rowCount="2">
-
-            <TextView
-                android:id="@+id/words_read_label"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:text="Words Read" />
-
-            <TextView
-                android:id="@+id/words_read_description"
-                android:layout_row="1"
-                android:layout_column="0"
-                android:text="118" />
-        </GridLayout>
-
-        <GridLayout
-            android:id="@+id/gridLayout4"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:columnCount="1"
-            android:rowCount="2">
-
-            <TextView
-                android:id="@+id/wpm_label"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:text="WPM" />
-
-            <TextView
-                android:id="@+id/wpm_description"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_row="1"
-                android:layout_column="0"
-                android:text="236" />
-        </GridLayout>
-    </GridLayout>-->
-
-    <!--<TextView
-        android:id="@+id/text_last_week_title"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Last Week"/>
-    <TextView
-        android:id="@+id/text_lifetime_title"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Lifetime"/>-->
-
-    <!--<GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="546dp"
-            android:layout_below="@+id/text_progress"
-            android:layout_alignParentBottom="true"
-            android:columnCount="2"
-            android:rowCount="2"
-            android:padding="10dp"
-            >
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_rowWeight="1"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:backgroundTint="?colorAccent"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    >
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/prog7"
-                        />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Words Per Minute"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_rowWeight="1"
-                android:layout_column="1"
-                android:layout_columnWeight="1"
-                android:backgroundTint="?colorAccent"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/prog1" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Words Read"
-                        android:textStyle="bold"
-                        android:textSize="18sp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="1"
-                android:layout_rowWeight="1"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:backgroundTint="?colorAccent"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/prog6" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Modules Completed"
-                        android:textStyle="bold"
-                        android:textSize="18sp"/>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="1"
-                android:layout_rowWeight="1"
-                android:layout_column="1"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:backgroundTint="?colorAccent"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/prog8" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Quiz Scores"
-                        android:textStyle="bold"
-                        android:textSize="18sp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-        </GridLayout>-->
 </RelativeLayout>
