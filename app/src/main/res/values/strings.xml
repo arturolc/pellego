@@ -621,6 +621,7 @@ dangerous behavior</item>
         <item>medium</item>
         <item>large</item>
     </string-array>
+    <string name="title_progress_reports">Progress Reports</string>
     <string name="title_text_size">Text size</string>
     <string name="description_text_size">The default text size displayed in the reader</string>
     <string name="default_text_size">medium</string>
@@ -630,6 +631,30 @@ dangerous behavior</item>
     <string name="title_today">Today</string>
     <string name="title_last_week">Last Week</string>
     <string name="title_last_year">Last Year</string>
+    <string-array name="days_abbr">
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </string-array>
+    <string-array name="months_abbr">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
+    </string-array>
+
 
 
 </resources>

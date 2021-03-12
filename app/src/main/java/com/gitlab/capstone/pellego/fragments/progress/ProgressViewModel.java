@@ -4,6 +4,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.App;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**********************************************
     Chris Bordoy
 
@@ -20,5 +28,99 @@ public class ProgressViewModel extends ViewModel {
 
     public LiveData<String> getText() {
         return mText;
+    }
+
+    public String[] getTodayValues() {
+        String[] todayValues = {"118", "236"};
+
+        return todayValues;
+    }
+
+    public String[] getLastWeekValues() {
+        String[] lastWeekValues = {"588", "255"};
+
+        return lastWeekValues;
+    }
+
+    public String[] getLastYearValues() {
+        String[] lastYearValues = {"1529", "420"};
+
+        return lastYearValues;
+    }
+
+    public ArrayList<String> getDaysList() {
+        ArrayList<String> listOfDays = new ArrayList<>();
+        Collections.addAll(listOfDays, App.getAppResources().getStringArray(R.array.days_abbr));
+
+        return listOfDays;
+    }
+
+    public ArrayList<String> getMonthsList() {
+        ArrayList<String> listOfMonths = new ArrayList<>();
+        Collections.addAll(listOfMonths, App.getAppResources().getStringArray(R.array.months_abbr));
+
+        return listOfMonths;
+    }
+    
+    public ArrayList<BarEntry> getMockLastWeekWordsReadData() {
+        ArrayList<BarEntry> wordsReadEntries = new ArrayList<>();
+        wordsReadEntries.add(new BarEntry(1,890));
+        wordsReadEntries.add(new BarEntry(2,600));
+        wordsReadEntries.add(new BarEntry(3,550));
+        wordsReadEntries.add(new BarEntry(4,533));
+        wordsReadEntries.add(new BarEntry(5,620));
+        wordsReadEntries.add(new BarEntry(6,420));
+        wordsReadEntries.add(new BarEntry(7,666));
+
+        return wordsReadEntries;
+    }
+
+    public ArrayList<BarEntry> getMockLastWeekWpmData() {
+        ArrayList<BarEntry> wpmEntries = new ArrayList<>();
+        wpmEntries.add(new BarEntry(1,540));
+        wpmEntries.add(new BarEntry(2,230));
+        wpmEntries.add(new BarEntry(3,297));
+        wpmEntries.add(new BarEntry(4,89));
+        wpmEntries.add(new BarEntry(5,444));
+        wpmEntries.add(new BarEntry(6,33));
+        wpmEntries.add(new BarEntry(7,111));
+
+        return wpmEntries;
+    }
+
+    public ArrayList<Entry> getMockLastYearWordsReadData() {
+        ArrayList<Entry> wordsReadEntries = new ArrayList<>();
+        wordsReadEntries.add(new Entry(1, 233));
+        wordsReadEntries.add(new Entry(2, 120));
+        wordsReadEntries.add(new Entry(3, 450));
+        wordsReadEntries.add(new Entry(4, 500));
+        wordsReadEntries.add(new Entry(5, 80));
+        wordsReadEntries.add(new Entry(6, 145));
+        wordsReadEntries.add(new Entry(7, 278));
+        wordsReadEntries.add(new Entry(8, 333));
+        wordsReadEntries.add(new Entry(9, 444));
+        wordsReadEntries.add(new Entry(10, 580));
+        wordsReadEntries.add(new Entry(11, 700));
+        wordsReadEntries.add(new Entry(12, 490));
+
+        return wordsReadEntries;
+    }
+
+    public ArrayList<Entry> getMockLastYearWpmData() {
+        ArrayList<Entry> wpmEntries = new ArrayList<>();
+        wpmEntries.add(new Entry(1, 100));
+        wpmEntries.add(new Entry(2, 120));
+        wpmEntries.add(new Entry(3, 140));
+        wpmEntries.add(new Entry(4, 150));
+        wpmEntries.add(new Entry(5, 180));
+        wpmEntries.add(new Entry(6, 200));
+        wpmEntries.add(new Entry(7, 190));
+        wpmEntries.add(new Entry(8, 125));
+        wpmEntries.add(new Entry(9, 175));
+        wpmEntries.add(new Entry(10, 195));
+        wpmEntries.add(new Entry(11, 205));
+        wpmEntries.add(new Entry(12, 211));
+
+        return wpmEntries;
     }
 }
