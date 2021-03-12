@@ -20,8 +20,5 @@
     <color name="dark_grey">#181818</color>
     <color name="grey_transparent">#774D5656</color>
     <color name="dark_blue">#21618C</color>
-    <color name="pink">#FF69B4</color>
     <color name="purple">#800080</color>
-    <color name="green_transparent">#33FF99</color>
-
 </resources>

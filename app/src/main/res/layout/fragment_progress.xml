@@ -43,7 +43,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/title_today"
                 android:textColor="@color/white"
-                android:layout_alignBottom="@+id/progress_animation"
+                android:layout_below="@+id/progress_animation"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp" />
 
@@ -71,7 +71,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="@color/green"
-                android:text="118"
                 android:textSize="18sp"
                 android:layout_below="@+id/today_words_read_label"
                 android:layout_toLeftOf="@+id/centerShim"/>
@@ -95,7 +94,6 @@
                 android:textColor="@color/purple"
                 android:layout_toRightOf="@+id/centerShim"
                 android:layout_below="@+id/today_wpm_label"
-                android:text="236"
                 android:textSize="18sp"/>
 
             <TextView
@@ -124,7 +122,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="118"
                 android:textColor="@color/green"
                 android:textSize="18sp"
                 android:layout_below="@+id/last_week_words_read_label"
@@ -149,7 +146,6 @@
                 android:textColor="@color/purple"
                 android:layout_toRightOf="@+id/centerShim"
                 android:layout_below="@+id/last_week_wpm_label"
-                android:text="236"
                 android:textSize="18sp" />
 
             <com.github.mikephil.charting.charts.BarChart
@@ -186,7 +182,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="118"
                 android:textSize="18sp"
                 android:textColor="@color/green"
                 android:layout_below="@+id/last_year_words_read_label"
@@ -210,7 +205,6 @@
                 android:gravity="center"
                 android:layout_toRightOf="@+id/centerShim"
                 android:layout_below="@+id/last_year_wpm_label"
-                android:text="236"
                 android:textSize="18sp"
                 android:textColor="@color/purple"/>
 
