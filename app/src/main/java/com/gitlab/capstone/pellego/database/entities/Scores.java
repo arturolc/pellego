@@ -1,16 +1,13 @@
-package com.gitlab.capstone.pellego.database;
+package com.gitlab.capstone.pellego.database.entities;
 
-import androidx.navigation.dynamicfeatures.Constants;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import com.gitlab.capstone.pellego.database.TimestampConverter;
+
 import java.util.Date;
 
 @Entity(foreignKeys = {@ForeignKey(entity = LM_Quiz.class, parentColumns = "QID", childColumns = "Quiz"),

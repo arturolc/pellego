@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego.database;
+package com.gitlab.capstone.pellego.database.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

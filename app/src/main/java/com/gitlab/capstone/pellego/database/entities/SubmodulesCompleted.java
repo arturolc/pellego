@@ -1,4 +1,4 @@
-package com.gitlab.capstone.pellego.database;
+package com.gitlab.capstone.pellego.database.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -7,11 +7,11 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = {@ForeignKey(entity = Users.class, parentColumns = "UID", childColumns = "UID"),
-        @ForeignKey(entity = Books.class, parentColumns = "BID", childColumns = "BID")})
-public class Library {
+    @ForeignKey(entity = LM_Submodule.class, parentColumns = "SMID", childColumns = "SMID")})
+public class SubmodulesCompleted {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "LID")
-    private int lID;
+    @ColumnInfo(name = "SCID")
+    private int scID;
 
     @ColumnInfo(name = "UID")
     @NonNull
@@ -19,23 +19,23 @@ public class Library {
 
     @ColumnInfo
     @NonNull
-    private int BID;
+    private int sMID;
 
-    public Library(int lID, int uID, int BID) {
-        this.lID = lID;
+    public SubmodulesCompleted(int scID, int uID, int sMID) {
+        this.scID = scID;
         this.uID = uID;
-        this.BID = BID;
+        this.sMID = sMID;
     }
 
-    public int getlID() {
-        return lID;
+    public int getScID() {
+        return scID;
     }
 
     public int getuID() {
         return uID;
     }
 
-    public int getBID() {
-        return BID;
+    public int getsMID() {
+        return sMID;
     }
 }
