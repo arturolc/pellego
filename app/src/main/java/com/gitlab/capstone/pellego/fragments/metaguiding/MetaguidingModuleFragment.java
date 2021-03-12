@@ -1,5 +1,6 @@
 package com.gitlab.capstone.pellego.fragments.metaguiding;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
@@ -138,6 +139,10 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         scroller = currentView.findViewById(R.id.mscroller);
         this.playerWidget = playerWidget;
         color = a.getResources().getColor(R.color.light_blue);
+        if (content == "") {
+            content = getNextPage();
+        }
+        mtext.setText(content);
     }
 
     public void play() {
@@ -146,7 +151,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         }
         if (PlayerWidget.playing) {
             mtext.setText(content);
-            idx = 0;
+//            idx = 0;
             asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText(); // start thread on ok
             asyncUpdateReaderText.execute(PlayerWidget.wpm);
         }
@@ -155,7 +160,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
 
     public String getNextPage() {
         String txt = "";
-        for (int i = 0; i < 20; i++) {
+        while(txt.length() < 1500) {
             txt += playerWidget.selectNext();
         }
         return txt;
@@ -163,22 +168,26 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
 
     public String getPrevPage() {
         String txt = "";
-        for (int i = 0; i < 20; i++) {
+        while(txt.length() < 1500) {
             txt += playerWidget.selectPrev();
         }
         return txt;
     }
 
     public void startNext() {
-        content = getNextPage();
+        if (content == "") {
+            content = getNextPage();
+        }
         mtext.setText(content);
-        idx = 0;
+        idx += 200;
         asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText(); // start thread on ok
         asyncUpdateReaderText.execute(PlayerWidget.wpm);
     }
 
     public void startPrev() {
-        content = getPrevPage();
+        if (content == "") {
+            content = getNextPage();
+        }
         mtext.setText(content);
         idx = 0;
         asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText(); // start thread on ok
@@ -196,6 +205,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
     private class AsyncUpdateReaderText extends AsyncTask<Integer, String, Integer> {
 
         TextView mtext;
+        String[] words = content.split (" "); // split on non-word characters
         @Override
         protected void onPreExecute() {
             mtext = currentView.findViewById(R.id.mText);
@@ -204,24 +214,23 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         @Override
         protected Integer doInBackground(Integer... ints) {
             String pageTxt = content;
+            Layout layout = mtext.getLayout();
+            NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+            String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
             while (idx < pageTxt.length() - 9) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if (!Thread.interrupted()) {
-                            NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-                            String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
                             if (currFragment.contains("MetaguidingModuleFragment") || (currFragment.contains("ReaderFragment") && PlayerWidget.playing)) {
-                                mtext.setText(Html.fromHtml(pageTxt.substring(0, idx) + "<u><font color='" + color + "'>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9)));
-                                Layout layout = mtext.getLayout();
-                                scroller.smoothScrollTo(0, layout.getLineBottom(layout.getLineForOffset(idx)));
+                                mtext.setText(Html.fromHtml(pageTxt.substring(0, idx) + "<u>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9)));
+                                ObjectAnimator.ofInt(scroller, "scrollY",  layout.getLineBottom(layout.getLineForOffset(idx))).setDuration(100).start();
+
                             }
                         }
                     }
                 });
                 idx++;
-                NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-                String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
                 if (!currFragment.contains("MetaguidingModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing)) {
                     cancel(true);
                     return 0;
@@ -241,7 +250,11 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
             try {
                 if (PlayerWidget.playing) {
                     content = getNextPage();
+                    mtext.setText(content);
                     idx = 0;
+                    Layout layout = mtext.getLayout();
+                    scroller.scrollTo(0, layout.getLineBottom(layout.getLineForOffset(idx)));
+                    Thread.sleep(500);
                     asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText();
                     asyncUpdateReaderText.execute(PlayerWidget.wpm);
                 }

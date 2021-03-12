@@ -26,22 +26,18 @@
         app:layout_constraintTop_toBottomOf="@id/linear">
 
 
-
             <TextView
                 android:id="@+id/mText"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:paddingTop="15dp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:layout_marginTop="20dp"
                 android:paddingBottom="15dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:textSize="20dp"
-                android:background="@drawable/rounded_background"
                 android:backgroundTint="@color/white_transparent"
                 tools:ignore="MissingConstraints">
             </TextView>
