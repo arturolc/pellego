@@ -505,12 +505,14 @@ public class PlayerWidget {
                             case R.id.rsvp_menu_item:
                                 activity.findViewById(R.id.rsvp_reader).setVisibility(View.VISIBLE);
                                 activity.findViewById(R.id.main_view).setVisibility(INVISIBLE);
+                                activity.findViewById(R.id.metaguiding_reader).setVisibility(INVISIBLE);
                                 rsvpModuleFragment = new RsvpModuleFragment();
                                 rsvpModuleFragment.initRsvpReader(PlayerWidget.this, v, activity);
                                 break;
                             case R.id.metaguiding_menu_item:
                                 activity.findViewById(R.id.metaguiding_reader).setVisibility(View.VISIBLE);
                                 activity.findViewById(R.id.main_view).setVisibility(INVISIBLE);
+                                activity.findViewById(R.id.rsvp_reader).setVisibility(INVISIBLE);
                                 metaguidingModuleFragment = new MetaguidingModuleFragment();
                                 metaguidingModuleFragment.initMetaguidingReader(PlayerWidget.this, activity, getReaderTheme());
                                 break;
