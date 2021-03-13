@@ -38,6 +38,8 @@ import com.gitlab.capstone.pellego.widgets.PlayerWidget;
 
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 
+import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
+import static android.os.Process.THREAD_PRIORITY_MORE_FAVORABLE;
 import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
 
 /**********************************************
@@ -166,7 +168,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
 
     public String getNextPage() {
         String txt = "";
-        while(txt.length() < 1000) {
+        while(txt.length() < 1500) {
             txt += playerWidget.selectNext();
         }
         return txt;
@@ -174,7 +176,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
 
     public String getPrevPage() {
         String txt = "";
-        while(txt.length() < 1000) {
+        while(txt.length() < 1500) {
             txt += playerWidget.selectPrev();
         }
         return txt;
@@ -222,7 +224,6 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
     private class AsyncUpdateReaderText extends AsyncTask<Integer, String, Integer> {
 
         TextView mtext;
-        String[] words = content.split (" "); // split on non-word characters
         @Override
         protected void onPreExecute() {
             mtext = currentView.findViewById(R.id.mText);
@@ -232,12 +233,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         protected Integer doInBackground(Integer... ints) {
             String pageTxt = content;
             Layout layout = mtext.getLayout();
-            scroller.fullScroll(ScrollView.FOCUS_UP);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
             NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
             while (idx < pageTxt.length() - 9) {
                 runOnUiThread(new Runnable() {
@@ -246,7 +242,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
                         if (!Thread.interrupted()) {
                             if ((PlayerWidget.playing)) {
                                 mtext.setText(Html.fromHtml("<font color='#FFFFFF'>"+ pageTxt.substring(0, idx) + "<u>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9) +  "</font>"));
-                                ObjectAnimator.ofInt(scroller, "scrollY",  layout.getLineBottom(layout.getLineForOffset(idx))).setDuration(100).start();
+                                ObjectAnimator.ofInt(scroller, "scrollY",  layout.getLineBottom(layout.getLineForOffset(idx))).setDuration(((700 / PlayerWidget.wpm) - 1) * 10).start();
                             }
                         }
                     }
@@ -276,6 +272,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
                     idx = 0;
                     asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText();
                     asyncUpdateReaderText.execute(PlayerWidget.wpm);
+
                 }
             } catch (Exception e) {
                 Log.d("error" , e.getMessage());
