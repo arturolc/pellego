@@ -668,6 +668,18 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_reader, container, false);
+        SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
+        switch(prefs.getString(App.READER_THEME, "")) {
+            case "Theme_Dark":
+                v.setBackgroundColor(0x444444);
+                break;
+            case "Theme_Light":
+                v.setBackgroundColor(0xFFFFFF);
+                break;
+            default:
+                v.setBackgroundColor(0xF5E5CC);
+                break;
+        }
         final MainActivity main = (MainActivity) getActivity();
         main.findViewById(R.id.bottom_nav_view).setVisibility(INVISIBLE);
 
