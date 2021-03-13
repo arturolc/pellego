@@ -671,7 +671,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
         switch(prefs.getString(App.READER_THEME, "")) {
             case "Theme_Dark":
-                v.setBackgroundColor(0x444444);
+                v.setBackgroundColor(0x000000);
                 break;
             case "Theme_Light":
                 v.setBackgroundColor(0xFFFFFF);

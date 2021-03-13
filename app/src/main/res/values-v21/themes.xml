@@ -17,6 +17,7 @@
         <item name="itemIconTint">@color/bottom_nav_color_light</item>
         <item name="alertDialogTheme">@style/DialogThemeLight</item>
         <item name="colorOnSecondary">@color/gray_hover</item>
+        <item name="colorButtonNormal">@color/white</item>
         <item name="android:itemTextAppearance">@style/LightActionBar.MenuTextStyle</item>
 
         <item name="android:statusBarColor">@color/light_blue</item>
@@ -67,6 +68,7 @@
         <item name="itemTextColor">@color/bottom_nav_color_dark</item>
         <item name="itemIconTint">@color/bottom_nav_color_dark</item>
         <item name="alertDialogTheme">@style/DialogThemeDark</item>
+        <item name="colorButtonNormal">@color/light_blue</item>
 
         <!-- Styles -->
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
