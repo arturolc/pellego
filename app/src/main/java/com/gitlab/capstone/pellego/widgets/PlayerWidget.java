@@ -2,6 +2,7 @@ package com.gitlab.capstone.pellego.widgets;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -25,11 +26,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.preference.PreferenceManager;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.Toast;
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Reflow;
 import com.gitlab.capstone.pellego.app.Storage;
@@ -481,8 +484,15 @@ public class PlayerWidget {
                 popup.getMenuInflater()
                         .inflate(R.menu.techniques_menu, popup.getMenu());
                 if (playing) {
-                    rsvpModuleFragment.stop();
-                    metaguidingModuleFragment.stop();
+                    switch (technique_id) {
+                        case R.id.rsvp_menu_item:
+                            rsvpModuleFragment.stop();
+                        case R.id.metaguiding_menu_item:
+                            metaguidingModuleFragment.stop();
+                            break;
+                        default:
+                            break;
+                    }
                     togglePlay(playButton);
                 }
                 //registering popup with OnMenuItemClickListener
@@ -502,7 +512,7 @@ public class PlayerWidget {
                                 activity.findViewById(R.id.metaguiding_reader).setVisibility(View.VISIBLE);
                                 activity.findViewById(R.id.main_view).setVisibility(INVISIBLE);
                                 metaguidingModuleFragment = new MetaguidingModuleFragment();
-                                metaguidingModuleFragment.initMetaguidingReader(PlayerWidget.this, v, activity);
+                                metaguidingModuleFragment.initMetaguidingReader(PlayerWidget.this, activity, getReaderTheme());
                                 break;
                             case R.id.none_menu_item:
                                 ReaderFragment.showOptionsMenu();
@@ -553,6 +563,11 @@ public class PlayerWidget {
         f.setPadding(dp20, dp20, dp20, dp20);
         this.view = f;
         this.panel = round;
+    }
+
+    private String getReaderTheme() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        return prefs.getString(App.READER_THEME, "");
     }
 
 

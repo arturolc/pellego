@@ -3,6 +3,7 @@ package com.gitlab.capstone.pellego.fragments.metaguiding;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -26,12 +27,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceManager;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.fragments.metaguiding.defaultPager.DefaultPagerFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 import com.gitlab.capstone.pellego.widgets.PlayerWidget;
+
+import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 
 import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
 
@@ -57,6 +62,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
     public TextView contentTextView;
     private FragmentActivity currentView;
     private PlayerWidget playerWidget;
+    private String txtColor;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -133,12 +139,13 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
     }
 
 
-    public void initMetaguidingReader(PlayerWidget playerWidget, View v, Activity a) {
+    public void initMetaguidingReader(PlayerWidget playerWidget, Activity a, String theme) {
         currentView = (FragmentActivity) a;
         mtext = currentView.findViewById(R.id.mText);
         scroller = currentView.findViewById(R.id.mscroller);
         this.playerWidget = playerWidget;
         color = a.getResources().getColor(R.color.light_blue);
+        configColorProfile(theme);
         if (content == "") {
             content = getNextPage();
         }
@@ -151,7 +158,6 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         }
         if (PlayerWidget.playing) {
             mtext.setText(content);
-//            idx = 0;
             asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText(); // start thread on ok
             asyncUpdateReaderText.execute(PlayerWidget.wpm);
         }
@@ -199,6 +205,17 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
     }
 
 
+    public void configColorProfile(String thm) {
+        if (thm.equals("Theme_Dark")) {
+            txtColor = "#FFFFFF";
+        } else if (thm.equals("Theme_Light")) {
+            txtColor = "#000000";
+        } else {
+            txtColor = "#000000";
+        }
+    }
+
+
     /**
      * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
      */
@@ -223,7 +240,8 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
                     public void run() {
                         if (!Thread.interrupted()) {
                             if (currFragment.contains("MetaguidingModuleFragment") || (currFragment.contains("ReaderFragment") && PlayerWidget.playing)) {
-                                mtext.setText(Html.fromHtml(pageTxt.substring(0, idx) + "<u>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9)));
+                                String str = "<font color='#FFFFFF'>"+ pageTxt.substring(0, idx) + "<u>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9) +  "</font>";
+                                mtext.setText(Html.fromHtml(str));
                                 ObjectAnimator.ofInt(scroller, "scrollY",  layout.getLineBottom(layout.getLineForOffset(idx))).setDuration(100).start();
 
                             }
