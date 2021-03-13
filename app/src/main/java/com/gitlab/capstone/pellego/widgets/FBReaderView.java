@@ -1144,7 +1144,7 @@ public class FBReaderView extends RelativeLayout {
         if (shared.getString(App.READER_THEME, "").equals(getContext().getString(R.string.Theme_Dark))) {
             config.setValue(app.ViewOptions.ColorProfileName, ColorProfile.NIGHT);
             ColorProfile p = ColorProfile.get(ColorProfile.NIGHT);
-            config.setValue(p.BackgroundOption, 0x444444);
+            config.setValue(p.BackgroundOption, 0x000000);
 
         } else if (shared.getString(App.READER_THEME, "").equals(getContext().getString(R.string.Theme_Light))) {
             config.setValue(app.ViewOptions.ColorProfileName, ColorProfile.DAY);

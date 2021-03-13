@@ -62,7 +62,9 @@ public class MetaguidingModuleFragment extends BaseFragment {
     private int color;
     private FragmentActivity currentView;
     private PlayerWidget playerWidget;
-    private String txtColor;
+    private int txtColor;
+    private int backgroundColor;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -140,10 +142,12 @@ public class MetaguidingModuleFragment extends BaseFragment {
     public void initMetaguidingReader(PlayerWidget playerWidget, Activity a, String theme) {
         currentView = (FragmentActivity) a;
         mtext = currentView.findViewById(R.id.mText);
+        configColorProfile(theme);
+        mtext.setBackgroundColor(backgroundColor);
+        mtext.setTextColor(txtColor);
         scroller = currentView.findViewById(R.id.mscroller);
         this.playerWidget = playerWidget;
         color = a.getResources().getColor(R.color.light_blue);
-        configColorProfile(theme);
         if (content == "") {
             content = getNextPage();
         }
@@ -164,7 +168,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
 
     public String getNextPage() {
         String txt = "";
-        while(txt.length() < 1500) {
+        while(txt.length() < 1000) {
             txt += playerWidget.selectNext();
         }
         return txt;
@@ -172,7 +176,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
 
     public String getPrevPage() {
         String txt = "";
-        while(txt.length() < 1500) {
+        while(txt.length() < 1000) {
             txt += playerWidget.selectPrev();
         }
         return txt;
@@ -190,7 +194,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
 
     public void startPrev() {
         if (content == "") {
-            content = getNextPage();
+            content = getPrevPage();
         }
         mtext.setText(content);
         idx = 0;
@@ -205,14 +209,16 @@ public class MetaguidingModuleFragment extends BaseFragment {
 
     public void configColorProfile(String thm) {
         if (thm.equals("Theme_Dark")) {
-            txtColor = "#FFFFFF";
+            txtColor = Color.parseColor("#FFFFFF");
+            backgroundColor = Color.parseColor("#000000");
         } else if (thm.equals("Theme_Light")) {
-            txtColor = "#000000";
+            txtColor = Color.parseColor("#000000");
+            backgroundColor = Color.parseColor("#FFFFFF");
         } else {
-            txtColor = "#000000";
+            txtColor = Color.parseColor("#000000");
+            backgroundColor = Color.parseColor("#F5E5CC");
         }
     }
-
 
     /**
      * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
@@ -238,7 +244,8 @@ public class MetaguidingModuleFragment extends BaseFragment {
                     public void run() {
                         if (!Thread.interrupted()) {
                             if (currFragment.contains("MetaguidingModuleFragment") || (currFragment.contains("ReaderFragment") && PlayerWidget.playing)) {
-                                mtext.setText(Html.fromHtml("<font color='#FFFFFF'>"+ pageTxt.substring(0, idx) + "<u>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9) +  "</font>"));
+                                String txt = "<font color='" + Integer.toHexString(txtColor) + "'>"+ pageTxt.substring(0, idx) + "<u>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9) +  "</font>";
+                                mtext.setText(Html.fromHtml(txt));
                                 ObjectAnimator.ofInt(scroller, "scrollY",  layout.getLineBottom(layout.getLineForOffset(idx))).setDuration(((700 / PlayerWidget.wpm) - 1) * 10).start();
                             }
                         }
