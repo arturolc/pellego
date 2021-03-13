@@ -232,23 +232,22 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         protected Integer doInBackground(Integer... ints) {
             String pageTxt = content;
             Layout layout = mtext.getLayout();
+            scroller.scrollTo(0, layout.getLineBottom(layout.getLineForOffset(idx)));
             NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-            String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
             while (idx < pageTxt.length() - 9) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if (!Thread.interrupted()) {
-                            if (currFragment.contains("MetaguidingModuleFragment") || (currFragment.contains("ReaderFragment") && PlayerWidget.playing)) {
-                                String str = "<font color='#FFFFFF'>"+ pageTxt.substring(0, idx) + "<u>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9) +  "</font>";
-                                mtext.setText(Html.fromHtml(str));
+                            if ((PlayerWidget.playing)) {
+                                mtext.setText(Html.fromHtml("<font color='#FFFFFF'>"+ pageTxt.substring(0, idx) + "<u>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9) +  "</font>"));
                                 ObjectAnimator.ofInt(scroller, "scrollY",  layout.getLineBottom(layout.getLineForOffset(idx))).setDuration(100).start();
-
                             }
                         }
                     }
                 });
                 idx++;
+                String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
                 if (!currFragment.contains("MetaguidingModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing)) {
                     cancel(true);
                     return 0;
@@ -270,9 +269,6 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
                     content = getNextPage();
                     mtext.setText(content);
                     idx = 0;
-                    Layout layout = mtext.getLayout();
-                    scroller.scrollTo(0, layout.getLineBottom(layout.getLineForOffset(idx)));
-                    Thread.sleep(500);
                     asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText();
                     asyncUpdateReaderText.execute(PlayerWidget.wpm);
                 }

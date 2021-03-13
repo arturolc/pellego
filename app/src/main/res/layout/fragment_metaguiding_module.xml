@@ -37,6 +37,7 @@
                 android:textColor="@color/white"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:background="?colorPrimary"
                 android:textSize="20dp"
                 tools:ignore="MissingConstraints">
             </TextView>
