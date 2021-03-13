@@ -31,7 +31,7 @@ import androidx.preference.PreferenceManager;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
-import com.gitlab.capstone.pellego.fragments.metaguiding.defaultPager.DefaultPagerFragment;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 import com.gitlab.capstone.pellego.widgets.PlayerWidget;
@@ -48,20 +48,18 @@ import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiTh
  Metaguiding fragment that guides users through text with an underlined
  or highlighted word
  **********************************************/
-public class MetaguidingModuleFragment extends DefaultPagerFragment {
+public class MetaguidingModuleFragment extends BaseFragment {
 
     private View root;
     private Integer wpm;
     public String difficulty;
-    private static AsyncUpdateText asyncUpdateText;
     private static AsyncUpdateReaderText asyncUpdateReaderText;
     private TextView mtext;
     private ScrollView scroller;
     private String content = "";
     private ModuleViewModel moduleViewModel;
-    private int idx =0;
+    private int idx = 0;
     private int color;
-    public TextView contentTextView;
     private FragmentActivity currentView;
     private PlayerWidget playerWidget;
     private String txtColor;
@@ -72,14 +70,13 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         // Set the displayed text to the appropriate level
         switch(difficulty) {
             case "beginner":
-                getArguments().putInt("string_id", R.string.content_metaguiding_beginner);
+                content = getString(R.string.content_metaguiding_beginner);
                 break;
             case "intermediate":
-                getArguments().putInt("string_id", R.string.content_metaguiding_intermediate);
+                content = getString(R.string.content_metaguiding_intermediate);
                 break;
             case "advanced":
-                getArguments().putInt("string_id", R.string.content_metaguiding_advanced);
-
+                content = getString(R.string.content_metaguiding_advanced);
                 break;
         }
         super.onCreateView(inflater, container, savedInstanceState);
@@ -88,11 +85,10 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
 
-        root = inflater.inflate(R.layout.fragment_default_pager, container, false);
-        mPager = root.findViewById(R.id.pager);
-        mProgressBar = root.findViewById(R.id.progress_bar);
-        mPageIndicator = root.findViewById(R.id.pageIndicator);
-        ViewGroup textviewPage = (ViewGroup) getLayoutInflater().inflate(R.layout.fragment_pager_container, (ViewGroup) getActivity().getWindow().getDecorView().findViewById(android.R.id.content) , false);
+        root = inflater.inflate(R.layout.fragment_metaguiding_module, container, false);
+        mtext = root.findViewById(R.id.mText);
+        scroller = root.findViewById(R.id.mscroller);
+        mtext.setText(content);
 
         if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
         return root;
@@ -132,8 +128,8 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                asyncUpdateText = new AsyncUpdateText(); // start thread on ok
-                asyncUpdateText.execute(wpm);
+                asyncUpdateReaderText = new AsyncUpdateReaderText(); // start thread on ok
+                asyncUpdateReaderText.execute(wpm);
             }
         });
         dialog.show();
@@ -236,11 +232,12 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
             NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
             while (idx < pageTxt.length() - 9) {
+                String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if (!Thread.interrupted()) {
-                            if ((PlayerWidget.playing)) {
+                            if (currFragment.contains("MetaguidingModuleFragment") || (currFragment.contains("ReaderFragment") && PlayerWidget.playing)) {
                                 mtext.setText(Html.fromHtml("<font color='#FFFFFF'>"+ pageTxt.substring(0, idx) + "<u>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9) +  "</font>"));
                                 ObjectAnimator.ofInt(scroller, "scrollY",  layout.getLineBottom(layout.getLineForOffset(idx))).setDuration(((700 / PlayerWidget.wpm) - 1) * 10).start();
                             }
@@ -248,7 +245,6 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
                     }
                 });
                 idx++;
-                String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
                 if (!currFragment.contains("MetaguidingModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing)) {
                     cancel(true);
                     return 0;
@@ -272,75 +268,19 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
                     idx = 0;
                     asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText();
                     asyncUpdateReaderText.execute(PlayerWidget.wpm);
-
-                }
-            } catch (Exception e) {
-                Log.d("error" , e.getMessage());
-            }
-
-        }
-    }
-
-    /**
-     *
-     * Asynchronously updates the text in the metaguiding fragment at the provided WPM rate
-     */
-    private class AsyncUpdateText extends AsyncTask<Integer, String, Integer> {
-
-        @RequiresApi(api = Build.VERSION_CODES.O)
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.N)
-        @Override
-        protected Integer doInBackground(Integer... ints) {
-            // This delay requires some fine tuning because word length varies
-            long delay = (long) (((60.0 / (float) ints[0]) * 70));
-            contentTextView = (TextView) root.findViewById(R.id.mText);
-            for (int i = 0; i < mPages.size(); i++) {
-                String pageTxt = getContents(i);
-                showPageIndicator(i);
-                while (idx < pageTxt.length() - 9) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (!Thread.interrupted()) {
-                                NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-                                if (navHostFragment.getChildFragmentManager().getFragments().get(0).toString().contains("MetaguidingModuleFragment")) {
-                                    contentTextView.setText(Html.fromHtml(pageTxt.substring(0, idx) + "<u><font color='" + getResources().getColor(R.color.light_blue) + "'>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9)));
-                                }
-                            }
-                        }
-                    });
-                    idx++;
-                    NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-                    if (!navHostFragment.getChildFragmentManager().getFragments().get(0).toString().contains("MetaguidingModuleFragment")) {
-                        cancel(true);
-                        return 0;
-                    }
+                } else {
                     try {
-                        Thread.sleep(delay);
-                    } catch (InterruptedException e) {
-                        cancel(true);
-                        e.printStackTrace();
+                        showQuizPopupDialog();
+                    } catch (Exception e) {
+                        Log.d("error" , e.getMessage());
                     }
                 }
-                idx = 0;
-            }
-            return 0;
-        }
-
-        @Override
-        protected void onPostExecute(Integer result) {
-            try {
-                showQuizPopupDialog();
             } catch (Exception e) {
                 Log.d("error" , e.getMessage());
             }
 
         }
     }
+
 }
 
