@@ -166,7 +166,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
 
     public String getNextPage() {
         String txt = "";
-        while(txt.length() < 1500) {
+        while(txt.length() < 1000) {
             txt += playerWidget.selectNext();
         }
         return txt;
@@ -174,7 +174,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
 
     public String getPrevPage() {
         String txt = "";
-        while(txt.length() < 1500) {
+        while(txt.length() < 1000) {
             txt += playerWidget.selectPrev();
         }
         return txt;
@@ -232,7 +232,12 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         protected Integer doInBackground(Integer... ints) {
             String pageTxt = content;
             Layout layout = mtext.getLayout();
-            scroller.scrollTo(0, layout.getLineBottom(layout.getLineForOffset(idx)));
+            scroller.fullScroll(ScrollView.FOCUS_UP);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
             while (idx < pageTxt.length() - 9) {
                 runOnUiThread(new Runnable() {
