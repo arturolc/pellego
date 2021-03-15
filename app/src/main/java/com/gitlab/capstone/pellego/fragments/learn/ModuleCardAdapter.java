@@ -2,11 +2,13 @@ package com.gitlab.capstone.pellego.fragments.learn;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gitlab.capstone.pellego.R;
@@ -24,11 +26,16 @@ public class ModuleCardAdapter extends BaseAdapter {
 
     Context mContext;
     ArrayList<ModuleListItemModel> mNavItems;
+    int[] gradients = new int[] {0xFFF9D976, 0xFFF39F86, 0xFF20BF55, 0xFF01BAEF, 0xFFD2CCC4, 0xFF2F4353, 0xFFF53844, 0xFF42378F, 0xFF37D5D6, 0xFF36096D};
+    // yellow, blue, grey, redblue,
+    int idx;
 
     public ModuleCardAdapter(Context context, ArrayList<ModuleListItemModel> navItems) {
         mContext = context;
         mNavItems = navItems;
+        idx = 0;
     }
+
 
     @Override
     public int getCount() {
@@ -52,11 +59,19 @@ public class ModuleCardAdapter extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.layout_module_card, null);
+            view = inflater.inflate(R.layout.module_technique_item, null);
         }
         else {
             view = convertView;
         }
+
+        GradientDrawable gd = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[] {gradients[idx],gradients[idx + 1]});
+        gd.setCornerRadius(45f);
+        gd.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
+        idx += 2;
+        view.setBackgroundDrawable(gd);
 
         TextView titleView = (TextView) view.findViewById(R.id.title);
         TextView subtitleView = (TextView) view.findViewById(R.id.subTitle);
