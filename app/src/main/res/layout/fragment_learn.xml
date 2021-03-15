@@ -13,18 +13,6 @@
         android:orientation="vertical"
         android:background="?colorPrimary">
 
-        <TextView
-            android:id="@+id/text_learn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autoSizeTextType="uniform"
-            app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/bulletto_family"
-            android:textColor="@color/white"
-            android:textSize="50dp" />
-
         <ProgressBar
             android:id="@+id/loading_spinner"
             style="?android:attr/progressBarStyle"
@@ -36,8 +24,27 @@
             tools:ignore="MissingConstraints" />
 
 
-            <!-- Here is the inserted layout -->
-            <include layout="@layout/container_submodules"/>
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/module_card_pane"
+            app:layout_constraintTop_toTopOf="@+id/toolbar"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_nav_view"
+            android:layout_alignParentBottom="true"
+            android:verticalSpacing="10dp"
+            android:gravity="center_horizontal"
+            android:horizontalSpacing="10dp"
+            tools:listitem="@layout/layout_module_card"
+            android:listSelector="@drawable/rounded_background"
+            android:numColumns="2"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            >
+        </GridView>
+
+        <!-- Here is the inserted layout -->
+<!--            <include layout="@layout/container_submodules"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

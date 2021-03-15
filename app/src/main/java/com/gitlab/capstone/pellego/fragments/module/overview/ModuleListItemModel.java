@@ -8,6 +8,9 @@ package com.gitlab.capstone.pellego.fragments.module.overview;
 public class ModuleListItemModel {
     private String mTitle;
     private String mSubtitle;
+
+
+    private String description;
     private int mIcon;
 
     public ModuleListItemModel(String title, String subtitle, int icon) {
@@ -16,10 +19,18 @@ public class ModuleListItemModel {
         mIcon = icon;
     }
 
+    public ModuleListItemModel(String title, String subtitle, int icon, String description) {
+        mTitle = title;
+        mSubtitle = subtitle;
+        mIcon = icon;
+        this.description = description;
+    }
+
     public ModuleListItemModel(String title) {
         mTitle = title;
         mSubtitle = "";
         mIcon = 0;
+        description = "";
     }
 
 
@@ -45,5 +56,14 @@ public class ModuleListItemModel {
 
     public void setIcon(int mIcon) {
         this.mIcon = mIcon;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

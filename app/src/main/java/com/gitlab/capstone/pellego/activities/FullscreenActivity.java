@@ -1,6 +1,7 @@
 package com.gitlab.capstone.pellego.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -30,6 +31,7 @@ import com.amplifyframework.core.Amplify;
 import com.github.axet.androidlibrary.activities.AppCompatFullscreenThemeActivity;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
+import com.gitlab.capstone.pellego.fragments.auth.AuthActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -97,7 +99,12 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
                             },
                             error -> Log.e("AUTHENTICATION", error.toString())
                     );
-                } else {
+                } else if (id == R.id.nav_settings) {
+                    Intent i = new Intent(FullscreenActivity.this,
+                            SettingsActivity.class);
+                    startActivity(i);
+                }
+                else {
                     navController.navigate(id);
                     drawer.close();
                 }
