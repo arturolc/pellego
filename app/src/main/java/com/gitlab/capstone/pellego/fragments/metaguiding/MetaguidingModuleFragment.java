@@ -168,7 +168,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
 
     public String getNextPage() {
         String txt = "";
-        while(txt.length() < 1000) {
+        while(txt.length() < 900) {
             txt += playerWidget.selectNext();
         }
         return txt;
@@ -176,7 +176,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
 
     public String getPrevPage() {
         String txt = "";
-        while(txt.length() < 1000) {
+        while(txt.length() < 900) {
             txt += playerWidget.selectPrev();
         }
         return txt;
@@ -235,7 +235,9 @@ public class MetaguidingModuleFragment extends BaseFragment {
         protected Integer doInBackground(Integer... ints) {
             String pageTxt = content;
             Layout layout = mtext.getLayout();
+            mtext.setText(Html.fromHtml(pageTxt));
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+            scroller.scrollTo(0, layout.getLineTop(layout.getLineForOffset(idx)));
             NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
             while (idx < pageTxt.length() - 9) {
                 String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
@@ -244,15 +246,20 @@ public class MetaguidingModuleFragment extends BaseFragment {
                     public void run() {
                         if (!Thread.interrupted()) {
                             if (currFragment.contains("MetaguidingModuleFragment") || (currFragment.contains("ReaderFragment") && PlayerWidget.playing)) {
-                                String txt = "<font color='" + Integer.toHexString(txtColor) + "'>"+ pageTxt.substring(0, idx) + "<u>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9) +  "</font>";
-                                mtext.setText(Html.fromHtml(txt));
-                                ObjectAnimator.ofInt(scroller, "scrollY",  layout.getLineBottom(layout.getLineForOffset(idx))).setDuration(((700 / PlayerWidget.wpm) - 1) * 10).start();
+                                try {
+                                    String txt = "<font color='" + Integer.toHexString(txtColor) + "'>"+ pageTxt.substring(0, idx) + "<u>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9) +  "</font>";
+                                    mtext.setText(Html.fromHtml(txt));
+                                    ObjectAnimator.ofInt(scroller, "scrollY",  layout.getLineBottom(layout.getLineForOffset(idx))).setDuration(0).start();
+                                } catch (Exception e) {
+                                    cancel(true);
+                                }
+
                             }
                         }
                     }
                 });
                 idx++;
-                if (!currFragment.contains("MetaguidingModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing)) {
+                if (!currFragment.contains("MetaguidingModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing) || idx > pageTxt.length()) {
                     cancel(true);
                     return 0;
                 }

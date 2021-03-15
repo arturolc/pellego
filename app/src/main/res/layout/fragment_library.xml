@@ -16,15 +16,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:id="@+id/lib_linear_layout">
-    <TextView
-        android:id="@+id/text_library"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/bulletto_family"
-        android:text="@string/title_library"
-        android:gravity="center_horizontal"
-        android:textColor="@color/white"
-        android:textSize="50dp" />
         <TextView
             android:id="@+id/text_empty_library"
             android:layout_width="match_parent"

@@ -171,7 +171,6 @@ public class RsvpModuleFragment extends BaseFragment {
 
         @Override
         protected Integer doInBackground(Integer... ints) {
-            long delay = (long) ((60.0 / (float) ints[0]) * 1000);
             for (String word : words) {
                 // Verify that user has not navigated away from the RSVP fragment
                 NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
@@ -184,7 +183,7 @@ public class RsvpModuleFragment extends BaseFragment {
                     if (PlayerWidget.playing) content = content.replaceFirst(word, "");
                 }
                 try {
-                    Thread.sleep(delay);
+                    Thread.sleep((long) ((60.0 / (float) PlayerWidget.wpm) * 1000));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     return 0;
