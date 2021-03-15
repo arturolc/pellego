@@ -29,6 +29,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -150,6 +151,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         SeekBar fontsizepopup_seek;
         View fontsizepopup_minus;
         View fontsizepopup_plus;
+        public static int txtColor;
 
         public FontsPopup(Context context) {
             fontsize_popup = LayoutInflater.from(context).inflate(R.layout.font_popup, new FrameLayout(context), false);
@@ -165,6 +167,9 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                     setFont(fonts.ff.get(position).name);
                 }
             };
+            TypedValue typedValue = new TypedValue();
+            context.getTheme().resolveAttribute(R.attr.colorSecondary, typedValue, true);
+            txtColor = typedValue.data;
             fontsFrame = fontsize_popup.findViewById(R.id.fonts_frame);
             fontsText = (TextView) fontsize_popup.findViewById(R.id.fonts_text);
             fontsText.setText(context.getString(R.string.add_more_fonts_to, FONTS.toString()));
@@ -269,6 +274,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         public FontHolder(View itemView) {
             super(itemView);
             tv = (CheckedTextView) itemView.findViewById(android.R.id.text1);
+            tv.setTextColor(FontsPopup.txtColor);
         }
     }
 

@@ -142,7 +142,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
                 setNumColumns(1);
                 layout = R.layout.book_list_item;
             } else {
-                setNumColumns(4);
+                setNumColumns(3);
                 layout = R.layout.book_item;
             }
         }
