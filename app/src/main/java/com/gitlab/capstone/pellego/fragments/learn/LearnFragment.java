@@ -60,12 +60,11 @@ public class LearnFragment extends BaseFragment {
 
     private ModuleViewModel moduleViewModel;
     private ListView moduleList;
-    private GridView moduleGrid;
     private ArrayList<ModuleListItemModel> mNavItems;
     ProgressBar spinner;
     NavigationView modulesView;
     LibraryFragment.FragmentHolder holder;
-    
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -74,13 +73,12 @@ public class LearnFragment extends BaseFragment {
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         View root = inflater.inflate(R.layout.fragment_learn, container, false);
-//        moduleList = root.findViewById(R.id.nav_module_list);
-        moduleGrid = root.findViewById(R.id.module_card_pane);
+        moduleList = root.findViewById(R.id.nav_module_list);
         spinner = root.findViewById(R.id.loading_spinner);
         // TODO: show spinner while modules load in
         spinner.setVisibility(View.GONE);
 
-//        modulesView = root.findViewById(R.id.nav_module_overview);
+        modulesView = root.findViewById(R.id.nav_module_overview);
         // Query DB for learning modules
         getApiData(inflater, container, new ResponseCallBack() {
             @Override
@@ -107,7 +105,7 @@ public class LearnFragment extends BaseFragment {
             }
         });
         // Drawer Item click listeners
-        moduleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
@@ -151,7 +149,7 @@ public class LearnFragment extends BaseFragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String url ="http://54.176.198.201:5000/modules";
 //        spinner.setVisibility(View.GONE);
-//        modulesView.setVisibility(View.VISIBLE);
+        modulesView.setVisibility(View.VISIBLE);
         useDefaultData();
         // Request a json response from the provided URL.
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
@@ -191,20 +189,23 @@ public class LearnFragment extends BaseFragment {
      */
     private void useDefaultData() {
         //TODO use shared preferences to populate list using data stored locally on the device
-        mNavItems.add(new ModuleListItemModel("Rapid Serial Visual Presentation", retrieveModuleProgress("rsvp"), R.color.transparent_blue, getString(R.string.short_description_rsvp)));
-        mNavItems.add(new ModuleListItemModel("Clump Reading", retrieveModuleProgress("clumpreading"),R.color.transparent_blue, getString(R.string.short_description_clump_reading)));
-        mNavItems.add(new ModuleListItemModel("Reducing Subvocalization", retrieveModuleProgress("reducingsubvocalization"), R.color.transparent_blue, getString(R.string.short_description_reducing_subvocalization)));
-        mNavItems.add(new ModuleListItemModel("Meta Guiding", retrieveModuleProgress("metaguiding"), R.color.transparent_blue, getString(R.string.short_description_metaguiding)));
+        mNavItems.add(new ModuleListItemModel("Rapid Serial Visual Presentation", retrieveModuleProgress("rsvp"), R.drawable.ic_rsvp, getString(R.string.short_description_rsvp)));
+        mNavItems.add(new ModuleListItemModel("Clump Reading", retrieveModuleProgress("clumpreading"),R.drawable.ic_clump_reading, getString(R.string.short_description_clump_reading)));
+        mNavItems.add(new ModuleListItemModel("Reducing Subvocalization", retrieveModuleProgress("reducingsubvocalization"), R.drawable.ic_reducing_subvocalization, getString(R.string.short_description_reducing_subvocalization)));
+        mNavItems.add(new ModuleListItemModel("Meta Guiding", retrieveModuleProgress("metaguiding"), R.drawable.ic_meta_guiding, getString(R.string.short_description_metaguiding)));
+        mNavItems.add(new ModuleListItemModel("Pre-Reading", retrieveModuleProgress("prereading"), R.drawable.ic_pre_reading, getString(R.string.short_description_metaguiding)));
+
         // Populate the Navigation Drawer with options
         ModuleCardAdapter adapter = new ModuleCardAdapter(getContext(), mNavItems);
-        moduleGrid.setAdapter(adapter);
+        moduleList.setAdapter(adapter);
+
     }
 
     private String retrieveModuleProgress(String technique) {
         // TODO: query DB for module progress and default to local data if connection can't be established
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         String key = technique + "_submodule_progress";
-        return sharedPref.getInt(key, 0) + " of 4 completed";
+        return sharedPref.getInt(key, 0) + "of 4 completed";
     }
 
 

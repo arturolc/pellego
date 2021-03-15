@@ -63,7 +63,7 @@ public class ModuleOverviewFragment extends BaseFragment {
         moduleList = root.findViewById(R.id.nav_module_list);
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
-        modulesView = root.findViewById(R.id.nav_module_overview);
+        modulesView = root.findViewById(R.id.nav_submodule_overview);
         modulesView.setVisibility(View.VISIBLE);
 
         // menu Item click listeners
