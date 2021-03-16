@@ -82,6 +82,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
 public class ReaderFragment extends Fragment implements MainActivity.SearchListener, SharedPreferences.OnSharedPreferenceChangeListener, FullscreenActivity.FullscreenListener, MainActivity.OnBackPressed {
     public static final String TAG = ReaderFragment.class.getSimpleName();
@@ -188,7 +189,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         }
 
         public void loadFonts() {
-            fontsFrame.setVisibility(View.VISIBLE);
+            fontsFrame.setVisibility(VISIBLE);
             fontsList.setAdapter(fonts);
             fonts.addBasics();
             List<File> files = new ArrayList<>();
@@ -422,7 +423,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             if (t.nodes.isEmpty())
                 ex.setVisibility(INVISIBLE);
             else
-                ex.setVisibility(View.VISIBLE);
+                ex.setVisibility(VISIBLE);
             ex.setImageResource(t.expanded ? R.drawable.ic_expand_less_black_24dp : R.drawable.ic_expand_more_blue_24dp);
             h.itemView.setPadding(20 * t.level, 0, 0, 0);
             if (t.selected) {
@@ -659,8 +660,6 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         }
         return null;
     }
-
-
 
 
 

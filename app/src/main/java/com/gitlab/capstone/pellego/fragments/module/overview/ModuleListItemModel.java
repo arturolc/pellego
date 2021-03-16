@@ -1,5 +1,7 @@
 package com.gitlab.capstone.pellego.fragments.module.overview;
 
+import android.graphics.drawable.Drawable;
+
 /**********************************************
  Eli Hebdon
 
@@ -8,18 +10,16 @@ package com.gitlab.capstone.pellego.fragments.module.overview;
 public class ModuleListItemModel {
     private String mTitle;
     private String mSubtitle;
-
-
     private String description;
-    private int mIcon;
+    private Drawable mIcon;
 
-    public ModuleListItemModel(String title, String subtitle, int icon) {
+    public ModuleListItemModel(String title, String subtitle, Drawable icon) {
         mTitle = title;
         mSubtitle = subtitle;
         mIcon = icon;
     }
 
-    public ModuleListItemModel(String title, String subtitle, int icon, String description) {
+    public ModuleListItemModel(String title, String subtitle, Drawable icon, String description) {
         mTitle = title;
         mSubtitle = subtitle;
         mIcon = icon;
@@ -29,7 +29,7 @@ public class ModuleListItemModel {
     public ModuleListItemModel(String title) {
         mTitle = title;
         mSubtitle = "";
-        mIcon = 0;
+        mIcon = null;
         description = "";
     }
 
@@ -50,11 +50,11 @@ public class ModuleListItemModel {
         this.mSubtitle = mSubtitle;
     }
 
-    public int getIcon() {
+    public Drawable getIcon() {
         return mIcon;
     }
 
-    public void setIcon(int mIcon) {
+    public void setIcon(Drawable mIcon) {
         this.mIcon = mIcon;
     }
 

@@ -34,7 +34,7 @@
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="100dp"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:textSize="10dp"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/button_wpm"
@@ -73,7 +73,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="100dp"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/button_technique"
                 android:scrollHorizontally="true"
@@ -95,8 +95,8 @@
             android:id="@+id/bottom_nav_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
             android:background="?colorAccent"
+            android:layout_gravity="bottom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

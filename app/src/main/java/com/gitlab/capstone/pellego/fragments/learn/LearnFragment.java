@@ -2,9 +2,12 @@ package com.gitlab.capstone.pellego.fragments.learn;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,14 +15,18 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -66,6 +73,7 @@ public class LearnFragment extends BaseFragment {
     LibraryFragment.FragmentHolder holder;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mNavItems = new ArrayList<>();
@@ -77,7 +85,7 @@ public class LearnFragment extends BaseFragment {
         spinner = root.findViewById(R.id.loading_spinner);
         // TODO: show spinner while modules load in
         spinner.setVisibility(View.GONE);
-
+        super.setupHeader(root);
         modulesView = root.findViewById(R.id.nav_module_overview);
         // Query DB for learning modules
         getApiData(inflater, container, new ResponseCallBack() {
@@ -87,16 +95,16 @@ public class LearnFragment extends BaseFragment {
                 // Add icons and subtitles for modules manually for now
                 System.out.println("response " + response);
                 // TODO: query DB for icons, titles, etc
-                mNavItems.get(0).setIcon(R.drawable.ic_rsvp);
-                mNavItems.get(0).setSubtitle("1 out of 4 submodules completed");
-                mNavItems.get(1).setIcon(R.drawable.ic_clump_reading);
-                mNavItems.get(1).setSubtitle("0 out of 4 submodules completed");
-                mNavItems.get(2).setIcon(R.drawable.ic_reducing_subvocalization);
-                mNavItems.get(2).setSubtitle("0 out of 4 submodules completed");
-                mNavItems.get(3).setIcon(R.drawable.ic_meta_guiding);
-                mNavItems.get(3).setSubtitle("0 out of 4 submodules completed");
-                mNavItems.get(4).setIcon(R.drawable.ic_pre_reading);
-                mNavItems.get(4).setSubtitle("0 out of 4 submodules completed");
+//                mNavItems.get(0).setIcon(R.drawable.ic_rsvp);
+//                mNavItems.get(0).setSubtitle("1 out of 4 submodules completed");
+//                mNavItems.get(1).setIcon(R.drawable.ic_clump_reading);
+//                mNavItems.get(1).setSubtitle("0 out of 4 submodules completed");
+//                mNavItems.get(2).setIcon(R.drawable.ic_reducing_subvocalization);
+//                mNavItems.get(2).setSubtitle("0 out of 4 submodules completed");
+//                mNavItems.get(3).setIcon(R.drawable.ic_meta_guiding);
+//                mNavItems.get(3).setSubtitle("0 out of 4 submodules completed");
+//                mNavItems.get(4).setIcon(R.drawable.ic_pre_reading);
+//                mNavItems.get(4).setSubtitle("0 out of 4 submodules completed");
 
                 // Populate the Navigation Drawer with options
                 Log.d("checking", mNavItems.toString());
@@ -113,6 +121,7 @@ public class LearnFragment extends BaseFragment {
                 switch(position) {
                     case 0: // rsvp
                         moduleViewModel.setTechnique("rsvp");
+                        moduleViewModel.setGradient(new int[] {0xFFF9D976, 0xFFF39F86});
                         moduleViewModel.setViewModelVars(getResources().getString(R.string.title_rsvp), getResources().getString(R.string.description_rsvp), R.id.nav_rsvp_intro, R.array.intro_rsvp_content, R.array.intro_rsvp_header, R.id.nav_rsvp_module);
                         navController.navigate(R.id.nav_module_overview);
                         break;
@@ -121,6 +130,7 @@ public class LearnFragment extends BaseFragment {
                         break;
                     case 3: // metaguiding
                         moduleViewModel.setTechnique("metaguiding");
+                        moduleViewModel.setGradient(new int[] {0xFFF53844, 0xFF42378F});
                         moduleViewModel.setViewModelVars(getResources().getString(R.string.title_meta_guiding), getResources().getString(R.string.description_metaguiding), R.id.nav_metaguiding_intro, R.array.intro_metaguiding_content, R.array.intro_metaguiding_header, R.id.nav_metaguiding_module);
                         navController.navigate(R.id.nav_module_overview);
                         break;
@@ -189,11 +199,11 @@ public class LearnFragment extends BaseFragment {
      */
     private void useDefaultData() {
         //TODO use shared preferences to populate list using data stored locally on the device
-        mNavItems.add(new ModuleListItemModel("Rapid Serial Visual Presentation", retrieveModuleProgress("rsvp"), R.drawable.ic_rsvp, getString(R.string.short_description_rsvp)));
-        mNavItems.add(new ModuleListItemModel("Clump Reading", retrieveModuleProgress("clumpreading"),R.drawable.ic_clump_reading, getString(R.string.short_description_clump_reading)));
-        mNavItems.add(new ModuleListItemModel("Reducing Subvocalization", retrieveModuleProgress("reducingsubvocalization"), R.drawable.ic_reducing_subvocalization, getString(R.string.short_description_reducing_subvocalization)));
-        mNavItems.add(new ModuleListItemModel("Meta Guiding", retrieveModuleProgress("metaguiding"), R.drawable.ic_meta_guiding, getString(R.string.short_description_metaguiding)));
-        mNavItems.add(new ModuleListItemModel("Pre-Reading", retrieveModuleProgress("prereading"), R.drawable.ic_pre_reading, getString(R.string.short_description_metaguiding)));
+        mNavItems.add(new ModuleListItemModel("Rapid Serial Visual Presentation", retrieveModuleProgress("rsvp"), getResources().getDrawable(R.drawable.ic_rsvp), getString(R.string.short_description_rsvp)));
+        mNavItems.add(new ModuleListItemModel("Clump Reading", retrieveModuleProgress("clumpreading"),getResources().getDrawable(R.drawable.ic_clump_reading), getString(R.string.short_description_clump_reading)));
+        mNavItems.add(new ModuleListItemModel("Reducing Subvocalization", retrieveModuleProgress("reducingsubvocalization"), getResources().getDrawable(R.drawable.ic_reducing_subvocalization), getString(R.string.short_description_reducing_subvocalization)));
+        mNavItems.add(new ModuleListItemModel("Meta Guiding", retrieveModuleProgress("metaguiding"), getResources().getDrawable(R.drawable.ic_meta_guiding), getString(R.string.short_description_metaguiding)));
+        mNavItems.add(new ModuleListItemModel("Pre-Reading", retrieveModuleProgress("prereading"), getResources().getDrawable(R.drawable.ic_pre_reading), getString(R.string.short_description_prereading)));
 
         // Populate the Navigation Drawer with options
         ModuleCardAdapter adapter = new ModuleCardAdapter(getContext(), mNavItems);
@@ -205,7 +215,7 @@ public class LearnFragment extends BaseFragment {
         // TODO: query DB for module progress and default to local data if connection can't be established
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         String key = technique + "_submodule_progress";
-        return sharedPref.getInt(key, 0) + "of 4 completed";
+        return sharedPref.getInt(key, 0) + " of 4 completed";
     }
 
 

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gitlab.capstone.pellego.R;
@@ -59,12 +58,13 @@ public class ModuleCardAdapter extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.module_technique_item, null);
+            view = inflater.inflate(R.layout.module_item, null);
         }
         else {
             view = convertView;
         }
 
+        if (idx == 10) idx = 0;
         GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
                 new int[] {gradients[idx],gradients[idx + 1]});
@@ -81,7 +81,7 @@ public class ModuleCardAdapter extends BaseAdapter {
 
         titleView.setText( mNavItems.get(position).getTitle() );
         subtitleView.setText( mNavItems.get(position).getSubtitle() );
-        iconView.setImageResource(mNavItems.get(position).getIcon() );
+        iconView.setImageDrawable(mNavItems.get(position).getIcon() );
         descr.setText( mNavItems.get(position).getDescription() );
 
         return view;

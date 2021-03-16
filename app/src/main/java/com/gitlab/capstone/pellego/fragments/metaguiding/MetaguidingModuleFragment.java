@@ -66,6 +66,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
     private int backgroundColor;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         difficulty = getArguments().getString("difficulty");
@@ -88,10 +89,11 @@ public class MetaguidingModuleFragment extends BaseFragment {
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
 
         root = inflater.inflate(R.layout.fragment_metaguiding_module, container, false);
+        super.setupHeader(root);
         mtext = root.findViewById(R.id.mText);
+        mtext.setBackgroundColor(Color.WHITE);
         scroller = root.findViewById(R.id.mscroller);
         mtext.setText(content);
-
         if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
         return root;
     }

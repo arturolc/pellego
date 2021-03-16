@@ -8,23 +8,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context="com.gitlab.capstone.pellego.fragments.library.LibraryFragment">
 
-    <include
-        android:id="@+id/library_header"
-        layout="@layout/library_header" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:id="@+id/lib_linear_layout">
-        <TextView
-            android:id="@+id/text_empty_library"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:visibility="invisible"
-            android:gravity="center_horizontal"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/grid"
         android:layout_width="match_parent"
@@ -34,7 +24,19 @@
         android:scrollbars="vertical"
         android:stretchMode="columnWidth"
         android:verticalSpacing="2dp" />
+        <TextView
+            android:id="@+id/text_empty_library"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:visibility="invisible"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
     </LinearLayout>
+    <include
+        android:id="@+id/library_header"
+        layout="@layout/library_header" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_import_book"
         android:layout_width="wrap_content"

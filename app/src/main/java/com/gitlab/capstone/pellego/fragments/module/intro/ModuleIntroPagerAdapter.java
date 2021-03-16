@@ -1,9 +1,11 @@
 package com.gitlab.capstone.pellego.fragments.module.intro;
 
 import android.content.res.Resources;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 
 /***********************************************
  *  Chris Bordoy
@@ -23,6 +26,7 @@ public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPag
     private Resources res;
     private String[] content;
     private String[] headers;
+    private int[] bkg_colors;
     int[][] color_icon_matrix = new int[][] {
             {R.color.pastel_blue},
             {R.color.pastel_purple},
@@ -37,9 +41,10 @@ public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPag
         return new ModuleIntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_page, parent, false));
     }
 
-    public void setContentAndHeaders(int headers, int content, Resources res) {
-        this.content = res.getStringArray(content);
-        this.headers = res.getStringArray(headers);
+    public void setContentAndHeaders(ModuleViewModel moduleViewModel, Resources res) {
+        bkg_colors = moduleViewModel.getGradient();
+        this.content = res.getStringArray(moduleViewModel.getIntro_content_id());
+        this.headers = res.getStringArray(moduleViewModel.getIntro_header_id());
         this.res = res;
     }
 
@@ -47,7 +52,11 @@ public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPag
     public void onBindViewHolder(@NonNull ModuleIntroViewHolder holder, int position) {
         holder.header_text_view.setText(headers[position]);
         holder.description_text_view.setText(content[position]);
-        holder.container.setBackgroundResource(color_icon_matrix[position][0]);
+        GradientDrawable gd = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[] {bkg_colors[0],bkg_colors[1]});
+        gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
+        holder.container.setBackgroundDrawable(gd);
     }
 
     @Override
@@ -58,13 +67,13 @@ public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPag
     public class ModuleIntroViewHolder extends RecyclerView.ViewHolder {
         TextView header_text_view;
         TextView description_text_view;
-        RelativeLayout container;
+        LinearLayout container;
 
         public ModuleIntroViewHolder(@NonNull View itemView) {
             super(itemView);
             header_text_view = (TextView)itemView.findViewById(R.id.header_text_view);
             description_text_view = (TextView)itemView.findViewById(R.id.description_text_view);
-            container = (RelativeLayout)itemView.findViewById(R.id.item_page_container);
+            container = (LinearLayout )itemView.findViewById(R.id.item_page_container);
         }
     }
 }

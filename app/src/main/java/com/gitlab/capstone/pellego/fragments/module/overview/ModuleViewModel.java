@@ -20,6 +20,7 @@ public class ModuleViewModel extends ViewModel {
     private int intro_content_id;
     private int module_id;
     public String technique;
+    private int[] gradient;
 
     public String getTechnique() {
         return technique;
@@ -81,6 +82,14 @@ public class ModuleViewModel extends ViewModel {
         this.module_id = module_id;
     }
 
+    public int[] getGradient() {
+        return gradient;
+    }
+
+    public void setGradient(int[] gradient) {
+        this.gradient = gradient;
+    }
+
     public ModuleViewModel() {
         showSubmodulePopupDialog = false;
         showPopupDialog = false;
@@ -88,6 +97,7 @@ public class ModuleViewModel extends ViewModel {
         moduleDescription = "";
         intro_id = -1;
         module_id = -1;
+        gradient = new int[] {};
     }
 
     public void clear() {
@@ -97,6 +107,7 @@ public class ModuleViewModel extends ViewModel {
         moduleDescription = "";
         intro_id = -1;
         module_id = -1;
+        gradient = new int[] {};
     }
 
     public void setViewModelVars(String title, String descr, int intro_id, int intro_content_id, int intro_header_id, int module_id) {

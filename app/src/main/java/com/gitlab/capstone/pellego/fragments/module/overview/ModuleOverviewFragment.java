@@ -1,16 +1,27 @@
 package com.gitlab.capstone.pellego.fragments.module.overview;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,6 +30,7 @@ import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.app.Plugin;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -38,6 +50,7 @@ public class ModuleOverviewFragment extends BaseFragment {
     private ListView moduleList;
     NavigationView modulesView;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         moduleViewModel =
@@ -50,6 +63,7 @@ public class ModuleOverviewFragment extends BaseFragment {
                 textView.setText(s);
             }
         });
+        this.setupHeader(root);
         mNavItems = new ArrayList<>();
         // Add nav items to the list of submodules
         mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_intro), getResources().getString(R.string.descr_module_intro), getDrawable("intro")));
@@ -63,7 +77,7 @@ public class ModuleOverviewFragment extends BaseFragment {
         moduleList = root.findViewById(R.id.nav_module_list);
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
-        modulesView = root.findViewById(R.id.nav_submodule_overview);
+        modulesView = root.findViewById(R.id.nav_module_overview);
         modulesView.setVisibility(View.VISIBLE);
 
         // menu Item click listeners
@@ -99,13 +113,34 @@ public class ModuleOverviewFragment extends BaseFragment {
         return root;
     }
 
-    public int getDrawable(String difficulty) {
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setupHeader(View root) {
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(moduleViewModel.getGradient()[0]);
+        toolbar.setTitle(null);
+        Window window = getActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(moduleViewModel.getGradient()[0]);
+        LinearLayout header = root.findViewById(R.id.module_header_container);
+        GradientDrawable gd = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[] {moduleViewModel.getGradient()[0], moduleViewModel.getGradient()[1]});
+        gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 0f, 0f, 90f, 90f});
+        gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
+        header.setBackgroundDrawable(gd);
+    }
+
+    public Drawable getDrawable(String difficulty) {
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         boolean complete = sharedPref.getBoolean(moduleViewModel.getTechnique() + "_" + difficulty + "_complete", false);
         if (complete) {
-           return  R.drawable.ic_checked_circle;
+            Drawable r = getResources().getDrawable(R.drawable.ic_checked_circle);
+            r.setColorFilter(moduleViewModel.getGradient()[1], PorterDuff.Mode.MULTIPLY);
+           return r;
         } else {
-            return  R.drawable.ic_empty_circle;
+            Drawable r = getResources().getDrawable(R.drawable.ic_empty_circle);
+            r.setColorFilter(moduleViewModel.getGradient()[1], PorterDuff.Mode.MULTIPLY);
+            return r;
         }
     }
 

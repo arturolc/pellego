@@ -2,6 +2,7 @@ package com.gitlab.capstone.pellego.fragments.module.intro;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -33,11 +36,13 @@ public class ModuleIntroFragment extends BaseFragment {
     ViewPager2 viewPager2;
     DotsIndicator dotsIndicator;
     Button btn_register;
-    private NavController navController;
     private SharedPreferences sharedPref;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(null);
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         View root = inflater.inflate(R.layout.fragment_module_intro, container, false);
@@ -47,11 +52,11 @@ public class ModuleIntroFragment extends BaseFragment {
         parent_view = root.findViewById(R.id.parent_view);
 
         btn_register = root.findViewById(R.id.rsvp_intro_finish_btn);
+        btn_register.setBackgroundColor(moduleViewModel.getGradient()[0]);
 
         //set data
         ModuleIntroPagerAdapter pagerAdapter = new ModuleIntroPagerAdapter();
-        pagerAdapter.setContentAndHeaders(moduleViewModel.getIntro_header_id(),
-                moduleViewModel.getIntro_content_id(),
+        pagerAdapter.setContentAndHeaders(moduleViewModel,
                 getResources());
         viewPager2.setAdapter(pagerAdapter);
 
