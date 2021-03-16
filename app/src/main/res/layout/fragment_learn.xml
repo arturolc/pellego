@@ -13,24 +13,35 @@
         android:orientation="vertical"
         android:background="?colorPrimary">
 
-        <ProgressBar
-            android:id="@+id/loading_spinner"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:visibility="visible"
-            tools:ignore="MissingConstraints" />
+<!--        <ProgressBar-->
+<!--            android:id="@+id/loading_spinner"-->
+<!--            style="?android:attr/progressBarStyle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:visibility="visible"-->
+<!--            tools:ignore="MissingConstraints" />-->
 
 
         <!-- Here is the inserted layout -->
-        <include
-            layout="@layout/container_modules"
+        <ListView
+            android:id="@+id/nav_module_list"
+            android:layout_width="match_parent"
+            android:backgroundTint="?colorPrimary"
+            android:choiceMode="singleChoice"
+            android:divider="?colorPrimary"
+            android:dividerHeight="26dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            tools:layout_editor_absoluteX="8dp"
+            android:layout_height="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

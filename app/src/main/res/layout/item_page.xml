@@ -1,75 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_page_container"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/module_header_container"-->
-<!--        android:background="@drawable/rounded_corner_background"-->
-<!--        android:layout_marginBottom="30dp"-->
-<!--        android:orientation="vertical">-->
-<!--        <TextView-->
-<!--            android:id="@+id/title_module_overview"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginTop="0dp"-->
-<!--            android:fontFamily="@font/bulletto_family"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:layout_marginEnd="8dp"-->
-<!--            android:gravity="center_horizontal"-->
-<!--            android:textSize="35dp" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/text_module_description"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:paddingTop="15dp"-->
-<!--            android:layout_marginTop="15dp"-->
-<!--            android:gravity="center"-->
-<!--            android:paddingBottom="15dp"-->
-<!--            android:textSize="14dp"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:paddingLeft="10dp"-->
-<!--            android:paddingRight="10dp"-->
-<!--            android:layout_marginBottom="5dp"-->
-<!--            android:layout_marginLeft="8dp"-->
-<!--            android:layout_marginRight="8dp">-->
-<!--        </TextView>-->
-<!--    </LinearLayout>-->
-
-
-
 
     <TextView
         android:id="@+id/header_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="?actionBarSize"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_gravity="center_horizontal"
-        android:text="what is rsvp"
+        app:layout_constraintHeight_percent="0.25"
         android:gravity="center"
+        android:text="what is rsvp"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="55sp" />
+        android:textSize="55sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/description_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center"
-        android:textColor="@color/white"
         android:autoSizeTextType="uniform"
-        android:textSize="26sp" />
+        android:gravity="center"
+        android:text="testtttttttt"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_text_view"
+        app:layout_constraintVertical_bias="0.202" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

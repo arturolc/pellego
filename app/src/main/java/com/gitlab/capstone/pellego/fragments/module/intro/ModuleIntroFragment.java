@@ -52,6 +52,7 @@ public class ModuleIntroFragment extends BaseFragment {
         parent_view = root.findViewById(R.id.parent_view);
 
         btn_register = root.findViewById(R.id.rsvp_intro_finish_btn);
+        btn_register.setBackground(getResources().getDrawable(R.drawable.rounded_background));
         btn_register.setBackgroundColor(moduleViewModel.getGradient()[0]);
 
         //set data

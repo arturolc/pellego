@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -77,8 +78,8 @@ public class ModuleOverviewFragment extends BaseFragment {
         moduleList = root.findViewById(R.id.nav_module_list);
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
-        modulesView = root.findViewById(R.id.nav_module_overview);
-        modulesView.setVisibility(View.VISIBLE);
+//        modulesView = root.findViewById(R.id.nav_module_overview);
+//        modulesView.setVisibility(View.VISIBLE);
 
         // menu Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -121,7 +122,7 @@ public class ModuleOverviewFragment extends BaseFragment {
         Window window = getActivity().getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(moduleViewModel.getGradient()[0]);
-        LinearLayout header = root.findViewById(R.id.module_header_container);
+        ConstraintLayout header = root.findViewById(R.id.module_header_container);
         GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
                 new int[] {moduleViewModel.getGradient()[0], moduleViewModel.getGradient()[1]});

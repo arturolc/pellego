@@ -82,11 +82,11 @@ public class LearnFragment extends BaseFragment {
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         View root = inflater.inflate(R.layout.fragment_learn, container, false);
         moduleList = root.findViewById(R.id.nav_module_list);
-        spinner = root.findViewById(R.id.loading_spinner);
+//        spinner = root.findViewById(R.id.loading_spinner);
         // TODO: show spinner while modules load in
-        spinner.setVisibility(View.GONE);
+//        spinner.setVisibility(View.GONE);
         super.setupHeader(root);
-        modulesView = root.findViewById(R.id.nav_module_overview);
+//        modulesView = root.findViewById(R.id.nav_module_overview);
         // Query DB for learning modules
         getApiData(inflater, container, new ResponseCallBack() {
             @Override
@@ -159,7 +159,7 @@ public class LearnFragment extends BaseFragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String url ="http://54.176.198.201:5000/modules";
 //        spinner.setVisibility(View.GONE);
-        modulesView.setVisibility(View.VISIBLE);
+//        modulesView.setVisibility(View.VISIBLE);
         useDefaultData();
         // Request a json response from the provided URL.
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
@@ -184,7 +184,7 @@ public class LearnFragment extends BaseFragment {
                     public void onErrorResponse(VolleyError error) {
                         Log.d("error", error.toString());
                         // Load the default data from shared preferences
-                        spinner.setVisibility(View.GONE);
+//                        spinner.setVisibility(View.GONE);
 //                        modulesView.setVisibility(View.VISIBLE);
 //                        useDefaultData();
                     }
