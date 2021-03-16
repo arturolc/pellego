@@ -49,7 +49,6 @@ public class ModuleOverviewFragment extends BaseFragment {
     private ModuleViewModel moduleViewModel;
     ArrayList<ModuleListItemModel> mNavItems;
     private ListView moduleList;
-    NavigationView modulesView;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -78,8 +77,6 @@ public class ModuleOverviewFragment extends BaseFragment {
         moduleList = root.findViewById(R.id.nav_module_list);
         ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
         moduleList.setAdapter(adapter);
-//        modulesView = root.findViewById(R.id.nav_module_overview);
-//        modulesView.setVisibility(View.VISIBLE);
 
         // menu Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

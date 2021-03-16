@@ -52,21 +52,12 @@ public class ProfileFragment extends BaseFragment {
         profileViewModel =
                 new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        final TextView textView = root.findViewById(R.id.text_profile);
         super.setupHeader(root);
-        profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
 
         getApiData(inflater, container, new ResponseCallBack() {
             public void onResponse(Object response) {
                 // Update UI only after response is received &
                //set the UI
-                final TextView view = root.findViewById(R.id.user_name);
-                view.setText(user_name);
             }
         });
 
