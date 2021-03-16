@@ -18,13 +18,10 @@
             android:id="@+id/title_results"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="8dp"
             android:gravity="center_horizontal"
             android:textColor="@color/primary_white"
             android:fontFamily="@font/bulletto_family"
-            android:textSize="70dp" />
+            android:textSize="70sp" />
 
         <TextView
             android:id="@+id/text_results"
@@ -39,7 +36,7 @@
             android:paddingBottom="15dp"
             android:textAlignment="center"
             android:textColor="@color/light_blue"
-            android:textSize="50dp"></TextView>
+            android:textSize="50sp"></TextView>
 
         <TextView
             android:id="@+id/text_results_message"
@@ -55,7 +52,7 @@
             android:paddingRight="8dp"
             android:paddingBottom="15dp"
             android:textAlignment="center"
-            android:textSize="50dp"></TextView>
+            android:textSize="50sp"></TextView>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_results_retry"

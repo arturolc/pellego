@@ -36,7 +36,7 @@
             android:textAlignment="center"
             android:fontFamily="@font/bulletto_family"
             android:gravity="center"
-            android:textSize="80dp"
+            android:textSize="80sp"
             tools:ignore="MissingConstraints"></TextView>
 
         <com.airbnb.lottie.LottieAnimationView

@@ -32,7 +32,7 @@
                 android:textColor="@color/white"
                 android:layout_marginEnd="8dp"
                 android:gravity="center_horizontal"
-                android:textSize="35dp" />
+                android:textSize="35sp" />
 
             <TextView
                 android:id="@+id/text_module_description"
@@ -42,7 +42,7 @@
                 android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:paddingBottom="15dp"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:textColor="@color/white"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"

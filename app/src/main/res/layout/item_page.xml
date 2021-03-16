@@ -59,7 +59,7 @@
         android:gravity="center"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="55dp" />
+        android:textSize="55sp" />
 
     <TextView
         android:id="@+id/description_text_view"
@@ -70,6 +70,6 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:autoSizeTextType="uniform"
-        android:textSize="26dp" />
+        android:textSize="26sp" />
 
 </LinearLayout>

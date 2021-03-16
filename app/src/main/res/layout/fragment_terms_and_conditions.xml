@@ -21,6 +21,6 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="8dp"
             android:gravity="center_horizontal"
-            android:textSize="70dp" />
+            android:textSize="70sp" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
