@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -450,25 +451,30 @@ public class PlayerWidget {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (technique_id) {
-                    case R.id.rsvp_menu_item:
-                        if (playing) {
-                            rsvpModuleFragment.stop();
-                        } else {
-                            togglePlay(playButton);
-                        }
-                        rsvpModuleFragment.startNext();
-                    case R.id.metaguiding_menu_item:
-                        if (playing) {
-                            metaguidingModuleFragment.stop();
-                        } else {
-                            togglePlay(playButton);
-                        }
-                        metaguidingModuleFragment.startNext();
-                        break;
-                    default:
-                        break;
+                try {
+                    switch (technique_id) {
+                        case R.id.rsvp_menu_item:
+                            if (playing) {
+                                rsvpModuleFragment.stop();
+                            } else {
+                                togglePlay(playButton);
+                            }
+                            rsvpModuleFragment.startNext();
+                        case R.id.metaguiding_menu_item:
+                            if (playing) {
+                                metaguidingModuleFragment.stop();
+                            } else {
+                                togglePlay(playButton);
+                            }
+                            metaguidingModuleFragment.startNext();
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (Exception e) {
+                    Log.d("Error!" , e.getMessage());
                 }
+
 
             }
         });
@@ -483,18 +489,23 @@ public class PlayerWidget {
                 //Inflating the Popup using xml file
                 popup.getMenuInflater()
                         .inflate(R.menu.techniques_menu, popup.getMenu());
-                if (playing) {
-                    switch (technique_id) {
-                        case R.id.rsvp_menu_item:
-                            rsvpModuleFragment.stop();
-                        case R.id.metaguiding_menu_item:
-                            metaguidingModuleFragment.stop();
-                            break;
-                        default:
-                            break;
+                try {
+                    if (playing) {
+                        switch (technique_id) {
+                            case R.id.rsvp_menu_item:
+                                rsvpModuleFragment.stop();
+                            case R.id.metaguiding_menu_item:
+                                metaguidingModuleFragment.stop();
+                                break;
+                            default:
+                                break;
+                        }
+                        togglePlay(playButton);
                     }
-                    togglePlay(playButton);
+                } catch (Exception e) {
+                    Log.d("Technique selector error: " , e.getMessage());
                 }
+
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {

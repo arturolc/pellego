@@ -2,6 +2,8 @@ package com.gitlab.capstone.pellego.fragments.module.intro;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -52,8 +55,9 @@ public class ModuleIntroFragment extends BaseFragment {
         parent_view = root.findViewById(R.id.parent_view);
 
         btn_register = root.findViewById(R.id.rsvp_intro_finish_btn);
-        btn_register.setBackground(getResources().getDrawable(R.drawable.rounded_background));
-        btn_register.setBackgroundColor(moduleViewModel.getGradient()[0]);
+        Drawable d = DrawableCompat.wrap(getResources().getDrawable(R.drawable.rounded_background));
+        DrawableCompat.setTint(d, moduleViewModel.getGradient()[0]);
+        btn_register.setBackground(d);
 
         //set data
         ModuleIntroPagerAdapter pagerAdapter = new ModuleIntroPagerAdapter();
