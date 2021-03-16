@@ -11,6 +11,7 @@
         <item name="colorPrimary">@color/light_blue</item>
         <item name="colorSecondary">@color/gray_card</item>
         <item name="colorAccent">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
         <item name="colorPrimaryDark">@color/light_blue</item>
         <item name="colorSecondaryVariant">@color/light_blue</item>
         <item name="itemTextColor">@color/bottom_nav_color_light</item>
@@ -61,6 +62,7 @@
         <item name="colorSecondaryVariant">@color/white</item>
         <item name="android:textColor">@color/primary_white</item>
         <item name="colorPrimaryDark">@color/gray_hover</item>
+        <item name="colorControlHighlight">@color/grey_transparent</item>
         <item name="android:textColorSecondary">@color/secondary_white</item>
         <item name="colorOnSecondary">@color/gray_hover</item>
         <item name="android:statusBarColor">@color/dark_grey</item>

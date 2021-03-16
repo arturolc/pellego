@@ -51,7 +51,7 @@ public class ModuleListAdapter extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.module_item, null);
+            view = inflater.inflate(R.layout.submodule_item, null);
         }
         else {
             view = convertView;
@@ -63,7 +63,7 @@ public class ModuleListAdapter extends BaseAdapter {
 
         titleView.setText( mNavItems.get(position).getTitle() );
         subtitleView.setText( mNavItems.get(position).getSubtitle() );
-        iconView.setImageResource(mNavItems.get(position).getIcon() );
+        iconView.setImageDrawable(mNavItems.get(position).getIcon() );
 
         return view;
     }

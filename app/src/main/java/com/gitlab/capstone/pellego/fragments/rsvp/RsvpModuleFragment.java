@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -46,6 +49,7 @@ public class RsvpModuleFragment extends BaseFragment {
     private PlayerWidget playerWidget;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         wpm = Integer.parseInt(getArguments().getString("wpm"));
@@ -70,10 +74,10 @@ public class RsvpModuleFragment extends BaseFragment {
 
 
         root = inflater.inflate(R.layout.fragment_rsvp_module, container, false);
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(null);
         final TextView textView = root.findViewById(R.id.title_rsvp);
-
-
-
+        super.setupHeader(root);
         // Only show popup if user navigated to the Rsvp module
        if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
         return root;

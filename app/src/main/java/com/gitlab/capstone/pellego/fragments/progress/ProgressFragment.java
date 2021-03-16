@@ -1,6 +1,7 @@
 package com.gitlab.capstone.pellego.fragments.progress;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -39,6 +41,7 @@ public class ProgressFragment extends BaseFragment {
     private ArrayList<String> days;
     private ArrayList<String> months;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         progressViewModel =
@@ -47,7 +50,7 @@ public class ProgressFragment extends BaseFragment {
                 final TextView textView = root.findViewById(R.id.text_progress);
         progressViewModel.getText().observe(getViewLifecycleOwner(),
                 s -> textView.setText(getString(R.string.title_progress_reports)));
-
+        super.setupHeader(root);
         lastWeekBarChart = root.findViewById(R.id.last_week_barChart);
         lastYearLineChart = root.findViewById(R.id.last_year_lineChart);
 
