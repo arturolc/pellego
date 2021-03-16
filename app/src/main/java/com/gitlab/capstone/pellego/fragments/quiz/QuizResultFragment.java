@@ -67,9 +67,9 @@ public class QuizResultFragment extends BaseFragment {
 
         // Store results in shared preference
         if (quizViewModel.quizPassed()) {
+            updateModuleProgress();
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean(quizViewModel.generateSubmoduleCompleteKey(), quizViewModel.quizPassed());
-            updateModuleProgress();
             editor.apply();
         }
 
@@ -118,9 +118,13 @@ public class QuizResultFragment extends BaseFragment {
         String key = moduleViewModel.getTechnique() + "_submodule_progress";
         int count = sharedPref.getInt(key, 0);
         // Store results in shared preference
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(key, ++count);
-        editor.apply();
+        boolean complete = sharedPref.getBoolean(quizViewModel.generateSubmoduleCompleteKey(), false);
+        if (!complete) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt(key, ++count);
+            editor.apply();
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
