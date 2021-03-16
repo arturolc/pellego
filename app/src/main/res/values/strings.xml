@@ -339,10 +339,10 @@ human beings and deserve our care and respect." The main purpose of this stateme
     </string-array>
 
     <!--    Pre Reading-->
-    <string name="description_prereading_highlight" translatable="false">Scan a text to prep you brain for reading</string>
+    <string name="description_prereading_highlight" translatable="false">Scan text beforehand to prep you brain</string>
     <string name="title_prereading_intro" translatable="false">Pre-Reading Introduction</string>
     <string name="title_prereading" translatable="false">Pre-Reading</string>
-    <string name="short_description_prereading" translatable="false">Scan a text to prep you brain for readingt</string>
+    <string name="short_description_prereading" translatable="false">Scan text to prep your brain</string>
 
     <!-- Metaguiding -->
     <string name="title_metaguiding_highlight" translatable="false">Meta-guiding highlight</string>

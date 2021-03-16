@@ -2,6 +2,7 @@ package com.gitlab.capstone.pellego.fragments.quiz;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -36,6 +38,7 @@ public class QuizResultFragment extends BaseFragment {
     private NavController navController;
     private SharedPreferences sharedPref;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         this.quizViewModel = new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
@@ -43,6 +46,7 @@ public class QuizResultFragment extends BaseFragment {
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         View root = inflater.inflate(R.layout.fragment_quiz_results, container, false);
+        super.setupHeader(root);
         final TextView textView = root.findViewById(R.id.title_results);
         quizViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

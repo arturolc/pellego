@@ -266,7 +266,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
                     return 0;
                 }
                 try {
-                    Thread.sleep((long) (((60.0 / (float) PlayerWidget.wpm) * 70)));
+                    Thread.sleep((long) (((60.0 / (float) PlayerWidget.wpm) * 90)));
                 } catch (InterruptedException e) {
                     cancel(true);
                     e.printStackTrace();
