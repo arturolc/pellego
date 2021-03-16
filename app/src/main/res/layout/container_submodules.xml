@@ -8,12 +8,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    app:layout_constraintTop_toBottomOf="@+id/text_learn"
+    app:layout_constraintTop_toBottomOf="@id/module_header_container"
     app:layout_constraintBottom_toBottomOf="parent"
     android:paddingTop="15dp"
     android:paddingBottom="15dp"
     android:layout_marginTop="15dp"
-    android:layout_marginBottom="30dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:background="@drawable/rounded_background"
@@ -23,7 +22,7 @@
     <ListView
         android:id="@+id/nav_module_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:choiceMode="singleChoice"
       />
 

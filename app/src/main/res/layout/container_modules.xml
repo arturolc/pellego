@@ -9,18 +9,8 @@
     app:layout_constraintBottom_toBottomOf="@+id/frag_learn"
     android:elevation="0dp"
     android:backgroundTint="?colorPrimary"
-    android:fitsSystemWindows="true"
     android:visibility="invisible">
 
-    <ListView
-        android:id="@+id/nav_module_list"
-        android:layout_width="match_parent"
-        android:backgroundTint="?colorPrimary"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:dividerHeight="20dp"
-        android:divider="?colorPrimary"
-        android:layout_height="match_parent"
-        android:choiceMode="singleChoice" />
+
 
 </com.google.android.material.navigation.NavigationView>

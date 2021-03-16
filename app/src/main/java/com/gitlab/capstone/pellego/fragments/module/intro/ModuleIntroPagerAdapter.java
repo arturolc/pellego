@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gitlab.capstone.pellego.R;
@@ -67,13 +68,13 @@ public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPag
     public class ModuleIntroViewHolder extends RecyclerView.ViewHolder {
         TextView header_text_view;
         TextView description_text_view;
-        LinearLayout container;
+        ConstraintLayout container;
 
         public ModuleIntroViewHolder(@NonNull View itemView) {
             super(itemView);
             header_text_view = (TextView)itemView.findViewById(R.id.header_text_view);
             description_text_view = (TextView)itemView.findViewById(R.id.description_text_view);
-            container = (LinearLayout )itemView.findViewById(R.id.item_page_container);
+            container = (ConstraintLayout)itemView.findViewById(R.id.item_page_container);
         }
     }
 }
