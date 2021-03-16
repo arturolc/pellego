@@ -80,10 +80,10 @@ public class ModuleIntroFragment extends BaseFragment {
                             // TODO: update DB that intro was completed
                             // Store results in shared preference
                             sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                            updateModuleProgress();
                             SharedPreferences.Editor editor = sharedPref.edit();
                             editor.putBoolean(moduleViewModel.getTechnique() + "_intro_complete", true);
                             editor.apply();
-                            updateModuleProgress();
                             navController.navigateUp();
                             return;
                         }
@@ -102,8 +102,12 @@ public class ModuleIntroFragment extends BaseFragment {
         String key = moduleViewModel.getTechnique() + "_submodule_progress";
         int count = sharedPref.getInt(key, 0);
         // Store results in shared preference
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(key, ++count);
-        editor.apply();
+        boolean complete = sharedPref.getBoolean(moduleViewModel.getTechnique() + "_intro_complete", false);
+        if (!complete) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt(key, ++count);
+            editor.apply();
+        }
+
     }
 }
