@@ -23,10 +23,12 @@ public class QuizQuestionListAdapter extends BaseAdapter {
 
     Context mContext;
     ArrayList<QuizQuestionModel> mNavItems;
+    int color;
 
-    public QuizQuestionListAdapter(Context context, ArrayList<QuizQuestionModel> navItems) {
+    public QuizQuestionListAdapter(Context context, ArrayList<QuizQuestionModel> navItems, int color) {
         mContext = context;
         mNavItems = navItems;
+        this.color = color;
     }
 
     @Override
@@ -58,6 +60,7 @@ public class QuizQuestionListAdapter extends BaseAdapter {
 
         TextView titleView = (TextView) view.findViewById(R.id.title);
         TextView iconView = (TextView) view.findViewById(R.id.icon);
+        iconView.setTextColor(color);
         titleView.setText( mNavItems.get(position).mTitle );
         iconView.setText(mNavItems.get(position).mIcon);
 
