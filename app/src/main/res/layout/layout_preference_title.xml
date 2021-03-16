@@ -16,7 +16,7 @@
             android:textColor="@color/white"
             android:text="@string/title_settings"
             android:paddingBottom="30dp"
-            android:textSize="50dp"
+            android:textSize="50sp"
             tools:ignore="MissingConstraints" />
 
 

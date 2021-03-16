@@ -7,7 +7,7 @@
     tools:context="com.gitlab.capstone.pellego.fragments.learn.LearnFragment"
     android:id="@+id/frag_learn">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -25,8 +25,13 @@
 
 
         <!-- Here is the inserted layout -->
-        <include layout="@layout/container_modules"/>
+        <include
+            layout="@layout/container_modules"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

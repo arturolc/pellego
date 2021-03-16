@@ -135,11 +135,11 @@ public class ModuleOverviewFragment extends BaseFragment {
         boolean complete = sharedPref.getBoolean(moduleViewModel.getTechnique() + "_" + difficulty + "_complete", false);
         if (complete) {
             Drawable r = getResources().getDrawable(R.drawable.ic_checked_circle);
-            r.setColorFilter(moduleViewModel.getGradient()[1], PorterDuff.Mode.MULTIPLY);
+            r.setColorFilter(moduleViewModel.getGradient()[0], PorterDuff.Mode.MULTIPLY);
            return r;
         } else {
             Drawable r = getResources().getDrawable(R.drawable.ic_empty_circle);
-            r.setColorFilter(moduleViewModel.getGradient()[1], PorterDuff.Mode.MULTIPLY);
+            r.setColorFilter(moduleViewModel.getGradient()[0], PorterDuff.Mode.MULTIPLY);
             return r;
         }
     }
