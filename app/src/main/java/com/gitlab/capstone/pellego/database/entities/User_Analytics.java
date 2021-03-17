@@ -31,11 +31,11 @@ public class User_Analytics {
         this.joined = joined;
     }
 
-    public int getaID() {
+    public int getAID() {
         return aID;
     }
 
-    public int getuID() {
+    public int getUID() {
         return uID;
     }
 

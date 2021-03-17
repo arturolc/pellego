@@ -23,7 +23,7 @@ public class Answers {
         this.correct = correct;
     }
 
-    public int getaID() {
+    public int getAID() {
         return aID;
     }
 

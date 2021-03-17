@@ -19,11 +19,11 @@ public class LM_Quiz {
         this.sMID = sMID;
     }
 
-    public int getqID() {
+    public int getQID() {
         return qID;
     }
 
-    public int getsMID() {
+    public int getSMID() {
         return sMID;
     }
 }

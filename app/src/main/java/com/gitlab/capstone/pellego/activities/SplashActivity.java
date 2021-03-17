@@ -22,6 +22,7 @@ import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.gitlab.capstone.pellego.R;
 
+import com.gitlab.capstone.pellego.database.LearningModulesRepo;
 import com.gitlab.capstone.pellego.fragments.auth.AuthActivity;
 
 
@@ -55,6 +56,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
+        LearningModulesRepo repo = new LearningModulesRepo(getApplication());
         try {
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(getApplicationContext());

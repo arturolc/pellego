@@ -28,11 +28,11 @@ public class Intro_Status {
         this.completed = completed;
     }
 
-    public int getiSID() {
+    public int getISID() {
         return iSID;
     }
 
-    public int getuID() {
+    public int getUID() {
         return uID;
     }
 

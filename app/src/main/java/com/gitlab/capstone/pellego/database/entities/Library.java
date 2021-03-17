@@ -17,25 +17,25 @@ public class Library {
     @NonNull
     private int uID;
 
-    @ColumnInfo
+    @ColumnInfo(name = "BID")
     @NonNull
-    private int BID;
+    private int bID;
 
-    public Library(int lID, int uID, int BID) {
+    public Library(int lID, int uID, int bID) {
         this.lID = lID;
         this.uID = uID;
-        this.BID = BID;
+        this.bID = bID;
     }
 
-    public int getlID() {
+    public int getLID() {
         return lID;
     }
 
-    public int getuID() {
+    public int getUID() {
         return uID;
     }
 
     public int getBID() {
-        return BID;
+        return bID;
     }
 }

@@ -31,7 +31,7 @@ public class Users {
         this.email = email;
     }
 
-    public int getuID() {
+    public int getUID() {
         return uID;
     }
 

@@ -23,7 +23,7 @@ public class Questions {
         this.question = question;
     }
 
-    public int getqUID() {
+    public int getQUID() {
         return qUID;
     }
 

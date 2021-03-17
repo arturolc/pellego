@@ -20,7 +20,6 @@ public class Average_WPM_History {
     private int user;
 
     @ColumnInfo(name = "Day")
-    @TypeConverters({TimestampConverter.class})
     private Date day;
 
     public Average_WPM_History(int wpmID, int user, Date day) {

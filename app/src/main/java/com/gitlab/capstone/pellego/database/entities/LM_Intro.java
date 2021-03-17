@@ -31,11 +31,11 @@ public class LM_Intro {
         this.content = content;
     }
 
-    public int getiID() {
+    public int getIID() {
         return iID;
     }
 
-    public int getmID() {
+    public int getMID() {
         return mID;
     }
 

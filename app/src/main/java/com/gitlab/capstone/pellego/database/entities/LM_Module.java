@@ -16,16 +16,16 @@ public class LM_Module {
     private String name;
 
     @NonNull
-    @ColumnInfo(name = "description")
-    private String description;
+    @ColumnInfo(name = "Text")
+    private String text;
 
-    public LM_Module(int mID, @NonNull String name, @NonNull String description) {
+    public LM_Module(int mID, @NonNull String name, @NonNull String text) {
         this.mID = mID;
         this.name = name;
-        this.description = description;
+        this.text = text;
     }
 
-    public int getmID() {
+    public int getMID() {
         return mID;
     }
 
@@ -35,7 +35,7 @@ public class LM_Module {
     }
 
     @NonNull
-    public String getDescription() {
-        return description;
+    public String getText() {
+        return text;
     }
 }

@@ -17,7 +17,7 @@ public class SubmodulesCompleted {
     @NonNull
     private int uID;
 
-    @ColumnInfo
+    @ColumnInfo(name = "SMID")
     @NonNull
     private int sMID;
 
@@ -31,11 +31,11 @@ public class SubmodulesCompleted {
         return scID;
     }
 
-    public int getuID() {
+    public int getUID() {
         return uID;
     }
 
-    public int getsMID() {
+    public int getSMID() {
         return sMID;
     }
 }

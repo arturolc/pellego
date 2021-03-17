@@ -12,6 +12,7 @@ import static androidx.room.ForeignKey.CASCADE;
     parentColumns = "MID", childColumns = "MID", onDelete = CASCADE))
 public class LM_Submodule {
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "SMID")
     private int sMID;
 
     @ColumnInfo(name = "MID")
@@ -31,11 +32,11 @@ public class LM_Submodule {
         this.text = text;
     }
 
-    public int getsMID() {
+    public int getSMID() {
         return sMID;
     }
 
-    public int getmID() {
+    public int getMID() {
         return mID;
     }
 
