@@ -162,36 +162,36 @@ public class LearnFragment extends BaseFragment {
 //        modulesView.setVisibility(View.VISIBLE);
         useDefaultData();
         // Request a json response from the provided URL.
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d("response", response.toString());
-
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject item = response.getJSONObject(i);
-                                mNavItems.add(new ModuleListItemModel(item.get("Name").toString()));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        responseCallBack.onResponse(response);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("error", error.toString());
-                        // Load the default data from shared preferences
-//                        spinner.setVisibility(View.GONE);
-//                        modulesView.setVisibility(View.VISIBLE);
-//                        useDefaultData();
-                    }
-                });
-
-        // Add the request to the RequestQueue.
-        queue.add(jsonArrayRequest);
+//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+//                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+//
+//                    @Override
+//                    public void onResponse(JSONArray response) {
+//                        Log.d("response", response.toString());
+//
+//                        for (int i = 0; i < response.length(); i++) {
+//                            try {
+//                                JSONObject item = response.getJSONObject(i);
+//                                mNavItems.add(new ModuleListItemModel(item.get("Name").toString()));
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                        responseCallBack.onResponse(response);
+//                    }
+//                }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Log.d("error", error.toString());
+//                        // Load the default data from shared preferences
+////                        spinner.setVisibility(View.GONE);
+////                        modulesView.setVisibility(View.VISIBLE);
+////                        useDefaultData();
+//                    }
+//                });
+//
+//        // Add the request to the RequestQueue.
+//        queue.add(jsonArrayRequest);
     }
 
     /**

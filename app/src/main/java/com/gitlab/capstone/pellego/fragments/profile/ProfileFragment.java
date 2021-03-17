@@ -41,7 +41,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,6 +64,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.gitlab.capstone.pellego.activities.MainActivity.RESULT_ADD_CATALOG;
 import static com.gitlab.capstone.pellego.activities.MainActivity.RESULT_FILE;
 import static com.gitlab.capstone.pellego.activities.MainActivity.TAG;
+import static com.gitlab.capstone.pellego.activities.MainActivity.bitmap;
 
 
 /**********************************************
@@ -75,7 +79,7 @@ public class ProfileFragment extends BaseFragment {
     public String user_name;
     public static final int GET_FROM_GALLERY = 38;
     private ProfileViewModel profileViewModel;
-    private static String profilePath = "/data/user/0/com.gitlab.capstone.pellego/app_imageDir/";
+    public static String profilePath = "/data/user/0/com.gitlab.capstone.pellego/app_imageDir/";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -84,13 +88,16 @@ public class ProfileFragment extends BaseFragment {
                 new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         super.setupHeader(root);
+        ImageView im1 = (ImageView) root.findViewById(R.id.profile_image);
+        ImageView im2 = (ImageView) getActivity().findViewById(R.id.profile_image_drawer);
         RelativeLayout usr = root.findViewById(R.id.imgUser);
         usr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-                loadImageFromStorage((ImageView) getActivity().findViewById(R.id.profile_image_drawer), (ImageView) root.findViewById(R.id.profile_image));
-
+                MainActivity.loadImageFromStorage();
+                im1.setImageBitmap(bitmap);
+                im2.setImageBitmap(bitmap);
             }
         });
 
@@ -100,9 +107,8 @@ public class ProfileFragment extends BaseFragment {
                //set the UI
             }
         });
-//        if (root.findViewById(R.id.pro))
-//        loadImageFromStorage((ImageView) root.findViewById(R.id.profile_image));
-
+        im1.setImageBitmap(bitmap);
+        im2.setImageBitmap(bitmap);
         return root;
     }
 
@@ -164,19 +170,12 @@ public class ProfileFragment extends BaseFragment {
         return directory.getAbsolutePath();
     }
 
-    public static void loadImageFromStorage(ImageView img1, ImageView img2)
-    {
-        try {
-            File f=new File(profilePath, "profile.jpg");
-            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-            img1.setImageBitmap(b);
-            img2.setImageBitmap(b);
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MainActivity.loadImageFromStorage();
     }
 
 

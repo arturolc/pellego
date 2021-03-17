@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -68,6 +69,7 @@ import org.geometerplus.fbreader.fbreader.options.MiscOptions;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,7 +82,7 @@ import static com.gitlab.capstone.pellego.fragments.profile.ProfileFragment.GET_
 
 public class MainActivity extends FullscreenActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String TAG = MainActivity.class.getSimpleName();
-
+    public static Bitmap bitmap;
     public static final int RESULT_FILE = 1;
     public static final int RESULT_ADD_CATALOG = 2;
 
@@ -230,6 +232,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
         Window window = this.getWindow();
         TypedValue typedValue = new TypedValue();
+        loadImageFromStorage();
 
     }
 
@@ -252,10 +255,24 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
             onResume(); // udpate theme if changed
     }
 
+    public static void loadImageFromStorage()
+    {
+        try {
+            File f=new File(ProfileFragment.profilePath, "profile.jpg");
+            bitmap = BitmapFactory.decodeStream(new FileInputStream(f));
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-
+        ImageView im = findViewById(R.id.profile_image_drawer);
+        im.setImageBitmap(bitmap);
 //        MenuItem searchMenu = menu.findItem(R.id.action_search);
         final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
 //        MenuItem theme = menu.findItem(R.id.action_theme);
