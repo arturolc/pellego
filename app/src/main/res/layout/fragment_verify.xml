@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20sp"
+    android:background="?colorControlHighlight"
     tools:context=".fragments.auth.VerifyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
