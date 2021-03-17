@@ -11,7 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="?colorPrimary">
+        android:background="?colorControlHighlight">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            app:layout_constraintBottom_toTopOf="@+id/container_bottom"
+            android:background="@drawable/gradient_background_circular"/>
 
 <!--        <ProgressBar-->
 <!--            android:id="@+id/loading_spinner"-->
@@ -23,23 +28,38 @@
 <!--            android:visibility="visible"-->
 <!--            tools:ignore="MissingConstraints" />-->
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/title_learn"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/white"
+            android:text="Modules"
+            android:textSize="50sp"
+            android:gravity="center"
+            android:fontFamily="@font/bulletto_family"
+            >
+
+        </TextView>
+
 
         <!-- Here is the inserted layout -->
         <ListView
             android:id="@+id/nav_module_list"
             android:layout_width="match_parent"
-            android:backgroundTint="?colorPrimary"
+            android:backgroundTint="?colorControlHighlight"
             android:choiceMode="singleChoice"
-            android:divider="?colorPrimary"
-            android:dividerHeight="26dp"
+            android:elevation="10dp"
+            android:divider="@color/transparent"
+            android:dividerHeight="14dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
+            android:paddingBottom="10dp"
             tools:layout_editor_absoluteX="8dp"
             android:layout_height="0dp" />
 

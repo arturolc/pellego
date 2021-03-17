@@ -8,9 +8,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -77,10 +80,23 @@ public class RsvpModuleFragment extends BaseFragment {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(null);
         final TextView textView = root.findViewById(R.id.title_rsvp);
-        super.setupHeader(root);
+        this.setupHeader(root);
         // Only show popup if user navigated to the Rsvp module
        if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
         return root;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setupHeader(View root) {
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.color, typedValue, true);
+        int color = typedValue.data;
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(color);
+        toolbar.setTitle(null);
+        Window window = getActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(color);
     }
 
 

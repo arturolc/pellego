@@ -10,7 +10,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?colorPrimary"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,6 +67,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
+            android:elevation="80dp"
             android:background="@drawable/rounded_background"
             android:choiceMode="singleChoice"
             android:maxHeight="200dp"

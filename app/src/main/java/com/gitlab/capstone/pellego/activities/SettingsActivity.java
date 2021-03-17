@@ -12,8 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 
@@ -32,6 +37,14 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SettingsActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("back pressed", "back from activity");
+        Intent i = new Intent(SettingsActivity.this,
+                MainActivity.class);
+        startActivity(i);
     }
 
     @Override
