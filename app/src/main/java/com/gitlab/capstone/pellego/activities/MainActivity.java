@@ -255,7 +255,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
             onResume(); // udpate theme if changed
     }
 
-    public static void loadImageFromStorage()
+    public static void loadImageFromStorage(Activity a)
     {
         try {
             File f=new File(ProfileFragment.profilePath, "profile.jpg");
@@ -263,6 +263,8 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         }
         catch (FileNotFoundException e)
         {
+            bitmap = BitmapFactory.decodeResource(a.getResources(),
+                    R.drawable.ic_default_user_profile);
             e.printStackTrace();
         }
 

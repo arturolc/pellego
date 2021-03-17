@@ -95,7 +95,7 @@ public class ProfileFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-                MainActivity.loadImageFromStorage();
+                MainActivity.loadImageFromStorage(getActivity());
             }
         });
 
@@ -176,7 +176,7 @@ public class ProfileFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity.loadImageFromStorage();
+        MainActivity.loadImageFromStorage(getActivity());
     }
 
 
