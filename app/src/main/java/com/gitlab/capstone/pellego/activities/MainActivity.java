@@ -1,6 +1,7 @@
 package com.gitlab.capstone.pellego.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -15,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -24,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -53,6 +57,7 @@ import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
+import com.gitlab.capstone.pellego.fragments.profile.ProfileFragment;
 import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
 import com.google.android.material.internal.NavigationMenuItemView;
@@ -63,11 +68,15 @@ import org.geometerplus.fbreader.fbreader.options.MiscOptions;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.gitlab.capstone.pellego.fragments.profile.ProfileFragment.GET_FROM_GALLERY;
 
 public class MainActivity extends FullscreenActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String TAG = MainActivity.class.getSimpleName();

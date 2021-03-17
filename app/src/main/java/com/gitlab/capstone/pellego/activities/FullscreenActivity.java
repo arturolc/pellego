@@ -35,6 +35,7 @@ import com.github.axet.androidlibrary.activities.AppCompatFullscreenThemeActivit
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.fragments.auth.AuthActivity;
+import com.gitlab.capstone.pellego.fragments.profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -65,7 +66,6 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         toolbar.setTitle(null);
         bottomContent = findViewById(R.id.container_bottom);
         toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.ic_action_button_overflow));
-
 
         // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);

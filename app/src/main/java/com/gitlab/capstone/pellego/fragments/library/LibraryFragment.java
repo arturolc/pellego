@@ -63,6 +63,7 @@ import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.fragments.profile.ProfileFragment;
 import com.gitlab.capstone.pellego.widgets.BookmarksDialog;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
 
@@ -674,6 +675,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
                 return true;
             }
         });
+
         return v;
     }
 
