@@ -38,7 +38,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5sp"
             android:fontFamily="sans-serif-light"
-            android:text="Joanna Lowry"
+            android:text="Chris Bordoy"
             android:textColor="@color/white"
             android:textSize="28sp" />
 
