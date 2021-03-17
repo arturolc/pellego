@@ -51,6 +51,7 @@ public class SplashActivity extends AppCompatActivity {
                 lottieAnimationView.playAnimation();
             }
         });
+        MainActivity.loadImageFromStorage();
 
         try {
             Amplify.addPlugin(new AWSCognitoAuthPlugin());

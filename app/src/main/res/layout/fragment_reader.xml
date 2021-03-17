@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?colorPrimary"
     android:id="@+id/reader_container"
     tools:context="com.gitlab.capstone.pellego.activities.MainActivity">
 
