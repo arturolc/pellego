@@ -42,7 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/title_today"
-                android:textColor="@color/white"
                 android:layout_below="@+id/progress_animation"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp" />
@@ -61,7 +60,6 @@
                 android:gravity="center"
                 android:text="@string/title_words_read"
                 android:textSize="10sp"
-                android:textColor="@color/white"
                 android:layout_below="@+id/text_today_title"
                 android:layout_toLeftOf="@+id/centerShim"/>
 
@@ -80,7 +78,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
-                android:textColor="@color/white"
                 android:gravity="center"
                 android:layout_toRightOf="@+id/centerShim"
                 android:layout_below="@+id/text_today_title"
@@ -102,7 +99,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
                 android:text="@string/title_last_week"
-                android:textColor="@color/white"
                 android:layout_below="@+id/today_words_read_description"
                 android:layout_marginLeft="5dp" />
 
@@ -113,7 +109,6 @@
                 android:gravity="center"
                 android:text="@string/title_words_read"
                 android:textSize="10sp"
-                android:textColor="@color/white"
                 android:layout_below="@+id/text_last_week_title"
                 android:layout_toLeftOf="@+id/centerShim"/>
 
@@ -133,7 +128,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="10sp"
-                android:textColor="@color/white"
                 android:layout_toRightOf="@+id/centerShim"
                 android:layout_below="@+id/text_last_week_title"
                 android:text="@string/title_wpm" />
@@ -162,7 +156,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
                 android:text="@string/title_last_year"
-                android:textColor="@color/white"
                 android:layout_below="@+id/last_week_barChart"
                 android:layout_marginLeft="5dp" />
 
@@ -172,7 +165,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/title_words_read"
-                android:textColor="@color/white"
                 android:textSize="10sp"
                 android:layout_below="@+id/text_last_year_title"
                 android:layout_toLeftOf="@+id/centerShim"/>
@@ -192,7 +184,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@color/white"
                 android:textSize="10sp"
                 android:layout_toRightOf="@+id/centerShim"
                 android:layout_below="@+id/text_last_year_title"

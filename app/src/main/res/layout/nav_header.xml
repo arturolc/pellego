@@ -3,17 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="225dp"
+    android:id="@+id/drawer_header"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
 
-    <ImageView
+    <RelativeLayout
+        android:id="@+id/imgUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center"
-        android:paddingTop="35dp"
-        app:srcCompat="@drawable/ic_account_circle_24px"
-        app:tint="@color/white" />
+        android:layout_centerHorizontal="true"
+        android:elevation="10dp"
+        android:background="@drawable/circle_border">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_drawer"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_default_user_profile" />
+
+
+    </RelativeLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

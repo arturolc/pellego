@@ -10,17 +10,10 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.Window;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
