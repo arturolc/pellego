@@ -2,6 +2,9 @@ package com.gitlab.capstone.pellego.fragments.module.intro;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -33,11 +39,13 @@ public class ModuleIntroFragment extends BaseFragment {
     ViewPager2 viewPager2;
     DotsIndicator dotsIndicator;
     Button btn_register;
-    private NavController navController;
     private SharedPreferences sharedPref;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(null);
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         View root = inflater.inflate(R.layout.fragment_module_intro, container, false);
@@ -47,11 +55,13 @@ public class ModuleIntroFragment extends BaseFragment {
         parent_view = root.findViewById(R.id.parent_view);
 
         btn_register = root.findViewById(R.id.rsvp_intro_finish_btn);
+        Drawable d = DrawableCompat.wrap(getResources().getDrawable(R.drawable.rounded_background));
+        DrawableCompat.setTint(d, moduleViewModel.getGradient()[0]);
+        btn_register.setBackground(d);
 
         //set data
         ModuleIntroPagerAdapter pagerAdapter = new ModuleIntroPagerAdapter();
-        pagerAdapter.setContentAndHeaders(moduleViewModel.getIntro_header_id(),
-                moduleViewModel.getIntro_content_id(),
+        pagerAdapter.setContentAndHeaders(moduleViewModel,
                 getResources());
         viewPager2.setAdapter(pagerAdapter);
 
@@ -70,10 +80,10 @@ public class ModuleIntroFragment extends BaseFragment {
                             // TODO: update DB that intro was completed
                             // Store results in shared preference
                             sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                            updateModuleProgress();
                             SharedPreferences.Editor editor = sharedPref.edit();
                             editor.putBoolean(moduleViewModel.getTechnique() + "_intro_complete", true);
                             editor.apply();
-                            updateModuleProgress();
                             navController.navigateUp();
                             return;
                         }
@@ -92,8 +102,12 @@ public class ModuleIntroFragment extends BaseFragment {
         String key = moduleViewModel.getTechnique() + "_submodule_progress";
         int count = sharedPref.getInt(key, 0);
         // Store results in shared preference
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(key, ++count);
-        editor.apply();
+        boolean complete = sharedPref.getBoolean(moduleViewModel.getTechnique() + "_intro_complete", false);
+        if (!complete) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt(key, ++count);
+            editor.apply();
+        }
+
     }
 }

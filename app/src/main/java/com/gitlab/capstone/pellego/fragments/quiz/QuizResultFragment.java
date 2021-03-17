@@ -2,15 +2,21 @@ package com.gitlab.capstone.pellego.fragments.quiz;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -36,6 +42,7 @@ public class QuizResultFragment extends BaseFragment {
     private NavController navController;
     private SharedPreferences sharedPref;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         this.quizViewModel = new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
@@ -43,6 +50,7 @@ public class QuizResultFragment extends BaseFragment {
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         View root = inflater.inflate(R.layout.fragment_quiz_results, container, false);
+        this.setupHeader(root);
         final TextView textView = root.findViewById(R.id.title_results);
         quizViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -59,9 +67,9 @@ public class QuizResultFragment extends BaseFragment {
 
         // Store results in shared preference
         if (quizViewModel.quizPassed()) {
+            updateModuleProgress();
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean(quizViewModel.generateSubmoduleCompleteKey(), quizViewModel.quizPassed());
-            updateModuleProgress();
             editor.apply();
         }
 
@@ -110,9 +118,30 @@ public class QuizResultFragment extends BaseFragment {
         String key = moduleViewModel.getTechnique() + "_submodule_progress";
         int count = sharedPref.getInt(key, 0);
         // Store results in shared preference
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(key, ++count);
-        editor.apply();
+        boolean complete = sharedPref.getBoolean(quizViewModel.generateSubmoduleCompleteKey(), false);
+        if (!complete) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt(key, ++count);
+            editor.apply();
+        }
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setupHeader(View root) {
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(moduleViewModel.getGradient()[0]);
+        toolbar.setTitle(null);
+        Window window = getActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(moduleViewModel.getGradient()[0]);
+        TextView header = root.findViewById(R.id.title_results);
+        GradientDrawable gd = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[] {moduleViewModel.getGradient()[0], moduleViewModel.getGradient()[1]});
+        gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 0f, 0f, 90f, 90f});
+        gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
+        header.setBackgroundDrawable(gd);
     }
 
 }

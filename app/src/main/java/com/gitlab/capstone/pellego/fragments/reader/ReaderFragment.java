@@ -21,6 +21,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
@@ -29,6 +30,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -37,6 +39,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
@@ -81,6 +85,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
 public class ReaderFragment extends Fragment implements MainActivity.SearchListener, SharedPreferences.OnSharedPreferenceChangeListener, FullscreenActivity.FullscreenListener, MainActivity.OnBackPressed {
     public static final String TAG = ReaderFragment.class.getSimpleName();
@@ -150,6 +155,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         SeekBar fontsizepopup_seek;
         View fontsizepopup_minus;
         View fontsizepopup_plus;
+        public static int txtColor;
 
         public FontsPopup(Context context) {
             fontsize_popup = LayoutInflater.from(context).inflate(R.layout.font_popup, new FrameLayout(context), false);
@@ -165,6 +171,9 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                     setFont(fonts.ff.get(position).name);
                 }
             };
+            TypedValue typedValue = new TypedValue();
+            context.getTheme().resolveAttribute(R.attr.colorSecondary, typedValue, true);
+            txtColor = typedValue.data;
             fontsFrame = fontsize_popup.findViewById(R.id.fonts_frame);
             fontsText = (TextView) fontsize_popup.findViewById(R.id.fonts_text);
             fontsText.setText(context.getString(R.string.add_more_fonts_to, FONTS.toString()));
@@ -183,7 +192,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         }
 
         public void loadFonts() {
-            fontsFrame.setVisibility(View.VISIBLE);
+            fontsFrame.setVisibility(VISIBLE);
             fontsList.setAdapter(fonts);
             fonts.addBasics();
             List<File> files = new ArrayList<>();
@@ -269,6 +278,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         public FontHolder(View itemView) {
             super(itemView);
             tv = (CheckedTextView) itemView.findViewById(android.R.id.text1);
+            tv.setTextColor(FontsPopup.txtColor);
         }
     }
 
@@ -416,7 +426,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             if (t.nodes.isEmpty())
                 ex.setVisibility(INVISIBLE);
             else
-                ex.setVisibility(View.VISIBLE);
+                ex.setVisibility(VISIBLE);
             ex.setImageResource(t.expanded ? R.drawable.ic_expand_less_black_24dp : R.drawable.ic_expand_more_blue_24dp);
             h.itemView.setPadding(20 * t.level, 0, 0, 0);
             if (t.selected) {
@@ -628,6 +638,19 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         shared.registerOnSharedPreferenceChangeListener(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setupHeader(View root) {
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.color, typedValue, true);
+        int color = typedValue.data;
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(color);
+        toolbar.setTitle(null);
+        Window window = getActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(color);
+    }
+
     public static void showOptionsMenu() {
         MenuItem tocMenu = ReaderFragment.optionsMenu.findItem(R.id.action_toc);
         MenuItem bookmarksMenu = ReaderFragment.optionsMenu.findItem(R.id.action_bm);
@@ -656,8 +679,6 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
 
 
 
-
-
     @Override
     public void onStart() {
         super.onStart();
@@ -668,6 +689,19 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_reader, container, false);
+        setupHeader(v);
+        SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
+        switch(prefs.getString(App.READER_THEME, "")) {
+            case "Theme_Dark":
+                v.setBackgroundColor(0x000000);
+                break;
+            case "Theme_Light":
+                v.setBackgroundColor(0xFFFFFF);
+                break;
+            default:
+                v.setBackgroundColor(0xF5E5CC);
+                break;
+        }
         final MainActivity main = (MainActivity) getActivity();
         main.findViewById(R.id.bottom_nav_view).setVisibility(INVISIBLE);
 

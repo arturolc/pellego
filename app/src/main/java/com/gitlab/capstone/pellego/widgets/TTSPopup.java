@@ -958,7 +958,6 @@ public class TTSPopup {
             Plugin.View.Selection s = fb.pluginview.select(start, end);
             if (s != null) {
                 String str = s.getText();
-//                String test = fb.pluginview.select(0, 20).getText();
                 s.close();
                 return str;
             }

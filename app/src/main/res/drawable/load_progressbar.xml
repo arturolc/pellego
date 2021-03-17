@@ -5,10 +5,10 @@
     <item android:id="@android:id/background">
         <shape>
             <gradient
-                android:startColor="@color/dark_grey"
-                android:centerColor="@color/dark_grey"
+                android:startColor="@color/grey_transparent"
+                android:centerColor="@color/grey_transparent"
                 android:centerY="1.0"
-                android:endColor="#0d1522"
+                android:endColor="@color/grey_transparent"
                 android:angle="270"
                 />
         </shape>
@@ -20,9 +20,9 @@
             <shape>
                 <gradient
                     android:startColor="@color/light_blue"
-                    android:centerColor="@color/light_blue"
+                    android:centerColor="#EE3C5AEB"
                     android:centerY="1.0"
-                    android:endColor="@color/light_blue"
+                    android:endColor="#EE3C5AEB"
                     android:angle="270"
                     />
             </shape>

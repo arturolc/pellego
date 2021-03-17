@@ -67,6 +67,7 @@ dependencies {
     implementation 'com.github.axet:k2pdfopt:0.1.6'
     implementation('com.github.axet:wget:1.7.0') { exclude group: 'org.json', module: 'json' }
     assets('com.madgag.spongycastle:bctls-jdk15on:1.58.0.0') { exclude module: 'junit' }
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'

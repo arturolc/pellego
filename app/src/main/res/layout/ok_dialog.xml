@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:backgroundTint="?colorAccent"
     android:background="@drawable/rounded_background"
     android:orientation="vertical">
 
@@ -13,7 +14,8 @@
         android:paddingBottom="25dp"
         android:gravity="center"
         android:layout_gravity="center"
-        android:textSize="20dp"
+        android:textSize="20sp"
+        android:backgroundTint="@color/transparent"
         android:background="@drawable/rounded_background">
     </TextView>
 
@@ -31,7 +33,7 @@
         android:layout_marginRight="40dp"
         android:layout_gravity="bottom"
         android:text="GO!"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textColor="@color/white"
         android:background="@drawable/rounded_background"
         android:backgroundTint="@color/light_blue"

@@ -1,16 +1,22 @@
 package com.gitlab.capstone.pellego.fragments.quiz;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -20,6 +26,7 @@ import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 
 import java.util.ArrayList;
 
@@ -31,15 +38,20 @@ import java.util.ArrayList;
 public class QuizFragment extends BaseFragment {
 
     private QuizViewModel quizViewModel;
+    private ModuleViewModel moduleViewModel;
     private ListView moduleList;
     private ArrayList<QuizQuestionModel> mNavItems;
     NavController navController;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mNavItems = new ArrayList<>();
+        moduleViewModel =
+                new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         View root = inflater.inflate(R.layout.fragment_quiz, container, false);
+        this.setupHeader(root);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         quizViewModel =
                 new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
@@ -63,7 +75,7 @@ public class QuizFragment extends BaseFragment {
 
         // Populate the Navigation Drawer with options
         moduleList = root.findViewById(R.id.nav_question_list);
-        QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems);
+        QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems, moduleViewModel.getGradient()[0]);
         moduleList.setAdapter(adapter);
 
         // Drawer Item click listeners
@@ -93,11 +105,28 @@ public class QuizFragment extends BaseFragment {
                 mNavItems = quizViewModel.getNextAnswers();
                 // Populate the Navigation Drawer with options
                 moduleList = root.findViewById(R.id.nav_question_list);
-                QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems);
+                QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems, moduleViewModel.getGradient()[0]);
                 moduleList.setAdapter(adapter);
             }
         });
 
         return root;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setupHeader(View root) {
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(moduleViewModel.getGradient()[0]);
+        toolbar.setTitle(null);
+        Window window = getActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(moduleViewModel.getGradient()[0]);
+        LinearLayout header = root.findViewById(R.id.quiz_header_container);
+        GradientDrawable gd = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[] {moduleViewModel.getGradient()[0], moduleViewModel.getGradient()[1]});
+        gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 0f, 0f, 90f, 90f});
+        gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
+        header.setBackgroundDrawable(gd);
     }
 }

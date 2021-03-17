@@ -1,34 +1,49 @@
 package com.gitlab.capstone.pellego.fragments.metaguiding;
 
+import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.SpannableString;
+import android.text.Layout;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceManager;
 
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.fragments.metaguiding.defaultPager.DefaultPagerFragment;
+import com.gitlab.capstone.pellego.app.App;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
+import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
+import com.gitlab.capstone.pellego.widgets.PlayerWidget;
 
-import java.util.ArrayList;
+import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 
+import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
+import static android.os.Process.THREAD_PRIORITY_MORE_FAVORABLE;
 import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
 
 /**********************************************
@@ -37,51 +52,68 @@ import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiTh
  Metaguiding fragment that guides users through text with an underlined
  or highlighted word
  **********************************************/
-public class MetaguidingModuleFragment extends DefaultPagerFragment {
+public class MetaguidingModuleFragment extends BaseFragment {
 
     private View root;
     private Integer wpm;
     public String difficulty;
-    private static AsyncUpdateText asyncUpdateText;
-    private SpannableString content;
+    private static AsyncUpdateReaderText asyncUpdateReaderText;
+    private TextView mtext;
+    private ScrollView scroller;
+    private String content = "";
     private ModuleViewModel moduleViewModel;
-    private FragmentActivity currentActivity;
-    private int idx =0;
-    private int maxChars;
-    private ArrayList<String> pageText;
-    public TextView contentTextView;
+    private int idx = 0;
+    private int color;
+    private FragmentActivity currentView;
+    private PlayerWidget playerWidget;
+    private int txtColor;
+    private int backgroundColor;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         difficulty = getArguments().getString("difficulty");
         // Set the displayed text to the appropriate level
         switch(difficulty) {
             case "beginner":
-                getArguments().putInt("string_id", R.string.content_metaguiding_beginner);
+                content = getString(R.string.content_metaguiding_beginner);
                 break;
             case "intermediate":
-                getArguments().putInt("string_id", R.string.content_metaguiding_intermediate);
+                content = getString(R.string.content_metaguiding_intermediate);
                 break;
             case "advanced":
-                getArguments().putInt("string_id", R.string.content_metaguiding_advanced);
-
+                content = getString(R.string.content_metaguiding_advanced);
                 break;
         }
         super.onCreateView(inflater, container, savedInstanceState);
         wpm = Integer.parseInt(getArguments().getString("wpm"));
-        currentActivity = getActivity();
+        currentView = getActivity();
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
 
-        root = inflater.inflate(R.layout.fragment_default_pager, container, false);
-        mPager = root.findViewById(R.id.pager);
-        mProgressBar = root.findViewById(R.id.progress_bar);
-        mPageIndicator = root.findViewById(R.id.pageIndicator);
-        ViewGroup textviewPage = (ViewGroup) getLayoutInflater().inflate(R.layout.fragment_pager_container, (ViewGroup) getActivity().getWindow().getDecorView().findViewById(android.R.id.content) , false);
-        mDisplay = getActivity().getWindowManager().getDefaultDisplay();
+        root = inflater.inflate(R.layout.fragment_metaguiding_module, container, false);
 
+        this.setupHeader(root);
+        mtext = root.findViewById(R.id.mText);
+        mtext.setBackgroundColor(Color.WHITE);
+        scroller = root.findViewById(R.id.mscroller);
+        mtext.setText(content);
         if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
         return root;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setupHeader(View root) {
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.color, typedValue, true);
+        int color = typedValue.data;
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(color);
+        toolbar.setTitle(null);
+        Window window = getActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(color);
     }
 
     private void showQuizPopupDialog() {
@@ -95,7 +127,7 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                NavController navController = Navigation.findNavController(currentActivity, R.id.nav_host_fragment);
+                NavController navController = Navigation.findNavController(currentView, R.id.nav_host_fragment);
                 Bundle args = new Bundle();
                 args.putString("difficulty", difficulty);
                 args.putString("wpm", String.valueOf(wpm));
@@ -118,61 +150,145 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                asyncUpdateText = new AsyncUpdateText(); // start thread on ok
-                asyncUpdateText.execute(wpm);
+                asyncUpdateReaderText = new AsyncUpdateReaderText(); // start thread on ok
+                asyncUpdateReaderText.execute(wpm);
             }
         });
         dialog.show();
         moduleViewModel.showSubmodulePopupDialog = false;
     }
 
-    /**
-     *
-     * Asynchronously updates the text in the metaguiding fragment at the provided WPM rate
-     */
-    private class AsyncUpdateText extends AsyncTask<Integer, String, Integer> {
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
-        @Override
-        protected void onPreExecute() {
+    public void initMetaguidingReader(PlayerWidget playerWidget, Activity a, String theme) {
+        currentView = (FragmentActivity) a;
+        mtext = currentView.findViewById(R.id.mText);
+        configColorProfile(theme);
+        mtext.setBackgroundColor(backgroundColor);
+        mtext.setTextColor(txtColor);
+        scroller = currentView.findViewById(R.id.mscroller);
+        this.playerWidget = playerWidget;
+        color = a.getResources().getColor(R.color.light_blue);
+        if (content == "") {
+            content = getNextPage();
+        }
+        mtext.setText(content);
+    }
 
+    public void play() {
+        if (content == "") {
+            content = getNextPage();
+        }
+        if (PlayerWidget.playing) {
+            mtext.setText(content);
+            asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText(); // start thread on ok
+            asyncUpdateReaderText.execute(PlayerWidget.wpm);
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.N)
+    }
+
+    public String getNextPage() {
+        String txt = "";
+        while(txt.length() < 900) {
+            txt += playerWidget.selectNext();
+        }
+        return txt;
+    }
+
+    public String getPrevPage() {
+        String txt = "";
+        while(txt.length() < 900) {
+            txt += playerWidget.selectPrev();
+        }
+        return txt;
+    }
+
+    public void startNext() {
+        if (content == "") {
+            content = getNextPage();
+        }
+        mtext.setText(content);
+        idx += 200;
+        asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText(); // start thread on ok
+        asyncUpdateReaderText.execute(PlayerWidget.wpm);
+    }
+
+    public void startPrev() {
+        if (content == "") {
+            content = getPrevPage();
+        }
+        mtext.setText(content);
+        idx = 0;
+        asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText(); // start thread on ok
+        asyncUpdateReaderText.execute(PlayerWidget.wpm);
+    }
+
+    public void stop() {
+        asyncUpdateReaderText.cancel(true);
+    }
+
+
+    public void configColorProfile(String thm) {
+        if (thm.equals("Theme_Dark")) {
+            txtColor = Color.parseColor("#FFFFFF");
+            backgroundColor = Color.parseColor("#000000");
+        } else if (thm.equals("Theme_Light")) {
+            txtColor = Color.parseColor("#000000");
+            backgroundColor = Color.parseColor("#FFFFFF");
+        } else {
+            txtColor = Color.parseColor("#000000");
+            backgroundColor = Color.parseColor("#F5E5CC");
+        }
+    }
+
+    /**
+     * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
+     */
+    private class AsyncUpdateReaderText extends AsyncTask<Integer, String, Integer> {
+
+        TextView mtext;
+        @Override
+        protected void onPreExecute() {
+            mtext = currentView.findViewById(R.id.mText);
+        }
+
         @Override
         protected Integer doInBackground(Integer... ints) {
-            // This delay requires some fine tuning because word length varies
-            long delay = (long) (((60.0 / (float) ints[0]) * 70));
-            contentTextView = (TextView) root.findViewById(R.id.mText);
-            for (int i = 0; i < mPages.size(); i++) {
-                String pageTxt = getContents(i);
-                showPageIndicator(i);
-                while (idx < pageTxt.length() - 9) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (!Thread.interrupted()) {
-                                NavHostFragment navHostFragment = (NavHostFragment) currentActivity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-                                if (navHostFragment.getChildFragmentManager().getFragments().get(0).toString().contains("MetaguidingModuleFragment")) {
-                                    contentTextView.setText(Html.fromHtml(pageTxt.substring(0, idx) + "<u><font color='" + getResources().getColor(R.color.light_blue) + "'>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9)));
+            String pageTxt = content;
+            Layout layout = mtext.getLayout();
+            mtext.setText(Html.fromHtml(pageTxt));
+            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+            scroller.scrollTo(0, layout.getLineTop(layout.getLineForOffset(idx)));
+            NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+            while (idx < pageTxt.length() - 9) {
+                String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!Thread.interrupted()) {
+                            if (currFragment.contains("MetaguidingModuleFragment") || (currFragment.contains("ReaderFragment") && PlayerWidget.playing)) {
+                                try {
+                                    String txt = "<font color='" + Integer.toHexString(txtColor) + "'>"+ pageTxt.substring(0, idx) + "<u>" + pageTxt.substring(idx, idx + 9) + "</u>" + pageTxt.substring(idx + 9) +  "</font>";
+                                    mtext.setText(Html.fromHtml(txt));
+                                    ObjectAnimator.ofInt(scroller, "scrollY",  layout.getLineBottom(layout.getLineForOffset(idx))).setDuration(0).start();
+                                } catch (Exception e) {
+                                    cancel(true);
                                 }
+
                             }
                         }
-                    });
-                    idx++;
-                    NavHostFragment navHostFragment = (NavHostFragment) currentActivity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-                    if (!navHostFragment.getChildFragmentManager().getFragments().get(0).toString().contains("MetaguidingModuleFragment")) {
-                        cancel(true);
-                        return 0;
                     }
-                    try {
-                        Thread.sleep(delay);
-                    } catch (InterruptedException e) {
-                        cancel(true);
-                        e.printStackTrace();
-                    }
+                });
+                idx++;
+                if (!currFragment.contains("MetaguidingModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing) || idx > pageTxt.length()) {
+                    cancel(true);
+                    return 0;
                 }
-                idx = 0;
+                try {
+                    Thread.sleep((long) (((60.0 / (float) PlayerWidget.wpm) * 90)));
+                } catch (InterruptedException e) {
+                    cancel(true);
+                    e.printStackTrace();
+                }
             }
             return 0;
         }
@@ -180,12 +296,25 @@ public class MetaguidingModuleFragment extends DefaultPagerFragment {
         @Override
         protected void onPostExecute(Integer result) {
             try {
-                showQuizPopupDialog();
+                if (PlayerWidget.playing) {
+                    content = getNextPage();
+                    mtext.setText(content);
+                    idx = 0;
+                    asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText();
+                    asyncUpdateReaderText.execute(PlayerWidget.wpm);
+                } else {
+                    try {
+                        showQuizPopupDialog();
+                    } catch (Exception e) {
+                        Log.d("error" , e.getMessage());
+                    }
+                }
             } catch (Exception e) {
                 Log.d("error" , e.getMessage());
             }
 
         }
     }
+
 }
 

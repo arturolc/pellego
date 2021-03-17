@@ -9,11 +9,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -27,6 +30,7 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,6 +39,8 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -42,6 +48,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.github.axet.androidlibrary.net.HttpClient;
 import com.github.axet.androidlibrary.services.StorageProvider;
 import com.github.axet.androidlibrary.widgets.CacheImagesAdapter;
@@ -54,7 +61,9 @@ import com.gitlab.capstone.pellego.R;
 
 import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.App;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.fragments.profile.ProfileFragment;
 import com.gitlab.capstone.pellego.widgets.BookmarksDialog;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
 
@@ -142,7 +151,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
                 setNumColumns(1);
                 layout = R.layout.book_list_item;
             } else {
-                setNumColumns(4);
+                setNumColumns(3);
                 layout = R.layout.book_item;
             }
         }
@@ -424,6 +433,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         public void refresh() {
         }
 
+
         @Override
         public long getItemId(int position) {
             return position;
@@ -533,12 +543,14 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         books.load();
         books.refresh();
         // Emtpy library
-        TextView emptyLibraryMsg =  getActivity().findViewById(R.id.text_empty_library);
+        LinearLayout emptyLibraryMsg =  getActivity().findViewById(R.id.empty_library_container);
+        LottieAnimationView lottieAnimationView = getActivity().findViewById(R.id.empty_anim);
         if (books.all.size() == 0) {
             emptyLibraryMsg.setVisibility(View.VISIBLE);
-            emptyLibraryMsg.setText(R.string.title_empty_library);
+            lottieAnimationView.playAnimation();
         } else {
             emptyLibraryMsg.setVisibility(View.INVISIBLE);
+            lottieAnimationView.cancelAnimation();
         }
 //        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_menu, null);
 //        drawable = DrawableCompat.wrap(drawable);
@@ -547,15 +559,16 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
 //        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_library, container, false);
 
         holder.create(v);
         holder.footer.setVisibility(View.GONE);
-
+        setupHeader(v);
         final MainActivity main = (MainActivity) getActivity();
-        main.toolbar.setTitle(R.string.app_name);
+        main.toolbar.setTitle(null);
         main.toolbar.setVisibility(View.VISIBLE);
         FrameLayout constraintLayout = main.findViewById(R.id.host_fragment_container);
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
@@ -662,7 +675,22 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
                 return true;
             }
         });
+
         return v;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setupHeader(View root) {
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        int color = typedValue.data;
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.light_blue_solid));
+        toolbar.setTitle(null);
+        Window window = getActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(getResources().getColor(R.color.light_blue_solid));
+        window.setNavigationBarColor(getResources().getColor(android.R.color.transparent));
     }
 
     @Override

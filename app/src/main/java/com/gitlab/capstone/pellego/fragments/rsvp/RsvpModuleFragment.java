@@ -5,15 +5,21 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -44,11 +50,9 @@ public class RsvpModuleFragment extends BaseFragment {
     private ModuleViewModel moduleViewModel;
     private FragmentActivity currentView;
     private PlayerWidget playerWidget;
-    public FBReaderView fb;
-    TTSPopup.Fragment fragment;
-    public Storage.Bookmarks marks = new Storage.Bookmarks();
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         wpm = Integer.parseInt(getArguments().getString("wpm"));
@@ -73,13 +77,26 @@ public class RsvpModuleFragment extends BaseFragment {
 
 
         root = inflater.inflate(R.layout.fragment_rsvp_module, container, false);
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(null);
         final TextView textView = root.findViewById(R.id.title_rsvp);
-
-
-
+        this.setupHeader(root);
         // Only show popup if user navigated to the Rsvp module
        if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
         return root;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setupHeader(View root) {
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.color, typedValue, true);
+        int color = typedValue.data;
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(color);
+        toolbar.setTitle(null);
+        Window window = getActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(color);
     }
 
 
@@ -174,7 +191,6 @@ public class RsvpModuleFragment extends BaseFragment {
 
         @Override
         protected Integer doInBackground(Integer... ints) {
-            long delay = (long) ((60.0 / (float) ints[0]) * 1000);
             for (String word : words) {
                 // Verify that user has not navigated away from the RSVP fragment
                 NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
@@ -187,7 +203,7 @@ public class RsvpModuleFragment extends BaseFragment {
                     if (PlayerWidget.playing) content = content.replaceFirst(word, "");
                 }
                 try {
-                    Thread.sleep(delay);
+                    Thread.sleep((long) ((60.0 / (float) PlayerWidget.wpm) * 1000));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     return 0;

@@ -19,6 +19,9 @@
         <item android:id="@+id/nav_privacy_policy"
             android:icon="@drawable/ic_privacy_policy_foreground"
             android:title="Privacy Policy" />
+        <item android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
         <item
             android:id="@+id/nav_sign_out"
             android:icon="@drawable/ic_sign_out"

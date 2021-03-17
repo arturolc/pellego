@@ -12,7 +12,7 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="92dp"
         tools:layout_editor_absoluteY="146dp"
-        android:background="?colorPrimary">
+        android:background="?colorControlHighlight">
         <WebView
             android:id="@+id/text_terms_and_conditions"
             android:layout_width="match_parent"
@@ -21,6 +21,6 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="8dp"
             android:gravity="center_horizontal"
-            android:textSize="70dp" />
+            android:textSize="70sp" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

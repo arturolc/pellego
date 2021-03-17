@@ -72,7 +72,7 @@
 
 
 
-    <string name="app_name">Pellego</string>
+    <string name="app_name"></string>
     <string name="title_library" translatable="false">Library</string>
     <string name="title_empty_library" translatable="false">Such empty..</string>
     <string name="title_learn_nav">Learn</string>
@@ -83,10 +83,12 @@
     <string name="title_settings">Settings</string>
     <string name="title_quiz">Quiz</string>
     <string name="title_quiz_results">Results</string>
-    <string name="title_clump_reading">Clump Reading</string>
+    <string name="title_clump_reading" translatable="false">Clump Reading</string>
+    <string name="short_description_clump_reading" translatable="false">Words grouped together in chunks</string>
     <string name="title_meta_guiding">Meta Guiding</string>
     <string name="title_technique">Technique Overview</string>
-    <string name="title_reducing_subvocalization">Reducing Subvocalization</string>
+    <string name="title_reducing_subvocalization" translatable="false">Reducing Subvocalization</string>
+    <string name="short_description_reducing_subvocalization" translatable="false">Eliminate the habit of subvocalization</string>
     <string name="title_profile">Profile</string>
     <string name="title_sign_out">Sign Out</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
@@ -108,6 +110,7 @@
     <!-- RSVP    -->
     <string name="title_rsvp_intro" translatable="false">Rapid Serial Visual Presentation Introduction</string>
     <string name="title_rsvp" translatable="false">Rapid Serial Visual Presentation</string>
+    <string name="short_description_rsvp" translatable="false">Individual words in rapid succession</string>
     <string name="description_rsvp" translatable="false">Rapid Serial Visual Presentation is a method in which individual words are displayed in rapid succession. The words are fixed to the same
                 point on the screen which eliminates the need for saccades. This means your eyes can remain fixed while the words change."</string>
     <!--    RSVP Beginner-->
@@ -335,11 +338,18 @@ human beings and deserve our care and respect." The main purpose of this stateme
         impairment, dyslexia, perceptual and cognitive psychology.</item>
     </string-array>
 
+    <!--    Pre Reading-->
+    <string name="description_prereading_highlight" translatable="false">Scan text beforehand to prep you brain</string>
+    <string name="title_prereading_intro" translatable="false">Pre-Reading Introduction</string>
+    <string name="title_prereading" translatable="false">Pre-Reading</string>
+    <string name="short_description_prereading" translatable="false">Scan text to prep your brain</string>
+
     <!-- Metaguiding -->
     <string name="title_metaguiding_highlight" translatable="false">Meta-guiding highlight</string>
     <string name="description_metaguiding_highlight" translatable="false">The default highlight color for the meta guiding technique</string>
     <string name="title_metaguiding_intro" translatable="false">Meta Guiding Introduction</string>
     <string name="title_metaguiding" translatable="false">Meta Guiding</string>
+    <string name="short_description_metaguiding" translatable="false">Smooth moving line beneath text</string>
     <string name="description_metaguiding" translatable="false">Meta guiding is the visual guiding of the eye using a finger or pointer, such as a pen, in order for the eye to move faster along the length of a passage of text. It involves drawing invisible shapes on a page of text in order to broaden the visual span for speed reading. </string>
 <!--    Metaguiding Beginner -->
     <string name="content_metaguiding_beginner" translatable="false">For two months, I have been trying to decide who makes the best ice cream. I have narrowed it

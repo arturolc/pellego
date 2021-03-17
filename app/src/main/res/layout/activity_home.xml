@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/home_layout"
+    android:background="?colorPrimary"
     android:fitsSystemWindows="true"
     tools:openDrawer="start" >
 
@@ -22,7 +23,7 @@
         android:background="@drawable/nav_side_drawer_background"
         app:itemTextColor="@color/white"
         android:id="@+id/side_nav_view"
-        app:itemBackground="?colorPrimaryDark"
+        app:itemBackground="@color/transparent"
         android:fitsSystemWindows="false"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu" />

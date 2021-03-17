@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?colorPrimary"
+        android:background="?colorControlHighlight"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="111dp"
         tools:layout_editor_absoluteY="16dp">
@@ -18,13 +18,10 @@
             android:id="@+id/title_results"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="8dp"
             android:gravity="center_horizontal"
             android:textColor="@color/primary_white"
             android:fontFamily="@font/bulletto_family"
-            android:textSize="70dp" />
+            android:textSize="70sp" />
 
         <TextView
             android:id="@+id/text_results"
@@ -36,26 +33,28 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_background"
             android:paddingTop="15dp"
+            android:elevation="10dp"
             android:paddingBottom="15dp"
             android:textAlignment="center"
             android:textColor="@color/light_blue"
-            android:textSize="50dp"></TextView>
+            android:textSize="50sp"></TextView>
 
         <TextView
             android:id="@+id/text_results_message"
-            android:textColor="@color/primary_white"
+            android:textColor="@color/light_blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="20dp"
+            android:elevation="10dp"
             android:layout_marginRight="8dp"
             android:paddingLeft="8dp"
             android:paddingTop="15dp"
             android:paddingRight="8dp"
             android:paddingBottom="15dp"
             android:textAlignment="center"
-            android:textSize="50dp"></TextView>
+            android:textSize="50sp"></TextView>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_results_retry"
@@ -65,6 +64,7 @@
             android:layout_gravity="bottom"
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="15dp"
+            android:elevation="10dp"
             android:background="@drawable/rounded_background"
             android:textColor="@color/light_blue"
             android:clickable="true">
@@ -75,6 +75,7 @@
             android:text="Return to Learning Modules"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:elevation="10dp"
             android:layout_gravity="bottom"
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="20dp"

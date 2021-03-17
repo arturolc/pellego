@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.gitlab.capstone.pellego.activities.SplashActivity"
-    android:background="@color/light_blue"
+    android:background="@drawable/gradient_background_square"
     >
 
     <ImageView
@@ -36,7 +36,7 @@
             android:textAlignment="center"
             android:fontFamily="@font/bulletto_family"
             android:gravity="center"
-            android:textSize="80dp"
+            android:textSize="80sp"
             tools:ignore="MissingConstraints"></TextView>
 
         <com.airbnb.lottie.LottieAnimationView
