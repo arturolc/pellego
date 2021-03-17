@@ -21,6 +21,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
@@ -38,6 +39,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
@@ -635,6 +638,19 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         shared.registerOnSharedPreferenceChangeListener(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setupHeader(View root) {
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.color, typedValue, true);
+        int color = typedValue.data;
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(color);
+        toolbar.setTitle(null);
+        Window window = getActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(color);
+    }
+
     public static void showOptionsMenu() {
         MenuItem tocMenu = ReaderFragment.optionsMenu.findItem(R.id.action_toc);
         MenuItem bookmarksMenu = ReaderFragment.optionsMenu.findItem(R.id.action_bm);
@@ -673,6 +689,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_reader, container, false);
+        setupHeader(v);
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(getContext());
         switch(prefs.getString(App.READER_THEME, "")) {
             case "Theme_Dark":

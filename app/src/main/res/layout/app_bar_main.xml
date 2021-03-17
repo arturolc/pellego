@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="?colorPrimary"
+    android:background="?colorControlHighlight"
     tools:context="com.gitlab.capstone.pellego.activities.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -12,8 +12,8 @@
         android:layout_height="?attr/actionBarSize"
         app:title=""
         android:id="@+id/toolbar"
-        app:titleTextColor="?colorPrimary"
-        android:background="?colorPrimary"
+        app:titleTextColor="@color/light_blue_solid"
+        android:background="@color/light_blue_solid"
         app:elevation="0dp"
         />
 

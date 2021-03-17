@@ -12,7 +12,7 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="92dp"
         tools:layout_editor_absoluteY="146dp"
-        android:background="?colorPrimary">
+        android:background="?colorControlHighlight">
         <WebView
             android:id="@+id/text_terms_and_conditions"
             android:layout_width="match_parent"

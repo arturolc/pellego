@@ -41,11 +41,11 @@ public class BaseFragment extends Fragment {
         getActivity().getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
         int color = typedValue.data;
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(color);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.light_blue_solid));
         toolbar.setTitle(null);
         Window window = getActivity().getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(color);
+        window.setStatusBarColor(getResources().getColor(R.color.light_blue_solid));
     }
 
     @Override

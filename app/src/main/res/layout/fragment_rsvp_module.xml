@@ -9,11 +9,12 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:id="@+id/rsvp_container"
+        android:elevation="20dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="92dp"
         tools:layout_editor_absoluteY="146dp"
-        android:background="?colorPrimary">
+        android:background="?colorControlHighlight">
         <TextView
             android:id="@+id/title_rsvp"
             android:layout_width="match_parent"
@@ -41,7 +42,7 @@
             android:layout_gravity="center"
             android:textSize="25sp"
             android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/white_transparent">
+            android:backgroundTint="@color/grey_transparent">
         </TextView>
 
 

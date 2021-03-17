@@ -9,8 +9,8 @@
         android:id="@+id/rellay1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="?actionBarSize"
-        android:paddingBottom="20dp">
+        android:paddingTop="0dp"
+        android:paddingBottom="40dp">
 
         <RelativeLayout
             android:id="@+id/imgUser"
@@ -36,11 +36,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgUser"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15sp"
+            android:layout_marginTop="5sp"
             android:fontFamily="sans-serif-light"
             android:text="Joanna Lowry"
             android:textColor="@color/white"
-            android:textSize="32sp" />
+            android:textSize="28sp" />
 
 
         <TextView
@@ -53,17 +53,7 @@
             android:text="5k words read"
             android:textAllCaps="true"
             android:textColor="@color/white_transparent"
-            android:textSize="14sp" />
-
-<!--        <ImageView-->
-<!--            android:layout_width="40dp"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:layout_alignParentRight="true"-->
-<!--            android:layout_marginRight="15dp"-->
-<!--            android:layout_marginTop="15dp"-->
-<!--            android:adjustViewBounds="true"-->
-<!--            android:scaleType="centerInside"-->
-<!--            app:srcCompat="@drawable/ic_settings" />-->
+            android:textSize="12sp" />
 
     </RelativeLayout>
 
@@ -92,14 +82,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Name"
-                    android:textColor="?colorSecondary"
+                    android:textColor="?subtitleTextColor"
                     android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:textColor="@color/white"
+                    android:textColor="?android:textColor"
                     android:text="Joanna Lowry"
                     android:textSize="18sp" />
 
@@ -120,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Email"
-                    android:textColor="?colorSecondary"
+                    android:textColor="?subtitleTextColor"
                     android:textSize="13sp" />
 
                 <TextView
@@ -128,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="joey@sharenofood.com"
-                    android:textColor="@color/white"
+                    android:textColor="?android:textColor"
                     android:textSize="18sp" />
 
                 <View
@@ -150,14 +140,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Password"
-                    android:textColor="?colorSecondary"
+                    android:textColor="?subtitleTextColor"
                     android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:textColor="@color/white"
+                    android:textColor="?android:textColor"
                     android:text="********"
                     android:textSize="18sp" />
 
@@ -179,14 +169,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total Books"
-                    android:textColor="?colorSecondary"
+                    android:textColor="?subtitleTextColor"
                     android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:textColor="@color/white"
+                    android:textColor="?android:textColor"
                     android:text="15"
                     android:textSize="18sp" />
 
