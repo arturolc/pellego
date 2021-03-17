@@ -53,6 +53,7 @@ public class SplashActivity extends AppCompatActivity {
                 lottieAnimationView.playAnimation();
             }
         });
+        MainActivity.loadImageFromStorage();
 
         LearningModulesRepo repo = new LearningModulesRepo(getApplication());
         try {

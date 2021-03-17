@@ -14,7 +14,7 @@
         android:id="@+id/toolbar"
         app:titleTextColor="@color/light_blue_solid"
         android:background="@color/light_blue_solid"
-        app:elevation="0dp"
+        app:elevation="15dp"
         />
 
     <include layout="@layout/content_main" />

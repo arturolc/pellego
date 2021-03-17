@@ -7,10 +7,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -40,6 +43,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
+
+import static com.gitlab.capstone.pellego.activities.MainActivity.bitmap;
 
 public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
     public Toolbar toolbar;
@@ -89,6 +94,30 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
         NavigationUI.setupWithNavController(drawerNavigationView, navController);
 
+        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+                invalidateOptionsMenu();
+                ImageView im2 = (ImageView) findViewById(R.id.profile_image_drawer);
+                im2.setImageBitmap(bitmap);
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                ImageView im2 = (ImageView) findViewById(R.id.profile_image_drawer);
+                im2.setImageBitmap(bitmap);
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+        });
+
         // TODO: refactor this so it's just a click listener for the sign out button, otherwise navigation to other views doesn't work
         drawerNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -117,6 +146,8 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         });
 
     }
+
+
 
     @Override
     protected void onResume() {
@@ -148,16 +179,22 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         }
     }
 
+    // TODO: fix full screen mode
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void hideSystemUI() {
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.color, typedValue, true);
+        int color = typedValue.data;
+        findViewById(R.id.main_content).setBackgroundColor(color);
         super.hideSystemUI();
-//        bottomContent.setVisibility(View.INVISIBLE);
         setFitsSystemWindows(this, false);
     }
 
     @Override
     public void showSystemUI() {
         super.showSystemUI();
+        findViewById(R.id.main_content).setBackgroundColor(Color.TRANSPARENT);
         bottomContent.setVisibility(View.VISIBLE);
         setFitsSystemWindows(this, true);
     }

@@ -45,6 +45,7 @@ import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -89,15 +90,12 @@ public class ProfileFragment extends BaseFragment {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         super.setupHeader(root);
         ImageView im1 = (ImageView) root.findViewById(R.id.profile_image);
-        ImageView im2 = (ImageView) getActivity().findViewById(R.id.profile_image_drawer);
         RelativeLayout usr = root.findViewById(R.id.imgUser);
         usr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
                 MainActivity.loadImageFromStorage();
-                im1.setImageBitmap(bitmap);
-                im2.setImageBitmap(bitmap);
             }
         });
 
@@ -108,7 +106,7 @@ public class ProfileFragment extends BaseFragment {
             }
         });
         im1.setImageBitmap(bitmap);
-        im2.setImageBitmap(bitmap);
+//        im2.setImageBitmap(bitmap);
         return root;
     }
 
@@ -119,11 +117,14 @@ public class ProfileFragment extends BaseFragment {
             case GET_FROM_GALLERY:
                 if (resultCode == Activity.RESULT_OK) {
                     Uri selectedImage = data.getData();
-                    Bitmap bitmap = null;
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
                         CircleImageView profilePic =  getActivity().findViewById(R.id.profile_image);
                         profilePic.setImageBitmap(bitmap);
+                        NavigationView navView = (NavigationView) getActivity().findViewById(R.id.side_nav_view);
+                        View headerView = navView.getHeaderView(0);
+                        ImageView im2 = (ImageView) headerView.findViewById(R.id.profile_image_drawer);
+                        im2.setImageBitmap(bitmap);
                         // save profile photo
                         storeImage(bitmap);
 

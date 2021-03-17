@@ -232,7 +232,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
         Window window = this.getWindow();
         TypedValue typedValue = new TypedValue();
-        loadImageFromStorage();
+//        loadImageFromStorage();
 
     }
 
@@ -269,10 +269,26 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        try {
+            ImageView im = findViewById(R.id.profile_image_drawer);
+            im.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            Log.d("bitmap" , e.getMessage());
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        ImageView im = findViewById(R.id.profile_image_drawer);
-        im.setImageBitmap(bitmap);
+        try {
+            ImageView im = findViewById(R.id.profile_image_drawer);
+            im.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            Log.d("bitmap" , e.getMessage());
+        }
 //        MenuItem searchMenu = menu.findItem(R.id.action_search);
         final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
 //        MenuItem theme = menu.findItem(R.id.action_theme);
