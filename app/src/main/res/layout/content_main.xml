@@ -10,12 +10,17 @@
     tools:showIn="@layout/app_bar_main"
     android:paddingTop="?attr/actionBarSize">
 
+
+
+
+
     <View
+        android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="15dp"
+        android:background="@drawable/shadow"
         android:elevation="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/container_bottom"
-        android:background="@drawable/shadow"/>
+        app:layout_constraintBottom_toTopOf="@+id/container_bottom" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/container_bottom"
@@ -130,7 +135,6 @@
             android:layout_height="200dp"
             app:layout_constraintBottom_toTopOf="@+id/container_bottom"
             android:background="@drawable/gradient_background_circular"/>
-
         <fragment
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"

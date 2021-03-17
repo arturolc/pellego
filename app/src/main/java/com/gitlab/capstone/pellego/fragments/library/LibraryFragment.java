@@ -48,6 +48,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.github.axet.androidlibrary.net.HttpClient;
 import com.github.axet.androidlibrary.services.StorageProvider;
 import com.github.axet.androidlibrary.widgets.CacheImagesAdapter;
@@ -541,12 +542,14 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         books.load();
         books.refresh();
         // Emtpy library
-        TextView emptyLibraryMsg =  getActivity().findViewById(R.id.text_empty_library);
+        LinearLayout emptyLibraryMsg =  getActivity().findViewById(R.id.empty_library_container);
+        LottieAnimationView lottieAnimationView = getActivity().findViewById(R.id.empty_anim);
         if (books.all.size() == 0) {
             emptyLibraryMsg.setVisibility(View.VISIBLE);
-            emptyLibraryMsg.setText(R.string.title_empty_library);
+            lottieAnimationView.playAnimation();
         } else {
             emptyLibraryMsg.setVisibility(View.INVISIBLE);
+            lottieAnimationView.cancelAnimation();
         }
 //        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_menu, null);
 //        drawable = DrawableCompat.wrap(drawable);
