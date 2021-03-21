@@ -62,53 +62,23 @@ import java.util.List;
 import static androidx.navigation.Navigation.findNavController;
 
 /**********************************************
-    Chris Bordoy & Eli Hebdon
+    Chris Bordoy, Arturo Lara & Eli Hebdon
 
     The Learn Modules Component
  **********************************************/
 public class LearnFragment extends BaseFragment {
 
-    private ModuleViewModel moduleViewModel;
     private LearnViewModel learnViewModel;
     private ListView moduleList;
-
-    private ArrayList<ModuleListItemModel> mNavItems;
-    ProgressBar spinner;
-    NavigationView modulesView;
-    LibraryFragment.FragmentHolder holder;
-
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        mNavItems = new ArrayList<>();
-
-        moduleViewModel =
-                new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         learnViewModel = new ViewModelProvider(requireActivity()).get(LearnViewModel.class);
         View root = inflater.inflate(R.layout.fragment_learn, container, false);
         moduleList = root.findViewById(R.id.nav_module_list);
-//        spinner = root.findViewById(R.id.loading_spinner);
-        // TODO: show spinner while modules load in
-//        spinner.setVisibility(View.GONE);
+
         super.setupHeader(root);
-//        modulesView = root.findViewById(R.id.nav_module_overview);
-        // Query DB for learning modules
-//        getApiData(inflater, container, new ResponseCallBack() {
-//            @Override
-//            public void onResponse(Object response) {
-//                // Update UI only after response is received &
-//                // Add icons and subtitles for modules manually for now
-//                System.out.println("response " + response);
-//                // TODO: query DB for icons, titles, etc
-//
-//
-//                // Populate the Navigation Drawer with options
-//                Log.d("checking", mNavItems.toString());
-//                ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
-//                moduleList.setAdapter(adapter);
-//            }
-//        });
 
         learnViewModel.getLMResponse().observe(getViewLifecycleOwner(), new Observer<List<LMResponse>>() {
             @Override
@@ -149,81 +119,4 @@ public class LearnFragment extends BaseFragment {
         });
         return root;
     }
-
-    /**
-     * Interface to to update UI after response from server is received
-     */
-    public interface ResponseCallBack{
-        void onResponse(Object response);
-    }
-
-    /**
-     * Query the DB for learning modules. If no connection can be established, use the default data
-     */
-    private void getApiData(@NonNull LayoutInflater inflater, ViewGroup container, ResponseCallBack responseCallBack)
-    {
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url ="http://54.176.198.201:5000/modules";
-//        spinner.setVisibility(View.GONE);
-//        modulesView.setVisibility(View.VISIBLE);
-        useDefaultData();
-        // Request a json response from the provided URL.
-//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-//                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-//
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        Log.d("response", response.toString());
-//
-//                        for (int i = 0; i < response.length(); i++) {
-//                            try {
-//                                JSONObject item = response.getJSONObject(i);
-//                                mNavItems.add(new ModuleListItemModel(item.get("Name").toString()));
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                        responseCallBack.onResponse(response);
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Log.d("error", error.toString());
-//                        // Load the default data from shared preferences
-////                        spinner.setVisibility(View.GONE);
-////                        modulesView.setVisibility(View.VISIBLE);
-////                        useDefaultData();
-//                    }
-//                });
-//
-//        // Add the request to the RequestQueue.
-//        queue.add(jsonArrayRequest);
-    }
-
-    /**
-     * Populates the learning module list with default data.
-     */
-    private void useDefaultData() {
-        //TODO use shared preferences to populate list using data stored locally on the device
-        mNavItems.add(new ModuleListItemModel("Rapid Serial Visual Presentation", retrieveModuleProgress("rsvp"), getResources().getDrawable(R.drawable.ic_rsvp), getString(R.string.short_description_rsvp)));
-        mNavItems.add(new ModuleListItemModel("Clump Reading", retrieveModuleProgress("clumpreading"),getResources().getDrawable(R.drawable.ic_clump_reading), getString(R.string.short_description_clump_reading)));
-        mNavItems.add(new ModuleListItemModel("Reducing Subvocalization", retrieveModuleProgress("reducingsubvocalization"), getResources().getDrawable(R.drawable.ic_reducing_subvocalization), getString(R.string.short_description_reducing_subvocalization)));
-        mNavItems.add(new ModuleListItemModel("Meta Guiding", retrieveModuleProgress("metaguiding"), getResources().getDrawable(R.drawable.ic_meta_guiding), getString(R.string.short_description_metaguiding)));
-        mNavItems.add(new ModuleListItemModel("Pre-Reading", retrieveModuleProgress("prereading"), getResources().getDrawable(R.drawable.ic_pre_reading), getString(R.string.short_description_prereading)));
-
-        // Populate the Navigation Drawer with options
-        ModuleCardAdapter adapter = new ModuleCardAdapter(getContext(), mNavItems);
-        moduleList.setAdapter(adapter);
-
-    }
-
-    private String retrieveModuleProgress(String technique) {
-        // TODO: query DB for module progress and default to local data if connection can't be established
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        String key = technique + "_submodule_progress";
-        return sharedPref.getInt(key, 0) + " of 4 completed";
-    }
-
-
 }

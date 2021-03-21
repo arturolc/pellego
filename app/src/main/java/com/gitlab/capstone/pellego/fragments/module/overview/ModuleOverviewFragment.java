@@ -37,7 +37,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
 /**********************************************
- Eli Hebdon
+ Eli Hebdon, Chris Bordoy & Arturo Lara
 
  Module Overview fragment that
  displays the technique submodules and gives a brief overview
