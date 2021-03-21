@@ -13,6 +13,7 @@ import com.gitlab.capstone.pellego.network.RetroInstance;
 import com.gitlab.capstone.pellego.network.models.AuthToken;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
+import com.gitlab.capstone.pellego.network.models.SMResponse;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -27,17 +28,19 @@ public class LearningModulesRepo {
     private APIService apiService;
     private MutableLiveData<List<LMResponse>> lmResponse = new MutableLiveData<>();
     private MutableLiveData<List<LMDescResponse>> lmDescResponse = new MutableLiveData<>();
+    private MutableLiveData<List<SMResponse>> smResponse = new MutableLiveData<>();
 
     public LearningModulesRepo(Application application) {
         db = PellegoDatabase.getDatabase(application);
         dao = db.learningModulesDao();
         apiService = RetroInstance.getRetroClient().create(APIService.class);
         getModules();
-        getModuleDesc("3");
+        getModuleDesc("1");
+        getSubmodule("1", "2");
     }
 
     public LiveData<List<LMResponse>> getModules() {
-        Call<List<LMResponse>> call = apiService.getModules(new AuthToken("arturolc_97@hotmail.com"));
+        Call<List<LMResponse>> call = apiService.getModules(new AuthToken("Arturo.Lara@gmail.com"));
         call.enqueue(new Callback<List<LMResponse>>() {
             @Override
             public void onResponse(Call<List<LMResponse>> call, Response<List<LMResponse>> response) {
@@ -71,5 +74,23 @@ public class LearningModulesRepo {
         });
 
         return lmDescResponse;
+    }
+
+    public LiveData<List<SMResponse>> getSubmodule(String mID, String sMID) {
+        Call<List<SMResponse>> call = apiService.getSubmodule(mID, sMID);
+        call.enqueue(new Callback<List<SMResponse>>() {
+
+            @Override
+            public void onResponse(Call<List<SMResponse>> call, Response<List<SMResponse>> response) {
+                Log.i("RETROFIT", response.body().toString());
+                smResponse.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<SMResponse>> call, Throwable t) {
+                Log.e("RETROFIT", t.toString());
+            }
+        });
+        return smResponse;
     }
 }

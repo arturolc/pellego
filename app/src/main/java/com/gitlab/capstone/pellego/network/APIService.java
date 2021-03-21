@@ -4,6 +4,7 @@ import com.gitlab.capstone.pellego.database.entities.Books;
 import com.gitlab.capstone.pellego.network.models.AuthToken;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
+import com.gitlab.capstone.pellego.network.models.SMResponse;
 
 import java.util.List;
 
@@ -23,6 +24,9 @@ public interface APIService {
     Call<List<LMResponse>> getModules(@Body AuthToken email);
 
 
-    @POST("modules/content/{module_id}")
+    @POST("modules/{module_id}/content")
     Call<List<LMDescResponse>> getModuleDescription(@Path("module_id") String mID);
+
+    @POST("modules/{module_id}/submodule/{submodule_id}")
+    Call<List<SMResponse>> getSubmodule(@Path("module_id") String mID, @Path("submodule_id") String sMID);
 }
