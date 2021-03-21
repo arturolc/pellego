@@ -12,6 +12,12 @@ public class LMResponse {
     @SerializedName("Name")
     @Expose
     private String name;
+    @SerializedName("Subheader")
+    @Expose
+    private String subheader;
+    @SerializedName("Icon")
+    @Expose
+    private String icon;
     @SerializedName("completed")
     @Expose
     private Integer completed;
@@ -26,19 +32,29 @@ public class LMResponse {
     public LMResponse() {
     }
 
-    /**
-     *
-     * @param name
-     * @param totalSubmodules
-     * @param mID
-     * @param completed
-     */
-    public LMResponse(Integer mID, String name, Integer completed, Integer totalSubmodules) {
-        super();
+    public LMResponse(Integer mID, String name, String subheader, String icon, Integer completed, Integer totalSubmodules) {
         this.mID = mID;
         this.name = name;
+        this.subheader = subheader;
+        this.icon = icon;
         this.completed = completed;
         this.totalSubmodules = totalSubmodules;
+    }
+
+    public String getSubheader() {
+        return subheader;
+    }
+
+    public void setSubheader(String subheader) {
+        this.subheader = subheader;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Integer getMID() {
@@ -78,6 +94,8 @@ public class LMResponse {
         return "LMResponse{" +
                 "mID=" + mID +
                 ", name='" + name + '\'' +
+                ", subheader='" + subheader + '\'' +
+                ", icon='" + icon + '\'' +
                 ", completed=" + completed +
                 ", totalSubmodules=" + totalSubmodules +
                 '}';

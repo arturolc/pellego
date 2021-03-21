@@ -25,6 +25,7 @@ public class ModuleCardAdapter extends BaseAdapter {
 
     Context mContext;
     ArrayList<ModuleListItemModel> mNavItems;
+
     int[] gradients = new int[] {0xFFF9D976, 0xFFF39F86, 0xFF20BF55, 0xFF01BAEF, 0xFFD2CCC4, 0xFF2F4353, 0xFFF53844, 0xFF42378F, 0xFF37D5D6, 0xFF36096D};
     // yellow, blue, grey, redblue,
     int idx;

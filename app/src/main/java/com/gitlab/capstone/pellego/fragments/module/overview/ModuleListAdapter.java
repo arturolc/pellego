@@ -63,6 +63,7 @@ public class ModuleListAdapter extends BaseAdapter {
 
         titleView.setText( mNavItems.get(position).getTitle() );
         subtitleView.setText( mNavItems.get(position).getSubtitle() );
+        // use glide here
         iconView.setImageDrawable(mNavItems.get(position).getIcon() );
 
         return view;

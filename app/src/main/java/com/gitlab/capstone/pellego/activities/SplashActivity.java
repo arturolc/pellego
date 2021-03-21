@@ -55,7 +55,7 @@ public class SplashActivity extends AppCompatActivity {
         });
         MainActivity.loadImageFromStorage(this);
 
-        LearningModulesRepo repo = new LearningModulesRepo(getApplication());
+//        LearningModulesRepo repo = new LearningModulesRepo(getApplication());
         try {
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(getApplicationContext());

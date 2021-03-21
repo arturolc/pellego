@@ -29,6 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -48,6 +49,7 @@ import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleListAdapter;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleListItemModel;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
+import com.gitlab.capstone.pellego.network.models.LMResponse;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -55,6 +57,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -66,7 +69,9 @@ import static androidx.navigation.Navigation.findNavController;
 public class LearnFragment extends BaseFragment {
 
     private ModuleViewModel moduleViewModel;
+    private LearnViewModel learnViewModel;
     private ListView moduleList;
+
     private ArrayList<ModuleListItemModel> mNavItems;
     ProgressBar spinner;
     NavigationView modulesView;
@@ -80,6 +85,7 @@ public class LearnFragment extends BaseFragment {
 
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
+        learnViewModel = new ViewModelProvider(requireActivity()).get(LearnViewModel.class);
         View root = inflater.inflate(R.layout.fragment_learn, container, false);
         moduleList = root.findViewById(R.id.nav_module_list);
 //        spinner = root.findViewById(R.id.loading_spinner);
@@ -88,30 +94,31 @@ public class LearnFragment extends BaseFragment {
         super.setupHeader(root);
 //        modulesView = root.findViewById(R.id.nav_module_overview);
         // Query DB for learning modules
-        getApiData(inflater, container, new ResponseCallBack() {
-            @Override
-            public void onResponse(Object response) {
-                // Update UI only after response is received &
-                // Add icons and subtitles for modules manually for now
-                System.out.println("response " + response);
-                // TODO: query DB for icons, titles, etc
-//                mNavItems.get(0).setIcon(R.drawable.ic_rsvp);
-//                mNavItems.get(0).setSubtitle("1 out of 4 submodules completed");
-//                mNavItems.get(1).setIcon(R.drawable.ic_clump_reading);
-//                mNavItems.get(1).setSubtitle("0 out of 4 submodules completed");
-//                mNavItems.get(2).setIcon(R.drawable.ic_reducing_subvocalization);
-//                mNavItems.get(2).setSubtitle("0 out of 4 submodules completed");
-//                mNavItems.get(3).setIcon(R.drawable.ic_meta_guiding);
-//                mNavItems.get(3).setSubtitle("0 out of 4 submodules completed");
-//                mNavItems.get(4).setIcon(R.drawable.ic_pre_reading);
-//                mNavItems.get(4).setSubtitle("0 out of 4 submodules completed");
+//        getApiData(inflater, container, new ResponseCallBack() {
+//            @Override
+//            public void onResponse(Object response) {
+//                // Update UI only after response is received &
+//                // Add icons and subtitles for modules manually for now
+//                System.out.println("response " + response);
+//                // TODO: query DB for icons, titles, etc
+//
+//
+//                // Populate the Navigation Drawer with options
+//                Log.d("checking", mNavItems.toString());
+//                ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
+//                moduleList.setAdapter(adapter);
+//            }
+//        });
 
-                // Populate the Navigation Drawer with options
-                Log.d("checking", mNavItems.toString());
-                ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
+        learnViewModel.getLMResponse().observe(getViewLifecycleOwner(), new Observer<List<LMResponse>>() {
+            @Override
+            public void onChanged(List<LMResponse> lmResponses) {
+                LearnCardAdapter adapter = new LearnCardAdapter(getContext(), lmResponses);
                 moduleList.setAdapter(adapter);
             }
         });
+
+
         // Drawer Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

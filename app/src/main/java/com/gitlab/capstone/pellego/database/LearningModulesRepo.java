@@ -29,14 +29,22 @@ public class LearningModulesRepo {
     private MutableLiveData<List<LMResponse>> lmResponse = new MutableLiveData<>();
     private MutableLiveData<List<LMDescResponse>> lmDescResponse = new MutableLiveData<>();
     private MutableLiveData<List<SMResponse>> smResponse = new MutableLiveData<>();
+    private static LearningModulesRepo INSTANCE;
 
-    public LearningModulesRepo(Application application) {
+    private LearningModulesRepo(Application application) {
         db = PellegoDatabase.getDatabase(application);
         dao = db.learningModulesDao();
         apiService = RetroInstance.getRetroClient().create(APIService.class);
         getModules();
         getModuleDesc("1");
         getSubmodule("1", "2");
+    }
+
+    synchronized public static LearningModulesRepo getInstance(Application app) {
+        if (INSTANCE == null) {
+            INSTANCE = new LearningModulesRepo(app);
+        }
+        return INSTANCE;
     }
 
     public LiveData<List<LMResponse>> getModules() {
