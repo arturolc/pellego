@@ -25,6 +25,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -33,9 +34,15 @@ import androidx.navigation.Navigation;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.app.Plugin;
+import com.gitlab.capstone.pellego.fragments.learn.ModuleCardAdapter;
+import com.gitlab.capstone.pellego.network.models.LMDescResponse;
+import com.gitlab.capstone.pellego.network.models.SMResponse;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.google.gson.reflect.TypeToken.get;
 
 /**********************************************
  Eli Hebdon, Chris Bordoy & Arturo Lara
@@ -50,37 +57,62 @@ public class ModuleOverviewFragment extends BaseFragment {
     private ModuleViewModel moduleViewModel;
     ArrayList<ModuleListItemModel> mNavItems;
     private ListView moduleList;
+    private TextView moduleTitle;
+    private TextView moduleDescription;
+    private List<SMResponse> response = new ArrayList<>();
+    private LiveData<List<LMDescResponse>> response1;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        String moduleID = getArguments().getString("moduleID");
         moduleViewModel =
-                new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
+                new ViewModelProvider(
+                        requireActivity(),
+                        new ModuleViewModelFactory(
+                                getActivity().getApplication(),
+                                moduleID)).
+                        get(ModuleViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_module_overview, container, false);
-        final TextView textView = root.findViewById(R.id.title_module_overview);
-        moduleViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        moduleList = root.findViewById(R.id.nav_module_list);
+        moduleTitle = root.findViewById(R.id.title_module_overview);
+        moduleDescription = root.findViewById(R.id.text_module_description);
+
+        response1 = moduleViewModel.getLMDescResponse();
+
+        moduleTitle.setText(response1.getValue().get(0).getName());
+        moduleDescription.setText(response1.getValue().get(0).getDescription());
+
+        response.add(new SMResponse(
+                response1.getValue().get(0).getMID(),
+                response1.getValue().get(0).getSubmodules().get(0).getName(),
+                response1.getValue().get(0).getSubmodules().get(0).getSubheader()));
+        response.add(new SMResponse(
+                response1.getValue().get(0).getMID(),
+                response1.getValue().get(0).getSubmodules().get(1).getName(),
+                response1.getValue().get(0).getSubmodules().get(1).getSubheader()));
+        response.add(new SMResponse(
+                response1.getValue().get(0).getMID(),
+                response1.getValue().get(0).getSubmodules().get(2).getName(),
+                response1.getValue().get(0).getSubmodules().get(2).getSubheader()));
+        response.add(new SMResponse(
+                response1.getValue().get(0).getMID(),
+                response1.getValue().get(0).getSubmodules().get(3).getName(),
+                response1.getValue().get(0).getSubmodules().get(3).getSubheader()));
+        moduleViewModel.setSMResponses(response);
+        moduleViewModel.getSMResponses().observe(getViewLifecycleOwner(), new Observer<List<SMResponse>>() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onChanged(List<SMResponse> responses) {
+                ModuleListAdapter adapter = new ModuleListAdapter(getContext(), responses, ModuleOverviewFragment.this);
+                moduleList.setAdapter(adapter);
             }
         });
         this.setupHeader(root);
 
-        Log.i("BUNDLE", getArguments().getString("moduleID"));
-        mNavItems = new ArrayList<>();
-        // Add nav items to the list of submodules
-        mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_intro), getResources().getString(R.string.descr_module_intro), getDrawable("intro")));
-        mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_beginner), getResources().getString(R.string.descr_module_beginner), getDrawable("beginner")));
-        mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_intermediate), getResources().getString(R.string.descr_module_intermediate), getDrawable("intermediate")));
-        mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_advanced), getResources().getString(R.string.descr_module_advanced), getDrawable("advanced")));
-        TextView rsvDescription = (TextView) root.findViewById(R.id.text_module_description);
-        rsvDescription.setText(moduleViewModel.getModuleDescription());
-
-        // Populate the Navigation menu with options
-        moduleList = root.findViewById(R.id.nav_module_list);
-        ModuleListAdapter adapter = new ModuleListAdapter(getContext(), mNavItems);
-        moduleList.setAdapter(adapter);
-
+        //TODO: Currently here with progress, case 0 usually navigates with moduleViewModel.getModule_id()
+        //TODO: need to figure out how to give it the right id based on position
         // menu Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,7 +122,7 @@ public class ModuleOverviewFragment extends BaseFragment {
                 moduleViewModel.showSubmodulePopupDialog = true;
                 switch(position) {
                     case 0:
-                        navController.navigate(moduleViewModel.getIntro_id());
+                        navController.navigate(R.id.nav_rsvp_intro);
                         break;
                     case 1:
                         args.putString("difficulty", "beginner");
@@ -135,15 +167,14 @@ public class ModuleOverviewFragment extends BaseFragment {
     public Drawable getDrawable(String difficulty) {
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         boolean complete = sharedPref.getBoolean(moduleViewModel.getTechnique() + "_" + difficulty + "_complete", false);
+        Drawable r;
         if (complete) {
-            Drawable r = getResources().getDrawable(R.drawable.ic_checked_circle);
+            r = getResources().getDrawable(R.drawable.ic_checked_circle);
 
-           return r;
         } else {
-            Drawable r = getResources().getDrawable(R.drawable.ic_empty_circle);
+            r = getResources().getDrawable(R.drawable.ic_empty_circle);
 
-            return r;
         }
+        return r;
     }
-
 }

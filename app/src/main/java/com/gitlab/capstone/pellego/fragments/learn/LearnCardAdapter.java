@@ -17,12 +17,23 @@ import com.gitlab.capstone.pellego.network.models.LMResponse;
 
 import java.util.List;
 
-public class LearnCardAdapter extends BaseAdapter {
-    private List<LMResponse> response;
-    private Context mContext;
+import static java.lang.String.*;
 
-    int[] gradients = new int[] {0xFFF9D976, 0xFFF39F86, 0xFF20BF55, 0xFF01BAEF, 0xFFD2CCC4, 0xFF2F4353, 0xFFF53844, 0xFF42378F, 0xFF37D5D6, 0xFF36096D};
-    // yellow, blue, grey, redblue,
+public class LearnCardAdapter extends BaseAdapter {
+    private final List<LMResponse> response;
+    private final Context mContext;
+
+    int[] gradients = new int[] {
+            0xFFF9D976,
+            0xFFF39F86,
+            0xFF20BF55,
+            0xFF01BAEF,
+            0xFFD2CCC4,
+            0xFF2F4353,
+            0xFFF53844,
+            0xFF42378F,
+            0xFF37D5D6,
+            0xFF36096D};
     int idx;
 
     public LearnCardAdapter(Context context, List<LMResponse> response) {
@@ -45,14 +56,14 @@ public class LearnCardAdapter extends BaseAdapter {
         return 0;
     }
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint({"ResourceAsColor", "DefaultLocale", "InflateParams"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.module_item, null);
+            view = inflater.inflate(R.layout.module_item,null);
         }
         else {
             view = convertView;
@@ -65,17 +76,19 @@ public class LearnCardAdapter extends BaseAdapter {
         gd.setCornerRadius(45f);
         gd.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
         idx += 2;
-        view.setBackgroundDrawable(gd);
+        view.setBackground(gd);
 
-        TextView titleView = (TextView) view.findViewById(R.id.title);
-        TextView subtitleView = (TextView) view.findViewById(R.id.subTitle);
-        ImageView iconView = (ImageView) view.findViewById(R.id.icon);
-        TextView subheader = (TextView) view.findViewById(R.id.description);
+        TextView titleView = view.findViewById(R.id.title);
+        TextView subtitleView = view.findViewById(R.id.subTitle);
+        ImageView iconView = view.findViewById(R.id.icon);
+        TextView subheader = view.findViewById(R.id.description);
+
+        subtitleView.setTextColor(Color.BLACK);
+        subheader.setTextColor(Color.BLACK);
 
         LMResponse res = response.get(position);
         titleView.setText( res.getName() );
-        subtitleView.setText( res.getCompleted() + " of " +
-                res.getTotalSubmodules() + " submodules completed");
+        subtitleView.setText(format("%d of %d submodules completed", res.getCompleted(), res.getTotalSubmodules()));
         Glide.with(mContext).load(res.getIcon()).into(iconView);
         subheader.setText(res.getSubheader());
 

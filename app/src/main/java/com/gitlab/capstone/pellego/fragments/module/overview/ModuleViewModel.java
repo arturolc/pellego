@@ -7,34 +7,50 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.gitlab.capstone.pellego.database.LearningModulesRepo;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
+import com.gitlab.capstone.pellego.network.models.SMResponse;
+import com.gitlab.capstone.pellego.network.models.Submodule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**********************************************
-    Chris Bordoy & Eli Hebdon
+    Chris Bordoy, Eli Hebdon, Arturo Lara
 
-    The Learn Modules view model
+    The Modules view model
  **********************************************/
 public class ModuleViewModel extends AndroidViewModel {
-    private int moduleID;
-    private List<LMDescResponse> resp;
+    private String moduleID;
     private LearningModulesRepo repo;
-    private LiveData<List<LMDescResponse>> lmDescResponse;
+    private LiveData<List<LMDescResponse>> lmDescResponse = new MutableLiveData<>();
+    private MutableLiveData<List<SMResponse>> smResponses = new MutableLiveData<>();
+    private List<SMResponse> smResponse = new ArrayList<>();
 
-    public ModuleViewModel(@NonNull Application application, List<LMDescResponse> resp, int moduleID) {
+    public ModuleViewModel(@NonNull Application application, String moduleID) {
         super(application);
-        this.resp = resp;
         this.repo = LearningModulesRepo.getInstance(application);
         this.moduleID = moduleID;
     }
 
-    public LiveData<List<LMDescResponse>> getLMDescResponse() {
-        return lmDescResponse;
+    public MutableLiveData<List<SMResponse>> getSMResponses() {
+        return smResponses;
     }
 
+    public void setSMResponses(List<SMResponse> response) {
+        smResponse = response;
+        smResponses.setValue(smResponse);
+    }
+
+    public LiveData<List<LMDescResponse>> getLMDescResponse() {
+        if (lmDescResponse.getValue() == null) {
+            lmDescResponse = repo.getModuleDesc(moduleID);
+        }
+
+        return lmDescResponse;
+    }
 
     public boolean showSubmodulePopupDialog;
     public boolean showPopupDialog;

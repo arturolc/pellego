@@ -45,6 +45,8 @@
                 android:id="@+id/text_module_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:singleLine="false"
                 android:gravity="center"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
@@ -55,7 +57,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title_module_overview"
-                app:layout_constraintVertical_bias="0.0"></TextView>
+                app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
