@@ -1,15 +1,40 @@
 package com.gitlab.capstone.pellego.fragments.module.overview;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.gitlab.capstone.pellego.database.LearningModulesRepo;
+import com.gitlab.capstone.pellego.network.models.LMDescResponse;
+
+import java.util.List;
 
 /**********************************************
     Chris Bordoy & Eli Hebdon
 
     The Learn Modules view model
  **********************************************/
-public class ModuleViewModel extends ViewModel {
+public class ModuleViewModel extends AndroidViewModel {
+    private int moduleID;
+    private List<LMDescResponse> resp;
+    private LearningModulesRepo repo;
+    private LiveData<List<LMDescResponse>> lmDescResponse;
+
+    public ModuleViewModel(@NonNull Application application, List<LMDescResponse> resp, int moduleID) {
+        super(application);
+        this.resp = resp;
+        this.repo = LearningModulesRepo.getInstance(application);
+        this.moduleID = moduleID;
+    }
+
+    public LiveData<List<LMDescResponse>> getLMDescResponse() {
+        return lmDescResponse;
+    }
+
 
     public boolean showSubmodulePopupDialog;
     public boolean showPopupDialog;
@@ -90,15 +115,15 @@ public class ModuleViewModel extends ViewModel {
         this.gradient = gradient;
     }
 
-    public ModuleViewModel() {
-        showSubmodulePopupDialog = false;
-        showPopupDialog = false;
-        moduleTitle = new MutableLiveData<>();
-        moduleDescription = "";
-        intro_id = -1;
-        module_id = -1;
-        gradient = new int[] {};
-    }
+//    public ModuleViewModel() {
+//        showSubmodulePopupDialog = false;
+//        showPopupDialog = false;
+//        moduleTitle = new MutableLiveData<>();
+//        moduleDescription = "";
+//        intro_id = -1;
+//        module_id = -1;
+//        gradient = new int[] {};
+//    }
 
     public void clear() {
         showSubmodulePopupDialog = false;

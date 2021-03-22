@@ -71,6 +71,7 @@ public class LearnFragment extends BaseFragment {
     private LearnViewModel learnViewModel;
     private ListView moduleList;
 
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -97,18 +98,20 @@ public class LearnFragment extends BaseFragment {
                 // TODO: navigate to fragment based on click id
                 switch(position) {
                     case 0: // rsvp
-                        moduleViewModel.setTechnique("rsvp");
-                        moduleViewModel.setGradient(new int[] {0xFFF9D976, 0xFFF39F86});
-                        moduleViewModel.setViewModelVars(getResources().getString(R.string.title_rsvp), getResources().getString(R.string.description_rsvp), R.id.nav_rsvp_intro, R.array.intro_rsvp_content, R.array.intro_rsvp_header, R.id.nav_rsvp_module);
-                        navController.navigate(R.id.nav_module_overview);
+//                        moduleViewModel.setTechnique("rsvp");
+//                        moduleViewModel.setGradient(new int[] {0xFFF9D976, 0xFFF39F86});
+//                        moduleViewModel.setViewModelVars(getResources().getString(R.string.title_rsvp), getResources().getString(R.string.description_rsvp), R.id.nav_rsvp_intro, R.array.intro_rsvp_content, R.array.intro_rsvp_header, R.id.nav_rsvp_module);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("moduleID", learnViewModel.getLMResponse().getValue().get(position).getMID().toString());
+                        navController.navigate(R.id.nav_module_overview, bundle);
                         break;
                     case 1:
                     case 2:
                         break;
                     case 3: // metaguiding
-                        moduleViewModel.setTechnique("metaguiding");
-                        moduleViewModel.setGradient(new int[] {0xFFF53844, 0xFF42378F});
-                        moduleViewModel.setViewModelVars(getResources().getString(R.string.title_meta_guiding), getResources().getString(R.string.description_metaguiding), R.id.nav_metaguiding_intro, R.array.intro_metaguiding_content, R.array.intro_metaguiding_header, R.id.nav_metaguiding_module);
+//                        moduleViewModel.setTechnique("metaguiding");
+//                        moduleViewModel.setGradient(new int[] {0xFFF53844, 0xFF42378F});
+//                        moduleViewModel.setViewModelVars(getResources().getString(R.string.title_meta_guiding), getResources().getString(R.string.description_metaguiding), R.id.nav_metaguiding_intro, R.array.intro_metaguiding_content, R.array.intro_metaguiding_header, R.id.nav_metaguiding_module);
                         navController.navigate(R.id.nav_module_overview);
                         break;
                     case 4:

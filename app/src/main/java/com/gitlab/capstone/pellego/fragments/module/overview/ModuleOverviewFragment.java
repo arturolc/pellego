@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,8 @@ public class ModuleOverviewFragment extends BaseFragment {
             }
         });
         this.setupHeader(root);
+
+        Log.i("BUNDLE", getArguments().getString("moduleID"));
         mNavItems = new ArrayList<>();
         // Add nav items to the list of submodules
         mNavItems.add(new ModuleListItemModel(getResources().getString(R.string.title_module_intro), getResources().getString(R.string.descr_module_intro), getDrawable("intro")));
@@ -114,15 +117,16 @@ public class ModuleOverviewFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setupHeader(View root) {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(moduleViewModel.getGradient()[0]);
+//        new int[] {0xFFF9D976, 0xFFF39F86}
+        toolbar.setBackgroundColor(0xFFF9D976);
         toolbar.setTitle(null);
         Window window = getActivity().getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(moduleViewModel.getGradient()[0]);
+        window.setStatusBarColor(0xFFF39F86);
         ConstraintLayout header = root.findViewById(R.id.module_header_container);
         GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[] {moduleViewModel.getGradient()[0], moduleViewModel.getGradient()[1]});
+                new int[] {0xFFF9D976, 0xFFF39F86});
         gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 0f, 0f, 90f, 90f});
         gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
         header.setBackgroundDrawable(gd);
@@ -133,11 +137,11 @@ public class ModuleOverviewFragment extends BaseFragment {
         boolean complete = sharedPref.getBoolean(moduleViewModel.getTechnique() + "_" + difficulty + "_complete", false);
         if (complete) {
             Drawable r = getResources().getDrawable(R.drawable.ic_checked_circle);
-            r.setColorFilter(moduleViewModel.getGradient()[0], PorterDuff.Mode.MULTIPLY);
+
            return r;
         } else {
             Drawable r = getResources().getDrawable(R.drawable.ic_empty_circle);
-            r.setColorFilter(moduleViewModel.getGradient()[0], PorterDuff.Mode.MULTIPLY);
+
             return r;
         }
     }

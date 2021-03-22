@@ -27,10 +27,9 @@ public class LearnViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<LMResponse>> getLMResponse() {
-        return repo.getModules();
+        if (lmResponse.getValue() == null)
+            lmResponse = repo.getModules();
+
+        return lmResponse;
     }
-
-
-
-
 }
