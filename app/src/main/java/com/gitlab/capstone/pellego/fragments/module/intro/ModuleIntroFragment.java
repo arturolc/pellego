@@ -1,8 +1,8 @@
 package com.gitlab.capstone.pellego.fragments.module.intro;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -29,7 +28,7 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 
 /***************************************************
- *  Chris Bordoy
+ *  Chris Bordoy and Eli Hebdon
  *
  *  The Module Introduction Fragment
  **************************************************/
@@ -54,8 +53,9 @@ public class ModuleIntroFragment extends BaseFragment {
         viewPager2 = root.findViewById(R.id.view_pager);
         parent_view = root.findViewById(R.id.parent_view);
 
-        btn_register = root.findViewById(R.id.rsvp_intro_finish_btn);
-        Drawable d = DrawableCompat.wrap(getResources().getDrawable(R.drawable.rounded_background));
+        btn_register = root.findViewById(R.id.intro_finish_btn);
+        @SuppressLint("UseCompatLoadingForDrawables") Drawable d =
+                DrawableCompat.wrap(getResources().getDrawable(R.drawable.rounded_background));
         DrawableCompat.setTint(d, moduleViewModel.getGradient()[0]);
         btn_register.setBackground(d);
 

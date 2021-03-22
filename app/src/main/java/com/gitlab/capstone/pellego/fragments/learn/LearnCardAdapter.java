@@ -4,15 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.gitlab.capstone.pellego.R;
@@ -77,16 +74,19 @@ public class LearnCardAdapter extends BaseAdapter {
         TextView titleView = view.findViewById(R.id.title);
         TextView subtitleView = view.findViewById(R.id.subTitle);
         ImageView iconView = view.findViewById(R.id.icon);
-        TextView subheader = view.findViewById(R.id.description);
+        TextView subHeaderView = view.findViewById(R.id.description);
 
         subtitleView.setTextColor(Color.BLACK);
-        subheader.setTextColor(Color.BLACK);
+        subHeaderView.setTextColor(Color.BLACK);
 
         LMResponse res = response.get(position);
         titleView.setText( res.getName() );
-        subtitleView.setText(format("%d of %d submodules completed", res.getCompleted(), res.getTotalSubmodules()));
+        subtitleView.setText(
+                format("%d of %d submodules completed",
+                res.getCompleted(),
+                res.getTotalSubmodules()));
         Glide.with(mContext).load(res.getIcon()).into(iconView);
-        subheader.setText(res.getSubheader());
+        subHeaderView.setText(res.getSubheader());
 
         return view;
     }

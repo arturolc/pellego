@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.gitlab.capstone.pellego.database.LearningModulesRepo;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
+import com.gitlab.capstone.pellego.network.models.LMResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
 import com.gitlab.capstone.pellego.network.models.Submodule;
 
@@ -27,12 +28,18 @@ public class ModuleViewModel extends AndroidViewModel {
     private LearningModulesRepo repo;
     private LiveData<List<LMDescResponse>> lmDescResponse = new MutableLiveData<>();
     private MutableLiveData<List<SMResponse>> smResponses = new MutableLiveData<>();
-    private List<SMResponse> smResponse = new ArrayList<>();
+    private LiveData<List<SMResponse>> submoduleResponse = new MutableLiveData<>();
+
+
+    private boolean showSubmodulePopupDialog;
+    private boolean showPopupDialog;
 
     public ModuleViewModel(@NonNull Application application, String moduleID) {
         super(application);
         this.repo = LearningModulesRepo.getInstance(application);
         this.moduleID = moduleID;
+        showSubmodulePopupDialog = false;
+        showPopupDialog = false;
     }
 
     public MutableLiveData<List<SMResponse>> getSMResponses() {
@@ -40,20 +47,23 @@ public class ModuleViewModel extends AndroidViewModel {
     }
 
     public void setSMResponses(List<SMResponse> response) {
-        smResponse = response;
-        smResponses.setValue(smResponse);
+        smResponses.setValue(response);
     }
 
-    public LiveData<List<LMDescResponse>> getLMDescResponse() {
+    public LiveData<List<LMDescResponse>> getLMDescResponse(String mid) {
         if (lmDescResponse.getValue() == null) {
-            lmDescResponse = repo.getModuleDesc(moduleID);
+            lmDescResponse = repo.getModuleDesc(mid);
         }
 
         return lmDescResponse;
     }
 
-    public boolean showSubmodulePopupDialog;
-    public boolean showPopupDialog;
+    public LiveData<List<SMResponse>> getSubmodulesResponse() {
+        submoduleResponse = repo.getSubmodules(moduleID);
+
+        return submoduleResponse;
+    }
+
     private MutableLiveData<String> moduleTitle;
     private String moduleDescription;
     private int intro_id;
@@ -62,6 +72,22 @@ public class ModuleViewModel extends AndroidViewModel {
     private int module_id;
     public String technique;
     private int[] gradient;
+
+    public boolean isShowPopupDialog() {
+        return showPopupDialog;
+    }
+
+    public void setShowPopupDialog(boolean showSubmodulePopupDialog) {
+        this.showPopupDialog = showSubmodulePopupDialog;
+    }
+
+    public boolean isShowSubmodulePopupDialog() {
+        return showSubmodulePopupDialog;
+    }
+
+    public void setShowSubmodulePopupDialog(boolean showSubmodulePopupDialog) {
+        this.showSubmodulePopupDialog = showSubmodulePopupDialog;
+    }
 
     public String getTechnique() {
         return technique;
@@ -132,8 +158,6 @@ public class ModuleViewModel extends AndroidViewModel {
     }
 
 //    public ModuleViewModel() {
-//        showSubmodulePopupDialog = false;
-//        showPopupDialog = false;
 //        moduleTitle = new MutableLiveData<>();
 //        moduleDescription = "";
 //        intro_id = -1;

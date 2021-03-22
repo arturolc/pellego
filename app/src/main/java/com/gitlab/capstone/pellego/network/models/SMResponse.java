@@ -3,44 +3,24 @@ package com.gitlab.capstone.pellego.network.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.w3c.dom.Text;
+
 public class SMResponse {
 
-    @SerializedName("SMID")
-    @Expose
-    private Integer sMID;
     @SerializedName("Name")
     @Expose
     private String name;
+    @SerializedName("Subheader")
+    @Expose
+    private String subheader;
     @SerializedName("Text")
     @Expose
-    private String text;
+    private String[] text;
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public SMResponse() {
-    }
-
-    /**
-     *
-     * @param sMID
-     * @param name
-     * @param text
-     */
-    public SMResponse(Integer sMID, String name, String text) {
-        super();
-        this.sMID = sMID;
+    public SMResponse(String name, String subheader, String[] text) {
         this.name = name;
+        this.subheader = subheader;
         this.text = text;
-    }
-
-    public Integer getSMID() {
-        return sMID;
-    }
-
-    public void setSMID(Integer sMID) {
-        this.sMID = sMID;
     }
 
     public String getName() {
@@ -51,19 +31,27 @@ public class SMResponse {
         this.name = name;
     }
 
-    public String getText() {
+    public String getSubheader() {
+        return subheader;
+    }
+
+    public void setSubheader(String subheader) {
+        this.subheader = subheader;
+    }
+
+    public String[] getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(String[] text) {
         this.text = text;
     }
 
     @Override
     public String toString() {
         return "SMResponse{" +
-                "sMID=" + sMID +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
+                ", subheader='" + subheader + '\'' +
                 ", text='" + text + '\'' +
                 '}';
     }

@@ -1,30 +1,24 @@
 package com.gitlab.capstone.pellego.fragments.module.overview;
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -33,16 +27,11 @@ import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
-import com.gitlab.capstone.pellego.app.Plugin;
-import com.gitlab.capstone.pellego.fragments.learn.ModuleCardAdapter;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
+import com.gitlab.capstone.pellego.network.models.LMResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
-import com.google.android.material.navigation.NavigationView;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.google.gson.reflect.TypeToken.get;
 
 /**********************************************
  Eli Hebdon, Chris Bordoy & Arturo Lara
@@ -55,12 +44,8 @@ import static com.google.gson.reflect.TypeToken.get;
 public class ModuleOverviewFragment extends BaseFragment {
 
     private ModuleViewModel moduleViewModel;
-    ArrayList<ModuleListItemModel> mNavItems;
     private ListView moduleList;
-    private TextView moduleTitle;
-    private TextView moduleDescription;
-    private List<SMResponse> response = new ArrayList<>();
-    private LiveData<List<LMDescResponse>> response1;
+    private final List<SMResponse> response = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -77,35 +62,86 @@ public class ModuleOverviewFragment extends BaseFragment {
 
         View root = inflater.inflate(R.layout.fragment_module_overview, container, false);
         moduleList = root.findViewById(R.id.nav_module_list);
-        moduleTitle = root.findViewById(R.id.title_module_overview);
-        moduleDescription = root.findViewById(R.id.text_module_description);
+        TextView moduleTitle = root.findViewById(R.id.title_module_overview);
+        TextView moduleDescription = root.findViewById(R.id.text_module_description);
 
-        response1 = moduleViewModel.getLMDescResponse();
-
-        moduleTitle.setText(response1.getValue().get(0).getName());
-        moduleDescription.setText(response1.getValue().get(0).getDescription());
-
-        response.add(new SMResponse(
-                response1.getValue().get(0).getMID(),
-                response1.getValue().get(0).getSubmodules().get(0).getName(),
-                response1.getValue().get(0).getSubmodules().get(0).getSubheader()));
-        response.add(new SMResponse(
-                response1.getValue().get(0).getMID(),
-                response1.getValue().get(0).getSubmodules().get(1).getName(),
-                response1.getValue().get(0).getSubmodules().get(1).getSubheader()));
-        response.add(new SMResponse(
-                response1.getValue().get(0).getMID(),
-                response1.getValue().get(0).getSubmodules().get(2).getName(),
-                response1.getValue().get(0).getSubmodules().get(2).getSubheader()));
-        response.add(new SMResponse(
-                response1.getValue().get(0).getMID(),
-                response1.getValue().get(0).getSubmodules().get(3).getName(),
-                response1.getValue().get(0).getSubmodules().get(3).getSubheader()));
-        moduleViewModel.setSMResponses(response);
-        moduleViewModel.getSMResponses().observe(getViewLifecycleOwner(), new Observer<List<SMResponse>>() {
+/*        moduleViewModel.getSubmodulesResponse().observe(getViewLifecycleOwner(), new Observer<List<SMResponse>>() {
             @Override
-            public void onChanged(List<SMResponse> responses) {
-                ModuleListAdapter adapter = new ModuleListAdapter(getContext(), responses, ModuleOverviewFragment.this);
+            public void onChanged(List<SMResponse> response2) {
+                moduleTitle.setText(response2.get(0).getText());
+                moduleDescription.setText(response2.get(1).getText());
+*//*                response.add(new SMResponse(
+                        response1.get(0).getMID(),
+                        response1.get(0).getSubmodules().get(0).getName(),
+                        response1.get(0).getSubmodules().get(0).getSubheader()));
+                response.add(new SMResponse(
+                        response1.get(0).getMID(),
+                        response1.get(0).getSubmodules().get(1).getName(),
+                        response1.get(0).getSubmodules().get(1).getSubheader()));
+                response.add(new SMResponse(
+                        response1.get(0).getMID(),
+                        response1.get(0).getSubmodules().get(2).getName(),
+                        response1.get(0).getSubmodules().get(2).getSubheader()));
+                response.add(new SMResponse(
+                        response1.get(0).getMID(),
+                        response1.get(0).getSubmodules().get(3).getName(),
+                        response1.get(0).getSubmodules().get(3).getSubheader()));*//*
+                moduleViewModel.setSMResponses(response);
+            }
+        });
+
+        //LiveData<List<LMResponse>> lmModulesResponse = moduleViewModel.getLMModulesResponse();
+        moduleViewModel.getSubmodulesResponse().observe(getViewLifecycleOwner(), new Observer<List<SMResponse>>() {
+            @Override
+            public void onChanged(List<SMResponse> response1) {
+                moduleTitle.setText(response1.get(0).getName());
+                moduleDescription.setText(response1.get(0).getText());
+
+                response.add(new SMResponse(
+                        response1.get(0).getName(),
+                        response1.get(0).getSubheader(),
+                        response1.get(0).getText()));
+                response.add(new SMResponse(
+                        response1.get(1).getName(),
+                        response1.get(1).getSubheader(),
+                        response1.get(1).getText()));
+                response.add(new SMResponse(
+                        response1.get(2).getName(),
+                        response1.get(2).getSubheader(),
+                        response1.get(2).getText()));
+                response.add(new SMResponse(
+                        response1.get(3).getName(),
+                        response1.get(3).getSubheader(),
+                        response1.get(3).getText()));
+                moduleViewModel.setSMResponses(response);
+            }
+        });*/
+
+        moduleViewModel.getSubmodulesResponse().observe(getViewLifecycleOwner(), new Observer<List<SMResponse>>() {
+            @Override
+            public void onChanged(List<SMResponse> response1) {
+                moduleTitle.setText(response1.get(0).getName());
+                moduleDescription.setText(response1.get(0).getText()[0]);
+
+                response.add(new SMResponse(
+                        response1.get(0).getName(),
+                        response1.get(0).getSubheader(),
+                        response1.get(0).getText()));
+                response.add(new SMResponse(
+                        response1.get(1).getName(),
+                        response1.get(1).getSubheader(),
+                        response1.get(1).getText()));
+                response.add(new SMResponse(
+                        response1.get(2).getName(),
+                        response1.get(2).getSubheader(),
+                        response1.get(2).getText()));
+                response.add(new SMResponse(
+                        response1.get(3).getName(),
+                        response1.get(3).getSubheader(),
+                        response1.get(3).getText()));
+                moduleViewModel.setSMResponses(response);
+
+                ModuleListAdapter adapter = new ModuleListAdapter(getContext(), response1, ModuleOverviewFragment.this);
                 moduleList.setAdapter(adapter);
             }
         });
@@ -119,7 +155,7 @@ public class ModuleOverviewFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 Bundle args = new Bundle();
-                moduleViewModel.showSubmodulePopupDialog = true;
+                moduleViewModel.setShowSubmodulePopupDialog(true);
                 switch(position) {
                     case 0:
                         navController.navigate(R.id.nav_rsvp_intro);
@@ -149,7 +185,6 @@ public class ModuleOverviewFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setupHeader(View root) {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-//        new int[] {0xFFF9D976, 0xFFF39F86}
         toolbar.setBackgroundColor(0xFFF9D976);
         toolbar.setTitle(null);
         Window window = getActivity().getWindow();
@@ -161,9 +196,10 @@ public class ModuleOverviewFragment extends BaseFragment {
                 new int[] {0xFFF9D976, 0xFFF39F86});
         gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 0f, 0f, 90f, 90f});
         gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
-        header.setBackgroundDrawable(gd);
+        header.setBackground(gd);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public Drawable getDrawable(String difficulty) {
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         boolean complete = sharedPref.getBoolean(moduleViewModel.getTechnique() + "_" + difficulty + "_complete", false);

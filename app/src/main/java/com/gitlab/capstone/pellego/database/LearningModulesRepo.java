@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.amazonaws.mobileconnectors.cognitoauth.Auth;
 import com.gitlab.capstone.pellego.database.daos.LearningModulesDao;
 import com.gitlab.capstone.pellego.network.APIService;
 import com.gitlab.capstone.pellego.network.RetroInstance;
@@ -14,7 +13,8 @@ import com.gitlab.capstone.pellego.network.models.AuthToken;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
-import com.google.gson.Gson;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -23,21 +23,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LearningModulesRepo {
-    private LearningModulesDao dao;
+    private final LearningModulesDao dao;
     private final PellegoDatabase db;
-    private APIService apiService;
-    private MutableLiveData<List<LMResponse>> lmResponse = new MutableLiveData<>();
-    private MutableLiveData<List<LMDescResponse>> lmDescResponse = new MutableLiveData<>();
-    private MutableLiveData<List<SMResponse>> smResponse = new MutableLiveData<>();
+    private final APIService apiService;
+    private final MutableLiveData<List<LMResponse>> lmResponse = new MutableLiveData<>();
+    private final MutableLiveData<List<LMDescResponse>> lmDescResponse = new MutableLiveData<>();
+    private final MutableLiveData<List<SMResponse>> smResponse = new MutableLiveData<>();
     private static LearningModulesRepo INSTANCE;
 
     private LearningModulesRepo(Application application) {
         db = PellegoDatabase.getDatabase(application);
         dao = db.learningModulesDao();
         apiService = RetroInstance.getRetroClient().create(APIService.class);
-        getModules();
-        getModuleDesc("1");
-        getSubmodule("1", "2");
     }
 
     synchronized public static LearningModulesRepo getInstance(Application app) {
@@ -51,14 +48,14 @@ public class LearningModulesRepo {
         Call<List<LMResponse>> call = apiService.getModules(new AuthToken("Arturo.Lara@gmail.com"));
         call.enqueue(new Callback<List<LMResponse>>() {
             @Override
-            public void onResponse(Call<List<LMResponse>> call, Response<List<LMResponse>> response) {
+            public void onResponse(@NotNull Call<List<LMResponse>> call, @NotNull Response<List<LMResponse>> response) {
                 Log.i("RETROFIT", response.body().toString());
                 List<LMResponse> r = response.body();
                 lmResponse.setValue(r);
             }
 
             @Override
-            public void onFailure(Call<List<LMResponse>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<LMResponse>> call, Throwable t) {
                 Log.e("RETROFIT", t.toString());
             }
         });
@@ -70,13 +67,13 @@ public class LearningModulesRepo {
         Call<List<LMDescResponse>> call = apiService.getModuleDescription(moduleID);
         call.enqueue(new Callback<List<LMDescResponse>>() {
             @Override
-            public void onResponse(Call<List<LMDescResponse>> call, Response<List<LMDescResponse>> response) {
+            public void onResponse(@NotNull Call<List<LMDescResponse>> call, Response<List<LMDescResponse>> response) {
                 Log.i("RETROFIT", response.body().toString());
                 lmDescResponse.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<LMDescResponse>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<LMDescResponse>> call, @NotNull Throwable t) {
                 Log.e("RETROFIT", t.toString());
             }
         });
@@ -84,8 +81,8 @@ public class LearningModulesRepo {
         return lmDescResponse;
     }
 
-    public LiveData<List<SMResponse>> getSubmodule(String mID, String sMID) {
-        Call<List<SMResponse>> call = apiService.getSubmodule(mID, sMID);
+    public LiveData<List<SMResponse>> getSubmodules(String mID) {
+        Call<List<SMResponse>> call = apiService.getSubmodules(mID);
         call.enqueue(new Callback<List<SMResponse>>() {
 
             @Override

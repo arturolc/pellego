@@ -99,7 +99,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
         mtext.setBackgroundColor(Color.WHITE);
         scroller = root.findViewById(R.id.mscroller);
         mtext.setText(content);
-        if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
+        if (moduleViewModel.isShowSubmodulePopupDialog()) showSubmodulePopupDialog();
         return root;
     }
 
@@ -136,7 +136,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
             }
         });
         dialog.show();
-        moduleViewModel.showPopupDialog = false;
+        moduleViewModel.setShowPopupDialog(false);
     }
 
     private void showSubmodulePopupDialog() {
@@ -155,7 +155,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
             }
         });
         dialog.show();
-        moduleViewModel.showSubmodulePopupDialog = false;
+        moduleViewModel.setShowSubmodulePopupDialog(false);
     }
 
 

@@ -82,7 +82,7 @@ public class RsvpModuleFragment extends BaseFragment {
         final TextView textView = root.findViewById(R.id.title_rsvp);
         this.setupHeader(root);
         // Only show popup if user navigated to the Rsvp module
-       if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
+       if (moduleViewModel.isShowSubmodulePopupDialog()) showSubmodulePopupDialog();
         return root;
     }
 
@@ -116,7 +116,7 @@ public class RsvpModuleFragment extends BaseFragment {
             }
         });
         dialog.show();
-        moduleViewModel.showSubmodulePopupDialog = false;
+        moduleViewModel.setShowSubmodulePopupDialog(false);
     }
 
     private void showQuizPopupDialog() {
@@ -139,7 +139,7 @@ public class RsvpModuleFragment extends BaseFragment {
             }
         });
         dialog.show();
-        moduleViewModel.showPopupDialog = false;
+        moduleViewModel.setShowPopupDialog(false);
     }
 
     public void initRsvpReader(PlayerWidget playerWidget, View v, Activity a) {

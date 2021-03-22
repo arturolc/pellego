@@ -10,11 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
 
-import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 
 /**********************************************
@@ -73,7 +70,7 @@ public class ModuleListAdapter extends BaseAdapter {
         SMResponse res = responses.get(position);
 
         titleView.setText(res.getName());
-        subtitleView.setText(res.getText());
+        subtitleView.setText(res.getText()[0]);
         iconView.setImageDrawable(fragment.getDrawable(res.getName().toLowerCase()));
 
         return view;

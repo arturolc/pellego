@@ -17,7 +17,7 @@
     </androidx.viewpager2.widget.ViewPager2>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/rsvp_intro_finish_btn"
+        android:id="@+id/intro_finish_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/dots_indicator"

@@ -27,6 +27,6 @@ public interface APIService {
     @POST("modules/{module_id}/content")
     Call<List<LMDescResponse>> getModuleDescription(@Path("module_id") String mID);
 
-    @POST("modules/{module_id}/submodule/{submodule_id}")
-    Call<List<SMResponse>> getSubmodule(@Path("module_id") String mID, @Path("submodule_id") String sMID);
+    @POST("modules/{module_id}/submodules")
+    Call<List<SMResponse>> getSubmodules(@Path("module_id") String mID);
 }
