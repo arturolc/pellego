@@ -126,9 +126,8 @@ public class LearnFragment extends BaseFragment {
                         navController.navigate(R.id.nav_module_overview);
                         break;
                     case 1:
-                    case 2:
                         break;
-                    case 3: // metaguiding
+                    case 2: // metaguiding
                         moduleViewModel.setTechnique("metaguiding");
                         moduleViewModel.setGradient(new int[] {0xFFF53844, 0xFF42378F});
                         moduleViewModel.setViewModelVars(getResources().getString(R.string.title_meta_guiding), getResources().getString(R.string.description_metaguiding), R.id.nav_metaguiding_intro, R.array.intro_metaguiding_content, R.array.intro_metaguiding_header, R.id.nav_metaguiding_module);
@@ -201,7 +200,6 @@ public class LearnFragment extends BaseFragment {
         //TODO use shared preferences to populate list using data stored locally on the device
         mNavItems.add(new ModuleListItemModel("Rapid Serial Visual Presentation", retrieveModuleProgress("rsvp"), getResources().getDrawable(R.drawable.ic_rsvp), getString(R.string.short_description_rsvp)));
         mNavItems.add(new ModuleListItemModel("Clump Reading", retrieveModuleProgress("clumpreading"),getResources().getDrawable(R.drawable.ic_clump_reading), getString(R.string.short_description_clump_reading)));
-        mNavItems.add(new ModuleListItemModel("Reducing Subvocalization", retrieveModuleProgress("reducingsubvocalization"), getResources().getDrawable(R.drawable.ic_reducing_subvocalization), getString(R.string.short_description_reducing_subvocalization)));
         mNavItems.add(new ModuleListItemModel("Meta Guiding", retrieveModuleProgress("metaguiding"), getResources().getDrawable(R.drawable.ic_meta_guiding), getString(R.string.short_description_metaguiding)));
         mNavItems.add(new ModuleListItemModel("Pre-Reading", retrieveModuleProgress("prereading"), getResources().getDrawable(R.drawable.ic_pre_reading), getString(R.string.short_description_prereading)));
 

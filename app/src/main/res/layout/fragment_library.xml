@@ -7,46 +7,36 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context="com.gitlab.capstone.pellego.fragments.library.LibraryFragment">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:id="@+id/title_library"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"
+        android:elevation="40dp"
+        android:text="@string/title_library"
+        android:textSize="50sp"
+        android:gravity="center"
+        android:fontFamily="@font/bulletto_family"
+        ></TextView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:id="@+id/lib_linear_layout">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            android:id="@+id/title_library"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textColor="@color/white"
-            android:elevation="40dp"
-            android:text="@string/title_library"
-            android:textSize="50sp"
-            android:gravity="center"
-            android:fontFamily="@font/bulletto_family"
-            ></TextView>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/library_header"
         android:numColumns="3"
         android:elevation="10dp"
+        android:paddingTop="82dp"
+        android:clipToPadding="false"
         android:scrollbars="vertical"
         android:stretchMode="columnWidth"
         android:verticalSpacing="2dp" />
-        <TextView
-            android:id="@+id/text_empty_library"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:visibility="invisible"
-            android:gravity="center_horizontal"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
     </LinearLayout>
 
     <include

@@ -131,6 +131,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:id="@+id/header_circular"
             app:layout_constraintBottom_toTopOf="@+id/container_bottom"
             android:background="@drawable/gradient_background_circular"/>
         <fragment

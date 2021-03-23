@@ -3,9 +3,14 @@ package com.gitlab.capstone.pellego.fragments.progress;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +45,10 @@ public class ProgressFragment extends BaseFragment {
     private LineChart lastYearLineChart;
     private ArrayList<String> days;
     private ArrayList<String> months;
+    private View header;
+    private static final int HIDE_THRESHOLD = 20;
+    private int scrolledDistance = 0;
+    private boolean controlsVisible = true;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -51,8 +60,26 @@ public class ProgressFragment extends BaseFragment {
         progressViewModel.getText().observe(getViewLifecycleOwner(),
                 s -> textView.setText(getString(R.string.title_progress_reports)));
         super.setupHeader(root);
+        header = getActivity().findViewById(R.id.header_circular);
         lastWeekBarChart = root.findViewById(R.id.last_week_barChart);
         lastYearLineChart = root.findViewById(R.id.last_year_lineChart);
+
+        ScrollView scrollView = root.findViewById(R.id.progress_scroll_view);
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                scrolledDistance = scrollView.getScrollY();
+                if (scrolledDistance != 0 && controlsVisible) {
+                    hideViews();
+                    controlsVisible = false;
+                    scrolledDistance = 0;
+                } else if (scrolledDistance == 0 && !controlsVisible) {
+                    showViews();
+                    controlsVisible = true;
+                    scrolledDistance = 0;
+                }
+            }
+        });
 
         loadProgressTextValues();
         populateDaysList();
@@ -63,6 +90,14 @@ public class ProgressFragment extends BaseFragment {
         loadLastYearLineChart();
 
         return root;
+    }
+
+    private void hideViews() {
+        header.animate().translationY(-header.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+    }
+
+    private void showViews() {
+        header.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
     }
 
     private void loadProgressTextValues() {
