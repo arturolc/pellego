@@ -27,9 +27,7 @@ public class ModuleViewModel extends AndroidViewModel {
     private String moduleID;
     private LearningModulesRepo repo;
     private LiveData<List<LMDescResponse>> lmDescResponse = new MutableLiveData<>();
-    private MutableLiveData<List<SMResponse>> smResponses = new MutableLiveData<>();
     private LiveData<List<SMResponse>> submoduleResponse = new MutableLiveData<>();
-
 
     private boolean showSubmodulePopupDialog;
     private boolean showPopupDialog;
@@ -42,14 +40,6 @@ public class ModuleViewModel extends AndroidViewModel {
         showPopupDialog = false;
     }
 
-    public MutableLiveData<List<SMResponse>> getSMResponses() {
-        return smResponses;
-    }
-
-    public void setSMResponses(List<SMResponse> response) {
-        smResponses.setValue(response);
-    }
-
     public LiveData<List<LMDescResponse>> getLMDescResponse(String mid) {
         if (lmDescResponse.getValue() == null) {
             lmDescResponse = repo.getModuleDesc(mid);
@@ -59,7 +49,9 @@ public class ModuleViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<SMResponse>> getSubmodulesResponse() {
-        submoduleResponse = repo.getSubmodules(moduleID);
+        if (submoduleResponse.getValue() == null) {
+            submoduleResponse = repo.getSubmodules(moduleID);
+        }
 
         return submoduleResponse;
     }

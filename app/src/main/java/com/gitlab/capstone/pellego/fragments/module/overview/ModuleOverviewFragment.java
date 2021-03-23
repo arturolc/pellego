@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,6 @@ public class ModuleOverviewFragment extends BaseFragment {
 
     private ModuleViewModel moduleViewModel;
     private ListView moduleList;
-    private final List<SMResponse> response = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -65,81 +65,17 @@ public class ModuleOverviewFragment extends BaseFragment {
         TextView moduleTitle = root.findViewById(R.id.title_module_overview);
         TextView moduleDescription = root.findViewById(R.id.text_module_description);
 
-/*        moduleViewModel.getSubmodulesResponse().observe(getViewLifecycleOwner(), new Observer<List<SMResponse>>() {
+        moduleViewModel.getLMDescResponse(moduleID).observe(getViewLifecycleOwner(), new Observer<List<LMDescResponse>>() {
             @Override
-            public void onChanged(List<SMResponse> response2) {
-                moduleTitle.setText(response2.get(0).getText());
-                moduleDescription.setText(response2.get(1).getText());
-*//*                response.add(new SMResponse(
-                        response1.get(0).getMID(),
-                        response1.get(0).getSubmodules().get(0).getName(),
-                        response1.get(0).getSubmodules().get(0).getSubheader()));
-                response.add(new SMResponse(
-                        response1.get(0).getMID(),
-                        response1.get(0).getSubmodules().get(1).getName(),
-                        response1.get(0).getSubmodules().get(1).getSubheader()));
-                response.add(new SMResponse(
-                        response1.get(0).getMID(),
-                        response1.get(0).getSubmodules().get(2).getName(),
-                        response1.get(0).getSubmodules().get(2).getSubheader()));
-                response.add(new SMResponse(
-                        response1.get(0).getMID(),
-                        response1.get(0).getSubmodules().get(3).getName(),
-                        response1.get(0).getSubmodules().get(3).getSubheader()));*//*
-                moduleViewModel.setSMResponses(response);
+            public void onChanged(List<LMDescResponse> response) {
+                moduleTitle.setText(response.get(0).getName());
+                moduleDescription.setText(response.get(0).getDescription());
             }
         });
 
-        //LiveData<List<LMResponse>> lmModulesResponse = moduleViewModel.getLMModulesResponse();
         moduleViewModel.getSubmodulesResponse().observe(getViewLifecycleOwner(), new Observer<List<SMResponse>>() {
             @Override
             public void onChanged(List<SMResponse> response1) {
-                moduleTitle.setText(response1.get(0).getName());
-                moduleDescription.setText(response1.get(0).getText());
-
-                response.add(new SMResponse(
-                        response1.get(0).getName(),
-                        response1.get(0).getSubheader(),
-                        response1.get(0).getText()));
-                response.add(new SMResponse(
-                        response1.get(1).getName(),
-                        response1.get(1).getSubheader(),
-                        response1.get(1).getText()));
-                response.add(new SMResponse(
-                        response1.get(2).getName(),
-                        response1.get(2).getSubheader(),
-                        response1.get(2).getText()));
-                response.add(new SMResponse(
-                        response1.get(3).getName(),
-                        response1.get(3).getSubheader(),
-                        response1.get(3).getText()));
-                moduleViewModel.setSMResponses(response);
-            }
-        });*/
-
-        moduleViewModel.getSubmodulesResponse().observe(getViewLifecycleOwner(), new Observer<List<SMResponse>>() {
-            @Override
-            public void onChanged(List<SMResponse> response1) {
-                moduleTitle.setText(response1.get(0).getName());
-                moduleDescription.setText(response1.get(0).getText()[0]);
-
-                response.add(new SMResponse(
-                        response1.get(0).getName(),
-                        response1.get(0).getSubheader(),
-                        response1.get(0).getText()));
-                response.add(new SMResponse(
-                        response1.get(1).getName(),
-                        response1.get(1).getSubheader(),
-                        response1.get(1).getText()));
-                response.add(new SMResponse(
-                        response1.get(2).getName(),
-                        response1.get(2).getSubheader(),
-                        response1.get(2).getText()));
-                response.add(new SMResponse(
-                        response1.get(3).getName(),
-                        response1.get(3).getSubheader(),
-                        response1.get(3).getText()));
-                moduleViewModel.setSMResponses(response);
 
                 ModuleListAdapter adapter = new ModuleListAdapter(getContext(), response1, ModuleOverviewFragment.this);
                 moduleList.setAdapter(adapter);

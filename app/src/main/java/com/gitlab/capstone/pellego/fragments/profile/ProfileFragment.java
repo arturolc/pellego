@@ -4,47 +4,31 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.axet.androidlibrary.widgets.CircleImageView;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.BaseFragment;
-import com.gitlab.capstone.pellego.app.Storage;
-import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -52,28 +36,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.NoSuchElementException;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.gitlab.capstone.pellego.activities.MainActivity.RESULT_ADD_CATALOG;
-import static com.gitlab.capstone.pellego.activities.MainActivity.RESULT_FILE;
-import static com.gitlab.capstone.pellego.activities.MainActivity.TAG;
 import static com.gitlab.capstone.pellego.activities.MainActivity.bitmap;
-
 
 /**********************************************
  Eli Hebdon and Joanna Lowry
 
  Profile Fragment
  **********************************************/
-
 
 public class ProfileFragment extends BaseFragment {
 
@@ -89,21 +62,16 @@ public class ProfileFragment extends BaseFragment {
                 new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         super.setupHeader(root);
-        ImageView im1 = (ImageView) root.findViewById(R.id.profile_image);
+        ImageView im1 = root.findViewById(R.id.profile_image);
         RelativeLayout usr = root.findViewById(R.id.imgUser);
-        usr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-                MainActivity.loadImageFromStorage(getActivity());
-            }
+        usr.setOnClickListener(view -> {
+            startActivityForResult(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+            MainActivity.loadImageFromStorage(getActivity());
         });
 
-        getApiData(inflater, container, new ResponseCallBack() {
-            public void onResponse(Object response) {
-                // Update UI only after response is received &
-               //set the UI
-            }
+        getApiData(inflater, container, response -> {
+            // Update UI only after response is received &
+           //set the UI
         });
         im1.setImageBitmap(bitmap);
 //        im2.setImageBitmap(bitmap);
@@ -121,9 +89,9 @@ public class ProfileFragment extends BaseFragment {
                         bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
                         CircleImageView profilePic =  getActivity().findViewById(R.id.profile_image);
                         profilePic.setImageBitmap(bitmap);
-                        NavigationView navView = (NavigationView) getActivity().findViewById(R.id.side_nav_view);
+                        NavigationView navView = getActivity().findViewById(R.id.side_nav_view);
                         View headerView = navView.getHeaderView(0);
-                        ImageView im2 = (ImageView) headerView.findViewById(R.id.profile_image_drawer);
+                        ImageView im2 = headerView.findViewById(R.id.profile_image_drawer);
                         im2.setImageBitmap(bitmap);
                         // save profile photo
                         storeImage(bitmap);
@@ -171,14 +139,11 @@ public class ProfileFragment extends BaseFragment {
         return directory.getAbsolutePath();
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.loadImageFromStorage(getActivity());
     }
-
 
     private void getApiData(@NonNull LayoutInflater inflater, ViewGroup container, ResponseCallBack responseCallBack)
     {
@@ -205,14 +170,10 @@ public class ProfileFragment extends BaseFragment {
                         }
                         responseCallBack.onResponse(response);
                     }
-                }, new Response.ErrorListener() {
+                }, error -> {
+                    // TODO: Handle error
+                    Log.d("error", error.toString());
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.d("error", error.toString());
-
-                    }
                 });
 
         // Add the request to the RequestQueue.

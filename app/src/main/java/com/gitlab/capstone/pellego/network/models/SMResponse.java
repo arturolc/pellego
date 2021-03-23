@@ -3,7 +3,7 @@ package com.gitlab.capstone.pellego.network.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.w3c.dom.Text;
+import java.util.List;
 
 public class SMResponse {
 
@@ -15,12 +15,17 @@ public class SMResponse {
     private String subheader;
     @SerializedName("Text")
     @Expose
-    private String[] text;
+    private String text;
+    @SerializedName("Content")
+    @Expose
+    private List<IntroContentModel> introContent;
 
-    public SMResponse(String name, String subheader, String[] text) {
-        this.name = name;
-        this.subheader = subheader;
-        this.text = text;
+    public List<IntroContentModel> getIntroContent() {
+        return introContent;
+    }
+
+    public void setIntroContent(List<IntroContentModel> introContent) {
+        this.introContent = introContent;
     }
 
     public String getName() {
@@ -39,11 +44,11 @@ public class SMResponse {
         this.subheader = subheader;
     }
 
-    public String[] getText() {
+    public String getText() {
         return text;
     }
 
-    public void setText(String[] text) {
+    public void setText(String text) {
         this.text = text;
     }
 
@@ -53,6 +58,8 @@ public class SMResponse {
                 "name='" + name + '\'' +
                 ", subheader='" + subheader + '\'' +
                 ", text='" + text + '\'' +
+                ", introContent=" + introContent +
                 '}';
     }
 }
+

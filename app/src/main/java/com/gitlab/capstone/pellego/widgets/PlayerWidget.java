@@ -42,7 +42,6 @@ import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 
 import org.geometerplus.fbreader.fbreader.TextBuildTraverser;
-import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 import org.geometerplus.zlibrary.text.view.ZLTextElement;
 import org.geometerplus.zlibrary.text.view.ZLTextElementArea;
 import org.geometerplus.zlibrary.text.view.ZLTextElementAreaVector;
@@ -80,6 +79,12 @@ public class PlayerWidget {
     ArrayList<Runnable> onScrollFinished = new ArrayList<>();
     Handler handler = new Handler();
     int gravity;
+    public ImageView playButton;
+    private static boolean isFirstSelect = false;
+    public ZLTextPosition end;
+    public int paragraphIndex;
+    public int pauseToPlayID;
+    public int playToPauseID;
 
     Runnable updateGravity = new Runnable() {
         @Override
@@ -415,7 +420,7 @@ public class PlayerWidget {
         this.activity = activity;
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.tts_popup, null);
-        ImageView playButton = activity.findViewById(R.id.button_play);
+        playButton = activity.findViewById(R.id.button_play);
 
         // skip back button pressed
         View prev = activity.findViewById(R.id.button_prev);
@@ -427,7 +432,7 @@ public class PlayerWidget {
                         if (playing) {
                             rsvpModuleFragment.stop();
                         } else {
-                            togglePlay(playButton);
+                            togglePlay();
                         }
                         rsvpModuleFragment.startPrev();
                         break;
@@ -435,7 +440,7 @@ public class PlayerWidget {
                         if (playing) {
                             metaguidingModuleFragment.stop();
                         } else {
-                            togglePlay(playButton);
+                            togglePlay();
                         }
                         metaguidingModuleFragment.startPrev();
                         break;
@@ -457,14 +462,14 @@ public class PlayerWidget {
                             if (playing) {
                                 rsvpModuleFragment.stop();
                             } else {
-                                togglePlay(playButton);
+                                togglePlay();
                             }
                             rsvpModuleFragment.startNext();
                         case R.id.metaguiding_menu_item:
                             if (playing) {
                                 metaguidingModuleFragment.stop();
                             } else {
-                                togglePlay(playButton);
+                                togglePlay();
                             }
                             metaguidingModuleFragment.startNext();
                             break;
@@ -500,10 +505,10 @@ public class PlayerWidget {
                             default:
                                 break;
                         }
-                        togglePlay(playButton);
+                        togglePlay();
                     }
                 } catch (Exception e) {
-                    Log.d("Technique selector error: " , e.getMessage());
+                    Log.d("error: " , e.getMessage());
                 }
 
                 //registering popup with OnMenuItemClickListener
@@ -552,11 +557,11 @@ public class PlayerWidget {
         playButton.setOnClickListener((View.OnClickListener) fb -> {
             switch (technique_id) {
                 case R.id.rsvp_menu_item:
-                    togglePlay(playButton);
+                    togglePlay();
                     rsvpModuleFragment.play();
                     break;
                 case R.id.metaguiding_menu_item:
-                    togglePlay(playButton);
+                    togglePlay();
                     metaguidingModuleFragment.play();
                     break;
                 default:
@@ -674,16 +679,18 @@ public class PlayerWidget {
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void togglePlay(ImageView playBtn) {
+    public void togglePlay() {
         playing = !playing;
         if ( playing ) {
-            playBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.avd_play_to_pause));
+            playButton.setImageDrawable(activity.getResources().getDrawable(R.drawable.avd_play_to_pause));
+            playToPauseID = activity.getResources().getIdentifier("avd_play_to_pause", "drawable", activity.getPackageName());
         } else {
-            playBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.avd_pause_to_play));
+            playButton.setImageDrawable(activity.getResources().getDrawable(R.drawable.avd_pause_to_play));
+            pauseToPlayID = activity.getResources().getIdentifier("avd_pause_to_play", "drawable", activity.getPackageName());
         }
 
         // Display animation
-        Drawable drawable = playBtn.getDrawable();
+        Drawable drawable = playButton.getDrawable();
         if (drawable instanceof AnimatedVectorDrawableCompat) {
             avd = (AnimatedVectorDrawableCompat) drawable;
             avd.start();
@@ -691,13 +698,11 @@ public class PlayerWidget {
             avd2 = (AnimatedVectorDrawable) drawable;
             avd2.start();
         }
-
     }
 
     public Context getContext() {
         return context;
     }
-
 
     public String selectPrev() {
         marks.clear();
@@ -904,10 +909,16 @@ public class PlayerWidget {
                 ZLTextPosition position = fb.getPosition();
                 Storage.Bookmark bm = expandWord(new Storage.Bookmark("", position, position));
                 fragment = new Fragment(bm);
+                isFirstSelect = true;
             }
         } else {
-            Storage.Bookmark bm = selectNext(fragment.fragment);
-            fragment = new Fragment(bm);
+            if (!isFirstSelect) {
+                Storage.Bookmark bm = selectNext(fragment.fragment);
+                fragment = new Fragment(bm);
+            }
+            else {
+                isFirstSelect = false;
+            }
         }
         marks.add(fragment.fragment);
         if (fb.widget instanceof ScrollWidget) {
@@ -933,8 +944,8 @@ public class PlayerWidget {
         }
         if (fb.widget instanceof PagerWidget) {
             if (fb.pluginview == null) {
-                ZLTextPosition end;
                 end = fb.app.BookTextView.getEndCursor();
+                paragraphIndex = fragment.fragment.start.getParagraphIndex();
                 if (end.compareTo(fragment.fragment.start) <= 0) {
                     onScrollFinished.add(new Runnable() {
                         @Override
@@ -1169,8 +1180,6 @@ public class PlayerWidget {
             return tt.getText();
         }
     }
-
-
 
     public static ZLTextPosition expandLeft(ZLTextPosition start) {
         if (fb.pluginview != null) {

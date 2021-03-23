@@ -63,6 +63,8 @@ public class ModuleListAdapter extends BaseAdapter {
             view = convertView;
         }
 
+        //view.setBackground(mContext.getResources().getDrawable(R.drawable.orange_gradient));
+
         TextView titleView = view.findViewById(R.id.title);
         TextView subtitleView = view.findViewById(R.id.subTitle);
         ImageView iconView = view.findViewById(R.id.icon);
@@ -70,7 +72,7 @@ public class ModuleListAdapter extends BaseAdapter {
         SMResponse res = responses.get(position);
 
         titleView.setText(res.getName());
-        subtitleView.setText(res.getText()[0]);
+        subtitleView.setText(res.getSubheader());
         iconView.setImageDrawable(fragment.getDrawable(res.getName().toLowerCase()));
 
         return view;
