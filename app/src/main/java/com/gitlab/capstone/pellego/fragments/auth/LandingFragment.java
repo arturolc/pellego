@@ -1,5 +1,6 @@
 package com.gitlab.capstone.pellego.fragments.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,9 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.amazonaws.mobileconnectors.cognitoauth.Auth;
 import com.amplifyframework.auth.AuthProvider;
 import com.amplifyframework.core.Amplify;
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.activities.MainActivity;
+
 /**********************************************
  Arturo Lara
  Main landing screen when user opens the app for the first time
@@ -77,7 +81,11 @@ public class LandingFragment extends Fragment {
                 Amplify.Auth.signInWithSocialWebUI(
                         AuthProvider.google(),
                         getActivity(),
-                        result -> Log.i("AUTHENTICATION", result.toString()),
+                        result -> {
+                            Intent i = new Intent(getActivity(), MainActivity.class);
+                            startActivity(i);
+                            Log.i("AUTHENTICATION", result.toString());
+                        },
                         error -> Log.e("AUTHENTICATION", error.toString())
                 );
             }

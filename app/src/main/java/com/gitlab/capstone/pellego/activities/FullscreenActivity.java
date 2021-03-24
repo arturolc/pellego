@@ -120,6 +120,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
 
         // TODO: refactor this so it's just a click listener for the sign out button, otherwise navigation to other views doesn't work
         drawerNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
@@ -127,8 +128,10 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
                 if (id == R.id.nav_sign_out) {
                     Amplify.Auth.signOut(
                             () -> {
-                                Log.i("AUTHENTICATION", "Signed out succesfully");
-                                finish();
+                                Log.i("AUTHENTICATION", "Signed out successfully");
+                                Intent i = new Intent(FullscreenActivity.this,
+                                        SplashActivity.class);
+                                startActivity(i);
                             },
                             error -> Log.e("AUTHENTICATION", error.toString())
                     );
