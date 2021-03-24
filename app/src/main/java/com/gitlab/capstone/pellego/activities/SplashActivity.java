@@ -69,10 +69,8 @@ public class SplashActivity extends AppCompatActivity {
                                 MainActivity.class);
 
                     } else {
-
                         i = new Intent(SplashActivity.this,
                                 AuthActivity.class);
-
                     }
                 },
                 error -> {

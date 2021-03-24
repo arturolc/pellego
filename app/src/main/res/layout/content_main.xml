@@ -10,8 +10,6 @@
     tools:showIn="@layout/app_bar_main"
     android:paddingTop="?attr/actionBarSize">
 
-
-
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"

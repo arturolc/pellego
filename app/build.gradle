@@ -2,7 +2,19 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.axet.dxplugin'
 
+configurations.all {
+    resolutionStrategy.force 'com.android.support:support-annotations:23.1.0'
+}
+
 android {
+    signingConfigs {
+        config1 {
+            storeFile file('C:\\Users\\u0871009\\Desktop\\pellego.jks')
+            storePassword 'Ak15halfTB!'
+            keyAlias 'key0'
+            keyPassword 'Ak15halfTB!'
+        }
+    }
     compileSdkVersion 29
 
     defaultConfig {
@@ -10,7 +22,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 29
         versionCode            1
-        versionName            "1.0.0"
+        versionName            "1.2.1"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -47,11 +59,19 @@ android {
     }
 }
 
-repositories {
-    maven { url "https://jitpack.io" }
+allprojects {
+    repositories {
+        jcenter()
+        google()
+        maven { url "https://jitpack.io" }
+        maven {url 'https://maven.google.com'  }
+
+    }
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
@@ -104,6 +124,7 @@ dependencies {
 
     // Glide for images
     implementation 'com.github.bumptech.glide:glide:4.12.0'
+
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     testImplementation 'org.robolectric:robolectric:4.4'
     testImplementation 'org.mockito:mockito-core:3.3.3'
