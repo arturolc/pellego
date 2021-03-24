@@ -7,22 +7,14 @@ configurations.all {
 }
 
 android {
-    signingConfigs {
-        config1 {
-            storeFile file('C:\\Users\\u0871009\\Desktop\\pellego.jks')
-            storePassword 'Ak15halfTB!'
-            keyAlias 'key0'
-            keyPassword 'Ak15halfTB!'
-        }
-    }
     compileSdkVersion 29
 
     defaultConfig {
         applicationId "com.gitlab.capstone.pellego"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode            1
-        versionName            "1.2.1"
+        versionCode            5
+        versionName            "1.2.3"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -35,10 +27,9 @@ android {
     }
     buildTypes {
         release {
-            shrinkResources true
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
-                    'proguard-rules.pro'
+            minifyEnabled false
+        }
+        devRelease {
         }
     }
     applicationVariants.all { variant ->
@@ -61,11 +52,10 @@ android {
 
 allprojects {
     repositories {
-        jcenter()
-        google()
         maven { url "https://jitpack.io" }
         maven {url 'https://maven.google.com'  }
-
+        jcenter()
+        google()
     }
 }
 
