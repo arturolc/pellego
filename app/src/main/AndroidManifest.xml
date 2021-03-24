@@ -263,17 +263,6 @@
 
         <activity android:name=".fragments.auth.AuthActivity"
             android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="com.gitlab.capstone.pellego"
-                    android:pathPrefix="/logout"
-                    android:scheme="pellego" />
-            </intent-filter>
         </activity>
 
         <activity android:name="com.gitlab.capstone.pellego.fragments.pellegolibrary.BookPreviewActivity"></activity>

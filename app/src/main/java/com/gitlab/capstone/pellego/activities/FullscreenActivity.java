@@ -128,11 +128,11 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
                 if (id == R.id.nav_sign_out) {
                     Amplify.Auth.signOut(
                             () -> {
+                                finishAffinity();
                                 Log.i("AUTHENTICATION", "Signed out successfully");
                                 Intent i = new Intent(FullscreenActivity.this,
                                         AuthActivity.class);
                                 startActivity(i);
-                                finish();
                             },
                             error -> Log.e("AUTHENTICATION", error.toString())
                     );

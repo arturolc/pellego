@@ -114,36 +114,7 @@
     <string name="description_rsvp" translatable="false">Rapid Serial Visual Presentation is a method in which individual words are displayed in rapid succession. The words are fixed to the same
                 point on the screen which eliminates the need for saccades. This means your eyes can remain fixed while the words change."</string>
     <!--    RSVP Beginner-->
-    <string name="content_rsvp_beginner" translatable="false">Fleas are perfectly designed by nature to feast on anything containing blood. Like a shark in the
-water or a wolf in the woods, fleas are ideally equipped to do what they do, making them very difficult to
-defeat. The bodies of these tiny parasites are extremely hardy and well-suited for their job.
-A flea has a very hard exoskeleton, which means the body is covered by a tough, tile-like plate
-called a sclerite. Because of these plates, fleas are almost impossible to squish. The exoskeletons of
-fleas are also waterproof and shock resistant, and therefore fleas are highly resistant to the sprays and
-chemicals used to kill them.
-Little spines are attached to this plate. The spines lie flat against the flea’s thin, narrow body as
-the flea scurries through an animal’s fur in search of food. However, if anything (like fingers or a selfgrooming pet) tries to pull a flea off through the hair coat, these spines will extend and stick to the fur like
-Velcro.
-Fleas are some of the best jumpers in the natural world. A flea can jump seven inches, or 150
-times its own length, either vertically or horizontally. An equivalent jump for a person would be 555 feet,
-the height of the Washington Monument. Fleas can jump 30,000 times in a row without stopping, and they
-are able to accelerate through the air at an incredibly high rate—a rate which is over ten times what
-humans can withstand in an airplane.
-Fleas have very long rear legs with huge thigh muscles and multiple joints. When they get ready
-to jump, they fold their long legs up and crouch like a runner on a starting block. Several of their joints
-contain a protein called resilin, which helps catapult fleas into the air as they jump, similar to the way a
-rubber band provides momentum to a slingshot. Outward facing claws on the bottom of their legs grip
-anything they touch when they land.
-The adult female flea mates after her first blood meal and begins producing eggs in just 1 to 2
-days. One flea can lay up to 50 eggs in one day and over 2,000 in her lifetime. Flea eggs can be seen
-with the naked eye, but they are about the size of a grain of salt. Shortly after being laid, the eggs begin
-to transform into cocoons. In the cocoon state, fleas are fully developed adults, and will hatch immediately
-if conditions are favorable. Fleas can detect warmth, movement, and carbon dioxide in exhaled breath,
-and these three factors stimulate them to emerge as new adults. If the flea does not detect appropriate
-conditions, it can remain dormant in the cocoon state for extended periods. Under ideal conditions, the
-entire life cycle may only take 3 weeks, so in no time at all, pets and homes can become infested.
-Because of these characteristics, fleas are intimidating opponents. The best way to control fleas,
-therefore, is to take steps to prevent an infestation from ever occurring. </string>
+    <string name="content_rsvp_beginner" translatable="false">Fleas are perfectly designed by nature  </string>
     <string name="question_rsvp_beginner_0" translatable="false">The primary purpose of the passage is to</string>
     <string-array name="answers_rsvp_beginner_0">
         <item>educate the reader about the physical characteristics of fleas</item>
