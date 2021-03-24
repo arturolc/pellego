@@ -132,6 +132,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
                                 Intent i = new Intent(FullscreenActivity.this,
                                         AuthActivity.class);
                                 startActivity(i);
+                                finish();
                             },
                             error -> Log.e("AUTHENTICATION", error.toString())
                     );

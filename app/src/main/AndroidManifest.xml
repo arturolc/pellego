@@ -41,18 +41,6 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="com.gitlab.capstone.pellego"
-                    android:pathPrefix="/login"
-                    android:scheme="pellego" />
-            </intent-filter>
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
                     android:host="*"
                     android:pathPattern=".*\\.fb2"
                     android:scheme="content" />
