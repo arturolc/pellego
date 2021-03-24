@@ -3,6 +3,12 @@ package com.gitlab.capstone.pellego.network.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/*****************************************************
+ * Arturo Lara & Chris Bordoy
+ *
+ * Model that represents a learning submodule
+ *****************************************************/
+
 public class Submodule {
 
     @SerializedName("SMID")
@@ -14,24 +20,6 @@ public class Submodule {
     @SerializedName("Subheader")
     @Expose
     private String subheader;
-
-    /**
-     * No args constructor for use in serialization
-     */
-    public Submodule() {
-    }
-
-    /**
-     * @param sMID
-     * @param subheader
-     * @param name
-     */
-    public Submodule(Integer sMID, String name, String subheader) {
-        super();
-        this.sMID = sMID;
-        this.name = name;
-        this.subheader = subheader;
-    }
 
     public Integer getSMID() {
         return sMID;

@@ -34,8 +34,10 @@ import java.util.List;
 /**********************************************
  Eli Hebdon and Chris Bordoy
 
- Quiz fragment that contains logic for learning submodule quizzes
+ Quiz fragment that contains logic for learning
+ submodule quizzes
  **********************************************/
+
 public class QuizFragment extends BaseFragment {
 
     private QuizViewModel quizViewModel;
@@ -43,22 +45,25 @@ public class QuizFragment extends BaseFragment {
     private ListView moduleList;
     private ArrayList<QuizQuestionModel> mNavItems;
     NavController navController;
-    private List<QuizResponse> quizResponses;
-
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mNavItems = new ArrayList<>();
+
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         View root = inflater.inflate(R.layout.fragment_quiz, container, false);
+
         this.setupHeader(root);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+
         quizViewModel =
                 new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
         quizViewModel.clear();
+
         final TextView textView = root.findViewById(R.id.title_quiz);
+
         quizViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -71,60 +76,58 @@ public class QuizFragment extends BaseFragment {
         quizViewModel.setWPM(Integer.parseInt(getArguments().getString("wpm")));
         quizViewModel.setModule(getArguments().getString("module"));
 
-        quizViewModel.populateQuestionBank();
-        ((TextView) root.findViewById(R.id.text_quiz_question)).setText(quizViewModel.getNextQuestion());
-        mNavItems = quizViewModel.getNextAnswers();
-
-        // Populate the Navigation Drawer with options
-        moduleList = root.findViewById(R.id.nav_question_list);
-/*        QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems, moduleViewModel.getGradient());
-        moduleList.setAdapter(adapter);*/
-
         quizViewModel.getQuizResponse(moduleViewModel.getModuleID(), "1").observe(getViewLifecycleOwner(), new Observer<List<QuizResponse>>() {
             @Override
             public void onChanged(List<QuizResponse> response1) {
-                quizResponses = response1;
-                QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), quizViewModel.getQuizQuestionCounter(), mNavItems, response1, moduleViewModel.getGradient());
-                moduleList.setAdapter(adapter);
-            }
-        });
+                quizViewModel.getQuestions(response1);
+                quizViewModel.populateQuestionBank(quizViewModel.getQuestions(response1), quizViewModel.getAnswers(response1));
 
-        // Drawer Item click listeners
-        moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @SuppressLint("ResourceAsColor")
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Last question, navigate to results
-                Bundle args = new Bundle();
-                quizViewModel.incrementQuizQuestionCounter();
-                if (quizViewModel.isLastQuestion()) {
-                    NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-                    navController.navigate(R.id.nav_quiz_results);
-                }
-                // TODO: update icons based on button click
-                // Right answer
-                if (quizViewModel.getCorrectIndex() == position) {
-                    quizViewModel.score++;
-                }
-                // Wrong answer
-                else {
-                    // TODO: update UI to reflect incorrect response?
-                }
-                if (!quizViewModel.isLastQuestion()) {
-                    quizViewModel.incrementQuestionCount();
-                }
-                ((TextView) root.findViewById(R.id.text_quiz_question)).setText(quizViewModel.getNextQuestion());
+                TextView quizQuestionTextView = root.findViewById(R.id.text_quiz_question);
+                quizQuestionTextView.setText(quizViewModel.getNextQuestion());
                 mNavItems = quizViewModel.getNextAnswers();
+
                 // Populate the Navigation Drawer with options
                 moduleList = root.findViewById(R.id.nav_question_list);
-                QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), quizViewModel.getQuizQuestionCounter(), mNavItems, quizResponses, moduleViewModel.getGradient());
+                QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), mNavItems, moduleViewModel.getGradient());
                 moduleList.setAdapter(adapter);
+
+                // Drawer Item click listeners
+                moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @SuppressLint("ResourceAsColor")
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        if (quizViewModel.isLastQuestion()) {
+                            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                            navController.navigate(R.id.nav_quiz_results);
+                        }
+                        // TODO: update icons based on button click
+                        // Right answer
+                        if (quizViewModel.getCorrectIndex() == position) {
+                            quizViewModel.score++;
+                        }
+                        // Wrong answer
+                        else {
+                            // TODO: update UI to reflect incorrect response?
+                        }
+                        if (!quizViewModel.isLastQuestion()) {
+                            quizViewModel.incrementQuestionCount();
+                        }
+
+                        quizQuestionTextView.setText(quizViewModel.getNextQuestion());
+                        mNavItems = quizViewModel.getNextAnswers();
+                        // Populate the Navigation Drawer with options
+                        moduleList = root.findViewById(R.id.nav_question_list);
+                        QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), mNavItems, moduleViewModel.getGradient());
+                        moduleList.setAdapter(adapter);
+                    }
+                });
             }
         });
 
         return root;
     }
 
+    //TODO: Make single colors, multi-color accessible
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setupHeader(View root) {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
@@ -137,7 +140,7 @@ public class QuizFragment extends BaseFragment {
         GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
                 new int[] {0xFFF9D976, 0xFFF39f86});
-        gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 0f, 0f, 90f, 90f});
+        gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 90f, 90f, 90f, 90f});
         header.setBackgroundDrawable(gd);
     }
 }

@@ -23,6 +23,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/*****************************************************
+ * Arturo Lara & Chris Bordoy
+ *
+ * Repository for all endpoint calls
+ *****************************************************/
+
 public class LearningModulesRepo {
     private final LearningModulesDao dao;
     private final PellegoDatabase db;
@@ -110,7 +116,6 @@ public class LearningModulesRepo {
             public void onResponse(Call<List<QuizResponse>> call, Response<List<QuizResponse>> response) {
                 Log.i("RETROFIT", response.body().toString());
                 quizResponse.setValue(response.body());
-                //callback.onResponse(call, response);
             }
 
             @Override

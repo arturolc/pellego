@@ -1,8 +1,13 @@
 package com.gitlab.capstone.pellego.network.models;
 
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+/*****************************************************
+ * Arturo Lara & Chris Bordoy
+ *
+ * Model that represents a learning module
+ *****************************************************/
 
 public class LMResponse {
 
@@ -24,22 +29,6 @@ public class LMResponse {
     @SerializedName("totalSubmodules")
     @Expose
     private Integer totalSubmodules;
-
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public LMResponse() {
-    }
-
-    public LMResponse(Integer mID, String name, String subheader, String icon, Integer completed, Integer totalSubmodules) {
-        this.mID = mID;
-        this.name = name;
-        this.subheader = subheader;
-        this.icon = icon;
-        this.completed = completed;
-        this.totalSubmodules = totalSubmodules;
-    }
 
     public String getSubheader() {
         return subheader;

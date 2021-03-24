@@ -6,6 +6,14 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/*****************************************************
+ * Chris Bordoy
+ *
+ * Model that represents a modules introduction content
+ * It implements the Parcelable interface so it can be
+ * passed as an object through a bundle
+ *****************************************************/
+
 public class IntroContentModel implements Parcelable {
     @SerializedName("Header")
     @Expose

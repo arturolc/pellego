@@ -665,6 +665,8 @@ dangerous behavior</item>
         <item>Dec</item>
     </string-array>
 
+    <string name="quiz_try_again">TRY AGAIN</string>
+    <string name="quiz_return">RETURN TO LEARNING MODULES</string>
 
 
 </resources>

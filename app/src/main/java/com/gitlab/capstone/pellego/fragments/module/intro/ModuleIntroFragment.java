@@ -1,9 +1,7 @@
 package com.gitlab.capstone.pellego.fragments.module.intro;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,15 +11,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -29,8 +22,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
-import com.gitlab.capstone.pellego.fragments.module.overview.ModuleListAdapter;
-import com.gitlab.capstone.pellego.fragments.module.overview.ModuleOverviewFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModelFactory;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
@@ -38,30 +29,23 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import java.util.List;
 
-
 /***************************************************
  *  Chris Bordoy and Eli Hebdon
  *
  *  The Module Introduction Fragment
  **************************************************/
+
 public class ModuleIntroFragment extends BaseFragment {
     private ModuleViewModel moduleViewModel;
-    RelativeLayout parent_view;
-    ViewPager2 viewPager2;
-    DotsIndicator dotsIndicator;
-    Button btn_register;
+    private Button btn_register;
     private SharedPreferences sharedPref;
-    int totalPageCount;
-    List<SMResponse> submoduleResponses;
-    GradientDrawable gd;
+    private int totalPageCount;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        submoduleResponses = getArguments().getParcelableArrayList("subModules");
+        List<SMResponse> submoduleResponses = getArguments().getParcelableArrayList("subModules");
 
-/*        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(null);*/
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(0xFFF9D976);
         toolbar.setTitle(null);
@@ -79,18 +63,17 @@ public class ModuleIntroFragment extends BaseFragment {
 
         View root = inflater.inflate(R.layout.fragment_module_intro, container, false);
 
-        dotsIndicator = root.findViewById(R.id.dots_indicator);
-        viewPager2 = root.findViewById(R.id.view_pager);
-        parent_view = root.findViewById(R.id.parent_view);
+        DotsIndicator dotsIndicator = root.findViewById(R.id.dots_indicator);
+        ViewPager2 viewPager2 = root.findViewById(R.id.view_pager);
 
-        gd = new GradientDrawable(
+        GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[] {0xFFF9D976, 0xFFF39f86});
+                new int[]{0xFFF9D976, 0xFFF39f86});
         gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
 
         btn_register = root.findViewById(R.id.intro_finish_btn);
 
-        viewPager2.setBackgroundDrawable(gd);
+        viewPager2.setBackground(gd);
 
         //set data
         ModuleIntroPagerAdapter pagerAdapter = new ModuleIntroPagerAdapter(
@@ -143,6 +126,5 @@ public class ModuleIntroFragment extends BaseFragment {
             editor.putInt(key, ++count);
             editor.apply();
         }
-
     }
 }

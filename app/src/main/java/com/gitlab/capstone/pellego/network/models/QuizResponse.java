@@ -4,6 +4,12 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/*****************************************************
+ * Chris Bordoy
+ *
+ * Model that represents a learning sub module quiz
+ *****************************************************/
+
 public class QuizResponse {
 
     @SerializedName("QUID")

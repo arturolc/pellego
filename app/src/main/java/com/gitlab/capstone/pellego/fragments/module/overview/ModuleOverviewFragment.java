@@ -86,8 +86,7 @@ public class ModuleOverviewFragment extends BaseFragment {
         });
         this.setupHeader(root);
 
-        //TODO: Currently here with progress, case 0 usually navigates with moduleViewModel.getModule_id()
-        //TODO: need to figure out how to give it the right id based on position
+        //TODO: Currently only navigates to RSVP, will add navigation for Meta Guiding
         // menu Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -165,6 +164,7 @@ public class ModuleOverviewFragment extends BaseFragment {
         return r;
     }
 
+    //TODO: Change this to have gradient selection be dynamic
     private Drawable moduleGradientPicker(String moduleID) {
         Drawable n = null;
 

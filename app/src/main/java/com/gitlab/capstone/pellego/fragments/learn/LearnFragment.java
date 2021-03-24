@@ -18,7 +18,6 @@ import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
-import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
 
 import java.util.List;
@@ -28,6 +27,7 @@ import java.util.List;
 
     The Learn Modules Component
  **********************************************/
+
 public class LearnFragment extends BaseFragment {
 
     private LearnViewModel learnViewModel;
@@ -42,6 +42,7 @@ public class LearnFragment extends BaseFragment {
         moduleList = root.findViewById(R.id.nav_module_list);
 
         super.setupHeader(root);
+
         lmResponses = learnViewModel.getLMResponse();
         learnViewModel.getLMResponse().observe(getViewLifecycleOwner(), new Observer<List<LMResponse>>() {
             @Override
@@ -51,7 +52,7 @@ public class LearnFragment extends BaseFragment {
             }
         });
 
-
+        //TODO: NEED TO CLEAN UP AND HOOK UP META GUIDING
         // Drawer Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -75,7 +76,6 @@ public class LearnFragment extends BaseFragment {
                         break;
                     case 3: // metaguiding
                         //TODO: NEED TO IMPLEMENT META-GUIDING DATA COMMUNICATIONS
-//                        moduleViewModel.setGradient(new int[] {0xFFF53844, 0xFF42378F});
                         Bundle bundle3 = new Bundle();
                         bundle3.putString("moduleID", lmResponses.getValue().get(position).getMID().toString());
                         navController.navigate(R.id.nav_module_overview, bundle3);
@@ -83,9 +83,9 @@ public class LearnFragment extends BaseFragment {
                     default:
                         break;
                 }
-
             }
         });
+
         return root;
     }
 }

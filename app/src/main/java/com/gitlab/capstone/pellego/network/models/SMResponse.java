@@ -8,6 +8,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/*****************************************************
+ * Chris Bordoy
+ *
+ * Model that represents a learning sub module. It
+ * implements the Parcelable interface so it can be
+ * passed as an object in a bundle
+ *****************************************************/
+
 public class SMResponse implements Parcelable {
 
     @SerializedName("Name")

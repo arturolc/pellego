@@ -1,18 +1,16 @@
 package com.gitlab.capstone.pellego.fragments.quiz;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.database.LearningModulesRepo;
+import com.gitlab.capstone.pellego.network.models.Answer;
 import com.gitlab.capstone.pellego.network.models.QuizResponse;
 
 import java.util.ArrayList;
@@ -24,9 +22,10 @@ import java.util.List;
 
  Quiz view model
  **********************************************/
+
 public class QuizViewModel extends AndroidViewModel {
 
-    private final LearningModulesRepo repo;
+    public LearningModulesRepo repo;
     private LiveData<List<QuizResponse>> quizResponse = new MutableLiveData<>();
     private MutableLiveData<String> mText;
     private String difficulty;
@@ -35,33 +34,19 @@ public class QuizViewModel extends AndroidViewModel {
     public static int score;
     private static String module;
     private static Integer wpm;
-    int quizQuestionCounter;
 
     public QuizViewModel(@NonNull Application application){
         super(application);
         this.repo = LearningModulesRepo.getInstance(application);
-        quizQuestionCounter = 0;
     }
 
-    /*public QuizViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue(getResourceString(R.string.quiz_name));
-        question_no = 0;
-        score = 0;
-        module = "";
-        wpm = 0;
-        questions = new ArrayList<>();
-    }
+    public LiveData<List<QuizResponse>> getQuizResponse(String MID, String SMID) {
+        if (quizResponse.getValue() == null) {
+            quizResponse = repo.getQuizzes(MID, SMID);
+        }
 
-    public QuizViewModel(String quiz_name) {
-        mText = new MutableLiveData<>();
-        mText.setValue(quiz_name);
-        question_no = 0;
-        score = 0;
-        module = "";
-        wpm = 0;
-        questions = new ArrayList<>();
-    }*/
+        return quizResponse;
+    }
 
     public void setDifficulty(String diff) {
         this.difficulty = diff;
@@ -69,14 +54,6 @@ public class QuizViewModel extends AndroidViewModel {
     public void setWPM(Integer wpm) {this.wpm = wpm;}
     public void setModule(String m) {this.module = m;}
     public String getModule() {return this.module;}
-
-    public void incrementQuizQuestionCounter() {
-        quizQuestionCounter++;
-    }
-
-    public int getQuizQuestionCounter(){
-        return quizQuestionCounter;
-    }
 
     public boolean isLastQuestion() {
         return question_no == questions.size() - 1;
@@ -112,14 +89,12 @@ public class QuizViewModel extends AndroidViewModel {
         }
     }
 
-
-
     public ArrayList<QuizQuestionModel> getNextAnswers() {
         ArrayList<QuizQuestionModel> mNavItems = new ArrayList<>();
-        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(0), "A)"));
-        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(1), "B)"));
-        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(2), "C)"));
-        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(3), "D)"));
+        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(0).getAnswer(), "A)"));
+        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(1).getAnswer(), "B)"));
+        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(2).getAnswer(), "C)"));
+        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(3).getAnswer(), "D)"));
         return mNavItems;
     }
 
@@ -149,32 +124,16 @@ public class QuizViewModel extends AndroidViewModel {
         questions = new ArrayList<>();
     }
 
-    public LiveData<List<QuizResponse>> getQuizResponse(String MID, String SMID) {
-        if (quizResponse.getValue() == null) {
-            quizResponse = repo.getQuizzes(MID, SMID);
-        }
-
-        return quizResponse;
-    }
-
-
-    public void populateQuestionBank() {
+    public void populateQuestionBank(List<String> questions, List<List<Answer>> answers) {
         this.questions = new ArrayList<>();
-        // TODO: query DB for quiz questions based on learning module and difficulty
-        String question = "question_" + getModule() +"_" + this.difficulty + "_";
-        String answers = "answers_" + getModule() + "_" + this.difficulty + "_";
-
         for (int i = 0; i < 4; i ++) {
-            int q = App.getStringIdentifier(question + i);
-            int a = App.getArrayIdentifier(answers + i);
-            String[] answersArray = App.getAppResources().getStringArray(a);
-            this.questions.add(new QuizQuestion(getResourceString(q), new ArrayList<String>(
+            Answer[] answersArray = answers.get(i).toArray(new Answer[0]);
+            this.questions.add(new QuizQuestion(questions.get(i), new ArrayList<>(
                     Arrays.asList(answersArray[0],
                             answersArray[1],
                             answersArray[2],
-                            answersArray[3])), Integer.parseInt(answersArray[4])));
+                            answersArray[3])), getCorrectAnswerIndex(answersArray)));
         }
-
     }
 
     public String generateSubmoduleCompleteKey() {
@@ -185,16 +144,44 @@ public class QuizViewModel extends AndroidViewModel {
         return App.getAppResources().getString(resString);
     }
 
+    public List<String> getQuestions(List<QuizResponse> quizResponses) {
+        List<String> questions = new ArrayList<>();
+        for (int i = 0; i < quizResponses.size(); i++) {
+            questions.add(quizResponses.get(i).getQuestion());
+        }
 
-    private class QuizQuestion {
+        return questions;
+    }
+
+    public List<List<Answer>> getAnswers(List<QuizResponse> quizResponses) {
+        List<List<Answer>> answers = new ArrayList<>();
+
+        for (int i = 0; i < quizResponses.size(); i++) {
+            answers.add(quizResponses.get(i).getAnswers());
+        }
+
+        return answers;
+    }
+
+    public int getCorrectAnswerIndex(Answer[] answers) {
+        int correctIdx = 0;
+        for (int i = 0; i < answers.length; i++) {
+            if (answers[i].getCorrect() == 1) {
+                correctIdx = i;
+            }
+        }
+
+        return correctIdx;
+    }
+
+    private static class QuizQuestion {
         public String question;
-        public ArrayList<String> answers;
+        public ArrayList<Answer> answers;
         public Integer correct_answer;
-        public QuizQuestion(String question, ArrayList<String> answers, Integer correct_answer) {
+        public QuizQuestion(String question, ArrayList<Answer> answers, Integer correct_answer) {
             this.question = question;
             this.answers = answers;
             this.correct_answer = correct_answer;
-
         }
     }
 }

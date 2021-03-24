@@ -3,6 +3,12 @@ package com.gitlab.capstone.pellego.network.models; ;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/*****************************************************
+ * Chris Bordoy
+ *
+ * Model that represents a Quiz Answer
+ *****************************************************/
+
 public class Answer {
 
     @SerializedName("QUID")

@@ -2,7 +2,6 @@ package com.gitlab.capstone.pellego.fragments.learn;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +18,15 @@ import java.util.List;
 
 import static java.lang.String.*;
 
+/*****************************************************
+ * Arturo Lara & Chris Bordoy
+ *
+ * Adapter that sets data for the Learn Fragment
+ *****************************************************/
+
 public class LearnCardAdapter extends BaseAdapter {
     private final List<LMResponse> response;
-    private Context mContext;
+    private final Context mContext;
 
     Drawable[] gradientBackgrounds;
     int idx;
@@ -75,9 +80,6 @@ public class LearnCardAdapter extends BaseAdapter {
         TextView subtitleView = view.findViewById(R.id.subTitle);
         ImageView iconView = view.findViewById(R.id.icon);
         TextView subHeaderView = view.findViewById(R.id.description);
-
-        subtitleView.setTextColor(Color.BLACK);
-        subHeaderView.setTextColor(Color.BLACK);
 
         LMResponse res = response.get(position);
         titleView.setText( res.getName() );

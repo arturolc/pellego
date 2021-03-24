@@ -15,7 +15,7 @@ import com.gitlab.capstone.pellego.network.models.SMResponse;
 import java.util.List;
 
 /**********************************************
- Eli Hebdon & Chris Bordoy
+ Eli Hebdon, Chris Bordoy, Arturo lara
 
  Adapter to populate learning module list with module items
  **********************************************/
@@ -24,7 +24,7 @@ public class ModuleListAdapter extends BaseAdapter {
 
     Context mContext;
     ModuleOverviewFragment fragment;
-    private List<SMResponse> responses;
+    private final List<SMResponse> responses;
 
     public ModuleListAdapter(Context context,
                              List<SMResponse> responses,
@@ -62,8 +62,6 @@ public class ModuleListAdapter extends BaseAdapter {
         else {
             view = convertView;
         }
-
-        //view.setBackground(mContext.getResources().getDrawable(R.drawable.orange_gradient));
 
         TextView titleView = view.findViewById(R.id.title);
         TextView subtitleView = view.findViewById(R.id.subTitle);

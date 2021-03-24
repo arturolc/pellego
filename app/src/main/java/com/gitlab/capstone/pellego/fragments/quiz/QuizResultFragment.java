@@ -11,14 +11,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -29,12 +27,12 @@ import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 
-
 /**********************************************
- Eli Hebdon
+ Eli Hebdon & Chris Bordoy
 
  Quiz Results Fragment
  **********************************************/
+
 public class QuizResultFragment extends BaseFragment {
 
     private QuizViewModel quizViewModel;
@@ -48,9 +46,12 @@ public class QuizResultFragment extends BaseFragment {
         this.quizViewModel = new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
+
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         View root = inflater.inflate(R.layout.fragment_quiz_results, container, false);
+
         this.setupHeader(root);
+
         final TextView textView = root.findViewById(R.id.title_results);
         quizViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -72,7 +73,6 @@ public class QuizResultFragment extends BaseFragment {
             editor.putBoolean(quizViewModel.generateSubmoduleCompleteKey(), quizViewModel.quizPassed());
             editor.apply();
         }
-
 
         // Display message
         TextView msg = root.findViewById(R.id.text_results_message);
@@ -123,26 +123,22 @@ public class QuizResultFragment extends BaseFragment {
             editor.putInt(key, ++count);
             editor.apply();
         }
-
     }
 
-/*
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setupHeader(View root) {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(moduleViewModel.getGradient()[0]);
+        toolbar.setBackgroundColor(0xFFF9D976);
         toolbar.setTitle(null);
         Window window = getActivity().getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(moduleViewModel.getGradient()[0]);
+        window.setStatusBarColor(0xFFF9D976);
         TextView header = root.findViewById(R.id.title_results);
         GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[] {moduleViewModel.getGradient()[0], moduleViewModel.getGradient()[1]});
-        gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 0f, 0f, 90f, 90f});
+                new int[] {0xFFF9D976, 0xFFF39f86});
+        gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 90f, 90f, 90f, 90f});
         gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
         header.setBackgroundDrawable(gd);
     }
-*/
-
 }

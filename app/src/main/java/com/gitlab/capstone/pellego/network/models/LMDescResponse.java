@@ -4,6 +4,13 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/*****************************************************
+ * Arturo Lara & Chris Bordoy
+ *
+ * Represents a Learning Module description and its
+ * all submodules
+ *****************************************************/
+
 public class LMDescResponse {
 
     @SerializedName("MID")
@@ -18,28 +25,6 @@ public class LMDescResponse {
     @SerializedName("Submodules")
     @Expose
     private List<Submodule> submodules = null;
-
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public LMDescResponse() {
-    }
-
-    /**
-     *
-     * @param submodules
-     * @param name
-     * @param mID
-     * @param description
-     */
-    public LMDescResponse(Integer mID, String name, String description, List<Submodule> submodules) {
-        super();
-        this.mID = mID;
-        this.name = name;
-        this.description = description;
-        this.submodules = submodules;
-    }
 
     public Integer getMID() {
         return mID;

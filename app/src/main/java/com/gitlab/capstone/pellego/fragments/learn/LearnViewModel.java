@@ -1,10 +1,5 @@
 package com.gitlab.capstone.pellego.fragments.learn;
 
-/**********************************************
- Chris Bordoy & Arturo Lara
-
- The Learn Fragment view model
- **********************************************/
 import android.app.Application;
 
 import androidx.annotation.NonNull;
@@ -17,8 +12,14 @@ import com.gitlab.capstone.pellego.network.models.LMResponse;
 
 import java.util.List;
 
+/**********************************************
+ Chris Bordoy & Arturo Lara
+
+ The Learn Fragment view model
+ **********************************************/
+
 public class LearnViewModel extends AndroidViewModel {
-    private LearningModulesRepo repo;
+    private final LearningModulesRepo repo;
     private LiveData<List<LMResponse>> lmResponse = new MutableLiveData<>();
 
     public LearnViewModel(@NonNull Application application) {
