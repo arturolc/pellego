@@ -1,40 +1,39 @@
 package com.gitlab.capstone.pellego.fragments.module.intro;
 
-import android.content.res.Resources;
-import android.graphics.drawable.GradientDrawable;
+import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
+import com.gitlab.capstone.pellego.network.models.SMResponse;
+
+import java.util.List;
 
 /***********************************************
- *  Chris Bordoy
+ *  Chris Bordoy and Eli Hebdon
  *
  *  The Module Intro Pager Adapter
- */
+ ***********************************************/
 public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPagerAdapter.ModuleIntroViewHolder> {
 
-    //color and icons
-    private Resources res;
-    private String[] content;
-    private String[] headers;
-    private int[] bkg_colors;
-    int[][] color_icon_matrix = new int[][] {
-            {R.color.pastel_blue},
-            {R.color.pastel_purple},
-            {R.color.pastel_green},
-            {R.color.pastel_orange}
-    };
+    Context mContext;
+    private final List<SMResponse> responses;
+    private final ModuleViewModel moduleViewModel;
 
+    public ModuleIntroPagerAdapter(Context context, List<SMResponse> responses, ModuleViewModel moduleViewModel) {
+        this.mContext = context;
+        this.responses = responses;
+        this.moduleViewModel = moduleViewModel;
+    }
 
     @NonNull
     @Override
@@ -42,27 +41,19 @@ public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPag
         return new ModuleIntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_page, parent, false));
     }
 
-    public void setContentAndHeaders(ModuleViewModel moduleViewModel, Resources res) {
-        bkg_colors = moduleViewModel.getGradient();
-        this.content = res.getStringArray(moduleViewModel.getIntro_content_id());
-        this.headers = res.getStringArray(moduleViewModel.getIntro_header_id());
-        this.res = res;
-    }
-
     @Override
     public void onBindViewHolder(@NonNull ModuleIntroViewHolder holder, int position) {
-        holder.header_text_view.setText(headers[position]);
-        holder.description_text_view.setText(content[position]);
-        GradientDrawable gd = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[] {bkg_colors[0],bkg_colors[1]});
-        gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
-        holder.container.setBackgroundDrawable(gd);
+        holder.header_text_view.setText(responses.get(0).getIntroContent().get(position).getHeader());
+        holder.description_text_view.setText(responses.get(0).getIntroContent().get(position).getContent());
+        holder.container.setBackground(moduleViewModel.getGradient());
+        holder.header_text_view.setTextColor(Color.BLACK);
+        holder.description_text_view.setPadding(5, 5, 5, 5);
+        holder.description_text_view.setTextColor(Color.BLACK);
     }
 
     @Override
     public int getItemCount() {
-        return color_icon_matrix.length;
+        return responses.get(0).getIntroContent().size();
     }
 
     public class ModuleIntroViewHolder extends RecyclerView.ViewHolder {

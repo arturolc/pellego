@@ -89,7 +89,6 @@ public class QuizResultFragment extends BaseFragment {
                 args.putString("difficulty", quizViewModel.getDifficulty());
                 args.putString("wpm", quizViewModel.getWPM().toString());
                 args.putString("module", quizViewModel.getModule());
-                quizViewModel = new QuizViewModel();
                 quizViewModel =
                         new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
                 navController.navigate(R.id.nav_quiz, args);
@@ -127,6 +126,7 @@ public class QuizResultFragment extends BaseFragment {
 
     }
 
+/*
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setupHeader(View root) {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
@@ -143,5 +143,6 @@ public class QuizResultFragment extends BaseFragment {
         gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
         header.setBackgroundDrawable(gd);
     }
+*/
 
 }

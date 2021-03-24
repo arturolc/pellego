@@ -1,6 +1,8 @@
 package com.gitlab.capstone.pellego.fragments.module.overview;
 
 import android.app.Application;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -9,7 +11,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.database.LearningModulesRepo;
+import com.gitlab.capstone.pellego.database.PellegoDatabase;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
@@ -18,16 +22,21 @@ import com.gitlab.capstone.pellego.network.models.Submodule;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**********************************************
     Chris Bordoy, Eli Hebdon, Arturo Lara
 
     The Modules view model
  **********************************************/
 public class ModuleViewModel extends AndroidViewModel {
-    private String moduleID;
-    private LearningModulesRepo repo;
+    private final String moduleID;
+    private final LearningModulesRepo repo;
     private LiveData<List<LMDescResponse>> lmDescResponse = new MutableLiveData<>();
     private LiveData<List<SMResponse>> submoduleResponse = new MutableLiveData<>();
+    private String techniqueLabel;
 
     private boolean showSubmodulePopupDialog;
     private boolean showPopupDialog;
@@ -48,13 +57,29 @@ public class ModuleViewModel extends AndroidViewModel {
         return lmDescResponse;
     }
 
-    public LiveData<List<SMResponse>> getSubmodulesResponse() {
+    public LiveData<List<SMResponse>> getSubmodulesResponse(String MID) {
         if (submoduleResponse.getValue() == null) {
-            submoduleResponse = repo.getSubmodules(moduleID);
+            submoduleResponse = repo.getSubmodules(MID);
         }
 
         return submoduleResponse;
     }
+
+/*    public LiveData<List<SMResponse>> getSubmodulesResponse(String MID){
+        repo.getSubmodules(MID, new Callback<List<SMResponse>>(){
+            @Override
+            public void onResponse(Call<List<SMResponse>> call, Response<List<SMResponse>> response) {
+                submoduleResponse.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.i("OK", "WHAT THE HELL IS GOING ON");
+            }
+        });
+
+        return submoduleResponse;
+    }*/
 
     private MutableLiveData<String> moduleTitle;
     private String moduleDescription;
@@ -63,7 +88,11 @@ public class ModuleViewModel extends AndroidViewModel {
     private int intro_content_id;
     private int module_id;
     public String technique;
-    private int[] gradient;
+    private Drawable gradient;
+
+    public String getModuleID(){
+        return moduleID;
+    }
 
     public boolean isShowPopupDialog() {
         return showPopupDialog;
@@ -85,6 +114,22 @@ public class ModuleViewModel extends AndroidViewModel {
         return technique;
     }
 
+    public void setTechniqueLabel(String MID) {
+        switch(MID) {
+            case "1":
+                techniqueLabel = "rsvp";
+                break;
+            case "2":
+                techniqueLabel = "metaguiding";
+                break;
+            default:
+                break;
+        }
+    }
+
+    public String getTechniqueLabel() {
+        return techniqueLabel;
+    }
     public void setTechnique(String technique) {
         this.technique = technique;
     }
@@ -141,11 +186,11 @@ public class ModuleViewModel extends AndroidViewModel {
         this.module_id = module_id;
     }
 
-    public int[] getGradient() {
+    public Drawable getGradient() {
         return gradient;
     }
 
-    public void setGradient(int[] gradient) {
+    public void setGradient(Drawable gradient) {
         this.gradient = gradient;
     }
 
@@ -164,7 +209,7 @@ public class ModuleViewModel extends AndroidViewModel {
         moduleDescription = "";
         intro_id = -1;
         module_id = -1;
-        gradient = new int[] {};
+        gradient = null;
     }
 
     public void setViewModelVars(String title, String descr, int intro_id, int intro_content_id, int intro_header_id, int module_id) {

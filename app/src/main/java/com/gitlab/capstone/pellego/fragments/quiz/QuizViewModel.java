@@ -1,25 +1,33 @@
 package com.gitlab.capstone.pellego.fragments.quiz;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
+import com.gitlab.capstone.pellego.database.LearningModulesRepo;
+import com.gitlab.capstone.pellego.network.models.QuizResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**********************************************
  Eli Hebdon and Chris Bordoy
 
  Quiz view model
  **********************************************/
-public class QuizViewModel extends ViewModel {
+public class QuizViewModel extends AndroidViewModel {
 
+    private final LearningModulesRepo repo;
+    private LiveData<List<QuizResponse>> quizResponse = new MutableLiveData<>();
     private MutableLiveData<String> mText;
     private String difficulty;
     public static Integer question_no;
@@ -27,8 +35,15 @@ public class QuizViewModel extends ViewModel {
     public static int score;
     private static String module;
     private static Integer wpm;
+    int quizQuestionCounter;
 
-    public QuizViewModel() {
+    public QuizViewModel(@NonNull Application application){
+        super(application);
+        this.repo = LearningModulesRepo.getInstance(application);
+        quizQuestionCounter = 0;
+    }
+
+    /*public QuizViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue(getResourceString(R.string.quiz_name));
         question_no = 0;
@@ -46,7 +61,7 @@ public class QuizViewModel extends ViewModel {
         module = "";
         wpm = 0;
         questions = new ArrayList<>();
-    }
+    }*/
 
     public void setDifficulty(String diff) {
         this.difficulty = diff;
@@ -54,6 +69,14 @@ public class QuizViewModel extends ViewModel {
     public void setWPM(Integer wpm) {this.wpm = wpm;}
     public void setModule(String m) {this.module = m;}
     public String getModule() {return this.module;}
+
+    public void incrementQuizQuestionCounter() {
+        quizQuestionCounter++;
+    }
+
+    public int getQuizQuestionCounter(){
+        return quizQuestionCounter;
+    }
 
     public boolean isLastQuestion() {
         return question_no == questions.size() - 1;
@@ -126,6 +149,13 @@ public class QuizViewModel extends ViewModel {
         questions = new ArrayList<>();
     }
 
+    public LiveData<List<QuizResponse>> getQuizResponse(String MID, String SMID) {
+        if (quizResponse.getValue() == null) {
+            quizResponse = repo.getQuizzes(MID, SMID);
+        }
+
+        return quizResponse;
+    }
 
 
     public void populateQuestionBank() {

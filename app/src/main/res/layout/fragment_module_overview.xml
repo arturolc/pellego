@@ -16,7 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/module_header_container"
             android:layout_width="match_parent"
@@ -59,7 +58,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/title_module_overview"
                 app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         <ListView
             android:id="@+id/nav_module_list"

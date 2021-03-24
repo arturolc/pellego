@@ -18,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -27,13 +26,15 @@ import androidx.navigation.Navigation;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
+import com.gitlab.capstone.pellego.network.models.QuizResponse;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**********************************************
  Eli Hebdon and Chris Bordoy
 
- Quiz fragment that contains logic for learning submodule quizes
+ Quiz fragment that contains logic for learning submodule quizzes
  **********************************************/
 public class QuizFragment extends BaseFragment {
 
@@ -42,6 +43,7 @@ public class QuizFragment extends BaseFragment {
     private ListView moduleList;
     private ArrayList<QuizQuestionModel> mNavItems;
     NavController navController;
+    private List<QuizResponse> quizResponses;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -75,8 +77,17 @@ public class QuizFragment extends BaseFragment {
 
         // Populate the Navigation Drawer with options
         moduleList = root.findViewById(R.id.nav_question_list);
-        QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems, moduleViewModel.getGradient()[0]);
-        moduleList.setAdapter(adapter);
+/*        QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems, moduleViewModel.getGradient());
+        moduleList.setAdapter(adapter);*/
+
+        quizViewModel.getQuizResponse(moduleViewModel.getModuleID(), "1").observe(getViewLifecycleOwner(), new Observer<List<QuizResponse>>() {
+            @Override
+            public void onChanged(List<QuizResponse> response1) {
+                quizResponses = response1;
+                QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), quizViewModel.getQuizQuestionCounter(), mNavItems, response1, moduleViewModel.getGradient());
+                moduleList.setAdapter(adapter);
+            }
+        });
 
         // Drawer Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -85,6 +96,7 @@ public class QuizFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Last question, navigate to results
                 Bundle args = new Bundle();
+                quizViewModel.incrementQuizQuestionCounter();
                 if (quizViewModel.isLastQuestion()) {
                     NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                     navController.navigate(R.id.nav_quiz_results);
@@ -105,7 +117,7 @@ public class QuizFragment extends BaseFragment {
                 mNavItems = quizViewModel.getNextAnswers();
                 // Populate the Navigation Drawer with options
                 moduleList = root.findViewById(R.id.nav_question_list);
-                QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems, moduleViewModel.getGradient()[0]);
+                QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), quizViewModel.getQuizQuestionCounter(), mNavItems, quizResponses, moduleViewModel.getGradient());
                 moduleList.setAdapter(adapter);
             }
         });
@@ -116,17 +128,16 @@ public class QuizFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setupHeader(View root) {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(moduleViewModel.getGradient()[0]);
+        toolbar.setBackgroundColor(0xFFF9D976);
         toolbar.setTitle(null);
         Window window = getActivity().getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(moduleViewModel.getGradient()[0]);
+        window.setStatusBarColor(0xFFF9D976);
         LinearLayout header = root.findViewById(R.id.quiz_header_container);
         GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[] {moduleViewModel.getGradient()[0], moduleViewModel.getGradient()[1]});
+                new int[] {0xFFF9D976, 0xFFF39f86});
         gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 0f, 0f, 90f, 90f});
-        gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
         header.setBackgroundDrawable(gd);
     }
 }

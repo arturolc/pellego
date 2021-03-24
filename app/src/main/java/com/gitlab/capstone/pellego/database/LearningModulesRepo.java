@@ -12,6 +12,7 @@ import com.gitlab.capstone.pellego.network.RetroInstance;
 import com.gitlab.capstone.pellego.network.models.AuthToken;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
+import com.gitlab.capstone.pellego.network.models.QuizResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +30,7 @@ public class LearningModulesRepo {
     private final MutableLiveData<List<LMResponse>> lmResponse = new MutableLiveData<>();
     private final MutableLiveData<List<LMDescResponse>> lmDescResponse = new MutableLiveData<>();
     private final MutableLiveData<List<SMResponse>> smResponse = new MutableLiveData<>();
+    private final MutableLiveData<List<QuizResponse>> quizResponse = new MutableLiveData<>();
     private static LearningModulesRepo INSTANCE;
 
     private LearningModulesRepo(Application application) {
@@ -45,7 +47,7 @@ public class LearningModulesRepo {
     }
 
     public LiveData<List<LMResponse>> getModules() {
-        Call<List<LMResponse>> call = apiService.getModules(new AuthToken("Arturo.Lara@gmail.com"));
+        Call<List<LMResponse>> call = apiService.getModules(new AuthToken("Chris.Bordoy@gmail.com"));
         call.enqueue(new Callback<List<LMResponse>>() {
             @Override
             public void onResponse(@NotNull Call<List<LMResponse>> call, @NotNull Response<List<LMResponse>> response) {
@@ -89,6 +91,7 @@ public class LearningModulesRepo {
             public void onResponse(Call<List<SMResponse>> call, Response<List<SMResponse>> response) {
                 Log.i("RETROFIT", response.body().toString());
                 smResponse.setValue(response.body());
+                //callback.onResponse(call, response);
             }
 
             @Override
@@ -97,5 +100,24 @@ public class LearningModulesRepo {
             }
         });
         return smResponse;
+    }
+
+    public LiveData<List<QuizResponse>> getQuizzes(String mID, String smID) {
+        Call<List<QuizResponse>> call = apiService.getQuizzes(mID, smID);
+        call.enqueue(new Callback<List<QuizResponse>>() {
+
+            @Override
+            public void onResponse(Call<List<QuizResponse>> call, Response<List<QuizResponse>> response) {
+                Log.i("RETROFIT", response.body().toString());
+                quizResponse.setValue(response.body());
+                //callback.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<List<QuizResponse>> call, Throwable t) {
+                Log.e("RETROFIT", t.toString());
+            }
+        });
+        return quizResponse;
     }
 }

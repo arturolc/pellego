@@ -18,6 +18,7 @@ import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
 
 import java.util.List;
@@ -59,7 +60,6 @@ public class LearnFragment extends BaseFragment {
                 // TODO: navigate to fragment based on click id
                 switch(position) {
                     case 0: // rsvp
-                        //moduleViewModel.setGradient(new int[] {0xFFF9D976, 0xFFF39F86});
                         Bundle bundle = new Bundle();
                         bundle.putString("moduleID", lmResponses.getValue().get(position).getMID().toString());
                         navController.navigate(R.id.nav_module_overview, bundle);
