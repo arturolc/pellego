@@ -130,7 +130,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
                             () -> {
                                 Log.i("AUTHENTICATION", "Signed out successfully");
                                 Intent i = new Intent(FullscreenActivity.this,
-                                        SplashActivity.class);
+                                        AuthActivity.class);
                                 startActivity(i);
                             },
                             error -> Log.e("AUTHENTICATION", error.toString())

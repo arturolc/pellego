@@ -13,7 +13,7 @@ android {
         applicationId "com.gitlab.capstone.pellego"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode            5
+        versionCode            1
         versionName            "1.2.3"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true

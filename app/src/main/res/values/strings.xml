@@ -71,7 +71,7 @@
 
 
 
-
+    <string name="app_title" translatable="false">Pellego</string>
     <string name="app_name"></string>
     <string name="title_library" translatable="false">Library</string>
     <string name="title_empty_library" translatable="false">Such empty..</string>

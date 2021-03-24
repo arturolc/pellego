@@ -12,7 +12,7 @@
         android:name="com.gitlab.capstone.pellego.app.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_pellego_launcher"
-        android:label="Pellego"
+        android:label="@string/app_title"
         android:requestLegacyExternalStorage="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_pellego_launcher"
@@ -26,7 +26,7 @@
         <activity
             android:name="com.gitlab.capstone.pellego.activities.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="Pellego"
+            android:label="@string/app_title"
             android:launchMode="singleTop"
             android:theme="@style/Theme.Pellego"
             android:windowSoftInputMode="adjustNothing">
@@ -302,7 +302,7 @@
 
         <activity
             android:name="com.gitlab.capstone.pellego.activities.SplashActivity"
-            android:label="Pellego"
+            android:label="@string/app_title"
             android:theme="@style/Theme.Splash">
 
             <intent-filter>
