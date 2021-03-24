@@ -34,6 +34,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.amplifyframework.core.Amplify;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -99,14 +100,22 @@ public class ProfileFragment extends BaseFragment {
             }
         });
 
-        getApiData(inflater, container, new ResponseCallBack() {
-            public void onResponse(Object response) {
-                // Update UI only after response is received &
-               //set the UI
+
+        im1.setImageBitmap(bitmap);
+        profileViewModel.getUserName().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                ((TextView)root.findViewById(R.id.tv_name)).setText(s);
+                ((TextView)root.findViewById(R.id.userName)).setText(s);
             }
         });
-        im1.setImageBitmap(bitmap);
-//        im2.setImageBitmap(bitmap);
+
+        profileViewModel.getEmail().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                ((TextView)root.findViewById(R.id.userEmail)).setText(s);
+            }
+        });
         return root;
     }
 
@@ -140,12 +149,6 @@ public class ProfileFragment extends BaseFragment {
         }
     }
 
-    /**
-     * Interface to to update UI after response from server is received
-     */
-    public interface ResponseCallBack{
-        void onResponse(Object response);
-    }
 
     private String storeImage(Bitmap bitmapImage){
         ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
@@ -171,52 +174,10 @@ public class ProfileFragment extends BaseFragment {
         return directory.getAbsolutePath();
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.loadImageFromStorage(getActivity());
-    }
-
-
-    private void getApiData(@NonNull LayoutInflater inflater, ViewGroup container, ResponseCallBack responseCallBack)
-    {
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url ="http://54.176.198.201:5001/user";
-
-        // Request a json response from the provided URL.
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d("response", response.toString());
-
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject item = response.getJSONObject(i);
-                                user_name = item.get("Name").toString();
-
-                             } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        responseCallBack.onResponse(response);
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.d("error", error.toString());
-
-                    }
-                });
-
-        // Add the request to the RequestQueue.
-        queue.add(jsonArrayRequest);
     }
 
 }
