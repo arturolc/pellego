@@ -89,7 +89,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
     String lastSearch = "";
     FragmentHolder holder;
     Runnable invalidateOptionsMenu;
-    private static View header;
+    public static View header;
 
     public static class FragmentHolder {
         RecyclerView grid;

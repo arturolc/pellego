@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -46,6 +47,7 @@ public class BaseFragment extends Fragment {
         Window window = getActivity().getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(getResources().getColor(R.color.light_blue_solid));
+        LibraryFragment.header.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
     }
 
     @Override
