@@ -14,24 +14,35 @@ import com.amplifyframework.core.Amplify;
  Profile View Model
  **********************************************/
 
-public class ProfileViewModel extends ViewModel {
+public class ProfileModel {
     private final MutableLiveData<String> userName;
     private final MutableLiveData<String> email;
+    private static ProfileModel INSTANCE;
 
-    public ProfileViewModel() {
+    private ProfileModel() {
         userName = new MutableLiveData<>();
         email = new MutableLiveData<>();
         Amplify.Auth.fetchUserAttributes(success ->  {
             Log.i("user", success.get(2).getValue());
+            Log.i("user", success.toString());
             Log.i("user", success.get(3).getValue());
 
-            userName.postValue(success.get(2).getValue());
-            email.postValue(success.get(3).getValue());
+            for(int i = 0; i < success.size(); i++) {
+                if (success.get(i).getKey().getKeyString().equals("name")) {
+                    userName.postValue(success.get(i).getValue());
+                }
+                else if (success.get(i).getKey().getKeyString().equals("email")) {
+                    email.postValue(success.get(i).getValue());
+                }
+            }
         }, fail -> Log.i("user", fail.toString()));
     }
 
-    public void setEmail(String email) {
-        this.email.setValue(email);
+    public static ProfileModel getInstance() {
+        if (INSTANCE != null) {
+            return INSTANCE;
+        }
+        return new ProfileModel();
     }
 
     public LiveData<String> getUserName() {

@@ -3,7 +3,6 @@ package com.gitlab.capstone.pellego.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,35 +10,31 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.transition.Fade;
-import androidx.transition.Transition;
 
 import com.amplifyframework.core.Amplify;
 import com.github.axet.androidlibrary.activities.AppCompatFullscreenThemeActivity;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.fragments.auth.AuthActivity;
-import com.gitlab.capstone.pellego.fragments.profile.ProfileFragment;
+import com.gitlab.capstone.pellego.fragments.profile.ProfileModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -73,6 +68,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         bottomContent = findViewById(R.id.container_bottom);
         toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.ic_action_button_overflow));
 
+
         // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
         drawer = findViewById(R.id.home_layout);
@@ -94,11 +90,17 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         // Attach nav drawer to nav controller
         NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
         View headerView = drawerNavigationView.getHeaderView(0);
-        Amplify.Auth.fetchUserAttributes(success ->  {
-            Log.i("user", success.get(2).getValue());
-            Log.i("user", success.get(3).getValue());
-            ((TextView)headerView.findViewById(R.id.headerUserName)).setText(success.get(2).getValue());
-        }, fail -> Log.i("user", fail.toString()));
+
+        ProfileModel p = ProfileModel.getInstance();
+        p.getUserName().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Log.i("SIDENAV", s);
+                ((TextView)headerView.findViewById(R.id.headerUserName)).setText(s);
+            }
+        });
+//s        Log.i("SIDENAV", p.getEmail().getValue());
+//        Log.i("SIDENAV", p.getUserName().getValue());
 
         NavigationUI.setupWithNavController(drawerNavigationView, navController);
 

@@ -229,6 +229,8 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
             openIntent(getIntent());
         }
 
+
+
         RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
         Window window = this.getWindow();
         TypedValue typedValue = new TypedValue();
