@@ -1,26 +1,45 @@
-plugins {
-    id 'com.android.application'
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.github.axet.dxplugin'
+
+configurations.all {
+    resolutionStrategy.force 'com.android.support:support-annotations:23.1.0'
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.example.pellego"
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId "com.gitlab.capstone.pellego"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode            1
+        versionName            "1.2.3"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
     }
-
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        devRelease {
+        }
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFileName = org.apache.commons.io.FilenameUtils.getExtension(android.defaultConfig.applicationId) + "-" + (output.getFilter(com.android.build.OutputFile.ABI) ?: "universal") + "-" + android.defaultConfig.versionName + "-" + variant.buildType.name + ".apk"
+        }
+    }
+    bundle {
+        abi {
+            enableSplit = true
         }
     }
     compileOptions {
@@ -31,7 +50,35 @@ android {
     }
 }
 
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+        maven {url 'https://maven.google.com'  }
+        jcenter()
+        google()
+    }
+}
+
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.3'
+    implementation 'androidx.navigation:navigation-ui:2.3.3'
+    implementation 'com.github.axet:android-library:1.33.14' // implementation project(':android-library')
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.vectordrawable:vectordrawable:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation ('com.github.axet.fbreader:library:0.1.17') { exclude group: 'org.apache.httpcomponents', module: 'httpclient' }
+    implementation 'com.github.axet:djvulibre:0.1.4'
+    implementation 'com.github.axet:pdfium:2.0.14'
+    implementation 'com.github.axet:k2pdfopt:0.1.6'
+    implementation('com.github.axet:wget:1.7.0') { exclude group: 'org.json', module: 'json' }
+    assets('com.madgag.spongycastle:bctls-jdk15on:1.58.0.0') { exclude module: 'junit' }
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.0.0'
@@ -44,7 +91,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.viewpager:viewpager:1.0.0'
-    testImplementation 'junit:junit:4.+'
+    testImplementation 'junit:junit:4.13.2'
     testImplementation 'android.arch.core:core-testing:1.1.1'
     implementation 'com.android.volley:volley:1.1.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -52,13 +99,52 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.1.0-alpha01"
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
     implementation 'androidx.cardview:cardview:1.0.0'
+
     // Amplify core dependency
-    implementation 'com.amplifyframework:core:1.6.9'
-    implementation "com.amazonaws:aws-android-sdk-core:2.6.31"
+    implementation 'com.amplifyframework:core:1.16.13'
+    implementation "com.amazonaws:aws-android-sdk-core:2.16.4"
     androidTestImplementation 'androidx.test:rules:1.3.0-beta01'
     implementation 'androidx.preference:preference:1.1.0'
     // Support for Java 8 features
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
     implementation 'com.amplifyframework:aws-auth-cognito:1.6.9'
 
+    // Recycler View
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    // Glide for images
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    testImplementation 'org.robolectric:robolectric:4.4'
+    testImplementation 'org.mockito:mockito-core:3.3.3'
+    androidTestImplementation 'com.androidx:support-annotations:23.1.0'
+    androidTestImplementation 'com.androidx.test:rules:1.0.2'
+    androidTestImplementation 'com.androidx.test:runner:1.0.2'
+    // Optional -- Robolectric environment
+    testImplementation 'androidx.test:core:1.3.0'
+    // Optional -- Mockito framework
+    testImplementation 'androidx.test.ext:junit:1.1.2'
+
+    // splash screen and progress reports animation
+    // https://lottiefiles.com/
+    implementation "com.airbnb.android:lottie:3.6.1"
+
+    //MPAndroidCharts
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+
+    // Room components
+    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+    androidTestImplementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
+
+// Lifecycle components
+    implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
+    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
+}
+task wrapper(type: Wrapper){
+    gradleVersion = '2.14.1'
 }

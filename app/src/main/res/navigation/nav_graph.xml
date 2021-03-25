@@ -7,8 +7,7 @@
 
     <fragment
         android:id="@+id/nav_library"
-        android:name="com.example.pellego.ui.library.LibraryFragment"
-        android:label="@string/title_library"
+        android:name="com.gitlab.capstone.pellego.fragments.library.LibraryFragment"
         tools:layout="@layout/fragment_library" >
         <action
             android:id="@+id/action_container_to_nav_learn"
@@ -23,6 +22,9 @@
             android:id="@+id/action_container_to_nav_terms_and_conditions"
             app:destination="@id/nav_terms_and_conditions" />
         <action
+            android:id="@+id/action_container_to_nav_privacy_policy"
+            app:destination="@id/nav_privacy_policy" />
+        <action
             android:id="@+id/action_container_to_nav_progress"
             app:destination="@id/nav_progress" />
         <action
@@ -31,11 +33,16 @@
         <action
             android:id="@+id/action_nav_library_to_nav_default_pager"
             app:destination="@id/nav_default_pager" />
+        <action
+            android:id="@+id/action_nav_library_to_pellegoLibrary"
+            app:destination="@id/pellegoLibrary" />
+        <action
+            android:id="@+id/action_nav_library_to_reader"
+            app:destination="@id/reader" />
     </fragment>
     <fragment
         android:id="@+id/nav_learn"
-        android:name="com.example.pellego.ui.learn.LearnFragment"
-        android:label="@string/title_learn"
+        android:name="com.gitlab.capstone.pellego.fragments.learn.LearnFragment"
         tools:layout="@layout/fragment_learn" >
         <action
             android:id="@+id/action_nav_learn_to_nav_module_overview"
@@ -44,34 +51,34 @@
 
     <fragment
         android:id="@+id/nav_progress"
-        android:name="com.example.pellego.ui.progress.ProgressFragment"
-        android:label="@string/title_progress"
+        android:name="com.gitlab.capstone.pellego.fragments.progress.ProgressFragment"
         tools:layout="@layout/fragment_progress"
         />
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.example.pellego.ui.settings.SettingsFragment"
-        android:label="@string/title_settings"
+        android:name="com.gitlab.capstone.pellego.activities.SettingsActivity$GeneralPreferenceFragment"
         tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.example.pellego.ui.profile.ProfileFragment"
-        android:label="@string/title_profile"
+        android:name="com.gitlab.capstone.pellego.fragments.profile.ProfileFragment"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_terms_and_conditions"
-        android:name="com.example.pellego.ui.termsAndConditions.TermsAndConditionsFragment"
-        android:label="@string/title_terms_and_conditions"
+        android:name="com.gitlab.capstone.pellego.fragments.termsAndConditions.TermsAndConditionsFragment"
         tools:layout="@layout/fragment_terms_and_conditions" />
 
     <fragment
+        android:id="@+id/nav_privacy_policy"
+        android:name="com.gitlab.capstone.pellego.fragments.privacypolicy.PrivacyPolicyFragment"
+        tools:layout="@layout/fragment_privacy_policy" />
+
+    <fragment
         android:id="@+id/nav_module_overview"
-        android:name="com.example.pellego.ui.module.overview.ModuleOverviewFragment"
-        android:label="@string/title_technique"
-        tools:layout="@layout/fragment_rsvp_module"
+        android:name="com.gitlab.capstone.pellego.fragments.module.overview.ModuleOverviewFragment"
+        tools:layout="@layout/fragment_module_overview"
         >
         <action
             android:id="@+id/action_nav_module_overview_to_nav_quiz"
@@ -94,8 +101,7 @@
 
     <fragment
         android:id="@+id/nav_metaguiding_intro"
-        android:name="com.example.pellego.ui.module.intro.ModuleIntroFragment"
-        android:label="@string/title_metaguiding_intro"
+        android:name="com.gitlab.capstone.pellego.fragments.module.intro.ModuleIntroFragment"
         tools:layout="@layout/fragment_module_intro"
         > <action
         android:id="@+id/action_nav_module_intro_to_nav_module_overview"
@@ -103,15 +109,12 @@
 
     <fragment
         android:id="@+id/nav_metaguiding_module"
-        android:name="com.example.pellego.ui.metaguiding.MetaguidingModuleFragment"
-        android:label="@string/title_meta_guiding"
+        android:name="com.gitlab.capstone.pellego.fragments.metaguiding.MetaguidingModuleFragment"
         tools:layout="@layout/fragment_default_pager" />
-
 
     <fragment
         android:id="@+id/nav_rsvp_intro"
-        android:name="com.example.pellego.ui.module.intro.ModuleIntroFragment"
-        android:label="@string/title_rsvp_intro"
+        android:name="com.gitlab.capstone.pellego.fragments.module.intro.ModuleIntroFragment"
         tools:layout="@layout/fragment_module_intro" >
         <action
             android:id="@+id/action_nav_module_intro_to_nav_module_overview"
@@ -120,14 +123,12 @@
 
     <fragment
         android:id="@+id/nav_rsvp_module"
-        android:name="com.example.pellego.ui.rsvp.RsvpModuleFragment"
-        android:label="@string/title_rsvp"
+        android:name="com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment"
         tools:layout="@layout/fragment_rsvp_module" />
 
     <fragment
         android:id="@+id/nav_quiz"
-        android:name="com.example.pellego.ui.quiz.QuizFragment"
-        android:label="@string/title_quiz"
+        android:name="com.gitlab.capstone.pellego.fragments.quiz.QuizFragment"
         tools:layout="@layout/fragment_quiz" >
         <action
             android:id="@+id/action_nav_quiz_to_nav_quiz_results"
@@ -136,8 +137,7 @@
 
     <fragment
         android:id="@+id/nav_quiz_results"
-        android:name="com.example.pellego.ui.quiz.QuizResultFragment"
-        android:label="@string/title_quiz_results"
+        android:name="com.gitlab.capstone.pellego.fragments.quiz.QuizResultFragment"
         tools:layout="@layout/fragment_quiz_results" >
         <action
             android:id="@+id/action_nav_quiz_results_to_nav_learn"
@@ -149,13 +149,19 @@
 
     <fragment
         android:id="@+id/nav_sign_out"
-        android:name="com.example.pellego.ui.signout.SignOutFragment"
-        android:label="@string/title_sign_out"
+        android:name="com.gitlab.capstone.pellego.fragments.signout.SignOutFragment"
         tools:layout="@layout/fragment_sign_out" />
 
     <fragment
         android:id="@+id/nav_default_pager"
-        android:name="com.example.pellego.ui.defaultPager.DefaultPagerFragment"
-        android:label="@string/menu_title"
+        android:name="com.gitlab.capstone.pellego.fragments.metaguiding.MetaguidingModuleFragment"
         tools:layout="@layout/fragment_default_pager" />
+    <fragment
+        android:id="@+id/pellegoLibrary"
+        android:name="com.gitlab.capstone.pellego.fragments.pellegolibrary.PellegoLibrary"
+        tools:layout="@layout/pellego_library_fragment" />
+    <fragment
+        android:id="@+id/reader"
+        android:name="com.gitlab.capstone.pellego.fragments.reader.ReaderFragment"
+        tools:layout="@layout/fragment_reader" />
 </navigation>

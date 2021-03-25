@@ -1,0 +1,87 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Reader">
+        <com.gitlab.capstone.pellego.widgets.StoragePathPreferenceCompat
+            android:defaultValue="My Readings"
+            android:key="storage_path"
+            android:summary="@string/pref_storagepath_summary"
+            android:title="@string/pref_storagepath_title" />
+
+        <ListPreference
+            android:defaultValue="PAGING"
+            android:entries="@array/viewmode_text"
+            android:entryValues="@array/viewmode_value"
+            android:key="view_mode"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/view_mode" />
+
+        <!--        Reader Theme -->
+        <ListPreference
+            android:defaultValue="@string/Theme_Parchment"
+            android:entries="@array/reader_theme_text"
+            android:entryValues="@array/reader_theme_value"
+            android:key="readerTheme"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="Reader Theme" />
+
+        <!--        App Theme -->
+        <ListPreference
+            android:defaultValue="@string/Theme_Light"
+            android:entries="@array/theme_text"
+            android:entryValues="@array/theme_value"
+            android:key="theme"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_theme_title" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="volume_keys"
+            android:summary="@string/pref_volume_summary"
+            android:title="@string/pref_volume_title" />
+
+        <com.github.axet.androidlibrary.preferences.ScreenlockPreference
+            android:defaultValue="0"
+            android:entries="@array/screen_lock_text"
+            android:entryValues="@array/screen_lock_values"
+            android:key="screen_lock"
+            android:summary=""
+            android:title="@string/pref_screenlock_title" />
+
+<!--        <com.github.axet.androidlibrary.preferences.RotatePreferenceCompat-->
+<!--            android:defaultValue="false"-->
+<!--            android:key="rotate"-->
+<!--            android:summary="@string/pref_rotate_summary"-->
+<!--            android:title="@string/pref_rotate_title" />-->
+
+        <com.github.axet.androidlibrary.preferences.TTSPreferenceCompat
+            android:key="tts_pref"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_tts_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Meta Guiding">
+        <ListPreference
+            android:key="metaguiding_highlight_color"
+            android:title="@string/title_metaguiding_highlight"
+            android:summary="@string/description_metaguiding_highlight"
+            android:entries="@array/text_sizes_entries"
+            android:entryValues="@array/text_sizes"
+            android:defaultValue="@string/default_text_size"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Miscellaneous">
+        <Preference
+            android:key="feedback"
+            android:title="Send feedback"
+            android:summary="Report technical issues or suggest new features"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

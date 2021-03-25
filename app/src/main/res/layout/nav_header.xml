@@ -1,28 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="225dp"
+    android:id="@+id/drawer_header"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
 
-    <ImageView
+    <RelativeLayout
+        android:id="@+id/imgUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center"
-        android:paddingTop="35dp"
-        android:src="@drawable/ic_default_user_profile"/>
+        android:layout_centerHorizontal="true"
+        android:elevation="10dp"
+        android:background="@drawable/circle_border">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_drawer"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_default_user_profile" />
+
+
+    </RelativeLayout>
+
     <TextView
+        android:id="@+id/headerUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Joanna Lowry"
+        android:textColor="@color/white"
         android:paddingTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
     <TextView
         android:layout_width="wrap_content"
         android:paddingTop="3dp"
         android:layout_gravity="center"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:text="1.4k Words Read"/>
 </LinearLayout>

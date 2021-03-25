@@ -1,17 +1,92 @@
+
 <resources>
-    <string name="app_name">Pellego</string>
-    <string name="title_library">Library</string>
+
+    <string-array name="reader_theme_text">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>Parchment</item>
+    </string-array>
+    <string-array name="theme_text">
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+
+    <string-array name="viewmode_text">
+        <item>@string/view_mode_paging</item>
+        <item>@string/view_mode_continuous</item>
+    </string-array>
+    <string name="drawer_open" translatable="false">Loading Book</string>
+    <string name="drawer_close" translatable="false">Loading Book</string>
+
+    <string name="loading_book">Loading Book</string>
+    <string name="Theme_Parchment" translatable="false">Parchment</string>
+    <string name="open_file">Open File</string>
+    <string name="catalog_home">Home</string>
+    <string name="book_toc">TOC</string>
+    <string name="search">Search</string>
+    <string name="book_rename">Rename</string>
+    <string name="book_open">Open</string>
+    <string name="book_delete">Delete</string>
+    <string name="my_readings">My Readings</string>
+    <string name="search_local">Local Search&#8230;</string>
+    <string name="search_book">Book Search&#8230;</string>
+    <string name="view_mode_continuous">Continuous View</string>
+    <string name="view_mode_paging">Paging View</string>
+
+    <string name="pref_rotate_title">Rotate</string>
+    <string name="pref_rotate_summary">Allow screen rotate</string>
+    <string name="pref_theme_title">Theme</string>
+    <string name="pref_storagepath_title">Sync Folder</string>
+    <string name="pref_storagepath_summary">No \'Sync Folder\' selected</string>
+    <string name="pref_volume_title">Volume Keys Turning</string>
+    <string name="pref_volume_summary">Use volume keys to turn pages</string>
+
+    <string name="continue_reading">Continue reading from:</string>
+    <string name="sync_conflict">Sync conflict</string>
+    <string name="view_mode">View Mode</string>
+    <string name="image_original_size">Original Size</string>
+    <string name="image_fit_to_screen">Fit To Screen</string>
+    <string name="image_original_size_all_images">Original Size All Images</string>
+    <string name="image_fit_to_screen_all_images">Fit To Screen All Images</string>
+    <string name="keep_reading_position">Keep Position</string>
+    <string name="add_more_fonts_to">Add more fonts to \'%s\'</string>
+    <string name="controls_fullscreen">Fullscreen</string>
+    <string name="controls_navigate">Navigate</string>
+    <string name="controls_nextpage">Next page</string>
+    <string name="controls_prevpage">Previous page</string>
+    <string name="controls_brightness">Brightness</string>
+    <string name="per_second">/s</string>
+    <string name="delete_bookmark">Delete bookmark</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="bookmark_edit">Edit</string>
+    <string name="book_font">Font</string>
+    <string name="sort_by">Sort By ...</string>
+    <string name="sort_by_name_a_z">Name A-Z</string>
+    <string name="sort_by_name_z_a">Name Z-A</string>
+    <string name="sort_by_added_asc">Added Asc</string>
+    <string name="sort_by_added_desc">Added Desc</string>
+    <string name="sort_by_opened_asc">Opened Asc</string>
+    <string name="sort_by_opened_desc">Opened Desc</string>
+    <string name="pref_tts_title">TTS Language</string>
+
+    <string name="app_name"></string>
+    <string name="app_title" translatable="false">Pellego</string>
+    <string name="title_library" translatable="false">Library</string>
+    <string name="title_empty_library" translatable="false">Such empty..</string>
     <string name="title_learn_nav">Learn</string>
     <string name="title_learn">Learning Modules</string>
     <string name="title_progress">Progress</string>
     <string name="title_terms_and_conditions">Terms and Conditions</string>
+    <string name="title_privacy_policy" translatable="false">Privacy Policy</string>
     <string name="title_settings">Settings</string>
     <string name="title_quiz">Quiz</string>
     <string name="title_quiz_results">Results</string>
-    <string name="title_clump_reading">Clump Reading</string>
+    <string name="title_clump_reading" translatable="false">Clump Reading</string>
+    <string name="short_description_clump_reading" translatable="false">Words grouped together in chunks</string>
     <string name="title_meta_guiding">Meta Guiding</string>
     <string name="title_technique">Technique Overview</string>
-    <string name="title_reducing_subvocalization">Reducing Subvocalization</string>
+    <string name="title_reducing_subvocalization" translatable="false">Reducing Subvocalization</string>
+    <string name="short_description_reducing_subvocalization" translatable="false">Eliminate the habit of subvocalization</string>
     <string name="title_profile">Profile</string>
     <string name="title_sign_out">Sign Out</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
@@ -31,27 +106,188 @@
     <string name="descr_module_advanced">Prove your mastery</string>
 
     <!-- RSVP    -->
-    <string name="title_rsvp_intro">Rapid Serial Visual Presentation Introduction</string>
-    <string name="title_rsvp">Rapid Serial Visual Presentation</string>
-    <string name="description_rsvp">Rapid Serial Visual Presentation is a method in which individual words are displayed in rapid succession. The words are fixed to the same
+    <string name="title_rsvp_intro" translatable="false">Rapid Serial Visual Presentation Introduction</string>
+    <string name="title_rsvp" translatable="false">Rapid Serial Visual Presentation</string>
+    <string name="short_description_rsvp" translatable="false">Individual words in rapid succession</string>
+    <string name="description_rsvp" translatable="false">Rapid Serial Visual Presentation is a method in which individual words are displayed in rapid succession. The words are fixed to the same
                 point on the screen which eliminates the need for saccades. This means your eyes can remain fixed while the words change."</string>
-    <string name="content_rsvp_beginner">I just returned from the greatest summer vacation in Paris, France! I spent eight days
-        there with my best friends, Henry and Steve. We visited many famous tourist places and my favorite was the Louvre,
-        a well-known museum.</string>
-    <!--Below string is used for fast testing purposes for RSVP Beginner Submodule -->
-<!--    <string name="content_rsvp_beginner">I was</string>-->
-    <string name="content_rsvp_intermediate">Keith recently came back from a trip to Chicago, Illinois. This midwestern metropolis is found along the shore of Lake Michigan. During his visit, Keith spent a lot of time exploring the city to visit important landmarks and monuments.
-Keith loves baseball, and he made sure to take a visit to Wrigley Field. Not only did he take a tour of this spectacular stadium, but he also got to watch a Chicago Cubs game. In the stadium, Keith and the other fans cheered for the Cubs. Keith was happy that the Cubs won with a score of 5-4.
-Chicago has many historic places to visit. Keith found the Chicago Water Tower impressive as it is one of the few remaining landmarks to have survived the Great Chicago Fire of 1871. Keith also took a walk through Jackson Park, a great outdoor space that hosted the World’s Fair of 1892. The park is great for a leisurely stroll, and it still features some of the original architecture and replicas of monuments that were.
-During the last part of his visit, Keith managed to climb the stairs inside of the Willis Tower, a 110-story skyscraper. Despite the challenge of climbing the many flights of stairs, Keith felt that reaching the top was worth the effort. From the rooftop, Keith received a gorgeous view of the city’s skyline with Lake Michigan in the background.</string>
-    <string name="content_rsvp_advanced">It goes without saying that humans (mammals identifiable as those that stand upright and are comparatively advanced and capable of detailed thought) have pretty remarkable bodies, given all that theyve accomplished. (Furthermore, an especially intelligent human brain produced this text!) To be sure, humans have overcome predators, disease, and all sorts of other obstacles over thousands of years.
-To fully understand and appreciate these accomplishments, lets take at some of the most well-known parts of the human body!
-The head, or the spherical body part that contains the brain and rests at the top of the human body, has quite a few individual organs and body parts on it. (It should quickly be mentioned that hair occupies the space on top of the head, and the ears, the organs responsible for hearing, are located on either side of the head.) From top to bottom, the eyebrows, or horizontal strips of hair that can be found above the eye, are the first components of the head. The eyes are below them, and are round, orb-like organs that allow humans to see.
-The eyes make way for the nose, or an external (sticking-out) organ that plays an important part in the breathing and bacteria-elimination processes. Below that is the mouth, or a wide, cavernous organ that chews food, removes bacteria, helps with breathing, and more. The mouth contains teeth, or small, white-colored, pointed body parts used to chew food, and the tongue, or a red-colored, boneless organ used to chew food and speak.
-The neck is the long body part that connects the head to the chest (the muscular body part that protects the heart and lungs), and the stomach, or the part of the body that contains food and liquid-processing organs, comes below that.
-The legs are the long, muscular body parts that allow humans to move from one spot to another and perform a variety of actions. Each leg contains a thigh (a thick, especially muscular body part used to perform strenuous motions; the upper part of the leg) and a calf (thinner, more flexible body part that absorbs the shock associated with movement; the lower part of the leg). Feet can be found at the bottom of legs, and each foot is comprised of five toes, or small appendages that help balance.
-Arms are long, powerful body parts that are located on either side of chest, below the shoulders;arms are comprised of biceps (the thicker, more powerful upper portion), and forearms (the thinner, more flexible lower portion). Hands, or small, gripping body parts used for a tremendous number of actions, are at the end of arms. Each hand contains five fingers, or small appendages used to grip objects.
-The aforementioned shoulders are rounded body parts that aid arms\' flexibility. One\'s back is found on the opposite side of the stomach, and is a flat section of the body that contains important muscles that\'re intended to protect the lungs and other internal organs, in addition to helping humans perform certain motions and actions.</string>
+    <!--    RSVP Beginner-->
+    <string name="content_rsvp_beginner" translatable="false">Fleas are perfectly designed by nature  </string>
+    <string name="question_rsvp_beginner_0" translatable="false">The primary purpose of the passage is to</string>
+    <string-array name="answers_rsvp_beginner_0">
+        <item>educate the reader about the physical characteristics of fleas</item>
+        <item>compare fleas to other members of the animal kingdom</item>
+        <item>relate the problems that can result from a flea infestation</item>
+        <item>explain why a flea infestation is hard to get rid of</item>
+        <item>3</item>
+    </string-array>
+    <string name="question_rsvp_beginner_1" translatable="false">The author’s tone in the passage is best described as</string>
+    <string-array name="answers_rsvp_beginner_1">
+        <item>concerned</item>
+        <item>passionate</item>
+        <item>informative</item>
+        <item>opinionated</item>
+        <item>2</item>
+    </string-array>
+    <string name="question_rsvp_beginner_2" translatable="false">According to the passage, fleas are resistant to sprays and chemicals because they</string>
+    <string-array name="answers_rsvp_beginner_2">
+        <item>have waterproof sclerites</item>
+        <item>are excellent jumpers</item>
+        <item>reproduce very rapidly</item>
+        <item>can stick to fur like Velcro</item>
+        <item>0</item>
+    </string-array>
+    <string name="question_rsvp_beginner_3" translatable="false">According to the passage, which of the following statements is true?</string>
+    <string-array name="answers_rsvp_beginner_3">
+        <item>Fleas extend their little spines if threatened.</item>
+        <item>Fleas have the ability to jump higher than humans</item>
+        <item>Humans can jump higher if they consume foods containing resilin. </item>
+        <item>The resilin found in fleas is used to make rubber bands.</item>
+        <item>0</item>
+    </string-array>
+
+
+    <!--    RSVP Intermediate-->
+    <string name="content_rsvp_intermediate" translatable="false">In the early 1920s, settlers came to Alaska looking for gold. They traveled by boat to the coastal
+towns of Seward and Knik, and from there by land into the gold fields. The trail they used to travel inland
+is known today as the Iditarod Trail, one of the National Historic Trails designated by the Congress of the
+United States. The Iditarod Trail quickly became a major thoroughfare in Alaska, as the mail and supplies
+were carried across this trail. People also used it to get from place to place, including the priests,
+ministers, and judges who had to travel between villages. In the winter, the settlers’ only means of travel
+down this trail was via dog sled.
+Once the gold rush ended, many gold-seekers went back to where they had come from, and
+suddenly there was much less travel on the Iditarod Trail. The introduction of the airplane in the late
+1920’s meant dog teams were no longer the standard mode of transportation, and of course with the
+airplane carrying the mail and supplies, there was less need for land travel in general. The final blow to
+the use of the dog teams was the appearance of snowmobiles.
+By the mid 1960s, most Alaskans didn’t even know the Iditarod Trail existed, or that dog teams
+had played a crucial role in Alaska’s early settlements. Dorothy G. Page, a self-made historian,
+recognized how few people knew about the former use of sled dogs as working animals and about the
+Iditarod Trail’s role in Alaska’s colorful history. To raise awareness about this aspect of Alaskan history,
+she came up with the idea to have a dog sled race over the Iditarod Trail. She presented her idea to an
+enthusiastic musher, as dog sled drivers are known, named Joe Redington, Sr. Soon the Pages and the
+Redingtons were working together to promote the idea of the Iditarod race.
+Many people worked to make the first Iditarod Trail Sled Dog Race a reality in 1967. The Aurora
+Dog Mushers Club, along with men from the Adult Camp in Sutton, helped clear years of overgrowth from
+the first nine miles of the Iditarod Trail. To raise interest in the race, a $25,000 purse was offered, with
+Joe Redington donating one acre of his land to help raise the funds. The short race, approximately 27
+miles long, was put on a second time in 1969.
+After these first two successful races, the goal was to lengthen the race a little further to the ghost
+town of Iditarod by 1973. However in 1972, the U.S. Army reopened the trail as a winter exercise, and so
+in 1973, the decision was made to take the race all the way to the city of Nome—over 1,000 miles. There
+were many who believed it could not be done and that it was crazy to send a bunch of mushers out into
+the vast, uninhabited Alaskan wilderness. But the race went! 22 mushers finished that year, and to date
+over 400 people have completed it.</string>
+    <string name="question_rsvp_intermediate_0" translatable="false">The primary purpose of the passage is to</string>
+    <string-array name="answers_rsvp_intermediate_0">
+        <item>recount the history of the Iditarod trail and the race that memorializes it</item>
+        <item>describe the obstacles involved in founding the Iditarod race</item>
+        <item>outline the circumstances that led to the establishment of the Iditarod Trail</item>
+        <item>reestablish the important place of the Iditarod Trail in Alaska’s history</item>
+        <item>0</item>
+    </string-array>
+    <string name="question_rsvp_intermediate_1" translatable="false">Based on information in the passage, it can be inferred that all of the following contributed to the
+disuse of the Iditarod Trail except</string>
+    <string-array name="answers_rsvp_intermediate_1">
+        <item>more modern forms of transportation</item>
+        <item>depleted gold mines</item>
+        <item>highway routes to ghost towns</item>
+        <item>reduced demand for land travel </item>
+        <item>2</item>
+    </string-array>
+    <string name="question_rsvp_intermediate_2" translatable="false">As used in paragraph 2, which is the best definition for mode?</string>
+    <string-array name="answers_rsvp_intermediate_2">
+        <item>formula</item>
+        <item>way</item>
+        <item>preference</item>
+        <item>option</item>
+        <item>1</item>
+    </string-array>
+    <string name="question_rsvp_intermediate_3" translatable="false">According to the passage, the initial Iditarod race</string>
+    <string-array name="answers_rsvp_intermediate_3">
+        <item>was funded through the sale of musher entrance fees</item>
+        <item>was founded by an advocate for Alaskan history </item>
+        <item>ended at the ghost town of Iditarod</item>
+        <item>boasted a total of 400 entrants</item>
+        <item>1</item>
+    </string-array>
+
+    <string name="content_rsvp_advanced" translatable="false">The word euthanasia is of Greek origin and literally means “a good death.” The American
+Heritage Dictionary defines it as “the act of killing a person painlessly for reasons of mercy.” Such killing
+can be done through active means, such as administering a lethal injection, or by passive means, such as
+withholding medical care or food and water.
+In recent years in the United States, there have been numerous cases of active euthanasia in the
+news. They usually involve the deliberate killing of ill or incapacitated persons by relatives or friends who
+plead that they can no longer bear to see their loved ones suffer. Although such killings are a crime, the
+perpetrators are often dealt with leniently by our legal system, and the media usually portrays them as
+compassionate heroes who take personal risks to save another from unbearable suffering.
+The seeming acceptance of active forms of euthanasia is alarming, but we face a bigger, more
+insidious threat from passive forms of euthanasia. Every year, in hospitals and nursing homes around the
+country, there are growing numbers of documented deaths caused by caregivers withholding lifesustaining care, including food and water, from vulnerable patients who cannot speak for themselves.
+While it is illegal to kill someone directly, for example with a gun or knife, in many cases the law
+has put its stamp of approval on causing death by omitting needed care. Further, many states have “living
+will” laws designed to protect those who withhold treatment, and there have been numerous court rulings
+which have approved of patients being denied care and even starved and dehydrated to death.
+Because such deaths occur quietly within the confines of hospitals and nursing homes, they can
+be kept hidden from the public. Most euthanasia victims are old or very ill, so their deaths might be
+attributed to a cause other than the denial of care that really killed them. Further, it is often relatives of the
+patient who request that care be withheld. In one court case, the court held that decisions to withhold lifesustaining care may be made not only by close family members but also by a number of third parties, and
+that such decisions need not be reviewed by the judicial system if there is no disagreement between
+decision makers and medical staff. The court went so far as to rule that a nursing home may not refuse to
+participate in the fatal withdrawal of food and water from an incompetent patient!
+“Extraordinary” or “heroic” treatment need not be used when the chance for recovery is poor and
+medical intervention would serve only to prolong the dying process. But to deny customary and
+reasonable care or to deliberately starve or dehydrate someone because he or she is very old or very ill
+should not be permitted. Most of the cases coming before the courts do not involve withholding heroic
+measures from imminently dying people, but rather they seek approval for denying basic care, such as
+administration of food and water, to people who are not elderly or terminally ill, but who are permanently
+incapacitated. These people could be expected to live indefinitely, though in an impaired state, if they
+were given food and water and minimal treatment.
+No one has the right to judge that another’s life is not worth living. The basic right to life should
+not be abridged because someone decides that someone else’s quality of life is too low. If we base the
+right to life on quality of life standards, there is no logical place to draw the line.
+To protect vulnerable patients, we must foster more positive attitudes towards people with serious
+and incapacitating illnesses and conditions. Despite the ravages of their diseases, they are still our fellow
+human beings and deserve our care and respect. We must also enact
+positive legislation that will protect vulnerable people from those who consider their lives meaningless or
+too costly to maintain and who would cause their deaths by withholding life-sustaining care such as food
+and water.</string>
+    <string name="question_rsvp_advanced_0" translatable="false">The tone of the author can best be described as</string>
+    <string-array name="answers_rsvp_advanced_0">
+        <item>pleading</item>
+        <item>argumentative</item>
+        <item>compassionate</item>
+        <item>emphatic</item>
+        <item>2</item>
+    </string-array>
+    <string name="question_rsvp_advanced_1" translatable="false">In paragraph 3, the author finds starvation and dehydration induced euthanasia is to be “more
+insidious" because</string>
+    <string-array name="answers_rsvp_advanced_1">
+        <item>euthanasia is legally considered to be a criminal act</item>
+        <item>the public’s attitude toward euthanasia is becoming more positive</item>
+        <item>it often involves those who cannot protest</item>
+        <item>the patient has asked to die with dignity </item>
+        <item>2</item>
+    </string-array>
+    <string name="question_rsvp_advanced_2" translatable="false">The author maintains that death by withholding care is</string>
+    <string-array name="answers_rsvp_advanced_2">
+        <item>largely confined to hospitals</item>
+        <item>largely confined to the terminally ill</item>
+        <item>often requested by family members</item>
+        <item>approved by living wills</item>
+        <item>2</item>
+    </string-array>
+    <string name="question_rsvp_advanced_3" translatable="false">In the final paragraph the author writes, "Despite the ravages of their diseases, they are still our fellow
+human beings and deserve our care and respect." The main purpose of this statement is to</string>
+    <string-array name="answers_rsvp_advanced_3">
+        <item>prove a previous argument</item>
+        <item>illustrate an example </item>
+        <item>gainsay a later statement</item>
+        <item>justify an earlier statement</item>
+        <item>3</item>
+    </string-array>
+
+    <!--    RSVP Intro -->
     <string-array name="intro_rsvp_header">
         <item>What is RSVP?</item>
         <item>What does RSVP allow?</item>
@@ -71,35 +307,240 @@ The aforementioned shoulders are rounded body parts that aid arms\' flexibility.
         impairment, dyslexia, perceptual and cognitive psychology.</item>
     </string-array>
 
+    <!--    Pre Reading-->
+    <string name="description_prereading_highlight" translatable="false">Scan text beforehand to prep you brain</string>
+    <string name="title_prereading_intro" translatable="false">Pre-Reading Introduction</string>
+    <string name="title_prereading" translatable="false">Pre-Reading</string>
+    <string name="short_description_prereading" translatable="false">Scan text to prep your brain</string>
+
     <!-- Metaguiding -->
-    <string name="title_metaguiding_highlight">Meta-guiding highlight</string>
-    <string name="description_metaguiding_highlight">The default highlight color for the meta guiding technique</string>
-    <string name="title_metaguiding_intro">Meta Guiding Introduction</string>
-    <string name="title_metaguiding">Meta Guiding</string>
-    <string name="description_metaguiding">Meta guiding is the visual guiding of the eye using a finger or pointer, such as a pen, in order for the eye to move faster along the length of a passage of text. It involves drawing invisible shapes on a page of text in order to broaden the visual span for speed reading. </string>
-    <string name="content_metaguiding_beginner">I just returned from the greatest summer vacation! It was so fantastic, I never wanted it to end. I spent eight days in Paris, France. My best friends, Henry and Steve, went with me. We had a beautiful hotel room in the Latin Quarter, and it wasnt even expensive. We had a balcony with a wonderful view.
-    We visited many famous tourist places. My favorite was the Louvre, a well-known museum. I was always interested in art, so that was a special treat for me. The museum is so huge, you could spend weeks there. Henry got tired walking around the museum and said “Enough! I need to take a break and rest.”
-    We took lots of breaks and sat in cafes along the river Seine. The French food we ate was delicious. The wines were tasty, too. Steve’s favorite part of the vacation was the hotel breakfast. He said he would be happy if he could eat croissants like those forever. We had so much fun that we’re already talking about our next vacation!</string>
-    <string name="content_metaguiding_intermediate">Keith recently came back from a trip to Chicago, Illinois. This midwestern metropolis is found along the shore of Lake Michigan. During his visit, Keith spent a lot of time exploring the city to visit important landmarks and monuments.
-Keith loves baseball, and he made sure to take a visit to Wrigley Field. Not only did he take a tour of this spectacular stadium, but he also got to watch a Chicago Cubs game. In the stadium, Keith and the other fans cheered for the Cubs. Keith was happy that the Cubs won with a score of 5-4.
-Chicago has many historic places to visit. Keith found the Chicago Water Tower impressive as it is one of the few remaining landmarks to have survived the Great Chicago Fire of 1871. Keith also took a walk through Jackson Park, a great outdoor space that hosted the World’s Fair of 1892. The park is great for a leisurely stroll, and it still features some of the original architecture and replicas of monuments that were. It goes without saying that humans (mammals identifiable as those that stand upright and are comparatively advanced and capable of detailed thought) have pretty remarkable bodies, given all that theyve accomplished. (Furthermore, an especially intelligent human brain produced this text!) To be sure, humans have overcome predators, disease, and all sorts of other obstacles over thousands of years.
-To fully understand and appreciate these accomplishments, lets take at some of the most well-known parts of the human body!
+    <string name="title_metaguiding_highlight" translatable="false">Meta-guiding highlight</string>
+    <string name="description_metaguiding_highlight" translatable="false">The default highlight color for the meta guiding technique</string>
+    <string name="title_metaguiding_intro" translatable="false">Meta Guiding Introduction</string>
+    <string name="title_metaguiding" translatable="false">Meta Guiding</string>
+    <string name="short_description_metaguiding" translatable="false">Smooth moving line beneath text</string>
+    <string name="description_metaguiding" translatable="false">Meta guiding is the visual guiding of the eye using a finger or pointer, such as a pen, in order for the eye to move faster along the length of a passage of text. It involves drawing invisible shapes on a page of text in order to broaden the visual span for speed reading. </string>
+<!--    Metaguiding Beginner -->
+    <string name="content_metaguiding_beginner" translatable="false">For two months, I have been trying to decide who makes the best ice cream. I have narrowed it
+down to my four favorite manufacturers: Randolph Farms, Goodies, Disco, and Twinkle.
+Let\'s start with Randolph Farms. Randolph Farms makes very good ice cream. They have lots of
+different flavors, but this doesn\'t really matter to me. That\'s because I always get coffee flavor. They make
+the best coffee ice cream in the world. I\'ve never had hot coffee (the drink) but people tell me that
+Randolph Farms coffee ice cream tastes just like the real thing. Also, Randolph Farms uses all natural
+ingredients to make their ice cream. This is a good idea, I think.
+Second, we have Goodies. Goodies makes excellent ice cream. Like Randolph Farms, Goodies
+uses all natural ingredients. They only make three different flavors—strawberry, vanilla, and chocolate—
+but they make them very well. The strawberry is amazing. Every bite of it reminds me of the strawberries
+that I used to pick behind my old house. The vanilla is wonderful. It is very smooth and has a refreshing,
+creamy taste. The chocolate is outstanding. It is made with real cocoa beans from Bolivia. I didn\'t know
+where Bolivia is so I decided to look for it on a map. After hunting awhile, I discovered that it is in South
+America! That\'s a long way to go to get cocoa, so it must be good. I would say that the only drawback to
+Goodies ice cream is that they only make three different flavors.
+Third, we have Disco. Disco ice cream is okay. They don\'t have many good flavors. Actually, the
+only Disco flavor I like is Bubblegum. It is vanilla ice cream with little chunks of bubblegum in it. After you
+eat the ice cream, you can blow bubbles with the gum. That\'s pretty fun.
+Finally, there is Twinkle. Twinkle ice cream is mediocre. The only good thing about Twinkle is that
+it is relatively inexpensive. You can buy a whole carton of twinkle ice cream for $4.50. That\'s only two
+weeks allowance for me.</string>
+    <string name="question_metaguiding_beginner_0" translatable="false">Which of the following would be the best title for this passage?</string>
+    <string-array name="answers_metaguiding_beginner_0">
+        <item>Strawberry, Vanilla, Chocolate, and Bubblegum Too!</item>
+        <item>The Four Top Ice Cream Manufacturers</item>
+        <item>The Finest Ice Cream in the World</item>
+        <item>Picking the Best Ice Cream Manufacturer</item>
+        <item>3</item>
+    </string-array>
+    <string name="question_metaguiding_beginner_1" translatable="false">If the author wanted to get a scoop of coffee ice cream, where would he or she probably go?</string>
+    <string-array name="answers_metaguiding_beginner_1">
+        <item>Randolph Farms</item>
+        <item>Goodies</item>
+        <item>Disco</item>
+        <item>Twinkle</item>
+        <item>0</item>
+    </string-array>
+    <string name="question_metaguiding_beginner_2" translatable="false">In paragraph 3 the author writes, "That's a long way to go to get cocoa, so it must be good." Using
+this information, we can understand that the author believes that</string>
+    <string-array name="answers_metaguiding_beginner_2">
+        <item>Goodies loses money on sales of chocolate ice cream</item>
+        <item>Bolivia makes the best cocoa in the world </item>
+        <item>things that are hard to get must be high quality</item>
+        <item>cocoa from the United States is not very good</item>
+        <item>2</item>
+    </string-array>
+    <string name="question_metaguiding_beginner_3" translatable="false">How many weeks would it take for the author to save enough money to buy two cartons of Twinkle
+ice cream?</string>
+    <string-array name="answers_metaguiding_beginner_3">
+        <item>1 week</item>
+        <item>2 weeks</item>
+        <item>3 weeks</item>
+        <item>4 weeks</item>
+        <item>3</item>
+    </string-array>
+
+
+    <string name="content_metaguiding_intermediate" translatable="false">
+        First introduced in 1927, The Hardy Boys Mystery Stories are a series of books about the
+adventures of brothers Frank and Joe Hardy, teenaged detectives who solve one baffling mystery after
+another. The Hardy Boys were so popular among young boys that in 1930 a similar series was created
+for girls featuring a sixteen-year-old detective named Nancy Drew. The cover of each volume of The
+Hardy Boys states that the author of the series is Franklin W. Dixon; the Nancy Drew Mystery Stories are
+supposedly written by Carolyn Keene. Over the years, though, many fans of both series have been
+surprised to find out that Franklin W. Dixon and Carolyn Keene are not real people. If Franklin W. Dixon
+and Carolyn Keene never existed, then who wrote The Hardy Boys and Nancy Drew mysteries?
+The Hardy Boys and the Nancy Drew books were written through a process called ghostwriting. A
+ghostwriter writes a book according to a specific formula. While ghostwriters are paid for writing the
+books, their authorship is not acknowledged, and their names do not appear on the published books.
+Ghostwriters can write books for children or adults, the content of which is unspecific. Sometimes they
+work on book series with a lot of individual titles, such as The Hardy Boys and the Nancy Drew series.
+The initial idea for both The Hardy Boys and the Nancy Drew series was developed by a man
+named Edward Stratemeyer, who owned a publishing company that specialized in children’s books.
+Stratemeyer noticed the increasing popularity of mysteries among adults, and surmised that children
+would enjoy reading mysteries about younger detectives with whom they could identify. Stratemeyer first
+developed each book with an outline describing the plot and setting. Once he completed the outline,
+Stratemeyer then hired a ghostwriter to convert it into a book of slightly over 200 pages. After the
+ghostwriter had written a draft of a book, he or she would send it back to Stratemeyer, who would make a
+list of corrections and mail it back to the ghostwriter. The ghostwriter would revise the book according to
+Stratemeyer’s instructions and then return it to him. Once Stratemeyer approved the book, it was ready
+for publication.
+Because each series ran for so many years, Nancy Drew and The Hardy Boys both had a
+number of different ghostwriters producing books; however, the first ghostwriter for each series proved to
+be the most influential. The initial ghostwriter for The Hardy Boys was a Canadian journalist named Leslie
+McFarlane. A few years later, Mildred A. Wirt, a young writer from Iowa, began writing the Nancy Drew
+books. Although they were using prepared outlines as guides, both McFarlane and Wirt developed the
+characters themselves. The personalities of Frank and Joe Hardy and Nancy Drew arose directly from
+McFarlane’s and Wirt’s imaginations. For example, Mildred Wirt had been a star college athlete and gave
+Nancy similar athletic abilities. The ghostwriters were also responsible for numerous plot and setting
+details. Leslie McFarlane used elements of his small Canadian town to create Bayport, the Hardy Boys’
+fictional hometown.
+Although The Hardy Boys and Nancy Drew books were very popular with children, not everyone
+approved of them. Critics thought their plots were unrealistic and even far-fetched, since most teenagers
+did not experience the adventures Frank and Joe Hardy or Nancy Drew did. The way the books were
+written also attracted criticism. Many teachers and librarians objected to the ghostwriting process,
+claiming it was designed to produce books quickly rather than create quality literature. Some libraries—
+including the New York Public Library—even refused to include the books in their children’s collections.
+Ironically, this decision actually helped sales of the books, because children simply purchased them when
+they were unavailable in local libraries.
+Regardless of the debates about their literary merit, each series of books has exerted an
+undeniable influence on American and even global culture. Most Americans have never heard of Edward
+Stratemeyer, Leslie McFarlane, or Mildred Wirt, but people throughout the world are familiar with Nancy
+Drew and Frank and Joe Hardy.
 </string>
-    <string name="content_metaguiding_advanced">It goes without saying that humans (mammals identifiable as those that stand upright and are comparatively advanced and capable of detailed thought) have pretty remarkable bodies, given all that theyve accomplished. (Furthermore, an especially intelligent human brain produced this text!) To be sure, humans have overcome predators, disease, and all sorts of other obstacles over thousands of years.
-To fully understand and appreciate these accomplishments, lets take at some of the most well-known parts of the human body!
-The head, or the spherical body part that contains the brain and rests at the top of the human body, has quite a few individual organs and body parts on it. (It should quickly be mentioned that hair occupies the space on top of the head, and the ears, the organs responsible for hearing, are located on either side of the head.) From top to bottom, the eyebrows, or horizontal strips of hair that can be found above the eye, are the first components of the head. The eyes are below them, and are round, orb-like organs that allow humans to see.
-The eyes make way for the nose, or an external (sticking-out) organ that plays an important part in the breathing and bacteria-elimination processes. Below that is the mouth, or a wide, cavernous organ that chews food, removes bacteria, helps with breathing, and more. The mouth contains teeth, or small, white-colored, pointed body parts used to chew food, and the tongue, or a red-colored, boneless organ used to chew food and speak.
-The neck is the long body part that connects the head to the chest (the muscular body part that protects the heart and lungs), and the stomach, or the part of the body that contains food and liquid-processing organs, comes below that.
-The legs are the long, muscular body parts that allow humans to move from one spot to another and perform a variety of actions. Each leg contains a thigh (a thick, especially muscular body part used to perform strenuous motions; the upper part of the leg) and a calf (thinner, more flexible body part that absorbs the shock associated with movement; the lower part of the leg). Feet can be found at the bottom of legs, and each foot is comprised of five toes, or small appendages that help balance.
-Arms are long, powerful body parts that are located on either side of chest, below the shoulders;arms are comprised of biceps (the thicker, more powerful upper portion), and forearms (the thinner, more flexible lower portion). Hands, or small, gripping body parts used for a tremendous number of actions, are at the end of arms. Each hand contains five fingers, or small appendages used to grip objects.
-The aforementioned shoulders are rounded body parts that aid arms\' flexibility. One\'s back is found on the opposite side of the stomach, and is a flat section of the body that contains important muscles that\'re intended to protect the lungs and other internal organs, in addition to helping humans perform certain motions and actions. It goes without saying that humans (mammals identifiable as those that stand upright and are comparatively advanced and capable of detailed thought) have pretty remarkable bodies, given all that theyve accomplished. (Furthermore, an especially intelligent human brain produced this text!) To be sure, humans have overcome predators, disease, and all sorts of other obstacles over thousands of years.
-To fully understand and appreciate these accomplishments, lets take at some of the most well-known parts of the human body!
-The head, or the spherical body part that contains the brain and rests at the top of the human body, has quite a few individual organs and body parts on it. (It should quickly be mentioned that hair occupies the space on top of the head, and the ears, the organs responsible for hearing, are located on either side of the head.) From top to bottom, the eyebrows, or horizontal strips of hair that can be found above the eye, are the first components of the head. The eyes are below them, and are round, orb-like organs that allow humans to see.
-The eyes make way for the nose, or an external (sticking-out) organ that plays an important part in the breathing and bacteria-elimination processes. Below that is the mouth, or a wide, cavernous organ that chews food, removes bacteria, helps with breathing, and more. The mouth contains teeth, or small, white-colored, pointed body parts used to chew food, and the tongue, or a red-colored, boneless organ used to chew food and speak.
-The neck is the long body part that connects the head to the chest (the muscular body part that protects the heart and lungs), and the stomach, or the part of the body that contains food and liquid-processing organs, comes below that.
-The legs are the long, muscular body parts that allow humans to move from one spot to another and perform a variety of actions. Each leg contains a thigh (a thick, especially muscular body part used to perform strenuous motions; the upper part of the leg) and a calf (thinner, more flexible body part that absorbs the shock associated with movement; the lower part of the leg). Feet can be found at the bottom of legs, and each foot is comprised of five toes, or small appendages that help balance.
-Arms are long, powerful body parts that are located on either side of chest, below the shoulders;arms are comprised of biceps (the thicker, more powerful upper portion), and forearms (the thinner, more flexible lower portion). Hands, or small, gripping body parts used for a tremendous number of actions, are at the end of arms. Each hand contains five fingers, or small appendages used to grip objects.
-The aforementioned shoulders are rounded body parts that aid arms\' flexibility. One\'s back is found on the opposite side of the stomach, and is a flat section of the body that contains important muscles that\'re intended to protect the lungs and other internal organs, in addition to helping humans perform certain motions and actions.</string>
+    <string name="question_metaguiding_intermediate_0" translatable="false">According to the passage, the Nancy Drew mystery series was introduced in</string>
+    <string-array name="answers_metaguiding_intermediate_0">
+        <item>1925</item>
+        <item>1927</item>
+        <item>1929</item>
+        <item>1930</item>
+        <item>3</item>
+    </string-array>
+    <string name="question_metaguiding_intermediate_1" translatable="false">Which of the following would be the best title for this passage?</string>
+    <string-array name="answers_metaguiding_intermediate_1">
+        <item>Ghostwriting: A Way of Life</item>
+        <item>Who Were Leslie McFarlane and Mildred A. Wirt?</item>
+        <item>The Hardy Boys and Nancy Drew: Ghostwriting a Series</item>
+        <item>The Dubious yet Profitable Practice of Ghostwriting</item>
+        <item>2</item>
+    </string-array>
+    <string name="question_metaguiding_intermediate_2" translatable="false">According to the passage, which of the following people was a real writer?</string>
+    <string-array name="answers_metaguiding_intermediate_2">
+        <item>Carolyn Keene</item>
+        <item>Franklin W. Dixon</item>
+        <item>Leslie McFarlane</item>
+        <item>Tom Hardy</item>
+        <item>2</item>
+    </string-array>
+    <string name="question_metaguiding_intermediate_3" translatable="false">Based on information in the passage, it can be inferred that Leslie McFarlane and Mildred Wirt </string>
+    <string-array name="answers_metaguiding_intermediate_3">
+        <item>disliked writing according to a specific formul</item>
+        <item>respected the art of ghostwriting </item>
+        <item>were unsuccessful in their previous occupations</item>
+        <item>found it helpful to write from personal experience</item>
+        <item>3</item>
+    </string-array>
+
+<!-- Metaguiding Advanced -->
+    <string name="content_metaguiding_advanced" translatable="false">Concussions are brain injuries that occur when a person receives a blow to the head, face, or
+neck. Although most people who suffer a concussion experience initial bouts of dizziness, nausea, and
+drowsiness, these symptoms often disappear after a few days. The long-term effects of concussions,
+however, are less understood and far more severe. Recent studies suggest that people who suffer
+multiple concussions are at significant risk for developing chronic traumatic encephalopathy (CTE), a
+degenerative brain disorder that causes a variety of dangerous mental and emotional problems to arise
+weeks, months, or even years after the initial injury. These psychological problems can include
+depression, anxiety, memory loss, inability to concentrate, and aggression. In extreme cases, people
+suffering from CTE have even committed suicide or homicide. The majority of people who develop these
+issues are athletes who participate in popular high-impact sports, especially football. Although new sports
+regulations and improvements in helmet technology can help protect players, amateur leagues, the sports
+media, and fans all bear some of the responsibility for reducing the incidence of these devastating
+injuries.
+Improvements in diagnostic technology have provided substantial evidence to link severe—and
+often fatal—psychological disorders to the head injuries that players receive while on the field. Recent
+autopsies performed on the brains of football players who have committed suicide have shown advanced
+cases of CTE in every single victim.
+In response to the growing understanding of this danger, the National Football League (NFL) has revised
+its safety regulations. Players who have suffered a head injury on the field must undergo a “concussion
+sideline assessment”—a series of mental and physical fitness tests—before being allowed back in the
+game. In an effort to diminish the amount of head and neck injuries on the field, NFL officials began
+enforcing stricter penalty calls for helmet-to-helmet contact, leading with the head, and hitting a
+defenseless player. Furthermore, as of 2010, if a player’s helmet is accidentally wrenched from his head
+during play, the ball is immediately whistled dead. It is hoped that these new regulations, coupled with
+advances in helmet design, will reduce the number of concussions, and thus curb further cases of CTE.
+Efforts by the NFL and other professional sports leagues are certainly laudable; we should
+commend every attempt to protect the mental and physical health of players. However, new regulations at
+the professional level cannot protect amateur players, especially young people. Fatal cases of CTE have
+been reported in victims as young as 21. Proper tackling form—using the arms and shoulders to aim for a
+player’s midsection—should be taught at an early age. Youth, high school, and college leagues should
+also adopt safety rules even more stringent than those of the NFL. Furthermore, young athletes should be
+educated about the serious dangers of head injuries at an early age.
+Perhaps the most important factor in reducing the number of traumatic brain injuries, however,
+lies not with the players, the coaches, or the administrators, but with the media and fans. Sports media
+producers have become accustomed to showcasing the most aggressive tackles and the most intense
+plays. NFL broadcasts often replay especially violent collisions while the commentators marvel at the
+players’ physical prowess. Some sports highlights television programs even feature weekly countdowns
+of the “hardest hits.” When the media exalts such dangerous behavior, professionals are rewarded for
+injuring each other on the field and amateurs become more likely to try to imitate their favorite NFL
+athletes. Announcers, commentators, television producers, and sportswriters should engage in a
+collective effort to cease glorifying brutal plays. In turn, fans should stop expecting their favorite players to
+put their lives on the line for the purposes of entertainment. Players must not be encouraged to trade their
+careers, their health, their happiness, and even their lives for the sake of a game. </string>
+    <string name="question_metaguiding_advanced_0" translatable="false">Based on information in the passage, it can be inferred that all of the following statements are true
+except</string>
+    <string-array name="answers_metaguiding_advanced_0">
+        <item>tackling is not always dangerous; however, players who use improper tackling form may injure
+others</item>
+        <item>scientists have established a definitive link between players who die untimely deaths and the
+onset of CTE</item>
+        <item>NFL officials have done little to address the problem of CTE</item>
+        <item>athletes who are praised for exceptionally brutal hits are likely to continue engaging in such
+dangerous behavior</item>
+        <item>2</item>
+    </string-array>
+    <string name="question_metaguiding_advanced_1" translatable="false">The author’s tone in the final paragraph can best be described as
+</string>
+    <string-array name="answers_metaguiding_advanced_1">
+        <item>remorseful</item>
+        <item>hopeless</item>
+        <item>perplexed</item>
+        <item>insistent</item>
+        <item>3</item>
+    </string-array>
+    <string name="question_metaguiding_advanced_2" translatable="false">In describing the sports media, the author emphasizes its</string>
+    <string-array name="answers_metaguiding_advanced_2">
+        <item>responsibility</item>
+        <item>entertainment value</item>
+        <item>senselessness</item>
+        <item>sensationalism</item>
+        <item>3</item>
+    </string-array>
+    <string name="question_metaguiding_advanced_3" translatable="false">As used in the final paragraph, which is the best antonym for exalts?</string>
+    <string-array name="answers_metaguiding_advanced_3">
+        <item>mitigates</item>
+        <item>venerates </item>
+        <item>mollifies</item>
+        <item>castigates</item>
+        <item>3</item>
+    </string-array>
+
+
     <string-array name="intro_metaguiding_header">
         <item>What is Meta Guiding?</item>
         <item>What does Meta Guiding allow?</item>
@@ -119,105 +560,6 @@ The aforementioned shoulders are rounded body parts that aid arms\' flexibility.
         impairment, dyslexia, perceptual and cognitive psychology.</item>
     </string-array>
 
-    <string name="content_test_book">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in risus tempus, auctor libero quis, placerat orci. Aliquam euismod enim ac massa egestas viverra. Vivamus tempor nisi non velit mattis volutpat sed non enim. Donec tempor sapien risus, sit amet varius nisl fringilla et. Quisque tincidunt tincidunt luctus. Praesent quam ligula, cursus a semper quis, tincidunt a massa. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur quis nunc nec enim faucibus cursus eu ac erat. Donec scelerisque facilisis velit, nec lobortis lacus. Etiam et augue eros. Curabitur leo justo, ultrices vitae convallis a, bibendum sed purus. Cras a risus semper, convallis nulla non, pellentesque metus. Nulla facilisis accumsan erat.
-
-Mauris ipsum magna, feugiat non nisi id, scelerisque rhoncus justo. Cras suscipit purus dui, at scelerisque urna sagittis ac. Mauris quis ipsum malesuada, ullamcorper ante ac, lacinia ante. Fusce id est justo. Aenean eu ante nec risus placerat ultricies. Aliquam condimentum justo et neque consequat, sed ultricies ligula volutpat. Pellentesque lacinia quam arcu, sit amet imperdiet enim dapibus id. Curabitur sodales aliquam facilisis. Maecenas tellus mauris, ultricies a congue sed, luctus efficitur lorem. Sed lobortis non orci nec porttitor.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc auctor at erat finibus rhoncus. In ac sollicitudin nisl. Sed eu erat ut metus sollicitudin varius. Duis elementum quis purus et pharetra. Aenean mattis scelerisque leo vitae sollicitudin. Suspendisse pulvinar sed mi eget luctus. Mauris consequat consequat erat sed pharetra.
-
-Donec at ultricies eros. Vestibulum placerat odio vitae sodales pretium. Cras tincidunt, ligula eu euismod elementum, magna nisi vehicula lacus, in lacinia turpis nunc finibus elit. Vestibulum sed efficitur neque. Integer ex augue, malesuada sit amet libero non, tincidunt finibus metus. Nulla aliquet nisi id porta pretium. Quisque sit amet sapien non lectus ultricies maximus quis ut magna. Curabitur egestas ligula eget imperdiet malesuada. Pellentesque commodo pretium sem ac tempus.
-
-Nullam enim eros, commodo vel ligula non, molestie tempor nisl. Sed dignissim, odio vel luctus commodo, velit felis rutrum urna, nec tincidunt nunc erat in purus. Aenean nec mollis risus. Vestibulum sed sem finibus sapien pellentesque congue in vulputate erat. Ut iaculis euismod nisi, id congue est egestas non. Etiam nec gravida risus, bibendum commodo leo. Aenean tempus facilisis orci, id efficitur ipsum imperdiet maximus. Nulla ipsum mauris, vestibulum sed accumsan at, vulputate et sapien. Suspendisse non velit metus. Curabitur quis arcu quis purus aliquam feugiat. Duis consectetur efficitur aliquam. Vestibulum volutpat ligula vitae urna ornare, et feugiat lacus lobortis. Praesent nec tortor sit amet massa sodales scelerisque. Aenean quam felis, tristique ac erat in, varius tincidunt dui. Quisque ac metus dapibus erat dictum auctor id vel orci. Nam vel vulputate tortor, ac tincidunt ligula.
-
-Morbi vitae arcu ac dolor fermentum tempor. Mauris dolor neque, dignissim congue sodales ut, accumsan a sem. Suspendisse fringilla ipsum at faucibus luctus. Integer nec facilisis nisi, vel iaculis nulla. Duis magna nunc, tincidunt ut diam et, scelerisque elementum tortor. Fusce fringilla ex metus, ut vulputate velit maximus eget. Mauris vestibulum metus sit amet lectus hendrerit tincidunt. Donec eleifend vitae ipsum eget iaculis. Pellentesque convallis, augue et varius facilisis, ex felis viverra ante, quis faucibus orci turpis vel nunc. Nunc fringilla malesuada est quis mollis. Donec mattis molestie mauris, eu laoreet metus rhoncus et. Pellentesque nec ante a felis vestibulum finibus. Sed et ex vel mi tempus maximus quis vitae turpis. Fusce ligula magna, mattis et urna non, vestibulum convallis arcu. Duis lacinia vitae nisi vitae ultrices. Duis non diam non lacus vestibulum ultricies vitae in lorem.
-
-Praesent sit amet felis eget est auctor dictum. Sed tincidunt diam nec placerat tristique. Etiam eu lacus congue, lacinia quam vel, molestie ex. Aliquam sagittis, enim vitae ultricies luctus, velit magna cursus nunc, ultrices ornare risus orci vitae erat. Phasellus facilisis bibendum sollicitudin. Vestibulum id posuere nulla. Mauris pharetra pretium elit, eu gravida ante hendrerit et. Nullam vel eleifend nisl, pulvinar tristique sapien. Cras ac tellus augue. In hac habitasse platea dictumst.
-
-Aenean eu risus vestibulum, pulvinar felis euismod, accumsan est. Cras consequat vehicula mi, id eleifend neque bibendum id. Morbi facilisis, leo eu tempor condimentum, mi sapien sollicitudin dolor, eu elementum eros nibh nec nulla. Donec ornare leo vitae lacinia auctor. Integer imperdiet lacinia purus. Mauris id facilisis ligula. Mauris at neque id tortor commodo posuere. Proin vel quam accumsan, ornare ante non, aliquet nibh.
-
-Cras sapien lectus, dapibus in tellus eu, pellentesque pretium lectus. Integer neque ante, suscipit eu purus eu, feugiat auctor enim. Sed justo leo, facilisis a lacus et, laoreet fermentum sapien. Aenean sit amet orci id orci sagittis consectetur et at orci. Maecenas lectus risus, auctor id est quis, finibus dapibus nisi. Morbi vulputate molestie varius. Suspendisse fringilla ex eros, sagittis pellentesque massa ultricies in. Aenean et facilisis leo, quis pretium ipsum. Aliquam sed est varius, malesuada turpis id, convallis elit. Donec vestibulum magna scelerisque volutpat bibendum. Nunc auctor sem eu orci suscipit gravida. Morbi luctus mauris arcu, sed efficitur sem varius pretium. Morbi id ante et tellus elementum porttitor a sit amet arcu. Nullam sed pellentesque quam, at rutrum turpis.
-
-In eget nulla nisl. Sed porta vitae ante in auctor. Aenean nec elit a velit convallis vestibulum id a nisi. Sed vulputate in erat a posuere. Quisque iaculis leo dignissim, eleifend odio vel, malesuada urna. Nullam leo nisl, pulvinar sed leo quis, malesuada volutpat nulla. Ut pulvinar et nibh ut vehicula. Nullam et leo ut tortor finibus molestie vitae mollis mauris. Etiam porta viverra varius. Morbi eu lobortis ante. Phasellus at urna pulvinar, dapibus orci quis, placerat tortor. Morbi felis lorem, vestibulum at accumsan sit amet, accumsan nec enim.
-
-Donec ut egestas dui, eget feugiat justo. Nulla pellentesque nibh id molestie euismod. Aenean volutpat quam at eros malesuada laoreet quis id magna. Integer porttitor nulla ac nisi fringilla viverra. Phasellus sit amet nunc enim. Curabitur fermentum bibendum fringilla. Proin tellus diam, vehicula porttitor auctor sed, gravida quis nulla. Phasellus est elit, tempus eu dui quis, lacinia tincidunt nunc. Integer lorem arcu, euismod iaculis felis ut, consequat sollicitudin erat. Nam faucibus iaculis ipsum. Integer sollicitudin blandit eros, vitae venenatis ligula hendrerit a.
-
-Integer at est nisl. Aliquam convallis consequat nibh, sed dapibus lectus consectetur ut. Fusce non luctus est. Curabitur congue et augue vel hendrerit. Aliquam tincidunt nulla velit, nec rutrum nulla porttitor a. Nulla pharetra tincidunt turpis, vitae ullamcorper metus dictum at. Sed id tincidunt augue.
-
-Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed euismod quam at ligula laoreet euismod. Aenean posuere hendrerit auctor. Suspendisse venenatis volutpat arcu, laoreet auctor lectus vulputate et. Suspendisse tincidunt purus vel mauris molestie tincidunt. Phasellus ac auctor orci, at fermentum felis. Aenean arcu nisi, varius eu ornare vitae, placerat a mauris. Nam urna risus, rutrum non nisi a, aliquet feugiat velit. Quisque ullamcorper gravida sem et faucibus. Mauris vel rutrum turpis. Suspendisse sodales ornare leo vitae varius. Curabitur pulvinar massa nec ipsum vulputate ultricies.
-
-Donec sit amet nunc id odio lobortis porttitor et ut mauris. Fusce semper metus ac dui molestie, sed vestibulum urna lacinia. Sed ac ipsum nisi. Duis scelerisque lobortis urna feugiat pellentesque. Nulla ut varius risus. Donec at justo non ante dictum vestibulum sed quis nisl. Aliquam nec enim id enim pulvinar laoreet. Fusce sapien sapien, rutrum quis ex nec, cursus suscipit nisi. Suspendisse vel elit pulvinar, feugiat magna tincidunt, euismod tortor. Phasellus eu molestie metus, sit amet posuere dolor.
-
-Donec fringilla sodales magna eget egestas. Nunc in nisi egestas, rutrum eros ut, iaculis enim. Mauris vehicula quis ipsum eget dignissim. Quisque a purus vitae ipsum dapibus bibendum sed sed risus. Phasellus quis est tristique, pulvinar dui quis, efficitur lacus. Mauris a mi volutpat lacus sollicitudin vehicula eget eu est. Suspendisse id turpis eu mi placerat blandit ac pulvinar neque. Aliquam erat volutpat. Cras vitae nibh in purus sollicitudin sagittis. Pellentesque vel tortor nunc. Phasellus mollis sem sed lectus gravida, non maximus arcu convallis. Suspendisse fringilla magna et risus congue laoreet. Pellentesque et turpis vitae eros viverra euismod. Duis non eleifend nulla. Aenean vestibulum sed erat a rutrum. Phasellus efficitur fermentum lectus, eget molestie mi vestibulum sed.
-
-Integer pellentesque porta lectus, eu sagittis diam rutrum vel. Ut vel libero ac ligula ornare consectetur. Donec velit enim, eleifend at nulla a, congue molestie velit. Suspendisse potenti. Quisque vel pretium orci. Praesent dui nunc, ornare blandit augue in, finibus aliquet dui. Quisque non consectetur ante, sit amet placerat felis. Cras fringilla lacus consectetur erat scelerisque pulvinar. Proin sodales congue pellentesque. Nunc elementum ligula in mauris tincidunt semper. Praesent accumsan ipsum et dolor malesuada, id feugiat ligula egestas. Suspendisse potenti. In dictum venenatis leo a pretium. Nulla iaculis risus non neque semper, vel efficitur tortor congue. Fusce convallis bibendum nunc, sed dictum leo elementum ac. Integer tincidunt aliquet magna, quis luctus felis tincidunt nec.
-
-Mauris lorem diam, fringilla nec felis eget, feugiat tincidunt magna. Cras risus nisl, maximus ut metus eget, suscipit rutrum sapien. Quisque tristique odio nunc, ac laoreet dui finibus in. Vestibulum nec leo in nunc auctor luctus quis et sem. Ut ullamcorper congue lorem non maximus. Sed orci sapien, scelerisque vel erat quis, pharetra commodo augue. Ut eu mattis tortor, et ornare lectus. Donec aliquam, mauris et tempus ultricies, mi mauris malesuada metus, vitae malesuada neque justo a justo. Nullam elementum eros at mi sollicitudin eleifend. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-
-Nulla convallis volutpat mauris quis maximus. Cras efficitur facilisis convallis. Sed eu justo accumsan, vulputate lorem at, fermentum risus. Donec pharetra aliquet quam ut pretium. Cras risus risus, auctor mattis turpis ac, malesuada laoreet sapien. Proin mollis ante eu elit faucibus pulvinar. Etiam blandit quis tortor quis congue. Ut ultricies metus id neque facilisis iaculis.
-
-Pellentesque venenatis, orci eget scelerisque pretium, tellus sem imperdiet nisi, tempor fringilla nulla dui ac risus. Pellentesque rhoncus orci et nulla viverra fermentum. Suspendisse vel turpis arcu. Phasellus et luctus justo. Vestibulum et justo ullamcorper libero ultrices dictum. In auctor ligula mollis mollis cursus. Sed ac lacinia justo. Morbi eleifend efficitur aliquet. Donec convallis, dolor quis tristique dapibus, ante velit sagittis elit, sed ullamcorper urna ligula at eros. Ut vulputate luctus neque a congue. Nulla feugiat justo et aliquam suscipit.
-
-Aliquam nibh arcu, faucibus sit amet bibendum non, elementum at orci. Integer tempus ligula velit, non sagittis nibh viverra nec. Nulla facilisi. Nulla fringilla lectus in augue aliquet dignissim. Etiam bibendum semper lectus, at rhoncus nibh finibus at. Donec cursus risus et neque interdum porta. Aenean luctus pharetra leo, quis fringilla justo. Maecenas volutpat tortor ac lacus dictum hendrerit. Nam ac tempor massa, vitae convallis elit. Curabitur facilisis quam at enim ultrices venenatis vel eget quam. In euismod sapien erat, quis facilisis nunc gravida ac. Aliquam tincidunt eros eu mauris dignissim, vitae congue mauris accumsan. Sed vitae rutrum felis, at dictum lectus. Suspendisse imperdiet sodales arcu, eu condimentum enim pellentesque id. Nulla vitae pulvinar est. Nulla eget diam aliquam justo tempor lacinia.
-
-Donec pulvinar arcu vitae magna imperdiet, et elementum mi dignissim. Quisque eget hendrerit ex. Sed cursus imperdiet turpis eu suscipit. Nulla semper libero lacus, vel pharetra libero ultricies id. Quisque fermentum nisl quis nibh imperdiet pellentesque. Nullam lectus nulla, rhoncus a ultrices tristique, bibendum eu ante. Vivamus dictum odio nulla, sed commodo erat aliquam ut. Aliquam maximus suscipit magna a facilisis. Mauris dignissim erat non nulla eleifend blandit. Aenean pretium feugiat suscipit. Fusce non vulputate velit, et fermentum turpis. Pellentesque convallis cursus suscipit. Donec faucibus diam ac congue congue. Curabitur semper odio sit amet imperdiet porta. Sed imperdiet sit amet felis sed laoreet.
-
-Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut id lacus id leo consequat aliquam nec non mauris. Nunc maximus pulvinar diam, eget lacinia dui rhoncus vitae. Duis eleifend pulvinar eros at vehicula. Pellentesque et condimentum purus. Duis porttitor eros sed urna tristique hendrerit. Suspendisse euismod mauris enim, ultrices ultricies massa volutpat vehicula. Vivamus risus enim, cursus eu eleifend dapibus, imperdiet id dolor. Aenean ultrices, orci quis eleifend ultricies, elit nibh suscipit eros, id placerat massa diam in dui. Morbi leo sapien, venenatis sed dignissim a, tincidunt ultrices lacus. Proin suscipit feugiat lectus vel fringilla. Nulla sed neque sed lacus bibendum ornare vel eu turpis. Etiam id ligula eget turpis luctus feugiat. Donec id scelerisque odio. Ut et bibendum mauris. Vivamus tempus massa at orci ultrices commodo.
-
-Curabitur sit amet sem at lectus molestie bibendum a finibus dui. Nunc scelerisque justo nunc, semper tincidunt sem aliquam quis. Aliquam quis dignissim ex. Praesent scelerisque vehicula quam in tincidunt. Fusce consectetur nunc egestas porta tempor. Sed vulputate nunc quis fringilla euismod. Etiam vel egestas diam, ut fringilla est.
-
-Quisque pellentesque id tortor eu dignissim. Suspendisse ultrices congue ante, quis volutpat felis. Aenean fringilla eget urna eu pellentesque. Aliquam sagittis porttitor neque, non pulvinar arcu lobortis eget. Aliquam varius interdum felis. Aenean pharetra libero a diam laoreet rutrum. Aliquam interdum mattis tristique. Integer ornare neque ipsum, quis luctus eros tincidunt eu. Vivamus nec erat convallis, tempus turpis id, bibendum quam.
-
-Morbi in magna a nisl porta luctus sed eget arcu. Maecenas ornare lorem sollicitudin, facilisis tortor non, pellentesque turpis. Nulla id nulla vel ipsum vehicula euismod. Maecenas consectetur, felis vitae venenatis dapibus, nunc tellus facilisis lectus, sagittis imperdiet velit ipsum vitae purus. Mauris ornare varius justo et dapibus. Fusce ut ante eget ex commodo auctor non eu ligula. Ut pretium elit nibh, et rhoncus urna volutpat vitae. Aenean et leo dictum, tempus quam eu, bibendum ligula.
-
-Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed ac ligula vel augue volutpat auctor. Cras sed porttitor massa, blandit vestibulum augue. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean iaculis sapien a dignissim vulputate. Phasellus aliquam ornare mi ac sollicitudin. Duis porta in quam eget commodo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris et urna eu odio tincidunt facilisis sed at elit. Integer vel cursus nisl. Fusce erat felis, volutpat sed lectus at, accumsan luctus sem. In hac habitasse platea dictumst. Curabitur pellentesque nunc non elementum luctus. Nam venenatis dapibus justo at consequat. Nullam ac sapien nec felis egestas pellentesque.
-
-Ut ut euismod velit. Nullam quis justo at dolor laoreet tempus nec cursus diam. Nulla sagittis placerat ultricies. Vestibulum non lacus lobortis, aliquet nisi non, euismod elit. Sed facilisis, quam eget rutrum maximus, erat felis ullamcorper ipsum, et pellentesque dui nibh at libero. Mauris laoreet dui sit amet lorem consectetur bibendum. Etiam urna lorem, suscipit vel interdum sit amet, ullamcorper ut tellus. In posuere ut nunc eu auctor. Quisque feugiat metus fermentum urna molestie rutrum vel id lacus. Pellentesque ut felis in tortor scelerisque tincidunt vitae a velit. Phasellus sapien ex, fringilla nec placerat ac, maximus a justo.
-
-Integer eu risus ac tellus tristique tempor. Suspendisse tristique, nibh vitae molestie semper, enim risus aliquet lectus, et commodo lorem magna vestibulum magna. Phasellus vel hendrerit dui, ut imperdiet lorem. Sed luctus ultrices nisi quis vestibulum. Ut lobortis efficitur mauris. Integer pulvinar, purus quis iaculis vestibulum, augue lorem lobortis lacus, sit amet ullamcorper est arcu vitae sem. Donec mattis venenatis felis, at tincidunt nunc posuere at. Sed viverra mollis tristique. Aliquam et pellentesque magna. Integer quam orci, aliquam a sapien posuere, tempor facilisis turpis. Aliquam enim elit, aliquet ac tristique et, vehicula ac mauris. Aliquam quis justo euismod, ullamcorper dui vitae, consectetur ex. Morbi a blandit sem. Morbi a est eget lacus consectetur tincidunt. Quisque consequat urna in ante cursus convallis. Vivamus ipsum eros, posuere in lorem vitae, posuere congue arcu.
-
-Sed tristique dolor magna, id iaculis lectus ullamcorper vel. Nam gravida, diam vel egestas luctus, urna dolor auctor dolor, ac venenatis massa eros ut diam. Sed eu nibh nisi. Nam hendrerit, quam elementum consectetur interdum, metus ligula molestie nisi, id mollis nisl libero vitae elit. Fusce ultrices imperdiet magna eu sollicitudin. Integer vitae pellentesque quam, tristique volutpat enim. Fusce luctus tempus nibh, vel elementum velit. Suspendisse eu enim eu nunc blandit mollis non ut felis. Ut porta, erat sit amet pulvinar sagittis, mi quam eleifend nisl, ac vehicula eros metus a tortor.
-
-Cras egestas, turpis a imperdiet facilisis, urna velit faucibus enim, non pulvinar dui mauris in ex. Donec cursus, est et egestas euismod, est elit luctus felis, nec porta purus mi at sem. Integer fermentum faucibus felis eget iaculis. Donec viverra leo sed laoreet condimentum. Integer luctus sem at magna placerat consequat. Donec et tempor quam. Aliquam erat volutpat. Integer molestie felis nunc, a bibendum metus imperdiet ut. Ut in tempor dolor. Aenean id efficitur metus, vitae fringilla nisl. Duis nibh neque, finibus at erat nec, dapibus volutpat felis. Quisque vitae luctus massa, ac pellentesque eros. Sed congue mollis risus eget porttitor. Nullam et erat lacus. Etiam imperdiet placerat erat at tincidunt.
-
-Ut eget neque blandit, dignissim turpis sit amet, convallis ex. Phasellus eget commodo tortor, sit amet semper lacus. Vestibulum mattis vel lorem vitae tempus. In scelerisque tortor sed nulla venenatis molestie. Phasellus commodo euismod fringilla. Suspendisse elementum est at eros vehicula dapibus. Nulla elementum gravida risus cursus placerat. Suspendisse nec turpis congue, euismod ex vel, blandit est. Pellentesque lacinia libero nec erat mattis, at elementum felis posuere. Etiam eros libero, lobortis ut ultricies nec, eleifend et lectus. Cras ac purus vitae enim lacinia finibus.
-
-Cras sed arcu at dolor feugiat sagittis. Quisque auctor diam at nibh vulputate auctor. Cras cursus est enim, vel aliquam odio pretium nec. Cras quis justo sed augue congue pretium nec id ipsum. Sed porttitor leo ligula, id gravida felis auctor id. In hac habitasse platea dictumst. Nulla tempus varius eros eu vestibulum. Aenean enim nulla, molestie mollis justo nec, interdum tincidunt odio. Aenean aliquam lacus tellus, sed tincidunt enim facilisis at. Nulla luctus sodales ligula, non dapibus felis finibus quis. Proin tincidunt enim et dolor pharetra, quis tristique tortor viverra. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-
-Suspendisse vehicula augue facilisis, dictum turpis sit amet, dapibus lorem. Nullam ac neque sem. Nullam orci turpis, laoreet et auctor vel, posuere vitae quam. Sed mauris eros, tincidunt vel mollis a, dictum non lorem. Pellentesque pretium lectus eros, suscipit consectetur nunc fringilla eget. Praesent venenatis in ante at molestie. Nunc a dolor id ex mattis rhoncus vitae non lorem. Fusce maximus est at laoreet sollicitudin. Cras ut egestas ipsum. Nullam tincidunt tellus ut augue bibendum, vel ornare sem rutrum. Nam sodales magna sit amet imperdiet semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed sed diam placerat, tincidunt mauris non, lobortis erat. Praesent at dapibus neque, eu dapibus tortor.
-
-Donec efficitur nunc eu mollis aliquam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam id purus nec purus hendrerit laoreet non ut ex. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris aliquet et erat id laoreet. Nullam ullamcorper lorem eu sagittis faucibus. Maecenas commodo dictum eros, in tempus nulla pharetra quis. Ut vel lorem felis. In gravida tempor ex. Quisque eu nunc eu enim faucibus consequat ac sit amet purus. Morbi quis risus aliquam, tempor libero malesuada, pulvinar ligula. Maecenas condimentum purus non posuere hendrerit. Ut iaculis velit vitae nibh hendrerit maximus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam vel hendrerit lectus, tristique luctus nisi.
-
-Praesent ac augue sit amet quam fermentum hendrerit ut nec justo. Aliquam malesuada in massa vel tristique. Suspendisse varius, magna vel vestibulum hendrerit, nulla nisi viverra turpis, at feugiat felis urna non risus. Cras placerat nec enim vel tincidunt. Aenean nec lorem pulvinar, fringilla elit eget, egestas nulla. Etiam vestibulum, ligula ullamcorper interdum imperdiet, diam libero malesuada sapien, sed convallis odio lorem vel enim. Aenean pellentesque tempus hendrerit. Nulla tincidunt metus id sapien mollis, quis consequat velit porttitor. Donec porttitor dictum laoreet. Praesent porttitor commodo lorem eget vestibulum. Aliquam id odio massa. Donec euismod elit ut augue facilisis facilisis. Duis eu ipsum in risus varius sagittis vel ut sapien.
-
-Quisque condimentum lorem convallis, mollis turpis et, congue ante. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed aliquet, nulla id molestie semper, lectus felis efficitur odio, id rhoncus leo magna et lectus. Suspendisse congue sem urna, id semper turpis dictum ut. Mauris vitae dui a ante sodales rhoncus cursus eu massa. Aenean tristique, magna vitae vehicula convallis, ligula leo ornare mi, sed eleifend lacus enim auctor elit. Proin fermentum ante diam, imperdiet tempor tortor rhoncus quis. Suspendisse ex lectus, mollis eget nisl a, aliquam interdum orci.
-
-Aenean bibendum aliquam dictum. Vivamus ut tellus lacus. Proin sit amet ante id velit dictum sagittis. Sed id odio diam. Nulla ultrices tempus lorem, id aliquam elit maximus eu. Phasellus accumsan ipsum ex, ac feugiat arcu pretium non. Pellentesque euismod blandit ligula dignissim semper. Nam neque diam, finibus ut mi id, tincidunt posuere justo. Suspendisse posuere ornare finibus. Nunc vestibulum quis sem eget imperdiet. Aenean lobortis magna vitae velit ullamcorper, in sagittis nisi lobortis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris eu viverra velit, eu posuere magna. Aenean volutpat nulla erat, non efficitur quam luctus eu.
-
-Nam et diam erat. Phasellus consequat, nulla in dapibus lobortis, enim turpis tempus felis, eu viverra ante diam volutpat nisl. Nunc vulputate tortor neque, vel dictum nisl faucibus id. Phasellus neque dui, pretium id augue eu, maximus vulputate quam. Nam non pharetra turpis. Curabitur odio risus, condimentum faucibus purus eget, dapibus consectetur mi. Donec eget auctor turpis, eget accumsan lacus. Nam suscipit sodales leo a volutpat. Sed facilisis, nisi tincidunt mollis mollis, tortor odio tempor lorem, quis fermentum lacus ligula sit amet mauris. Nam interdum a nulla sit amet hendrerit. Ut volutpat risus faucibus sapien eleifend, ac lobortis risus eleifend. Sed a mauris sodales, suscipit nunc a, varius eros. Mauris ac mauris cursus, aliquam lacus et, tincidunt lacus.
-
-Phasellus maximus augue quis malesuada ornare. Quisque nec vulputate nulla, sit amet pharetra lacus. Duis porta sagittis risus. Nam eget pulvinar massa. Donec viverra quam quam, vitae mattis purus euismod eget. Phasellus scelerisque justo sit amet urna gravida, ac finibus massa rhoncus. Proin varius est ac neque sodales tincidunt. In aliquam convallis odio eget rutrum. Nullam dictum aliquam venenatis. Maecenas ut velit vel est mollis commodo ac in est.
-
-Duis et venenatis neque. Proin eu suscipit ex, vel venenatis elit. Vestibulum a velit eget lorem accumsan tempus. Curabitur aliquet malesuada purus. Donec sagittis lacinia erat, mollis commodo nisi molestie sed. Morbi odio odio, elementum vel elementum vel, consectetur in nunc. Morbi nec iaculis lacus. Nunc cursus libero eu urna viverra, sit amet ullamcorper mi ultricies. Aliquam ultricies leo non enim posuere fermentum. Etiam sollicitudin fringilla mauris, a blandit ex facilisis quis. Aliquam in felis feugiat, mattis sem ac, dignissim urna. Phasellus massa nisi, tristique ac blandit quis, consequat vel tellus. Fusce laoreet fringilla elit eu elementum. Ut libero massa, blandit dignissim dignissim sed, luctus semper quam. Quisque rhoncus pharetra placerat.
-
-Mauris maximus elementum efficitur. Aliquam rutrum rhoncus nunc quis bibendum. Cras ut ligula quis sem porta bibendum sit amet cursus turpis. Aliquam orci elit, convallis nec ipsum vitae, accumsan finibus justo. Morbi risus urna, ornare vel lectus vitae, convallis auctor elit. Maecenas tristique, tellus nec dignissim rhoncus, lectus sapien euismod ex, id cursus eros dui eu urna. Aliquam maximus eros commodo nulla pulvinar, vitae facilisis tellus eleifend. Aliquam egestas porta massa ut consequat. Nulla convallis quis urna sit amet pulvinar. Praesent sed vestibulum purus, et vestibulum velit. Morbi facilisis massa in quam placerat placerat.
-
-Aliquam imperdiet bibendum erat, id mollis justo luctus scelerisque. Maecenas ac enim sollicitudin, consequat lectus hendrerit, bibendum enim. Suspendisse vel orci eget mi auctor pharetra in sed risus. Sed vehicula laoreet augue ullamcorper interdum. Integer non pretium ex. Integer eu semper arcu, vitae accumsan ipsum. Nunc pulvinar, dolor sit amet tempor pellentesque, nisl turpis ultricies orci, sed porta ligula leo in mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut lectus ac ipsum sollicitudin suscipit. Vivamus sed convallis justo. Vivamus et purus ex. Aliquam facilisis nulla et varius malesuada. Fusce non ullamcorper urna. Duis venenatis luctus metus, in eleifend eros consequat ut.
-
-Quisque vel mattis elit, bibendum ultrices odio. Nulla vestibulum, lectus vitae vestibulum eleifend, eros justo accumsan lacus, quis placerat nibh nulla eu tortor. In elit ligula, rutrum et sodales sed, ornare vitae arcu. Pellentesque fermentum, tellus ullamcorper volutpat vulputate, tortor nulla commodo arcu, sit amet tempus augue lorem eu ligula. In faucibus magna leo, lobortis placerat purus interdum vitae. Aliquam nec sollicitudin neque. Vestibulum rutrum vitae leo vel dapibus. Donec purus leo, auctor et nunc eget, mollis ornare dolor. Curabitur id ex eu odio dignissim vehicula. Donec tincidunt fringilla sapien. Pellentesque lobortis, metus in hendrerit condimentum, augue dolor ullamcorper risus, quis malesuada leo urna sit amet ligula. Sed varius augue vel luctus lacinia.
-
-Morbi at diam eu purus blandit posuere. Aliquam lacinia tristique nisi quis aliquet. Vivamus tincidunt lacus non ligula ullamcorper, porttitor hendrerit massa sodales. Donec efficitur elementum ex, vel euismod nisl pulvinar sit amet. Donec ac diam nec enim auctor euismod. Etiam sollicitudin mi vitae ante varius, tempus convallis leo lobortis. Aliquam et quam tempus, ornare mi a, aliquet massa. Nam lacinia massa nec velit molestie, id dictum sem aliquam. Duis imperdiet neque id nulla lacinia, non finibus felis egestas. Mauris vitae eleifend dolor. Proin aliquam lacinia purus sit amet aliquet. Donec et ipsum non augue lobortis rhoncus ut sed nisi. Etiam condimentum metus at risus ornare tempor. Sed arcu sapien, volutpat sed eleifend vitae, facilisis aliquet diam. Maecenas laoreet tellus sit amet convallis ultricies. Integer feugiat commodo lorem a eleifend.
-
-Fusce vitae magna ac lorem consequat consectetur. Nulla egestas sagittis magna, ut ullamcorper sem ullamcorper a. Nulla ex nulla, viverra a bibendum vel, eleifend et nulla. Duis aliquam leo sodales odio tristique laoreet. Quisque maximus justo in varius ullamcorper. Vestibulum luctus ut tortor vitae facilisis. Nam malesuada, enim ut vestibulum vulputate, ex ipsum congue lacus, non luctus nisi ante vitae metus. Ut ornare mauris id diam tempor iaculis a ac est. Sed magna sem, fermentum non congue sit amet, egestas sed lectus. Duis a molestie nisl, eu bibendum lorem. Nulla viverra purus non accumsan dictum. Donec aliquet vitae sapien in accumsan. In hac habitasse platea dictumst.
-
-Fusce sollicitudin pharetra aliquam. Aenean ac luctus purus. Suspendisse dolor ante, imperdiet a metus vitae, scelerisque fringilla libero. Mauris malesuada ligula urna, interdum accumsan eros eleifend non. Nunc fringilla massa orci, ac luctus est pellentesque sit amet. Nullam at lectus iaculis, vehicula risus sed, egestas mauris. Suspendisse tincidunt, mauris vel pharetra euismod, augue metus porta neque, nec molestie magna magna nec lectus. Morbi mollis felis eu malesuada pulvinar. Morbi viverra lacus sit amet leo condimentum, luctus ornare dui finibus.
-
-In non rutrum metus. Donec dictum libero ac dolor hendrerit tristique. Vivamus laoreet, orci non congue porttitor, lectus nulla accumsan ante, ut scelerisque turpis tellus in elit. Nam eget congue diam. Pellentesque euismod porttitor diam in elementum. Mauris euismod fermentum interdum. Morbi non cursus tellus. Aenean posuere tempus massa quis pharetra. Morbi non orci vel tortor suscipit blandit. Cras maximus dapibus erat tristique pharetra. Morbi at malesuada ipsum.
-
-Nam ut mi at erat tempus convallis. Donec euismod nibh sit amet condimentum dictum. Duis augue arcu, finibus eget quam et, ullamcorper tempus velit. Integer quam nisi, dignissim eu justo id, ullamcorper varius nisi. Donec tristique auctor vehicula. Fusce quam augue, mattis eget tempor quis, iaculis et dolor. Donec maximus tincidunt odio, et viverra odio. Etiam sodales tristique sapien vitae ultricies. Nunc tortor diam, dictum et mi quis, condimentum fermentum ipsum. Curabitur posuere condimentum turpis tincidunt iaculis. Pellentesque tincidunt pulvinar metus, sed vulputate nisi rutrum semper. Phasellus bibendum nunc quis purus tempor maximus. Donec eu porttitor urna. Aenean dictum fringilla viverra. Etiam et bibendum nulla.
-
-Cras at mauris non nisi commodo ullamcorper. Praesent nec augue mauris. Nam id porta arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse volutpat elit ut urna elementum sagittis. Phasellus nec lorem massa. Curabitur et dolor risus. Fusce pulvinar sapien rutrum, varius arcu imperdiet, blandit leo. In ullamcorper posuere enim, eu fermentum diam tincidunt et. Sed viverra lorem leo, et vestibulum dui finibus id. Maecenas in ullamcorper nulla. Sed rutrum vulputate lectus eu malesuada. Phasellus ultricies vitae est ac rhoncus.
-
-Sed maximus viverra vehicula. Sed efficitur pulvinar lectus ac malesuada. Quisque ornare lorem bibendum dui convallis fermentum. Sed neque urna, eleifend vitae mattis eget, congue vel lorem. In dignissim erat arcu, et tristique felis euismod et. Morbi tincidunt quam sed interdum finibus. Praesent vitae consectetur purus, sed blandit risus. Mauris sit amet odio mattis, fermentum libero vel, pharetra risus. In at aliquet nulla, eu tincidunt orci. Nullam maximus molestie purus, ut scelerisque eros vehicula eu. Quisque ac scelerisque metus.</string>
     <string name="finish">Finish</string>
 
     <!--QUIZ STRINGS-->
@@ -258,13 +600,42 @@ Sed maximus viverra vehicula. Sed efficitur pulvinar lectus ac malesuada. Quisqu
         <item>medium</item>
         <item>large</item>
     </string-array>
+    <string name="title_progress_reports">Progress Reports</string>
     <string name="title_text_size">Text size</string>
     <string name="description_text_size">The default text size displayed in the reader</string>
     <string name="default_text_size">medium</string>
     <string name="title_wpm">WPM</string>
+    <string name="title_words_read">Words Read</string>
     <string name="description_wpm">The default wpm used in the reader</string>
+    <string name="title_today">Today</string>
+    <string name="title_last_week">Last Week</string>
+    <string name="title_last_year">Last Year</string>
+    <string-array name="days_abbr">
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </string-array>
+    <string-array name="months_abbr">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
+    </string-array>
 
-
+    <string name="quiz_try_again">TRY AGAIN</string>
+    <string name="quiz_return">RETURN TO LEARNING MODULES</string>
 
 
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.signout.SignOutFragment">
+    tools:context="com.gitlab.capstone.pellego.fragments.signout.SignOutFragment">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="92dp"
         tools:layout_editor_absoluteY="146dp"
-        android:background="@color/light_blue">
+        android:background="?colorPrimary">
         <TextView
             android:id="@+id/text_sign_out"
             android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:layout_marginEnd="8dp"
             android:gravity="center_horizontal"
             android:textColor="@color/white"
-            android:textSize="70dp" />
+            android:textSize="70sp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

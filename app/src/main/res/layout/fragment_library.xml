@@ -1,97 +1,83 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.library.LibraryFragment">
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    tools:context="com.gitlab.capstone.pellego.fragments.library.LibraryFragment">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:id="@+id/title_library"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"
+        android:elevation="40dp"
+        android:text="@string/title_library"
+        android:textSize="50sp"
+        android:gravity="center"
+        android:fontFamily="@font/bulletto_family"
+        ></TextView>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="92dp"
-        tools:layout_editor_absoluteY="146dp"
-        android:background="@color/light_blue">
+        android:id="@+id/lib_linear_layout">
 
-        <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:elevation="10dp"
+        android:paddingTop="82dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp" />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/library_header"
+        layout="@layout/library_header" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_import_book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?colorPrimaryDark"
+        android:tint="?colorButtonNormal"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="15dp"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/empty_library_container"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:gravity="center"
+        >
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/empty_anim"
+            app:lottie_loop="false"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/lib_linear_layout">
-            <TextView
-                android:id="@+id/text_library"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center_horizontal"
-                android:textColor="@color/white"
-                android:textSize="70dp" />
-
-            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
-
-                <GridLayout
-                    android:id="@+id/book_grid"
-                    android:clickable="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_marginTop="30dp"
-                    android:columnWidth="110dp"
-                    android:layout_gravity="center_horizontal"
-                    android:verticalSpacing="24dp"
-                    android:horizontalSpacing="20dp"
-                    >
-
-                    <TextView
-                        android:id="@+id/book_1"
-                        android:layout_column="0"
-                        android:layout_row="0"
-                        android:layout_height="160dp"
-                        android:background="@drawable/catcher_in_the_rye"
-                        android:layout_width="110dp"
-                        android:layout_margin="4dp"
-                        android:gravity="center"/>
-                    <TextView
-                        android:id="@+id/book_2"
-                        android:layout_column="1"
-                        android:layout_row="0"
-                        android:layout_height="160dp"
-                        android:background="@drawable/harry_potter"
-                        android:layout_width="110dp"
-                        android:layout_margin="4dp"
-                        android:gravity="center"
-                        />
-                    <TextView
-                        android:id="@+id/book_3"
-                        android:layout_height="160dp"
-                        android:layout_column="2"
-                        android:layout_row="0"
-                        android:background="@drawable/leviathan_wakes"
-                        android:layout_width="110dp"
-                        android:layout_margin="4dp"
-                        android:gravity="center"
-                        />
-                </GridLayout>
-            </ScrollView>
-        </LinearLayout>
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_import"
-            android:layout_width="wrap_content"
+            app:lottie_fileName="astronaut.json"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="20dp"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            android:textSize="18dp"
+            android:text="So empty..">
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </TextView>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

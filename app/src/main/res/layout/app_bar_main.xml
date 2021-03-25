@@ -4,20 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeActivity">
+    android:background="?colorControlHighlight"
+    tools:context="com.gitlab.capstone.pellego.activities.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        app:title=""
         android:id="@+id/toolbar"
-        app:titleTextColor="@color/light_blue"
-        android:elevation="8dp"
-        app:theme="@style/ToolbarTheme"
+        app:titleTextColor="@color/light_blue_solid"
+        android:background="@color/light_blue_solid"
+        app:elevation="15dp"
         />
 
-
-
     <include layout="@layout/content_main" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

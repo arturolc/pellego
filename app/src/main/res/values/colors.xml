@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="light_blue">#609DE5</color>
+    <color name="light_blue">#EE609DE5</color>
+    <color name="light_blue_solid">#609DE5</color>
+    <color name="transparent_blue">#99609DE5</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#E74C3C</color>
     <color name="green">#28B463</color>
-    <color name="white_transparent">#77FFFFFF</color>
+    <color name="white_transparent">#88FFFFFF</color>
     <color name="black">#FF000000</color>
-    <color name="transparent">#000000CC</color>
+    <color name="transparent">#00000000</color>
     <color name="pastel_blue">#1b85b8</color>
     <color name="pastel_purple">#5a5255</color>
     <color name="pastel_green">#559e83</color>
     <color name="pastel_orange">#ae5a41</color>
-    <color name="light_grey">#D0D3D4</color>
-    <color name="dark_grey">#4D5656</color>
-    <color name="dark_blue">#21618C</color>
-
+    <color name="secondary_white">#f8f8ff</color>
+    <color name="primary_white">#e4e6eb</color>
+    <color name="light_grey">#3a3b3c</color>
+    <color name="gray_hover">#3a3b3c</color>
+    <color name="gray_card">#242526</color>
+    <color name="dark_grey">#EE181818</color>
+    <color name="dark_grey_solid">#181818</color>
+    <color name="grey_transparent">#774D5656</color>
+    <color name="dark_blue">#EE3C5AEB</color>
+    <color name="purple">#800080</color>
 </resources>

@@ -7,16 +7,15 @@
     "CredentialsProvider": {
         "CognitoIdentity": {
             "Default": {
-                "PoolId": "us-west-2:94cea1c8-6c99-42f4-8bda-96d3c15e5066",
+                "PoolId": "us-west-2:65f56223-e523-49b1-862c-4429a70188d2",
                 "Region": "us-west-2"
             }
         }
     },
     "CognitoUserPool": {
         "Default": {
-            "PoolId": "us-west-2_uMQcqkIOM",
-            "AppClientId": "6un6e2hj50itv794u87l2cj6n5",
-            "AppClientSecret": "1ee5i6alj5nggojs1f7ou3d3bni3l6ruuc9g9c1fceh3056jn4t2",
+            "PoolId": "us-west-2_AdDJsuC6f",
+            "AppClientId": "o4uoksbrsfa78eo644tpf20um",
             "Region": "us-west-2"
         }
     },
@@ -24,15 +23,19 @@
         "Permissions": "email,profile,openid",
         "ClientId-WebApp": "342167975084-8qtnm1pgjtecmdsctmcifa94ddul09lg.apps.googleusercontent.com"
     },
+    "FacebookSignIn": {
+        "AppId": "250928256664123",
+        "Permissions": "public_profile"
+    },
     "Auth": {
         "Default": {
             "OAuth": {
-                "WebDomain": "development241bbeea-241bbeea-dev.auth.us-west-2.amazoncognito.com",
-                "AppClientId": "6un6e2hj50itv794u87l2cj6n5",
-                "AppClientSecret": "1ee5i6alj5nggojs1f7ou3d3bni3l6ruuc9g9c1fceh3056jn4t2",
-                "SignInRedirectURI": "pellego://com.example.pellego/login/",
-                "SignOutRedirectURI": "pellego://com.example.pellego/logout/",
+                "WebDomain": "pellego813d271e-813d271e-dev.auth.us-west-2.amazoncognito.com",
+                "AppClientId": "o4uoksbrsfa78eo644tpf20um",
+                "SignInRedirectURI": "pellego://com.gitlab.capstone.pellego/login/",
+                "SignOutRedirectURI": "pellego://com.gitlab.capstone.pellego/logout/",
                 "Scopes": [
+                    "phone",
                     "email",
                     "openid",
                     "profile",
