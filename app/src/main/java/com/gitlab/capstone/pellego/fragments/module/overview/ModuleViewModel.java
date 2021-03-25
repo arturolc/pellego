@@ -64,6 +64,7 @@ public class ModuleViewModel extends AndroidViewModel {
         this.showPopupDialog = showSubmodulePopupDialog;
     }
 
+
     public boolean isShowSubmodulePopupDialog() {
         return showSubmodulePopupDialog;
     }

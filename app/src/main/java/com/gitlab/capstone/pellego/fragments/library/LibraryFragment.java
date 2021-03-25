@@ -41,7 +41,10 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -68,6 +71,7 @@ import com.gitlab.capstone.pellego.widgets.BookmarksDialog;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
 
 import org.apache.commons.io.IOUtils;
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -85,11 +89,17 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
     String lastSearch = "";
     FragmentHolder holder;
     Runnable invalidateOptionsMenu;
+    public static View header;
 
     public static class FragmentHolder {
         RecyclerView grid;
         View import_button;
         public int layout;
+        private int scrolledDistance = 0;
+        private static final int HIDE_THRESHOLD = 20;
+        private boolean controlsVisible = true;
+        private TextView title;
+
 
         View toolbar;
         View searchpanel;
@@ -115,11 +125,29 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
             // grid.addItemDecoration(divider);
 
             LayoutInflater inflater = LayoutInflater.from(context);
+            title = (TextView) v.findViewById(R.id.title_library);
+            grid.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
 
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    scrolledDistance = dy;
+                    if (scrolledDistance > HIDE_THRESHOLD && controlsVisible) {
+                        hideViews();
+                        controlsVisible = false;
+                    } else if (!grid.canScrollVertically(-1) && !controlsVisible) {
+                        showViews();
+                        controlsVisible = true;
+                    }
+                }
+            });
             toolbar = v.findViewById(R.id.search_header_toolbar_parent);
             searchpanel = v.findViewById(R.id.search_panel);
             searchtoolbar = (LinearLayout) v.findViewById(R.id.search_header_toolbar);
-
             toolbar.setVisibility(View.GONE);
 
             footer = inflater.inflate(R.layout.library_footer, null);
@@ -139,6 +167,19 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
             addFooterView(footer);
 
             updateGrid();
+        }
+
+        private void hideViews() {
+            title.animate().translationY(-title.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+            header.animate().translationY(-header.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+            import_button.animate().translationY(import_button.getHeight() * 2).setInterpolator(new AccelerateInterpolator(2));
+
+        }
+
+        private void showViews() {
+            title.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+            header.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+            import_button.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
         }
 
         public String getLayout() {
@@ -563,6 +604,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_library, container, false);
+        header = (View) getActivity().findViewById(R.id.header_circular);
 
         holder.create(v);
         holder.footer.setVisibility(View.GONE);

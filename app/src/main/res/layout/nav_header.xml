@@ -33,10 +33,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textColor="@color/white"
         android:paddingTop="8dp"
-        android:text="Chris Bordoy"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/white" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
     <TextView
         android:layout_width="wrap_content"
         android:paddingTop="3dp"
