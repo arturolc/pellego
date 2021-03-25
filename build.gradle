@@ -1,6 +1,9 @@
 buildscript {
     ext.kotlin_version = "1.4.30"
     ext.supportLibVersion = "25.3.0"
+    ext.roomVersion = "1.1.1"
+    ext.archLifecycleVersion = '1.1.1'
+
     repositories {
         mavenLocal()
         google()

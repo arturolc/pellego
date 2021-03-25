@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -92,6 +93,13 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         
         // Attach nav drawer to nav controller
         NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
+        View headerView = drawerNavigationView.getHeaderView(0);
+        Amplify.Auth.fetchUserAttributes(success ->  {
+            Log.i("user", success.get(2).getValue());
+            Log.i("user", success.get(3).getValue());
+            ((TextView)headerView.findViewById(R.id.headerUserName)).setText(success.get(2).getValue());
+        }, fail -> Log.i("user", fail.toString()));
+
         NavigationUI.setupWithNavController(drawerNavigationView, navController);
 
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -106,6 +114,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
             public void onDrawerOpened(@NonNull View drawerView) {
                 ImageView im2 = (ImageView) findViewById(R.id.profile_image_drawer);
                 im2.setImageBitmap(bitmap);
+
             }
 
             @Override

@@ -5,17 +5,19 @@
     android:id="@+id/item_page_container"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
 
     <TextView
         android:id="@+id/header_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/lato"
         app:layout_constraintHeight_percent="0.25"
         android:gravity="center"
-        android:text="what is rsvp"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="55sp"
@@ -28,9 +30,11 @@
         android:id="@+id/description_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/lato"
         android:autoSizeTextType="uniform"
         android:gravity="center"
-        android:text="testtttttttt"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:textColor="@color/white"
         android:textSize="26sp"
         app:layout_constraintBottom_toBottomOf="parent"

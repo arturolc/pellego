@@ -30,9 +30,12 @@ import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
+import com.gitlab.capstone.pellego.network.models.SMResponse;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
 import com.gitlab.capstone.pellego.widgets.PlayerWidget;
 import com.gitlab.capstone.pellego.widgets.TTSPopup;
+
+import java.util.List;
 
 
 /**********************************************
@@ -50,24 +53,25 @@ public class RsvpModuleFragment extends BaseFragment {
     private ModuleViewModel moduleViewModel;
     private FragmentActivity currentView;
     private PlayerWidget playerWidget;
-
+    private List<SMResponse> submoduleResponses;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         wpm = Integer.parseInt(getArguments().getString("wpm"));
         difficulty = getArguments().getString("difficulty");
+        submoduleResponses = getArguments().getParcelableArrayList("subModules");
         // Set the displayed text to the appropriate level
         // TODO: Query the DB for content
         switch(difficulty) {
             case "beginner":
-                content = getString(R.string.content_rsvp_beginner);
+                content = (submoduleResponses.get(1).getText()).replaceAll("\\s+", " ");
                 break;
             case "intermediate":
-                content = getString(R.string.content_rsvp_intermediate);
+                content = (submoduleResponses.get(2).getText()).replaceAll("\\s+", " ");
                 break;
             case "advanced":
-                content = getString(R.string.content_rsvp_advanced);
+                content = (submoduleResponses.get(3).getText()).replaceAll("\\s+", " ");
                 break;
         }
 
@@ -82,7 +86,7 @@ public class RsvpModuleFragment extends BaseFragment {
         final TextView textView = root.findViewById(R.id.title_rsvp);
         this.setupHeader(root);
         // Only show popup if user navigated to the Rsvp module
-       if (moduleViewModel.showSubmodulePopupDialog) showSubmodulePopupDialog();
+       if (moduleViewModel.isShowSubmodulePopupDialog()) showSubmodulePopupDialog();
         return root;
     }
 
@@ -116,7 +120,7 @@ public class RsvpModuleFragment extends BaseFragment {
             }
         });
         dialog.show();
-        moduleViewModel.showSubmodulePopupDialog = false;
+        moduleViewModel.setShowSubmodulePopupDialog(false);
     }
 
     private void showQuizPopupDialog() {
@@ -139,7 +143,7 @@ public class RsvpModuleFragment extends BaseFragment {
             }
         });
         dialog.show();
-        moduleViewModel.showPopupDialog = false;
+        moduleViewModel.setShowPopupDialog(false);
     }
 
     public void initRsvpReader(PlayerWidget playerWidget, View v, Activity a) {

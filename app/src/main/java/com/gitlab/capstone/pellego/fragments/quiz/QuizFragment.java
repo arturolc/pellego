@@ -18,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -27,14 +26,18 @@ import androidx.navigation.Navigation;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
+import com.gitlab.capstone.pellego.network.models.QuizResponse;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**********************************************
  Eli Hebdon and Chris Bordoy
 
- Quiz fragment that contains logic for learning submodule quizes
+ Quiz fragment that contains logic for learning
+ submodule quizzes
  **********************************************/
+
 public class QuizFragment extends BaseFragment {
 
     private QuizViewModel quizViewModel;
@@ -43,20 +46,24 @@ public class QuizFragment extends BaseFragment {
     private ArrayList<QuizQuestionModel> mNavItems;
     NavController navController;
 
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mNavItems = new ArrayList<>();
+
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         View root = inflater.inflate(R.layout.fragment_quiz, container, false);
+
         this.setupHeader(root);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+
         quizViewModel =
                 new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
         quizViewModel.clear();
+
         final TextView textView = root.findViewById(R.id.title_quiz);
+
         quizViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -69,64 +76,71 @@ public class QuizFragment extends BaseFragment {
         quizViewModel.setWPM(Integer.parseInt(getArguments().getString("wpm")));
         quizViewModel.setModule(getArguments().getString("module"));
 
-        quizViewModel.populateQuestionBank();
-        ((TextView) root.findViewById(R.id.text_quiz_question)).setText(quizViewModel.getNextQuestion());
-        mNavItems = quizViewModel.getNextAnswers();
-
-        // Populate the Navigation Drawer with options
-        moduleList = root.findViewById(R.id.nav_question_list);
-        QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems, moduleViewModel.getGradient()[0]);
-        moduleList.setAdapter(adapter);
-
-        // Drawer Item click listeners
-        moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @SuppressLint("ResourceAsColor")
+        quizViewModel.getQuizResponse(moduleViewModel.getModuleID(), "1").observe(getViewLifecycleOwner(), new Observer<List<QuizResponse>>() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Last question, navigate to results
-                Bundle args = new Bundle();
-                if (quizViewModel.isLastQuestion()) {
-                    NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-                    navController.navigate(R.id.nav_quiz_results);
-                }
-                // TODO: update icons based on button click
-                // Right answer
-                if (quizViewModel.getCorrectIndex() == position) {
-                    quizViewModel.score++;
-                }
-                // Wrong answer
-                else {
-                    // TODO: update UI to reflect incorrect response?
-                }
-                if (!quizViewModel.isLastQuestion()) {
-                    quizViewModel.incrementQuestionCount();
-                }
-                ((TextView) root.findViewById(R.id.text_quiz_question)).setText(quizViewModel.getNextQuestion());
+            public void onChanged(List<QuizResponse> response1) {
+                quizViewModel.getQuestions(response1);
+                quizViewModel.populateQuestionBank(quizViewModel.getQuestions(response1), quizViewModel.getAnswers(response1));
+
+                TextView quizQuestionTextView = root.findViewById(R.id.text_quiz_question);
+                quizQuestionTextView.setText(quizViewModel.getNextQuestion());
                 mNavItems = quizViewModel.getNextAnswers();
+
                 // Populate the Navigation Drawer with options
                 moduleList = root.findViewById(R.id.nav_question_list);
-                QuizQuestionListAdapter adapter = new QuizQuestionListAdapter(getContext(), mNavItems, moduleViewModel.getGradient()[0]);
+                QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), mNavItems, moduleViewModel.getGradient());
                 moduleList.setAdapter(adapter);
+
+                // Drawer Item click listeners
+                moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @SuppressLint("ResourceAsColor")
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        if (quizViewModel.isLastQuestion()) {
+                            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                            navController.navigate(R.id.nav_quiz_results);
+                        }
+                        // TODO: update icons based on button click
+                        // Right answer
+                        if (quizViewModel.getCorrectIndex() == position) {
+                            quizViewModel.score++;
+                        }
+                        // Wrong answer
+                        else {
+                            // TODO: update UI to reflect incorrect response?
+                        }
+                        if (!quizViewModel.isLastQuestion()) {
+                            quizViewModel.incrementQuestionCount();
+                        }
+
+                        quizQuestionTextView.setText(quizViewModel.getNextQuestion());
+                        mNavItems = quizViewModel.getNextAnswers();
+                        // Populate the Navigation Drawer with options
+                        moduleList = root.findViewById(R.id.nav_question_list);
+                        QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), mNavItems, moduleViewModel.getGradient());
+                        moduleList.setAdapter(adapter);
+                    }
+                });
             }
         });
 
         return root;
     }
 
+    //TODO: Make single colors, multi-color accessible
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setupHeader(View root) {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(moduleViewModel.getGradient()[0]);
+        toolbar.setBackgroundColor(0xFFF9D976);
         toolbar.setTitle(null);
         Window window = getActivity().getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(moduleViewModel.getGradient()[0]);
+        window.setStatusBarColor(0xFFF9D976);
         LinearLayout header = root.findViewById(R.id.quiz_header_container);
         GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[] {moduleViewModel.getGradient()[0], moduleViewModel.getGradient()[1]});
-        gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 0f, 0f, 90f, 90f});
-        gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
+                new int[] {0xFFF9D976, 0xFFF39f86});
+        gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 90f, 90f, 90f, 90f});
         header.setBackgroundDrawable(gd);
     }
 }

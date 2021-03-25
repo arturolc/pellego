@@ -38,10 +38,7 @@
             android:textSize="50sp"
             android:gravity="center"
             android:fontFamily="@font/bulletto_family"
-            >
-
-        </TextView>
-
+            />
 
         <!-- Here is the inserted layout -->
         <ListView

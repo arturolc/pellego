@@ -78,7 +78,7 @@
     <fragment
         android:id="@+id/nav_module_overview"
         android:name="com.gitlab.capstone.pellego.fragments.module.overview.ModuleOverviewFragment"
-        tools:layout="@layout/fragment_rsvp_module"
+        tools:layout="@layout/fragment_module_overview"
         >
         <action
             android:id="@+id/action_nav_module_overview_to_nav_quiz"
@@ -111,7 +111,6 @@
         android:id="@+id/nav_metaguiding_module"
         android:name="com.gitlab.capstone.pellego.fragments.metaguiding.MetaguidingModuleFragment"
         tools:layout="@layout/fragment_default_pager" />
-
 
     <fragment
         android:id="@+id/nav_rsvp_intro"

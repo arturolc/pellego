@@ -10,11 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.network.models.SMResponse;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**********************************************
- Eli Hebdon
+ Eli Hebdon, Chris Bordoy, Arturo lara
 
  Adapter to populate learning module list with module items
  **********************************************/
@@ -22,21 +23,25 @@ import java.util.ArrayList;
 public class ModuleListAdapter extends BaseAdapter {
 
     Context mContext;
-    ArrayList<ModuleListItemModel> mNavItems;
+    ModuleOverviewFragment fragment;
+    private final List<SMResponse> responses;
 
-    public ModuleListAdapter(Context context, ArrayList<ModuleListItemModel> navItems) {
-        mContext = context;
-        mNavItems = navItems;
+    public ModuleListAdapter(Context context,
+                             List<SMResponse> responses,
+                             ModuleOverviewFragment fragment) {
+        this.mContext = context;
+        this.responses = responses;
+        this.fragment = fragment;
     }
 
     @Override
     public int getCount() {
-        return mNavItems.size();
+        return responses.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mNavItems.get(position);
+        return responses.get(position);
     }
 
     @Override
@@ -44,6 +49,7 @@ public class ModuleListAdapter extends BaseAdapter {
         return 0;
     }
 
+    //LIST OF SUBMODULES USING THE MODULE PANE
     @SuppressLint("ResourceAsColor")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -57,13 +63,15 @@ public class ModuleListAdapter extends BaseAdapter {
             view = convertView;
         }
 
-        TextView titleView = (TextView) view.findViewById(R.id.title);
-        TextView subtitleView = (TextView) view.findViewById(R.id.subTitle);
-        ImageView iconView = (ImageView) view.findViewById(R.id.icon);
+        TextView titleView = view.findViewById(R.id.title);
+        TextView subtitleView = view.findViewById(R.id.subTitle);
+        ImageView iconView = view.findViewById(R.id.icon);
 
-        titleView.setText( mNavItems.get(position).getTitle() );
-        subtitleView.setText( mNavItems.get(position).getSubtitle() );
-        iconView.setImageDrawable(mNavItems.get(position).getIcon() );
+        SMResponse res = responses.get(position);
+
+        titleView.setText(res.getName());
+        subtitleView.setText(res.getSubheader());
+        iconView.setImageDrawable(fragment.getDrawable(res.getName().toLowerCase()));
 
         return view;
     }

@@ -4,80 +4,45 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.BaseFragment;
-import com.gitlab.capstone.pellego.app.Storage;
-import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 import com.google.android.material.navigation.NavigationView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.NoSuchElementException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.gitlab.capstone.pellego.activities.MainActivity.RESULT_ADD_CATALOG;
-import static com.gitlab.capstone.pellego.activities.MainActivity.RESULT_FILE;
-import static com.gitlab.capstone.pellego.activities.MainActivity.TAG;
 import static com.gitlab.capstone.pellego.activities.MainActivity.bitmap;
 
-
 /**********************************************
- Eli Hebdon and Joanna Lowry
+ Eli Hebdon, Joanna Lowry, Arturo Lara
 
  Profile Fragment
  **********************************************/
 
-
 public class ProfileFragment extends BaseFragment {
 
-    public String user_name;
     public static final int GET_FROM_GALLERY = 38;
     private ProfileViewModel profileViewModel;
     public static String profilePath = "/data/user/0/com.gitlab.capstone.pellego/app_imageDir/";
@@ -99,14 +64,21 @@ public class ProfileFragment extends BaseFragment {
             }
         });
 
-        getApiData(inflater, container, new ResponseCallBack() {
-            public void onResponse(Object response) {
-                // Update UI only after response is received &
-               //set the UI
+        im1.setImageBitmap(bitmap);
+        profileViewModel.getUserName().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                ((TextView)root.findViewById(R.id.tv_name)).setText(s);
+                ((TextView)root.findViewById(R.id.userName)).setText(s);
             }
         });
-        im1.setImageBitmap(bitmap);
-//        im2.setImageBitmap(bitmap);
+
+        profileViewModel.getEmail().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                ((TextView)root.findViewById(R.id.userEmail)).setText(s);
+            }
+        });
         return root;
     }
 
@@ -140,13 +112,6 @@ public class ProfileFragment extends BaseFragment {
         }
     }
 
-    /**
-     * Interface to to update UI after response from server is received
-     */
-    public interface ResponseCallBack{
-        void onResponse(Object response);
-    }
-
     private String storeImage(Bitmap bitmapImage){
         ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
         // path to /data/data/yourapp/app_data/imageDir
@@ -171,52 +136,9 @@ public class ProfileFragment extends BaseFragment {
         return directory.getAbsolutePath();
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.loadImageFromStorage(getActivity());
     }
-
-
-    private void getApiData(@NonNull LayoutInflater inflater, ViewGroup container, ResponseCallBack responseCallBack)
-    {
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url ="http://54.176.198.201:5001/user";
-
-        // Request a json response from the provided URL.
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d("response", response.toString());
-
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject item = response.getJSONObject(i);
-                                user_name = item.get("Name").toString();
-
-                             } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        responseCallBack.onResponse(response);
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.d("error", error.toString());
-
-                    }
-                });
-
-        // Add the request to the RequestQueue.
-        queue.add(jsonArrayRequest);
-    }
-
 }
