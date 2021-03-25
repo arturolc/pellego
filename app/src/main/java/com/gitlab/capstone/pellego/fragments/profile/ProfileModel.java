@@ -11,7 +11,7 @@ import com.amplifyframework.core.Amplify;
 /**********************************************
  Eli Hebdon & Arturo Lara
 
- Profile View Model
+ Profile Singleton Model
  **********************************************/
 
 public class ProfileModel {

@@ -42,6 +42,9 @@ import java.util.List;
 
 import static com.gitlab.capstone.pellego.activities.MainActivity.bitmap;
 
+/****************************************
+ * Arturo Lara, Eli Hebdon
+ ***************************************/
 public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
     public Toolbar toolbar;
     private AppBarConfiguration appBarConfiguration;
@@ -99,8 +102,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
                 ((TextView)headerView.findViewById(R.id.headerUserName)).setText(s);
             }
         });
-//s        Log.i("SIDENAV", p.getEmail().getValue());
-//        Log.i("SIDENAV", p.getUserName().getValue());
+
 
         NavigationUI.setupWithNavController(drawerNavigationView, navController);
 
