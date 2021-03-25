@@ -35,6 +35,8 @@ public class SplashActivity extends AppCompatActivity {
     private static int SPLASH_SCREEN_TIME_OUT=4000;
     private Intent i;
 
+
+
     LottieAnimationView lottieAnimationView;
     TextView title;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -54,6 +56,8 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
         MainActivity.loadImageFromStorage(this);
+
+
 
 //        LearningModulesRepo repo = new LearningModulesRepo(getApplication());
         try {

@@ -79,7 +79,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.gitlab.capstone.pellego.fragments.profile.ProfileFragment.GET_FROM_GALLERY;
-
+/****************************************
+ * Eli Hebdon
+ ***************************************/
 public class MainActivity extends FullscreenActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String TAG = MainActivity.class.getSimpleName();
     public static Bitmap bitmap;
@@ -228,6 +230,8 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
             openLibrary();
             openIntent(getIntent());
         }
+
+
 
         RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
         Window window = this.getWindow();

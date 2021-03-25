@@ -44,14 +44,13 @@ import static com.gitlab.capstone.pellego.activities.MainActivity.bitmap;
 public class ProfileFragment extends BaseFragment {
 
     public static final int GET_FROM_GALLERY = 38;
-    private ProfileViewModel profileViewModel;
+    private ProfileModel profileViewModel;
     public static String profilePath = "/data/user/0/com.gitlab.capstone.pellego/app_imageDir/";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel =
-                new ViewModelProvider(this).get(ProfileViewModel.class);
+        profileViewModel = ProfileModel.getInstance();
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         super.setupHeader(root);
         ImageView im1 = (ImageView) root.findViewById(R.id.profile_image);
