@@ -38,7 +38,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5sp"
             android:fontFamily="sans-serif-light"
-            android:text="Chris Bordoy"
             android:textColor="@color/white"
             android:textSize="28sp" />
 
@@ -86,11 +85,11 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:textColor="?android:textColor"
-                    android:text="Joanna Lowry"
                     android:textSize="18sp" />
 
                 <View
@@ -114,10 +113,10 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/userEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="example@gmail.com"
                     android:textColor="?android:textColor"
                     android:textSize="18sp" />
 

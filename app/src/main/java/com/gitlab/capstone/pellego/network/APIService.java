@@ -24,7 +24,6 @@ public interface APIService {
     @POST("modules")
     Call<List<LMResponse>> getModules(@Body AuthToken email);
 
-
     @POST("modules/{module_id}/content")
     Call<List<LMDescResponse>> getModuleDescription(@Path("module_id") String mID);
 

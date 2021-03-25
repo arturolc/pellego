@@ -9,48 +9,40 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-import com.github.axet.androidlibrary.widgets.CircleImageView;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.google.android.material.navigation.NavigationView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.gitlab.capstone.pellego.activities.MainActivity.bitmap;
 
 /**********************************************
- Eli Hebdon and Joanna Lowry
+ Eli Hebdon, Joanna Lowry, Arturo Lara
 
  Profile Fragment
  **********************************************/
 
 public class ProfileFragment extends BaseFragment {
 
-    public String user_name;
     public static final int GET_FROM_GALLERY = 38;
     private ProfileViewModel profileViewModel;
     public static String profilePath = "/data/user/0/com.gitlab.capstone.pellego/app_imageDir/";
@@ -62,19 +54,31 @@ public class ProfileFragment extends BaseFragment {
                 new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         super.setupHeader(root);
-        ImageView im1 = root.findViewById(R.id.profile_image);
+        ImageView im1 = (ImageView) root.findViewById(R.id.profile_image);
         RelativeLayout usr = root.findViewById(R.id.imgUser);
-        usr.setOnClickListener(view -> {
-            startActivityForResult(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-            MainActivity.loadImageFromStorage(getActivity());
+        usr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                MainActivity.loadImageFromStorage(getActivity());
+            }
         });
 
-        getApiData(inflater, container, response -> {
-            // Update UI only after response is received &
-           //set the UI
-        });
         im1.setImageBitmap(bitmap);
-//        im2.setImageBitmap(bitmap);
+        profileViewModel.getUserName().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                ((TextView)root.findViewById(R.id.tv_name)).setText(s);
+                ((TextView)root.findViewById(R.id.userName)).setText(s);
+            }
+        });
+
+        profileViewModel.getEmail().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                ((TextView)root.findViewById(R.id.userEmail)).setText(s);
+            }
+        });
         return root;
     }
 
@@ -89,9 +93,9 @@ public class ProfileFragment extends BaseFragment {
                         bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
                         CircleImageView profilePic =  getActivity().findViewById(R.id.profile_image);
                         profilePic.setImageBitmap(bitmap);
-                        NavigationView navView = getActivity().findViewById(R.id.side_nav_view);
+                        NavigationView navView = (NavigationView) getActivity().findViewById(R.id.side_nav_view);
                         View headerView = navView.getHeaderView(0);
-                        ImageView im2 = headerView.findViewById(R.id.profile_image_drawer);
+                        ImageView im2 = (ImageView) headerView.findViewById(R.id.profile_image_drawer);
                         im2.setImageBitmap(bitmap);
                         // save profile photo
                         storeImage(bitmap);
@@ -106,13 +110,6 @@ public class ProfileFragment extends BaseFragment {
                 }
                 break;
         }
-    }
-
-    /**
-     * Interface to to update UI after response from server is received
-     */
-    public interface ResponseCallBack{
-        void onResponse(Object response);
     }
 
     private String storeImage(Bitmap bitmapImage){
@@ -144,40 +141,4 @@ public class ProfileFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         MainActivity.loadImageFromStorage(getActivity());
     }
-
-    private void getApiData(@NonNull LayoutInflater inflater, ViewGroup container, ResponseCallBack responseCallBack)
-    {
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url ="http://54.176.198.201:5001/user";
-
-        // Request a json response from the provided URL.
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d("response", response.toString());
-
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject item = response.getJSONObject(i);
-                                user_name = item.get("Name").toString();
-
-                             } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        responseCallBack.onResponse(response);
-                    }
-                }, error -> {
-                    // TODO: Handle error
-                    Log.d("error", error.toString());
-
-                });
-
-        // Add the request to the RequestQueue.
-        queue.add(jsonArrayRequest);
-    }
-
 }
