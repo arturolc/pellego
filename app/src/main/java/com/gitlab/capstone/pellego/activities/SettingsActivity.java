@@ -21,7 +21,9 @@ import com.gitlab.capstone.pellego.app.Storage;
 import com.github.axet.androidlibrary.activities.AppCompatSettingsThemeActivity;
 import com.github.axet.androidlibrary.preferences.RotatePreferenceCompat;
 import com.github.axet.androidlibrary.preferences.StoragePathPreferenceCompat;
-
+/****************************************
+ * Eli Hebdon
+ ***************************************/
 public class SettingsActivity extends AppCompatSettingsThemeActivity {
     public static final int RESULT_STORAGE = 1;
 
