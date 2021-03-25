@@ -91,10 +91,10 @@ public class QuizViewModel extends AndroidViewModel {
 
     public ArrayList<QuizQuestionModel> getNextAnswers() {
         ArrayList<QuizQuestionModel> mNavItems = new ArrayList<>();
-        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(0).getAnswer(), "A)"));
-        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(1).getAnswer(), "B)"));
-        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(2).getAnswer(), "C)"));
-        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(3).getAnswer(), "D)"));
+        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(0).getAnswer(), "A"));
+        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(1).getAnswer(), "B"));
+        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(2).getAnswer(), "C"));
+        mNavItems.add(new QuizQuestionModel(this.questions.get(question_no).answers.get(3).getAnswer(), "D"));
         return mNavItems;
     }
 
