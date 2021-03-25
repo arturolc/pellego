@@ -14,11 +14,8 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
         android:gravity="center"
-        android:text="A"
-        android:textColor="@color/light_blue"
-        android:textSize="25dp"
-
-        />
+        android:textColor="@color/gray_card"
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/title"
@@ -30,9 +27,7 @@
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/icon"
         android:paddingBottom="2dp"
-
         android:layout_toRightOf="@+id/icon"
-        android:text="Line 1"
         android:textSize="18sp"
         android:textStyle="bold" />
 

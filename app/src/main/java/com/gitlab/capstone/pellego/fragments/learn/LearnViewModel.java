@@ -20,16 +20,18 @@ import java.util.List;
 
 public class LearnViewModel extends AndroidViewModel {
     private final LearningModulesRepo repo;
-    private LiveData<List<LMResponse>> lmResponse = new MutableLiveData<>();
+    private LiveData<List<LMResponse>> lmResponse;
 
     public LearnViewModel(@NonNull Application application) {
         super(application);
         repo = LearningModulesRepo.getInstance(application);
+        lmResponse = new MutableLiveData<>();
     }
 
     public LiveData<List<LMResponse>> getLMResponse() {
-        if (lmResponse.getValue() == null)
+        if (lmResponse.getValue() == null) {
             lmResponse = repo.getModules();
+        }
 
         return lmResponse;
     }

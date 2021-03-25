@@ -23,8 +23,8 @@ import java.util.List;
 public class ModuleViewModel extends AndroidViewModel {
     private final String moduleID;
     private final LearningModulesRepo repo;
-    private LiveData<List<LMDescResponse>> lmDescResponse = new MutableLiveData<>();
-    private LiveData<List<SMResponse>> submoduleResponse = new MutableLiveData<>();
+    private LiveData<List<LMDescResponse>> lmDescResponse;
+    private LiveData<List<SMResponse>> submoduleResponse;
     private String techniqueLabel;
     private MutableLiveData<String> moduleTitle;
     public String technique;
@@ -38,6 +38,8 @@ public class ModuleViewModel extends AndroidViewModel {
         this.moduleID = moduleID;
         showSubmodulePopupDialog = false;
         showPopupDialog = false;
+        lmDescResponse = new MutableLiveData<>();
+        submoduleResponse = new MutableLiveData<>();
     }
 
     public LiveData<List<LMDescResponse>> getLMDescResponse(String mid) {
