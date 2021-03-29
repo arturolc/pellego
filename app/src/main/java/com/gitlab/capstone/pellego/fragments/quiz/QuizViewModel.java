@@ -26,7 +26,7 @@ import java.util.List;
 public class QuizViewModel extends AndroidViewModel {
 
     public LearningModulesRepo repo;
-    private LiveData<List<QuizResponse>> quizResponse = new MutableLiveData<>();
+    private LiveData<List<QuizResponse>> quizResponse;
     private MutableLiveData<String> mText;
     private String difficulty;
     public static Integer question_no;
@@ -38,6 +38,7 @@ public class QuizViewModel extends AndroidViewModel {
     public QuizViewModel(@NonNull Application application){
         super(application);
         this.repo = LearningModulesRepo.getInstance(application);
+        quizResponse = new MutableLiveData<>();
     }
 
     public LiveData<List<QuizResponse>> getQuizResponse(String MID, String SMID) {

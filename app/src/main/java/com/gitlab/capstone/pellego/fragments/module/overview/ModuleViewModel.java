@@ -38,6 +38,7 @@ public class ModuleViewModel extends AndroidViewModel {
         this.moduleID = moduleID;
         showSubmodulePopupDialog = false;
         showPopupDialog = false;
+        moduleTitle = new MutableLiveData<>();
         lmDescResponse = new MutableLiveData<>();
         submoduleResponse = new MutableLiveData<>();
     }
