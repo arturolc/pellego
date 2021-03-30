@@ -86,6 +86,7 @@ public class QuizResultFragment extends BaseFragment {
             public void onClick(View view)
             {
                 Bundle args = new Bundle();
+                args.putString("smID", quizViewModel.getSMID());
                 args.putString("difficulty", quizViewModel.getDifficulty());
                 args.putString("wpm", quizViewModel.getWPM().toString());
                 args.putString("module", quizViewModel.getModule());

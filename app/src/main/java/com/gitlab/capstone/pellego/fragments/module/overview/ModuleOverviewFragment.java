@@ -101,6 +101,7 @@ public class ModuleOverviewFragment extends BaseFragment {
                         navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_intro, args);
                         break;
                     case 1:
+                        args.putString("smID", "2");
                         args.putString("difficulty", "beginner");
                         args.putString("wpm", "120");
                         if (moduleID.equals("1")){
@@ -111,6 +112,7 @@ public class ModuleOverviewFragment extends BaseFragment {
                         }
                         break;
                     case 2:
+                        args.putString("smID", "3");
                         args.putString("difficulty", "intermediate");
                         args.putString("wpm", "250");
                         if (moduleID.equals("1")){
@@ -121,6 +123,7 @@ public class ModuleOverviewFragment extends BaseFragment {
                         }
                         break;
                     case 3:
+                        args.putString("smID", "4");
                         args.putString("difficulty", "advanced");
                         args.putString("wpm", "500");
                         if (moduleID.equals("1")){

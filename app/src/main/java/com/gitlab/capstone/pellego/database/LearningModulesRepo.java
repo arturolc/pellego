@@ -30,7 +30,6 @@ import retrofit2.Response;
  *****************************************************/
 
 public class LearningModulesRepo {
-    private final LearningModulesDao dao;
     private final PellegoDatabase db;
     private final APIService apiService;
     private final MutableLiveData<List<LMResponse>> lmResponse = new MutableLiveData<>();
@@ -41,7 +40,6 @@ public class LearningModulesRepo {
 
     private LearningModulesRepo(Application application) {
         db = PellegoDatabase.getDatabase(application);
-        dao = db.learningModulesDao();
         apiService = RetroInstance.getRetroClient().create(APIService.class);
     }
 
@@ -108,8 +106,8 @@ public class LearningModulesRepo {
         return smResponse;
     }
 
-    public LiveData<List<QuizResponse>> getQuizzes(String mID, String smID) {
-        Call<List<QuizResponse>> call = apiService.getQuizzes(mID, smID);
+    public LiveData<List<QuizResponse>> getQuizzes(String mID, String smID, String qID) {
+        Call<List<QuizResponse>> call = apiService.getQuizzes(mID, smID, qID);
         call.enqueue(new Callback<List<QuizResponse>>() {
 
             @Override

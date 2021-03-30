@@ -29,24 +29,42 @@ public class QuizViewModel extends AndroidViewModel {
     private LiveData<List<QuizResponse>> quizResponse;
     private MutableLiveData<String> mText;
     private String difficulty;
-    public static Integer question_no;
-    private static ArrayList<QuizQuestion> questions;
-    public static int score;
-    private static String module;
-    private static Integer wpm;
+    public Integer question_no;
+    private ArrayList<QuizQuestion> questions;
+    public int score;
+    private String module;
+    private Integer wpm;
+    private String submoduleID;
 
     public QuizViewModel(@NonNull Application application){
         super(application);
         this.repo = LearningModulesRepo.getInstance(application);
+        question_no = 0;
+        questions = new ArrayList<>();
         quizResponse = new MutableLiveData<>();
     }
 
-    public LiveData<List<QuizResponse>> getQuizResponse(String MID, String SMID) {
-        if (quizResponse.getValue() == null) {
-            quizResponse = repo.getQuizzes(MID, SMID);
-        }
+    public LiveData<List<QuizResponse>> getQuizResponse(String MID, String SMID, String QUID) {
+        quizResponse = repo.getQuizzes(MID, SMID, QUID);
 
         return quizResponse;
+    }
+
+    public String getQUID(String smid){
+        String quid = null;
+        switch(smid){
+            case "2":
+                quid = "1";
+                break;
+            case "3":
+                quid = "5";
+                break;
+            case "4":
+                quid = "9";
+                break;
+        }
+
+        return quid;
     }
 
     public void setDifficulty(String diff) {
@@ -173,6 +191,14 @@ public class QuizViewModel extends AndroidViewModel {
         }
 
         return correctIdx;
+    }
+
+    public void setSMID(String smid){
+        submoduleID = smid;
+    }
+
+    public String getSMID() {
+        return submoduleID;
     }
 
     private static class QuizQuestion {

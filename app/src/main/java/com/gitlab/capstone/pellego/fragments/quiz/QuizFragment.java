@@ -75,8 +75,9 @@ public class QuizFragment extends BaseFragment {
         quizViewModel.setDifficulty(getArguments().getString("difficulty"));
         quizViewModel.setWPM(Integer.parseInt(getArguments().getString("wpm")));
         quizViewModel.setModule(getArguments().getString("module"));
+        quizViewModel.setSMID(getArguments().getString("smID"));
 
-        quizViewModel.getQuizResponse(moduleViewModel.getModuleID(), "1").observe(getViewLifecycleOwner(), new Observer<List<QuizResponse>>() {
+        quizViewModel.getQuizResponse(moduleViewModel.getModuleID(), quizViewModel.getSMID(), quizViewModel.getQUID(quizViewModel.getSMID())).observe(getViewLifecycleOwner(), new Observer<List<QuizResponse>>() {
             @Override
             public void onChanged(List<QuizResponse> response1) {
                 quizViewModel.getQuestions(response1);
