@@ -30,6 +30,7 @@ import retrofit2.Response;
  *****************************************************/
 
 public class LearningModulesRepo {
+    private final LearningModulesDao dao;
     private final PellegoDatabase db;
     private final APIService apiService;
     private final MutableLiveData<List<LMResponse>> lmResponse = new MutableLiveData<>();
@@ -40,6 +41,7 @@ public class LearningModulesRepo {
 
     private LearningModulesRepo(Application application) {
         db = PellegoDatabase.getDatabase(application);
+        dao = db.learningModulesDao();
         apiService = RetroInstance.getRetroClient().create(APIService.class);
     }
 
