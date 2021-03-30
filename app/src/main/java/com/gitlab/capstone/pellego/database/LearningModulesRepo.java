@@ -108,8 +108,8 @@ public class LearningModulesRepo {
         return smResponse;
     }
 
-    public LiveData<List<QuizResponse>> getQuizzes(String mID, String smID) {
-        Call<List<QuizResponse>> call = apiService.getQuizzes(mID, smID);
+    public LiveData<List<QuizResponse>> getQuizzes(String mID, String smID, String qID) {
+        Call<List<QuizResponse>> call = apiService.getQuizzes(mID, smID, qID);
         call.enqueue(new Callback<List<QuizResponse>>() {
 
             @Override

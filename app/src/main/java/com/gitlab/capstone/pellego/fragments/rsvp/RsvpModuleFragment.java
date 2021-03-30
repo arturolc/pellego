@@ -43,11 +43,13 @@ import java.util.List;
 
  RSVP module fragment that displays words, one at a time, at 'wpm'
  **********************************************/
+
 public class RsvpModuleFragment extends BaseFragment {
 
     private View root;
     private Integer wpm;
     public String difficulty;
+    public String submoduleID;
     private static AsyncUpdateText asyncUpdateText;
     private String content = "";
     private ModuleViewModel moduleViewModel;
@@ -60,7 +62,9 @@ public class RsvpModuleFragment extends BaseFragment {
                              ViewGroup container, Bundle savedInstanceState) {
         wpm = Integer.parseInt(getArguments().getString("wpm"));
         difficulty = getArguments().getString("difficulty");
+        submoduleID = getArguments().getString("smID");
         submoduleResponses = getArguments().getParcelableArrayList("subModules");
+
         // Set the displayed text to the appropriate level
         // TODO: Query the DB for content
         switch(difficulty) {
@@ -78,7 +82,6 @@ public class RsvpModuleFragment extends BaseFragment {
         currentView = getActivity();
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
-
 
         root = inflater.inflate(R.layout.fragment_rsvp_module, container, false);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
@@ -102,7 +105,6 @@ public class RsvpModuleFragment extends BaseFragment {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(color);
     }
-
 
     private void showSubmodulePopupDialog() {
         // Setup the custom dialog
@@ -139,6 +141,7 @@ public class RsvpModuleFragment extends BaseFragment {
                 args.putString("difficulty", difficulty);
                 args.putString("wpm", String.valueOf(wpm));
                 args.putString("module", "rsvp");
+                args.putString("smID", submoduleID);
                 navController.navigate(R.id.nav_quiz, args);
             }
         });
@@ -159,7 +162,6 @@ public class RsvpModuleFragment extends BaseFragment {
             asyncUpdateText = new AsyncUpdateText(); // start thread on ok
             asyncUpdateText.execute(PlayerWidget.wpm);
         }
-
     }
 
     public void startNext() {
@@ -177,8 +179,6 @@ public class RsvpModuleFragment extends BaseFragment {
     public void stop() {
         asyncUpdateText.cancel(true);
     }
-
-
 
     /**
      * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
