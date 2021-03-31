@@ -38,9 +38,9 @@ public class LearnCardAdapter extends BaseAdapter {
         gradientBackgrounds = new Drawable[] {
                 mContext.getResources().getDrawable(R.drawable.orange_gradient),
                 mContext.getResources().getDrawable(R.drawable.green_gradient),
-                mContext.getResources().getDrawable(R.drawable.silver_gradient),
                 mContext.getResources().getDrawable(R.drawable.pink_gradient),
-                mContext.getResources().getDrawable(R.drawable.blue_gradient)
+                mContext.getResources().getDrawable(R.drawable.blue_gradient),
+                mContext.getResources().getDrawable(R.drawable.silver_gradient)
         };
     }
 

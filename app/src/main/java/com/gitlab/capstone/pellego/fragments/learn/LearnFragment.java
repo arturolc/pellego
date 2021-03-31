@@ -52,37 +52,16 @@ public class LearnFragment extends BaseFragment {
             }
         });
 
-        //TODO: NEED TO CLEAN UP AND HOOK UP META GUIDING
         // Drawer Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-                // TODO: navigate to fragment based on click id
-                switch(position) {
-                    case 0: // rsvp
-                        Bundle bundle = new Bundle();
-                        bundle.putString("moduleID", lmResponses.getValue().get(position).getMID().toString());
-                        navController.navigate(R.id.nav_module_overview, bundle);
-                        break;
-                    case 1:
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putString("moduleID", lmResponses.getValue().get(position).getMID().toString());
-                        navController.navigate(R.id.nav_module_overview, bundle1);
-                    case 2:
-                        Bundle bundle2 = new Bundle();
-                        bundle2.putString("moduleID", lmResponses.getValue().get(position).getMID().toString());
-                        navController.navigate(R.id.nav_module_overview, bundle2);
-                        break;
-                    case 3: // metaguiding
-                        //TODO: NEED TO IMPLEMENT META-GUIDING DATA COMMUNICATIONS
-                        Bundle bundle3 = new Bundle();
-                        bundle3.putString("moduleID", lmResponses.getValue().get(position).getMID().toString());
-                        navController.navigate(R.id.nav_module_overview, bundle3);
-                        break;
-                    default:
-                        break;
-                }
+
+                Bundle bundle = new Bundle();
+                bundle.putString("moduleID", lmResponses.getValue().get(position).getMID().toString());
+                navController.navigate(R.id.nav_module_overview, bundle);
             }
         });
 

@@ -1,10 +1,10 @@
 package com.gitlab.capstone.pellego.fragments.module.overview;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -27,6 +27,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
@@ -59,6 +60,7 @@ public class ModuleOverviewFragment extends BaseFragment {
                                 getActivity().getApplication(),
                                 moduleID)).
                         get(ModuleViewModel.class);
+        moduleViewModel.setModuleID(moduleID);
 
         View root = inflater.inflate(R.layout.fragment_module_overview, container, false);
         moduleList = root.findViewById(R.id.nav_module_list);
@@ -67,6 +69,8 @@ public class ModuleOverviewFragment extends BaseFragment {
         moduleViewModel.setGradient(moduleGradientPicker(moduleViewModel.getModuleID()));
         TextView moduleTitle = root.findViewById(R.id.title_module_overview);
         TextView moduleDescription = root.findViewById(R.id.text_module_description);
+        moduleTitle.setTextColor((App.getAppResources().getColor(R.color.gray_card)));
+        moduleDescription.setTextColor((App.getAppResources().getColor(R.color.gray_card)));
 
         moduleViewModel.getLMDescResponse(moduleViewModel.getModuleID()).observe(getViewLifecycleOwner(), new Observer<List<LMDescResponse>>() {
             @Override
@@ -84,9 +88,9 @@ public class ModuleOverviewFragment extends BaseFragment {
                 moduleList.setAdapter(adapter);
             }
         });
-        this.setupHeader(root);
 
-        //TODO: Currently only navigates to RSVP, will add navigation for Meta Guiding
+        this.setupHeader(root, moduleViewModel.getModuleID());
+
         // menu Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -141,20 +145,16 @@ public class ModuleOverviewFragment extends BaseFragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void setupHeader(View root) {
+    public void setupHeader(View root, String moduleID) {
+        int[] colors = moduleViewModel.getModuleGradientColors(moduleID);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(0xFFF9D976);
+        toolbar.setBackgroundColor(colors[1]);
         toolbar.setTitle(null);
         Window window = getActivity().getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(0xFFF9D976);
+        window.setStatusBarColor(colors[1]);
         ConstraintLayout header = root.findViewById(R.id.module_header_container);
-        GradientDrawable gd = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[] {0xFFF9D976, 0xFFF39F86});
-        gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 90f, 90f, 90f, 90f});
-        gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
-        header.setBackground(gd);
+        header.setBackground(moduleViewModel.getGradient());
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -163,25 +163,30 @@ public class ModuleOverviewFragment extends BaseFragment {
         boolean complete = sharedPref.getBoolean(moduleViewModel.getTechnique() + "_" + difficulty + "_complete", false);
 
         Drawable r = (complete ? getResources().getDrawable(R.drawable.ic_checked_circle) : getResources().getDrawable(R.drawable.ic_empty_circle));
-        r.setColorFilter(0xFFF9D976, PorterDuff.Mode.MULTIPLY);
+        r.setColorFilter(moduleViewModel.getModuleGradientColors(moduleViewModel.getModuleID())[0],
+                PorterDuff.Mode.MULTIPLY);
         return r;
     }
 
-    //TODO: Change this to have gradient selection be dynamic
     private Drawable moduleGradientPicker(String moduleID) {
-        Drawable n = null;
+        Drawable moduleGradient = null;
 
         switch(moduleID) {
             case "1":
-                n = getResources().getDrawable(R.drawable.orange_gradient);
+                moduleGradient = getResources().getDrawable(R.drawable.orange_gradient);
                 break;
             case "2":
-                n =  getResources().getDrawable(R.drawable.silver_gradient);
+                moduleGradient =  getResources().getDrawable(R.drawable.green_gradient);
                 break;
+            case "3":
+                moduleGradient =  getResources().getDrawable(R.drawable.pink_gradient);
+                break;
+            case "4":
+                moduleGradient = getResources().getDrawable(R.drawable.blue_gradient);
             default:
                 break;
         }
 
-        return n;
+        return moduleGradient;
     }
 }

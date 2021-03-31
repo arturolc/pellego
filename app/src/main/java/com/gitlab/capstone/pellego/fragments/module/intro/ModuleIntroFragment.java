@@ -2,7 +2,6 @@ package com.gitlab.capstone.pellego.fragments.module.intro;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -44,36 +43,34 @@ public class ModuleIntroFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        List<SMResponse> submoduleResponses = getArguments().getParcelableArrayList("subModules");
-
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(0xFFF9D976);
-        toolbar.setTitle(null);
-        Window window = getActivity().getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(0xFFF9D976);
+        List<SMResponse> submoduleResponses = getArguments()
+                .getParcelableArrayList("subModules");
+        String mid = getArguments().getString("moduleID");
 
         moduleViewModel =
                 new ViewModelProvider(
                         requireActivity(),
                         new ModuleViewModelFactory(
                                 getActivity().getApplication(),
-                                getArguments().getString("moduleID"))).
+                                mid)).
                         get(ModuleViewModel.class);
+
+        int[] colors = moduleViewModel.getModuleGradientColors(mid);
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(colors[1]);
+        toolbar.setTitle(null);
+        Window window = getActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(colors[1]);
 
         View root = inflater.inflate(R.layout.fragment_module_intro, container, false);
 
         DotsIndicator dotsIndicator = root.findViewById(R.id.dots_indicator);
         ViewPager2 viewPager2 = root.findViewById(R.id.view_pager);
 
-        GradientDrawable gd = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{0xFFF9D976, 0xFFF39f86});
-        gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
-
         btn_register = root.findViewById(R.id.intro_finish_btn);
 
-        viewPager2.setBackground(gd);
+        viewPager2.setBackground(moduleViewModel.getGradient());
 
         //set data
         ModuleIntroPagerAdapter pagerAdapter = new ModuleIntroPagerAdapter(

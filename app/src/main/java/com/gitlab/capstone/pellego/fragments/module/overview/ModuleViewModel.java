@@ -21,7 +21,7 @@ import java.util.List;
  **********************************************/
 
 public class ModuleViewModel extends AndroidViewModel {
-    private final String moduleID;
+    private String moduleID;
     private final LearningModulesRepo repo;
     private LiveData<List<LMDescResponse>> lmDescResponse;
     private LiveData<List<SMResponse>> submoduleResponse;
@@ -44,23 +44,23 @@ public class ModuleViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<LMDescResponse>> getLMDescResponse(String mid) {
-        if (lmDescResponse.getValue() == null) {
-            lmDescResponse = repo.getModuleDesc(mid);
-        }
+        lmDescResponse = repo.getModuleDesc(mid);
 
         return lmDescResponse;
     }
 
     public LiveData<List<SMResponse>> getSubmodulesResponse(String MID) {
-        if (submoduleResponse.getValue() == null) {
-            submoduleResponse = repo.getSubmodules(MID);
-        }
+        submoduleResponse = repo.getSubmodules(MID);
 
         return submoduleResponse;
     }
 
     public String getModuleID(){
         return moduleID;
+    }
+
+    public void setModuleID(String MID) {
+        moduleID = MID;
     }
 
     public void setShowPopupDialog(boolean showSubmodulePopupDialog) {
@@ -103,6 +103,33 @@ public class ModuleViewModel extends AndroidViewModel {
 
     public Drawable getGradient() {
         return gradient;
+    }
+
+    public int[] getModuleGradientColors(String MID){
+        int[] colors = new int[2];
+
+        switch(MID) {
+            case "1":
+                colors[0] = 0xFFF9D976;
+                colors[1] = 0xFFF39f86;
+                break;
+            case "2":
+                colors[0] = 0xFF20BF55;
+                colors[1] = 0xFF01BAEF;
+                break;
+            case "3":
+                colors[0] = 0xFFF53844;
+                colors[1] = 0xFF42378F;
+                break;
+            case "4":
+                colors[0] = 0xFF37D5D6;
+                colors[1] = 0xFF9B6DFF;
+                break;
+            default:
+                break;
+        }
+
+        return colors;
     }
 
     public void setGradient(Drawable gradient) {

@@ -28,15 +28,11 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
-import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
-import com.gitlab.capstone.pellego.widgets.FBReaderView;
 import com.gitlab.capstone.pellego.widgets.PlayerWidget;
-import com.gitlab.capstone.pellego.widgets.TTSPopup;
 
 import java.util.List;
-
 
 /**********************************************
  Eli Hebdon and Chris Bordoy
@@ -46,7 +42,6 @@ import java.util.List;
 
 public class RsvpModuleFragment extends BaseFragment {
 
-    private View root;
     private Integer wpm;
     public String difficulty;
     public String submoduleID;
@@ -66,7 +61,6 @@ public class RsvpModuleFragment extends BaseFragment {
         submoduleResponses = getArguments().getParcelableArrayList("subModules");
 
         // Set the displayed text to the appropriate level
-        // TODO: Query the DB for content
         switch(difficulty) {
             case "beginner":
                 content = (submoduleResponses.get(1).getText()).replaceAll("\\s+", " ");
@@ -83,13 +77,14 @@ public class RsvpModuleFragment extends BaseFragment {
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
 
-        root = inflater.inflate(R.layout.fragment_rsvp_module, container, false);
+        View root = inflater.inflate(R.layout.fragment_rsvp_module, container, false);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(null);
-        final TextView textView = root.findViewById(R.id.title_rsvp);
+
         this.setupHeader(root);
         // Only show popup if user navigated to the Rsvp module
-       if (moduleViewModel.isShowSubmodulePopupDialog()) showSubmodulePopupDialog();
+        if (moduleViewModel.isShowSubmodulePopupDialog()) showSubmodulePopupDialog();
+
         return root;
     }
 
@@ -155,7 +150,7 @@ public class RsvpModuleFragment extends BaseFragment {
     }
 
     public void play() {
-        if (content == "") {
+        if (content.equals("")) {
             playerWidget.selectNext();
         }
         if (PlayerWidget.playing) {
