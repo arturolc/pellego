@@ -28,6 +28,7 @@ import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.app.BookModel;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.network.models.LibraryResponse;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -79,19 +80,19 @@ public class PellegoLibrary extends BaseFragment {
         recyclerView = root.findViewById(R.id.recyclerView);
 
         // get data from the model and pass in to adapter
-        mViewModel.getBooks().observe(this.getViewLifecycleOwner(), new Observer<List<BookModel>>() {
+        mViewModel.getLibResp().observe(this.getViewLifecycleOwner(), new Observer<List<LibraryResponse>>() {
             @Override
-            public void onChanged(@Nullable List<BookModel> mdl) {
-                String names[] = new String[mdl.size()];
-                String authors[] = new String[mdl.size()];
-                String imgs[] = new String[mdl.size()];
-                String ids[] = new String[mdl.size()];
+            public void onChanged(List<LibraryResponse> libraryResponses) {
+                String names[] = new String[libraryResponses.size()];
+                String authors[] = new String[libraryResponses.size()];
+                String imgs[] = new String[libraryResponses.size()];
+                String ids[] = new String[libraryResponses.size()];
 
-                for (int i = 0; i < mdl.size(); i++) {
-                    names[i] = mdl.get(i).getBookName();
-                    authors[i] = mdl.get(i).getAuthor();
-                    imgs[i] = mdl.get(i).getImgFilePath();
-                    ids[i] = mdl.get(i).getbID();
+                for (int i = 0; i < libraryResponses.size(); i++) {
+                    names[i] = libraryResponses.get(i).getBookName();
+                    authors[i] = libraryResponses.get(i).getAuthor();
+                    imgs[i] = libraryResponses.get(i).getImageUrl();
+                    ids[i] = libraryResponses.get(i).getBid().toString();
                 }
                 PellegoLibraryAdapter adapter = new PellegoLibraryAdapter(ids, names, authors, imgs, getContext(), myFragment);
                 recyclerView.setAdapter(adapter);

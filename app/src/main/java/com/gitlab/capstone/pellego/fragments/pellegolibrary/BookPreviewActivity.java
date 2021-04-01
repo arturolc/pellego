@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.gitlab.capstone.pellego.app.BookModel;
 import com.gitlab.capstone.pellego.R;
 import com.example.pellego.SingletonRequestQueue;
+import com.gitlab.capstone.pellego.network.models.SynopsisResponse;
 
 import java.util.List;
 
@@ -48,16 +49,12 @@ public class BookPreviewActivity extends AppCompatActivity {
 
         model = new BookPreviewModel(getApplication(), i.getStringExtra("id"));
 
-        model.getData().observe(this, new Observer<String>() {
+        model.getSynopsisResponse().observe(this, new Observer<List<SynopsisResponse>>() {
             @Override
-            public void onChanged(@Nullable String mdl) {
+            public void onChanged(List<SynopsisResponse> synopsisResponses) {
                 TextView syn = findViewById(R.id.synopsisTextView);
-                syn.setText(mdl);
+                syn.setText(synopsisResponses.get(0).getSynopsis());
             }
         });
-    }
-
-    public void addToLibrary(View view) {
-        model.addBookToUserLibrary();
     }
 }

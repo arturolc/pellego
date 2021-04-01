@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.Request;
@@ -13,6 +14,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.gitlab.capstone.pellego.app.BookModel;
 import com.example.pellego.SingletonRequestQueue;
+import com.gitlab.capstone.pellego.database.BooksRepo;
+import com.gitlab.capstone.pellego.network.models.SynopsisResponse;
 
 import org.json.JSONArray;
 
@@ -25,51 +28,22 @@ import java.util.List;
  using Volley. Loads images using Glide.
  **********************************************/
 public class BookPreviewModel extends AndroidViewModel {
-    private MutableLiveData<String> synopsis;
+    private LiveData<List<SynopsisResponse>> synopsis;
+    private BooksRepo repo;
     private String id;
     public BookPreviewModel(@NonNull Application application, String id) {
         super(application);
         this.id = id;
+        repo = BooksRepo.getInstance(application);
         synopsis = new MutableLiveData<>();
-        // Formulate the request and handle the response.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://54.245.202.132/library/synopsis/" + id,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        handleData(response);
-                        Log.d("BookPreviewModel", response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("BookPreviewModel", error.toString());
-                    }
-                });
-
-        SingletonRequestQueue.getInstance(getApplication()).addToRequestQueue(stringRequest);
     }
 
-    private void handleData(String response) {
-        try {
-            String syn = "";
-            JSONArray arr = new JSONArray(response);
-            for (int i = 0; i < arr.length(); i++) {
-                syn = arr.getJSONObject(i).get("Synopsis").toString();
-            }
-            synopsis.setValue(syn);
-
-        } catch (Throwable t) {
-            Log.e("My App", "Could not parse malformed JSON: \"" + t.toString() + "\"");
+    public LiveData<List<SynopsisResponse>> getSynopsisResponse(){
+        if (synopsis.getValue() == null) {
+            synopsis = repo.getSynopsis((int)Integer.parseInt(id));
         }
-    }
-
-    public MutableLiveData<String> getData(){
         return synopsis;
     }
 
-    public void addBookToUserLibrary() {
-//        getFilesDir()
-    }
 
 }

@@ -42,5 +42,7 @@ public interface APIService {
     Call<List<LibraryResponse>> getLibrary();
 
     @GET("library/synopsis/{book_id}")
-    Call<List<SynopsisResponse>> getSynopsis(String bID);
+    Call<List<SynopsisResponse>> getSynopsis(@Path("book_id") String book_id);
+
+
 }
