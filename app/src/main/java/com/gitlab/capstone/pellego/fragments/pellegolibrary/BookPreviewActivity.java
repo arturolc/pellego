@@ -1,25 +1,15 @@
 package com.gitlab.capstone.pellego.fragments.pellegolibrary;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
-import com.gitlab.capstone.pellego.app.BookModel;
 import com.gitlab.capstone.pellego.R;
-import com.example.pellego.SingletonRequestQueue;
 import com.gitlab.capstone.pellego.network.models.SynopsisResponse;
 
 import java.util.List;
