@@ -2,6 +2,7 @@ package com.gitlab.capstone.pellego.fragments.pellegolibrary;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,10 +37,8 @@ public class BookPreviewActivity extends AppCompatActivity {
                 .load(i.getStringExtra("image"))
                 .into(bookImg);
 
-
-        model = new BookPreviewModel(getApplication(), i.getStringExtra("id"));
-
-        model.getSynopsisResponse().observe(this, new Observer<List<SynopsisResponse>>() {
+        model = new ViewModelProvider(this).get(BookPreviewModel.class);
+        model.getSynopsisResponse(i.getStringExtra("id")).observe(this, new Observer<List<SynopsisResponse>>() {
             @Override
             public void onChanged(List<SynopsisResponse> synopsisResponses) {
                 TextView syn = findViewById(R.id.synopsisTextView);

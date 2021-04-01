@@ -20,15 +20,14 @@ import java.util.List;
 public class BookPreviewModel extends AndroidViewModel {
     private LiveData<List<SynopsisResponse>> synopsis;
     private BooksRepo repo;
-    private String id;
-    public BookPreviewModel(@NonNull Application application, String id) {
+
+    public BookPreviewModel(@NonNull Application application) {
         super(application);
-        this.id = id;
         repo = BooksRepo.getInstance(application);
         synopsis = new MutableLiveData<>();
     }
 
-    public LiveData<List<SynopsisResponse>> getSynopsisResponse(){
+    public LiveData<List<SynopsisResponse>> getSynopsisResponse(String id){
         if (synopsis.getValue() == null) {
             synopsis = repo.getSynopsis((int)Integer.parseInt(id));
         }
