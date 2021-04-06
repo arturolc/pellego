@@ -74,14 +74,17 @@ public class PellegoLibrary extends BaseFragment {
                 String authors[] = new String[libraryResponses.size()];
                 String imgs[] = new String[libraryResponses.size()];
                 String ids[] = new String[libraryResponses.size()];
+                String urls[] = new String[libraryResponses.size()];
 
                 for (int i = 0; i < libraryResponses.size(); i++) {
                     names[i] = libraryResponses.get(i).getBookName();
                     authors[i] = libraryResponses.get(i).getAuthor();
                     imgs[i] = libraryResponses.get(i).getImageUrl();
                     ids[i] = libraryResponses.get(i).getBid().toString();
+                    urls[i] = libraryResponses.get(i).getBookUrl();
+
                 }
-                PellegoLibraryAdapter adapter = new PellegoLibraryAdapter(ids, names, authors, imgs, getContext(), myFragment);
+                PellegoLibraryAdapter adapter = new PellegoLibraryAdapter(ids, names, authors, imgs, urls, getContext(), myFragment);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             }
