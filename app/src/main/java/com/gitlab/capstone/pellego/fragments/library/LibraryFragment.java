@@ -83,43 +83,26 @@ import java.util.Comparator;
 
 public class LibraryFragment extends Fragment implements MainActivity.SearchListener {
     public static final String TAG = LibraryFragment.class.getSimpleName();
+    private static LibraryFragment INSTANCE;
 
     LibraryAdapter books;
     Storage storage;
     String lastSearch = "";
     FragmentHolder holder;
     Runnable invalidateOptionsMenu;
-    public View header;
-
-    public static class ByRecent implements Comparator<Storage.Book> {
-        @Override
-        public int compare(Storage.Book o1, Storage.Book o2) {
-            return Long.valueOf(o1.info.last).compareTo(o2.info.last);
-        }
-    }
-
-    public static class ByCreated implements Comparator<Storage.Book> {
-        @Override
-        public int compare(Storage.Book o1, Storage.Book o2) {
-            return Long.valueOf(o1.info.created).compareTo(o2.info.created);
-        }
-    }
-
-    public static class ByName implements Comparator<Storage.Book> {
-        @Override
-        public int compare(Storage.Book o1, Storage.Book o2) {
-            return Storage.getTitle(o1.info).compareTo(Storage.getTitle(o2.info));
-        }
-    }
+    public static View header;
 
     public LibraryFragment() {
     }
 
     public static LibraryFragment newInstance() {
-        LibraryFragment fragment = new LibraryFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        if(INSTANCE == null) {
+            INSTANCE = new LibraryFragment();
+            Bundle args = new Bundle();
+            INSTANCE.setArguments(args);
+        }
+
+        return INSTANCE;
     }
 
     @Override
@@ -272,6 +255,27 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         });
 
         return v;
+    }
+
+    public static class ByRecent implements Comparator<Storage.Book> {
+        @Override
+        public int compare(Storage.Book o1, Storage.Book o2) {
+            return Long.valueOf(o1.info.last).compareTo(o2.info.last);
+        }
+    }
+
+    public static class ByCreated implements Comparator<Storage.Book> {
+        @Override
+        public int compare(Storage.Book o1, Storage.Book o2) {
+            return Long.valueOf(o1.info.created).compareTo(o2.info.created);
+        }
+    }
+
+    public static class ByName implements Comparator<Storage.Book> {
+        @Override
+        public int compare(Storage.Book o1, Storage.Book o2) {
+            return Storage.getTitle(o1.info).compareTo(Storage.getTitle(o2.info));
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

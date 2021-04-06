@@ -32,7 +32,6 @@ public class FragmentHolder {
     private TextView title;
     private final String TAG = this.getClass().getName();
 
-    View header;
     View toolbar;
     View searchpanel;
     LinearLayout searchtoolbar;
@@ -48,7 +47,6 @@ public class FragmentHolder {
 
     public FragmentHolder(Context context) {
         this.context = context;
-        this.header = ((Activity)context).findViewById(R.id.header_circular);
     }
 
     public void create(View v) {
@@ -104,14 +102,14 @@ public class FragmentHolder {
 
     private void hideViews() {
         title.animate().translationY(-title.getHeight()).setInterpolator(new AccelerateInterpolator(2));
-        header.animate().translationY(-header.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+        LibraryFragment.header.animate().translationY(-LibraryFragment.header.getHeight()).setInterpolator(new AccelerateInterpolator(2));
         import_button.animate().translationY(import_button.getHeight() * 2).setInterpolator(new AccelerateInterpolator(2));
 
     }
 
     private void showViews() {
         title.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
-        header.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+        LibraryFragment.header.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
         import_button.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
     }
 
@@ -172,7 +170,8 @@ public class FragmentHolder {
             lm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    return this.getSpanSize(position);
+//                    return this.getSpanSize(position);
+                        return 1;
                 }
             });
             RecyclerView.LayoutManager l = grid.getLayoutManager();
@@ -183,9 +182,9 @@ public class FragmentHolder {
             grid.setLayoutManager(reset);
     }
 
-    public int getSpanSize(int position) {
-        return 1;
-    }
+//    public int getSpanSize(int position) {
+//        return 1;
+//    }
 
     public void setOnItemClickListener(AdapterView.OnItemClickListener l) {
         clickListener = l;

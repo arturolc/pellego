@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 
 import com.github.axet.androidlibrary.widgets.InvalidateOptionsMenuCompat;
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.fragments.library.FragmentHolder;
 import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 
 public class BaseFragment extends Fragment {
@@ -32,7 +33,8 @@ public class BaseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LibraryFragment.FragmentHolder holder = new LibraryFragment.FragmentHolder(getContext());
+
+        FragmentHolder holder = new FragmentHolder(getContext());
         setHasOptionsMenu(true);
     }
 
