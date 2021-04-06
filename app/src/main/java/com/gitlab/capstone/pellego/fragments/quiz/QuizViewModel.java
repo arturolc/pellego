@@ -62,11 +62,41 @@ public class QuizViewModel extends AndroidViewModel {
             case "4":
                 quid = "9";
                 break;
+            case "6":
+                quid = "13";
+                break;
+            case "7":
+                quid = "17";
+                break;
+            case "8":
+                quid = "21";
+                break;
+            default:
+                break;
         }
 
         return quid;
     }
 
+    public String convertSmid(String moduleID, String submoduleID) {
+        String converted = "";
+        if (moduleID.equals("1")) {
+            converted = submoduleID;
+        }
+        else {
+            if (submoduleID.equals("2")) {
+                converted = "6";
+            }
+            else if (submoduleID.equals("3")){
+                converted = "7";
+            }
+            else if (submoduleID.equals("4")) {
+                converted = "8";
+            }
+        }
+
+        return converted;
+    }
     public void setDifficulty(String diff) {
         this.difficulty = diff;
     }

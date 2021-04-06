@@ -2,7 +2,6 @@ package com.gitlab.capstone.pellego.fragments.quiz;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -50,7 +49,7 @@ public class QuizResultFragment extends BaseFragment {
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         View root = inflater.inflate(R.layout.fragment_quiz_results, container, false);
 
-        this.setupHeader(root);
+        this.setupHeader(root, moduleViewModel.getModuleID());
 
         final TextView textView = root.findViewById(R.id.title_results);
         quizViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -127,19 +126,15 @@ public class QuizResultFragment extends BaseFragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void setupHeader(View root) {
+    public void setupHeader(View root, String moduleID) {
+        int[] colors = moduleViewModel.getModuleGradientColors(moduleID);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(0xFFF9D976);
+        toolbar.setBackgroundColor(colors[1]);
         toolbar.setTitle(null);
         Window window = getActivity().getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(0xFFF9D976);
+        window.setStatusBarColor(colors[1]);
         TextView header = root.findViewById(R.id.title_results);
-        GradientDrawable gd = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[] {0xFFF9D976, 0xFFF39f86});
-        gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 90f, 90f, 90f, 90f});
-        gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
-        header.setBackgroundDrawable(gd);
+        header.setBackground(moduleViewModel.getGradient());
     }
 }

@@ -1,7 +1,6 @@
 package com.gitlab.capstone.pellego.fragments.quiz;
 
 import android.annotation.SuppressLint;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -55,7 +54,7 @@ public class QuizFragment extends BaseFragment {
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         View root = inflater.inflate(R.layout.fragment_quiz, container, false);
 
-        this.setupHeader(root);
+        this.setupHeader(root, moduleViewModel.getModuleID());
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         quizViewModel =
@@ -75,9 +74,12 @@ public class QuizFragment extends BaseFragment {
         quizViewModel.setDifficulty(getArguments().getString("difficulty"));
         quizViewModel.setWPM(Integer.parseInt(getArguments().getString("wpm")));
         quizViewModel.setModule(getArguments().getString("module"));
-        quizViewModel.setSMID(getArguments().getString("smID"));
+        quizViewModel.setSMID(quizViewModel.convertSmid(moduleViewModel.getModuleID(), getArguments().getString("smID")));
 
-        quizViewModel.getQuizResponse(moduleViewModel.getModuleID(), quizViewModel.getSMID(), quizViewModel.getQUID(quizViewModel.getSMID())).observe(getViewLifecycleOwner(), new Observer<List<QuizResponse>>() {
+        quizViewModel.getQuizResponse(
+                moduleViewModel.getModuleID(),
+                quizViewModel.getSMID(),
+                quizViewModel.getQUID(quizViewModel.getSMID())).observe(getViewLifecycleOwner(), new Observer<List<QuizResponse>>() {
             @Override
             public void onChanged(List<QuizResponse> response1) {
                 quizViewModel.getQuestions(response1);
@@ -128,20 +130,16 @@ public class QuizFragment extends BaseFragment {
         return root;
     }
 
-    //TODO: Make single colors, multi-color accessible
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void setupHeader(View root) {
+    public void setupHeader(View root, String moduleID) {
+        int[] colors = moduleViewModel.getModuleGradientColors(moduleID);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(0xFFF9D976);
+        toolbar.setBackgroundColor(colors[1]);
         toolbar.setTitle(null);
         Window window = getActivity().getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(0xFFF9D976);
+        window.setStatusBarColor(colors[1]);
         LinearLayout header = root.findViewById(R.id.quiz_header_container);
-        GradientDrawable gd = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[] {0xFFF9D976, 0xFFF39f86});
-        gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 90f, 90f, 90f, 90f});
-        header.setBackgroundDrawable(gd);
+        header.setBackground(moduleViewModel.getGradient());
     }
 }

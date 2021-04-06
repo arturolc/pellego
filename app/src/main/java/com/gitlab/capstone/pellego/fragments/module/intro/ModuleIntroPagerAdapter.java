@@ -41,7 +41,6 @@ public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPag
         return new ModuleIntroViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_page, parent, false));
     }
 
-    //TODO: Change the responses get index to be dynamic
     @Override
     public void onBindViewHolder(@NonNull ModuleIntroViewHolder holder, int position) {
         holder.header_text_view.setText(responses.get(0).getIntroContent().get(position).getHeader());
@@ -52,7 +51,6 @@ public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPag
         holder.description_text_view.setTextColor(App.getAppResources().getColor(R.color.gray_card));
     }
 
-    //TODO: Change the responses get index to be dynamic
     @Override
     public int getItemCount() {
         return responses.get(0).getIntroContent().size();
@@ -65,9 +63,9 @@ public class ModuleIntroPagerAdapter extends RecyclerView.Adapter<ModuleIntroPag
 
         public ModuleIntroViewHolder(@NonNull View itemView) {
             super(itemView);
-            header_text_view = (TextView)itemView.findViewById(R.id.header_text_view);
-            description_text_view = (TextView)itemView.findViewById(R.id.description_text_view);
-            container = (ConstraintLayout)itemView.findViewById(R.id.item_page_container);
+            header_text_view = itemView.findViewById(R.id.header_text_view);
+            description_text_view = itemView.findViewById(R.id.description_text_view);
+            container = itemView.findViewById(R.id.item_page_container);
         }
     }
 }

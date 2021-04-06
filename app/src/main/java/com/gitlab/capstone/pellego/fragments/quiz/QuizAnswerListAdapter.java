@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.App;
 
 import java.util.ArrayList;
 
@@ -59,9 +60,9 @@ public class QuizAnswerListAdapter extends BaseAdapter {
             view = convertView;
         }
 
-        TextView titleView = (TextView) view.findViewById(R.id.title);
-        TextView iconView = (TextView) view.findViewById(R.id.icon);
-        iconView.setBackground(color);
+        TextView titleView = view.findViewById(R.id.title);
+        TextView iconView = view.findViewById(R.id.icon);
+        iconView.setBackgroundColor(App.getAppResources().getColor(R.color.white_transparent));
         titleView.setText(mNavItems.get(position).mTitle);
         iconView.setText(mNavItems.get(position).mIcon);
 

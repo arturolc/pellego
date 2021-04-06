@@ -3,7 +3,6 @@ package com.gitlab.capstone.pellego.fragments.metaguiding;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -11,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Layout;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -31,30 +29,26 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.preference.PreferenceManager;
 
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
-import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
+import com.gitlab.capstone.pellego.network.models.SMResponse;
 import com.gitlab.capstone.pellego.widgets.PlayerWidget;
 
-import org.geometerplus.fbreader.fbreader.options.ColorProfile;
+import java.util.List;
 
-import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
-import static android.os.Process.THREAD_PRIORITY_MORE_FAVORABLE;
 import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
 
 /**********************************************
- Eli Hebdon
+ Eli Hebdon and Chris Bordoy
 
  Metaguiding fragment that guides users through text with an underlined
  or highlighted word
  **********************************************/
+
 public class MetaguidingModuleFragment extends BaseFragment {
 
-    private View root;
     private Integer wpm;
     public String difficulty;
     private static AsyncUpdateReaderText asyncUpdateReaderText;
@@ -63,36 +57,40 @@ public class MetaguidingModuleFragment extends BaseFragment {
     private String content = "";
     private ModuleViewModel moduleViewModel;
     private int idx = 0;
-    private int color;
     private FragmentActivity currentView;
     private PlayerWidget playerWidget;
     private int txtColor;
     private int backgroundColor;
-
+    public String submoduleID;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        wpm = Integer.parseInt(getArguments().getString("wpm"));
         difficulty = getArguments().getString("difficulty");
+        submoduleID = getArguments().getString("smID");
+        List<SMResponse> submoduleResponses = getArguments().getParcelableArrayList("subModules");
+
         // Set the displayed text to the appropriate level
         switch(difficulty) {
             case "beginner":
-                content = getString(R.string.content_metaguiding_beginner);
+                content = (submoduleResponses.get(1).getText()).replaceAll("\\s+", " ");
                 break;
             case "intermediate":
-                content = getString(R.string.content_metaguiding_intermediate);
+                content = (submoduleResponses.get(2).getText()).replaceAll("\\s+", " ");
                 break;
             case "advanced":
-                content = getString(R.string.content_metaguiding_advanced);
+                content = (submoduleResponses.get(3).getText()).replaceAll("\\s+", " ");
                 break;
         }
+
         super.onCreateView(inflater, container, savedInstanceState);
-        wpm = Integer.parseInt(getArguments().getString("wpm"));
+
         currentView = getActivity();
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
 
-        root = inflater.inflate(R.layout.fragment_metaguiding_module, container, false);
+        View root = inflater.inflate(R.layout.fragment_metaguiding_module, container, false);
 
         this.setupHeader(root);
         mtext = root.findViewById(R.id.mText);
@@ -100,6 +98,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
         scroller = root.findViewById(R.id.mscroller);
         mtext.setText(content);
         if (moduleViewModel.isShowSubmodulePopupDialog()) showSubmodulePopupDialog();
+
         return root;
     }
 
@@ -132,6 +131,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
                 args.putString("difficulty", difficulty);
                 args.putString("wpm", String.valueOf(wpm));
                 args.putString("module", "metaguiding");
+                args.putString("smID", submoduleID);
                 navController.navigate(R.id.nav_quiz, args);
             }
         });
@@ -158,7 +158,6 @@ public class MetaguidingModuleFragment extends BaseFragment {
         moduleViewModel.setShowSubmodulePopupDialog(false);
     }
 
-
     public void initMetaguidingReader(PlayerWidget playerWidget, Activity a, String theme) {
         currentView = (FragmentActivity) a;
         mtext = currentView.findViewById(R.id.mText);
@@ -167,15 +166,14 @@ public class MetaguidingModuleFragment extends BaseFragment {
         mtext.setTextColor(txtColor);
         scroller = currentView.findViewById(R.id.mscroller);
         this.playerWidget = playerWidget;
-        color = a.getResources().getColor(R.color.light_blue);
-        if (content == "") {
+        if (content.equals("")) {
             content = getNextPage();
         }
         mtext.setText(content);
     }
 
     public void play() {
-        if (content == "") {
+        if (content.equals("")) {
             content = getNextPage();
         }
         if (PlayerWidget.playing) {
@@ -183,27 +181,26 @@ public class MetaguidingModuleFragment extends BaseFragment {
             asyncUpdateReaderText = new MetaguidingModuleFragment.AsyncUpdateReaderText(); // start thread on ok
             asyncUpdateReaderText.execute(PlayerWidget.wpm);
         }
-
     }
 
     public String getNextPage() {
-        String txt = "";
+        StringBuilder txt = new StringBuilder();
         while(txt.length() < 900) {
-            txt += playerWidget.selectNext();
+            txt.append(playerWidget.selectNext());
         }
-        return txt;
+        return txt.toString();
     }
 
     public String getPrevPage() {
-        String txt = "";
+        StringBuilder txt = new StringBuilder();
         while(txt.length() < 900) {
-            txt += playerWidget.selectPrev();
+            txt.append(playerWidget.selectPrev());
         }
-        return txt;
+        return txt.toString();
     }
 
     public void startNext() {
-        if (content == "") {
+        if (content.equals("")) {
             content = getNextPage();
         }
         mtext.setText(content);
@@ -213,7 +210,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
     }
 
     public void startPrev() {
-        if (content == "") {
+        if (content.equals("")) {
             content = getPrevPage();
         }
         mtext.setText(content);
@@ -225,7 +222,6 @@ public class MetaguidingModuleFragment extends BaseFragment {
     public void stop() {
         asyncUpdateReaderText.cancel(true);
     }
-
 
     public void configColorProfile(String thm) {
         if (thm.equals("Theme_Dark")) {
@@ -312,9 +308,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
             } catch (Exception e) {
                 Log.d("error" , e.getMessage());
             }
-
         }
     }
-
 }
 
