@@ -28,7 +28,7 @@ public class LibraryAdapter extends BooksAdapter {
     Storage storage;
     Context context;
 
-    public LibraryAdapter(LibraryFragment.FragmentHolder holder, Context context) {
+    public LibraryAdapter(FragmentHolder holder, Context context) {
         super(context, holder);
         this.context = context;
         this.storage = new Storage(context);

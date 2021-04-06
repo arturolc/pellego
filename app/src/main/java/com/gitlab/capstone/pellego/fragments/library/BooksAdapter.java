@@ -28,7 +28,7 @@ import java.io.IOException;
 
 public abstract class BooksAdapter extends CacheImagesRecyclerAdapter<BooksAdapter.BookHolder> {
     String filter;
-    LibraryFragment.FragmentHolder holder;
+    FragmentHolder holder;
     HttpClient client = new HttpClient(); // images client
 
     public static class BookHolder extends RecyclerView.ViewHolder {
@@ -46,7 +46,7 @@ public abstract class BooksAdapter extends CacheImagesRecyclerAdapter<BooksAdapt
         }
     }
 
-    public BooksAdapter(Context context, LibraryFragment.FragmentHolder holder) {
+    public BooksAdapter(Context context, FragmentHolder holder) {
         super(context);
         this.holder = holder;
     }
