@@ -19,11 +19,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.activities.MainActivity;
+import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 import com.gitlab.capstone.pellego.network.models.SynopsisResponse;
+
+import org.jsoup.Connection;
 
 import java.util.List;
 
-public class BookPreviewFragment extends Fragment {
+public class BookPreviewFragment extends BaseFragment {
     private BookPreviewModel model;
     private MainActivity mainAct;
 
@@ -31,7 +35,6 @@ public class BookPreviewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         this.mainAct = (MainActivity)getActivity();
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
