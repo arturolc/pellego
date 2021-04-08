@@ -16,13 +16,22 @@ public class LM_Module {
     private String name;
 
     @NonNull
-    @ColumnInfo(name = "Text")
-    private String text;
+    @ColumnInfo(name = "Subheader")
+    private String subheader;
 
-    public LM_Module(int mID, @NonNull String name, @NonNull String text) {
+    @ColumnInfo(name = "Description")
+    private String description;
+
+    @NonNull
+    @ColumnInfo(name = "Icon")
+    private String icon;
+
+    public LM_Module(int mID, @NonNull String name, @NonNull String subheader, String description, @NonNull String icon) {
         this.mID = mID;
         this.name = name;
-        this.text = text;
+        this.subheader = subheader;
+        this.description = description;
+        this.icon = icon;
     }
 
     public int getMID() {
@@ -35,7 +44,16 @@ public class LM_Module {
     }
 
     @NonNull
-    public String getText() {
-        return text;
+    public String getSubheader() {
+        return subheader;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    @NonNull
+    public String getIcon() {
+        return icon;
     }
 }

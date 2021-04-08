@@ -11,24 +11,24 @@ public class Questions {
     @ColumnInfo(name = "QUID")
     private int qUID;
 
-    @ColumnInfo(name = "Quiz_ID")
-    private int quiz_ID;
+    @ColumnInfo(name = "SMID")
+    private int sMID;
 
     @ColumnInfo(name = "Question")
     private String question;
 
-    public Questions(int qUID, int quiz_ID, String question) {
+    public Questions(int qUID, int sMID, String question) {
         this.qUID = qUID;
-        this.quiz_ID = quiz_ID;
+        this.sMID = sMID;
         this.question = question;
     }
 
-    public int getQUID() {
+    public int getGUID() {
         return qUID;
     }
 
-    public int getQuiz_ID() {
-        return quiz_ID;
+    public int getSMID() {
+        return sMID;
     }
 
     public String getQuestion() {

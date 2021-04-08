@@ -22,14 +22,14 @@ public class LM_Submodule {
     @NonNull
     private String name;
 
-    @ColumnInfo(name = "Text")
-    private String text;
+    @ColumnInfo(name = "Subheader")
+    private String subheader;
 
-    public LM_Submodule(int sMID, int mID, @NonNull String name, String text) {
+    public LM_Submodule(int sMID, int mID, @NonNull String name, String subheader) {
         this.sMID = sMID;
         this.mID = mID;
         this.name = name;
-        this.text = text;
+        this.subheader = subheader;
     }
 
     public int getSMID() {
@@ -45,7 +45,7 @@ public class LM_Submodule {
         return name;
     }
 
-    public String getText() {
-        return text;
+    public String getSubheader() {
+        return subheader;
     }
 }

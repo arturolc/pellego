@@ -5,21 +5,30 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = @ForeignKey(entity = Questions.class, parentColumns = "QUID", childColumns = "Question"))
+@Entity(foreignKeys = {@ForeignKey(entity = Questions.class, parentColumns = "QUID", childColumns = "QUID"),
+        @ForeignKey(entity = LM_Submodule.class, parentColumns = "SMID", childColumns = "SMID")})
 public class Answers {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "AID")
     private int aID;
 
-    @ColumnInfo(name = "Question")
-    private int question;
+    @ColumnInfo(name = "SMID")
+    private int sMID;
+
+    @ColumnInfo(name = "QUID")
+    private int qUID;
+
+    @ColumnInfo(name = "Answer")
+    private String answer;
 
     @ColumnInfo(name = "Correct")
     private boolean correct;
 
-    public Answers(int aID, int question, boolean correct) {
+    public Answers(int aID, int sMID, int qUID, String answer, boolean correct) {
         this.aID = aID;
-        this.question = question;
+        this.sMID = sMID;
+        this.qUID = qUID;
+        this.answer = answer;
         this.correct = correct;
     }
 
@@ -27,8 +36,16 @@ public class Answers {
         return aID;
     }
 
-    public int getQuestion() {
-        return question;
+    public int getsMID() {
+        return sMID;
+    }
+
+    public int getQUID() {
+        return qUID;
+    }
+
+    public String getAnswer() {
+        return answer;
     }
 
     public boolean isCorrect() {

@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = {@ForeignKey(entity = Users.class, parentColumns = "UID", childColumns = "UID"),
     @ForeignKey(entity = LM_Submodule.class, parentColumns = "SMID", childColumns = "SMID")})
-public class SubmodulesCompleted {
+public class ProgressCompleted {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "SCID")
     private int scID;
@@ -21,7 +21,7 @@ public class SubmodulesCompleted {
     @NonNull
     private int sMID;
 
-    public SubmodulesCompleted(int scID, int uID, int sMID) {
+    public ProgressCompleted(int scID, int uID, int sMID) {
         this.scID = scID;
         this.uID = uID;
         this.sMID = sMID;
