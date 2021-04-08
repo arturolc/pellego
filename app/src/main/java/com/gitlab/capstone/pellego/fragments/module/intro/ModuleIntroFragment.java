@@ -39,23 +39,28 @@ public class ModuleIntroFragment extends BaseFragment {
     private Button btn_register;
     private SharedPreferences sharedPref;
     private int totalPageCount;
+    private String mID;
+    private String submoduleID;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         List<SMResponse> submoduleResponses = getArguments()
                 .getParcelableArrayList("subModules");
-        String mid = getArguments().getString("moduleID");
+        mID = getArguments().getString("moduleID");
+        submoduleID = getArguments().getString("smID");
 
         moduleViewModel =
                 new ViewModelProvider(
                         requireActivity(),
                         new ModuleViewModelFactory(
                                 getActivity().getApplication(),
-                                mid)).
+                                mID)).
                         get(ModuleViewModel.class);
 
-        int[] colors = moduleViewModel.getModuleGradientColors(mid);
+        moduleViewModel.setSubModuleID(submoduleID);
+
+        int[] colors = moduleViewModel.getModuleGradientColors(mID);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(colors[1]);
         toolbar.setTitle(null);
@@ -92,7 +97,7 @@ public class ModuleIntroFragment extends BaseFragment {
                         public void onClick(View view){
                             NavController navController = Navigation.findNavController(getActivity(),
                                     R.id.nav_host_fragment);
-                            // TODO: update DB that intro was completed
+                            moduleViewModel.setSubModuleCompletion(mID, submoduleID);
                             // Store results in shared preference
                             sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
                             updateModuleProgress();

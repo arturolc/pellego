@@ -67,6 +67,8 @@ public class QuizResultFragment extends BaseFragment {
 
         // Store results in shared preference
         if (quizViewModel.quizPassed()) {
+            //update complete status for module/submodule
+            moduleViewModel.setSubModuleCompletion(moduleViewModel.getModuleID(), quizViewModel.getSMID());
             updateModuleProgress();
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean(quizViewModel.generateSubmoduleCompleteKey(), quizViewModel.quizPassed());

@@ -1,6 +1,7 @@
 package com.gitlab.capstone.pellego.network;
 
 import com.gitlab.capstone.pellego.network.models.AuthToken;
+import com.gitlab.capstone.pellego.network.models.CompletionResponse;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
 import com.gitlab.capstone.pellego.network.models.QuizResponse;
@@ -32,4 +33,10 @@ public interface APIService {
 
     @POST("modules/{module_id}/submodules/{submodule_id}/quizzes/{quiz_id}")
     Call<List<QuizResponse>> getQuizzes(@Path("module_id") String mID, @Path("submodule_id") String smID, @Path("quiz_id") String qID);
+
+    @POST("users/{module_id}/quiz_results/{submodule_id}")
+    Call<Void> setSubmoduleCompletion(@Body AuthToken email, @Path("module_id") String mID, @Path("submodule_id") String smID);
+
+    @POST("users/completion_count")
+    Call<List<CompletionResponse>> getUserLearningModulesCompletionCount(@Body AuthToken email);
 }

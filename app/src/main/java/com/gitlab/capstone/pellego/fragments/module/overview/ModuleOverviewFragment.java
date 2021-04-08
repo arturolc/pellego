@@ -102,6 +102,7 @@ public class ModuleOverviewFragment extends BaseFragment {
                 moduleViewModel.setShowSubmodulePopupDialog(true);
                 switch(position) {
                     case 0:
+                        args.putString("smID", "1");
                         navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_intro, args);
                         break;
                     case 1:

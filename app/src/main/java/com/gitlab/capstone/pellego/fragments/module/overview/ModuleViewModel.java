@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.gitlab.capstone.pellego.database.LearningModulesRepo;
+import com.gitlab.capstone.pellego.database.UsersRepo;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
 
@@ -22,7 +23,9 @@ import java.util.List;
 
 public class ModuleViewModel extends AndroidViewModel {
     private String moduleID;
-    private final LearningModulesRepo repo;
+    private String submoduleID;
+    private final LearningModulesRepo learningModulesRepo;
+    private final UsersRepo usersRepo;
     private LiveData<List<LMDescResponse>> lmDescResponse;
     private LiveData<List<SMResponse>> submoduleResponse;
     private String techniqueLabel;
@@ -34,7 +37,8 @@ public class ModuleViewModel extends AndroidViewModel {
 
     public ModuleViewModel(@NonNull Application application, String moduleID) {
         super(application);
-        this.repo = LearningModulesRepo.getInstance(application);
+        this.learningModulesRepo = LearningModulesRepo.getInstance(application);
+        this.usersRepo = UsersRepo.getInstance(application);
         this.moduleID = moduleID;
         showSubmodulePopupDialog = false;
         showPopupDialog = false;
@@ -44,15 +48,19 @@ public class ModuleViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<LMDescResponse>> getLMDescResponse(String mid) {
-        lmDescResponse = repo.getModuleDesc(mid);
+        lmDescResponse = learningModulesRepo.getModuleDesc(mid);
 
         return lmDescResponse;
     }
 
     public LiveData<List<SMResponse>> getSubmodulesResponse(String MID) {
-        submoduleResponse = repo.getSubmodules(MID);
+        submoduleResponse = learningModulesRepo.getSubmodules(MID);
 
         return submoduleResponse;
+    }
+
+    public void setSubModuleCompletion(String MID, String SMID) {
+        usersRepo.setSubmoduleCompletion(MID, SMID);
     }
 
     public String getModuleID(){
@@ -62,6 +70,10 @@ public class ModuleViewModel extends AndroidViewModel {
     public void setModuleID(String MID) {
         moduleID = MID;
     }
+
+    public String getSubModuleID() { return submoduleID; }
+
+    public void setSubModuleID(String SMID) { submoduleID = SMID; }
 
     public void setShowPopupDialog(boolean showSubmodulePopupDialog) {
         this.showPopupDialog = showSubmodulePopupDialog;
