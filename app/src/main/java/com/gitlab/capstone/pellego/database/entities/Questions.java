@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = @ForeignKey(entity = LM_Quiz.class, parentColumns = "QID", childColumns = "Quiz_ID"))
+@Entity(foreignKeys = @ForeignKey(entity = LM_Quiz.class, parentColumns = "QID", childColumns = "QUID"))
 public class Questions {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "QUID")
@@ -23,7 +23,7 @@ public class Questions {
         this.question = question;
     }
 
-    public int getGUID() {
+    public int getQUID() {
         return qUID;
     }
 

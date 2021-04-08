@@ -36,7 +36,7 @@ public class Answers {
         return aID;
     }
 
-    public int getsMID() {
+    public int getSMID() {
         return sMID;
     }
 
