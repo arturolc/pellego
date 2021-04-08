@@ -10,7 +10,6 @@ import com.gitlab.capstone.pellego.network.APIService;
 import com.gitlab.capstone.pellego.network.RetroInstance;
 import com.gitlab.capstone.pellego.network.models.AuthToken;
 import com.gitlab.capstone.pellego.network.models.CompletionResponse;
-import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -46,6 +45,24 @@ public class UsersRepo {
 
     public void setSubmoduleCompletion(String mID, String smID) {
         Call<Void> call = apiService.setSubmoduleCompletion(new AuthToken("Chris.Bordoy@gmail.com"), mID, smID);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NotNull Call<Void> call, Response<Void> response) {
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
+                Log.e("RETROFIT", t.toString());
+            }
+        });
+    }
+
+    public void setUserWordValues(int wordsRead, int wpm) {
+        Call<Void> call = apiService.setUserWordValues(
+                new AuthToken("Chris.Bordoy@gmail.com"),
+                wordsRead,
+                wpm);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, Response<Void> response) {

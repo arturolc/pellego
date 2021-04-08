@@ -42,7 +42,6 @@ import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 
 import org.geometerplus.fbreader.fbreader.TextBuildTraverser;
-import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 import org.geometerplus.zlibrary.text.view.ZLTextElement;
 import org.geometerplus.zlibrary.text.view.ZLTextElementArea;
 import org.geometerplus.zlibrary.text.view.ZLTextElementAreaVector;
@@ -583,7 +582,6 @@ public class PlayerWidget {
         return prefs.getString(App.READER_THEME, "");
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private SeekBar addDropDownSeekBar(Button wpmSelector) {
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -697,7 +695,6 @@ public class PlayerWidget {
     public Context getContext() {
         return context;
     }
-
 
     public String selectPrev() {
         marks.clear();
@@ -1047,7 +1044,6 @@ public class PlayerWidget {
         view.setVisibility(View.VISIBLE);
     }
 
-
     public void ensureVisible(Storage.Bookmark bm) { // same page
         int pos = ((ScrollWidget) fb.widget).adapter.findPage(bm.start);
         ScrollWidget.ScrollAdapter.PageCursor c = ((ScrollWidget) fb.widget).adapter.pages.get(pos);
@@ -1076,7 +1072,6 @@ public class PlayerWidget {
             dy = rect.top - fb.getTop();
         ((ScrollWidget) fb.widget).smoothScrollBy(0, dy);
     }
-
 
     public void updateGravity(int g) {
         gravity = g;
@@ -1169,8 +1164,6 @@ public class PlayerWidget {
             return tt.getText();
         }
     }
-
-
 
     public static ZLTextPosition expandLeft(ZLTextPosition start) {
         if (fb.pluginview != null) {

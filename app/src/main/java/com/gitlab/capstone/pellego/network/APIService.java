@@ -39,4 +39,9 @@ public interface APIService {
 
     @POST("users/completion_count")
     Call<List<CompletionResponse>> getUserLearningModulesCompletionCount(@Body AuthToken email);
+
+    @POST("users/{words_read}/{wpm}")
+    Call<Void> setUserWordValues(@Body AuthToken email,
+                                 @Path("words_read") int wordsRead,
+                                 @Path("wpm") int wpm);
 }

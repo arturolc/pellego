@@ -13,6 +13,9 @@ import com.gitlab.capstone.pellego.database.UsersRepo;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**********************************************
@@ -63,6 +66,20 @@ public class ModuleViewModel extends AndroidViewModel {
         usersRepo.setSubmoduleCompletion(MID, SMID);
     }
 
+    public void setUserWordValues(int wordsRead, int wpm) {
+        usersRepo.setUserWordValues(wordsRead, wpm);
+    }
+
+    public int getQuizTextCount(String quizText) {
+        if (quizText.isEmpty() || quizText == null) {
+            return 0;
+        }
+
+        String[] words = quizText.split("\\s+");
+
+        return words.length;
+    }
+
     public String getModuleID(){
         return moduleID;
     }
@@ -78,7 +95,6 @@ public class ModuleViewModel extends AndroidViewModel {
     public void setShowPopupDialog(boolean showSubmodulePopupDialog) {
         this.showPopupDialog = showSubmodulePopupDialog;
     }
-
 
     public boolean isShowSubmodulePopupDialog() {
         return showSubmodulePopupDialog;
