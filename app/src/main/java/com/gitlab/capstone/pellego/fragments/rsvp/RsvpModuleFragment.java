@@ -178,6 +178,7 @@ public class RsvpModuleFragment extends BaseFragment {
         asyncUpdateText.cancel(true);
     }
 
+    private int wordCount = 0;
     /**
      * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
      */
@@ -201,7 +202,11 @@ public class RsvpModuleFragment extends BaseFragment {
                     cancel(true);
                     return 0;
                 } else {
-                    rsvp_text.setText(word);
+                    if (!word.isEmpty()) {
+                        wordCount++;
+                        rsvp_text.setText(word + " " + wordCount);
+                    }
+                    //rsvp_text.setText(wordCount);
                     if (PlayerWidget.playing) content = content.replaceFirst(word, "");
                 }
                 try {
@@ -211,6 +216,7 @@ public class RsvpModuleFragment extends BaseFragment {
                     return 0;
                 }
             }
+
             return 0;
         }
 

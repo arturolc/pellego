@@ -1,5 +1,6 @@
 package com.gitlab.capstone.pellego.widgets;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -481,6 +482,7 @@ public class PlayerWidget {
         // technique selector pressed
         Button techniqueSelector = (Button) activity.findViewById(R.id.button_technique);
         techniqueSelector.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
