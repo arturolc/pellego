@@ -97,6 +97,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
         mtext.setBackgroundColor(Color.WHITE);
         scroller = root.findViewById(R.id.mscroller);
         mtext.setText(content);
+        
         if (moduleViewModel.isShowSubmodulePopupDialog()) showSubmodulePopupDialog();
 
         return root;
