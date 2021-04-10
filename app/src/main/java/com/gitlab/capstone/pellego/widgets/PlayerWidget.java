@@ -905,8 +905,11 @@ public class PlayerWidget {
                 fragment = new Fragment(bm);
             }
         } else {
-            Storage.Bookmark bm = selectNext(fragment.fragment);
-            fragment = new Fragment(bm);
+            //ZLTextPosition position = fb.getPosition();
+            if (fb.getPosition() == fragment.fragment.start) {
+                Storage.Bookmark bm = selectNext(fragment.fragment);
+                fragment = new Fragment(bm);
+            }
         }
         marks.add(fragment.fragment);
         if (fb.widget instanceof ScrollWidget) {
