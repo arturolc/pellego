@@ -14,7 +14,7 @@ import java.util.List;
 
 /**********************************************
  Arturo Lara
- Model for PellegoLibrary fragment. Pulls data from remote server
+ Model for PellegoLibraryFragment fragment. Pulls data from remote server
  **********************************************/
 public class PellegoLibraryViewModel extends AndroidViewModel {
     private LiveData<List<LibraryResponse>> libResp;

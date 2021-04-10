@@ -20,6 +20,9 @@ public class LibraryResponse {
     @SerializedName("Book_Url")
     @Expose
     private String bookUrl;
+    @SerializedName("Hash_String")
+    @Expose
+    private String hashString;
 
     /**
      * No args constructor for use in serialization
@@ -36,13 +39,15 @@ public class LibraryResponse {
      * @param bookUrl
      * @param bookName
      */
-    public LibraryResponse(Integer bid, String bookName, String author, String imageUrl, String bookUrl) {
+    public LibraryResponse(Integer bid, String bookName, String author, String imageUrl,
+                           String bookUrl, String hashString) {
         super();
         this.bid = bid;
         this.bookName = bookName;
         this.author = author;
         this.imageUrl = imageUrl;
         this.bookUrl = bookUrl;
+        this.hashString = hashString;
     }
 
     public Integer getBid() {
@@ -85,6 +90,13 @@ public class LibraryResponse {
         this.bookUrl = bookUrl;
     }
 
+    public String getHashString() {
+        return hashString;
+    }
+
+    public void setHashString(String hashString) {
+        this.hashString = hashString;
+    }
 
     @Override
     public String toString() {
@@ -94,6 +106,7 @@ public class LibraryResponse {
                 ", author='" + author + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", bookUrl='" + bookUrl + '\'' +
+                ", hashString='" + hashString + '\'' +
                 '}';
     }
 }

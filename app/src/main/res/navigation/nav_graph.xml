@@ -158,7 +158,7 @@
         tools:layout="@layout/fragment_default_pager" />
     <fragment
         android:id="@+id/pellegoLibrary"
-        android:name="com.gitlab.capstone.pellego.fragments.pellegolibrary.PellegoLibrary"
+        android:name="com.gitlab.capstone.pellego.fragments.pellegolibrary.PellegoLibraryFragment"
         tools:layout="@layout/pellego_library_fragment" >
         <action
             android:id="@+id/action_pellegoLibrary_to_bookPreviewFragment"

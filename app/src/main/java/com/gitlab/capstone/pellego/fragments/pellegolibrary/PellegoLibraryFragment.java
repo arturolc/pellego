@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ import java.util.List;
  Arturo Lara
  Displays all of the books of Pellego Library in a recycler view.
  **********************************************/
-public class PellegoLibrary extends BaseFragment {
+public class PellegoLibraryFragment extends BaseFragment {
 
     private PellegoLibraryViewModel mViewModel;
     private View root;
@@ -33,8 +34,8 @@ public class PellegoLibrary extends BaseFragment {
     RecyclerView recyclerView;
 
 
-    public static PellegoLibrary newInstance() {
-        return new PellegoLibrary();
+    public static PellegoLibraryFragment newInstance() {
+        return new PellegoLibraryFragment();
     }
 
     @Override
@@ -70,21 +71,26 @@ public class PellegoLibrary extends BaseFragment {
         mViewModel.getLibResp().observe(this.getViewLifecycleOwner(), new Observer<List<LibraryResponse>>() {
             @Override
             public void onChanged(List<LibraryResponse> libraryResponses) {
-                String names[] = new String[libraryResponses.size()];
-                String authors[] = new String[libraryResponses.size()];
-                String imgs[] = new String[libraryResponses.size()];
-                String ids[] = new String[libraryResponses.size()];
-                String urls[] = new String[libraryResponses.size()];
+                Log.d("PellegoLibraryFragment", libraryResponses.toString());
+                int size = libraryResponses.size();
+                String names[] = new String[size];
+                String authors[] = new String[size];
+                String imgs[] = new String[size];
+                String ids[] = new String[size];
+                String urls[] = new String[size];
+                String hashStrings[] = new String[size];
 
                 for (int i = 0; i < libraryResponses.size(); i++) {
-                    names[i] = libraryResponses.get(i).getBookName();
-                    authors[i] = libraryResponses.get(i).getAuthor();
-                    imgs[i] = libraryResponses.get(i).getImageUrl();
-                    ids[i] = libraryResponses.get(i).getBid().toString();
-                    urls[i] = libraryResponses.get(i).getBookUrl();
-
+                    LibraryResponse lib = libraryResponses.get(i);
+                    names[i] = lib.getBookName();
+                    authors[i] = lib.getAuthor();
+                    imgs[i] = lib.getImageUrl();
+                    ids[i] = lib.getBid().toString();
+                    urls[i] = lib.getBookUrl();
+                    hashStrings[i] = lib.getHashString();
                 }
-                PellegoLibraryAdapter adapter = new PellegoLibraryAdapter(ids, names, authors, imgs, urls, getContext(), myFragment);
+                PellegoLibraryAdapter adapter = new PellegoLibraryAdapter(ids, names, authors,
+                        imgs, urls, hashStrings, getContext(), myFragment);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             }

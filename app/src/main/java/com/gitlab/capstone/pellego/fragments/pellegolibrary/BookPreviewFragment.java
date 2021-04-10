@@ -33,7 +33,7 @@ import java.util.List;
 public class BookPreviewFragment extends BaseFragment {
     private BookPreviewModel model;
     private MainActivity mainAct;
-    private String title, author;
+    private String title, author, hashString;
 
 
     @Override
@@ -43,6 +43,7 @@ public class BookPreviewFragment extends BaseFragment {
         Storage storage = new Storage(getContext());
         title = getArguments().getString("title");
         author = getArguments().getString("author");
+        hashString = getArguments().getString("hashString");
     }
 
     @Override
@@ -71,7 +72,7 @@ public class BookPreviewFragment extends BaseFragment {
         });
 
 
-        if (!model.inStorage(author + " - " + title)) {
+        if (!model.inStorage(hashString)) {
             view.findViewById(R.id.addToLibraryBtn).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -80,6 +81,7 @@ public class BookPreviewFragment extends BaseFragment {
                         @Override
                         public void run() {
                             Log.d("loadBook", "success");
+                            model.updateStorage();
                         }
                     });
                 }

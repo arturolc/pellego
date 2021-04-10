@@ -24,6 +24,7 @@ import java.util.List;
 public class BookPreviewModel extends AndroidViewModel {
     private LiveData<List<SynopsisResponse>> synopsis;
     private BooksRepo repo;
+    private Storage s;
     private HashSet<String> set;
 
     public BookPreviewModel(@NonNull Application application) {
@@ -31,13 +32,8 @@ public class BookPreviewModel extends AndroidViewModel {
         repo = BooksRepo.getInstance(application);
         synopsis = new MutableLiveData<>();
         set = new HashSet<>();
-        Storage s = new Storage(application.getApplicationContext());
-        ArrayList<Storage.Book> b = s.list();
-        for (int i = 0; i < b.size(); i++) {
-            String title = Storage.getTitle(b.get(i).info);
-            Log.d("BookPreviewModel", title);
-            set.add(title);
-        }
+        s = new Storage(application.getApplicationContext());
+        updateStorage();
     }
 
     public LiveData<List<SynopsisResponse>> getSynopsisResponse(String id){
@@ -47,7 +43,17 @@ public class BookPreviewModel extends AndroidViewModel {
         return synopsis;
     }
 
-    public boolean inStorage(String name) {
-        return set.contains(name);
+    public boolean inStorage(String md5) {
+        return set.contains(md5);
+    }
+
+    public void updateStorage() {
+        set = new HashSet<>();
+        ArrayList<Storage.Book> b = s.list();
+        for (int i = 0; i < b.size(); i++) {
+            String title = b.get(i).md5;
+            Log.d("BookPreviewModel", title);
+            set.add(title);
+        }
     }
 }
