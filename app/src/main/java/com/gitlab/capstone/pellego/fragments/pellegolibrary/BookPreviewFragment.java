@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,21 +21,28 @@ import com.bumptech.glide.Glide;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 import com.gitlab.capstone.pellego.network.models.SynopsisResponse;
 
 import org.jsoup.Connection;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class BookPreviewFragment extends BaseFragment {
     private BookPreviewModel model;
     private MainActivity mainAct;
+    private String title, author;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         this.mainAct = (MainActivity)getActivity();
         super.onCreate(savedInstanceState);
+        Storage storage = new Storage(getContext());
+        title = getArguments().getString("title");
+        author = getArguments().getString("author");
     }
 
     @Override
@@ -46,8 +54,8 @@ public class BookPreviewFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        ((TextView) view.findViewById(R.id.titleTextView)).setText(getArguments().getString("title"));
-        ((TextView) view.findViewById(R.id.authorTextView)).setText(getArguments().getString("author"));
+        ((TextView) view.findViewById(R.id.titleTextView)).setText(title);
+        ((TextView) view.findViewById(R.id.authorTextView)).setText(author);
         ImageView bookImg = view.findViewById(R.id.bookImageView);
         Glide.with(this)
                 .load(getArguments().getString("image"))
@@ -62,17 +70,24 @@ public class BookPreviewFragment extends BaseFragment {
             }
         });
 
-        view.findViewById(R.id.addToLibraryBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("loadBook", Uri.parse(getArguments().getString("bookUrl")).toString());
-                mainAct.loadBook(Uri.parse(getArguments().getString("bookUrl")), new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("loadBook", "success");
-                    }
-                });
-            }
-        });
+
+        if (!model.inStorage(author + " - " + title)) {
+            view.findViewById(R.id.addToLibraryBtn).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("loadBook", Uri.parse(getArguments().getString("bookUrl")).toString());
+                    mainAct.loadBook(Uri.parse(getArguments().getString("bookUrl")), new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d("loadBook", "success");
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            view.findViewById(R.id.addToLibraryBtn).setClickable(false);
+            ((Button)view.findViewById(R.id.addToLibraryBtn)).setText("Already in Library");
+        }
     }
 }

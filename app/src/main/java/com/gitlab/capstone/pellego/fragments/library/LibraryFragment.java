@@ -112,6 +112,13 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         holder = new FragmentHolder(getContext());
         books = new LibraryAdapter(holder, getContext());
         setHasOptionsMenu(true);
+
+        Log.d("LibraryFragment", storage.list().toString());
+//        Log.d("LibraryFragment", storage.list().get(0).toString());
+//        Log.d("LibraryFragment", storage.list().get(1).toString());
+//        Log.d("LibraryFragment", storage.list().get(2).toString());
+//        Log.d("LibraryFragment", Storage.getTitle(storage.list().get(0).info));
+
     }
 
     @Override
