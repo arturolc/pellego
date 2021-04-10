@@ -26,6 +26,8 @@ import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 
+import java.time.LocalDate;
+
 /**********************************************
  Eli Hebdon & Chris Bordoy
 
@@ -60,6 +62,10 @@ public class QuizResultFragment extends BaseFragment {
         });
 
         // TODO: POST quiz result data to DB
+        if (quizViewModel.getQuizTextCount() != 0){
+            moduleViewModel.setUserWordValues(quizViewModel.getQuizTextCount(), quizViewModel.getWPM());
+        }
+
         // Display score
         TextView txt = root.findViewById(R.id.text_results);
         txt.setText(quizViewModel.getFinalScore());
@@ -67,6 +73,8 @@ public class QuizResultFragment extends BaseFragment {
 
         // Store results in shared preference
         if (quizViewModel.quizPassed()) {
+            //update complete status for module/submodule
+            moduleViewModel.setSubModuleCompletion(moduleViewModel.getModuleID(), quizViewModel.getSMID());
             updateModuleProgress();
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean(quizViewModel.generateSubmoduleCompleteKey(), quizViewModel.quizPassed());

@@ -18,6 +18,7 @@ import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.network.models.CompletionResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class LearnFragment extends BaseFragment {
     private LearnViewModel learnViewModel;
     private ListView moduleList;
     private LiveData<List<LMResponse>> lmResponses;
+    public int[] completionResponse;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -43,25 +45,32 @@ public class LearnFragment extends BaseFragment {
 
         super.setupHeader(root);
 
-        lmResponses = learnViewModel.getLMResponse();
-        learnViewModel.getLMResponse().observe(getViewLifecycleOwner(), new Observer<List<LMResponse>>() {
+        learnViewModel.getCompletionResponse().observe(getViewLifecycleOwner(), new Observer<List<CompletionResponse>>() {
             @Override
-            public void onChanged(List<LMResponse> lmResponses) {
-                LearnCardAdapter adapter = new LearnCardAdapter(getContext(), lmResponses);
-                moduleList.setAdapter(adapter);
-            }
-        });
+            public void onChanged(List<CompletionResponse> completionResponses) {
+                completionResponse = learnViewModel.parseCompletionResponses(completionResponses);
 
-        // Drawer Item click listeners
-        moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                lmResponses = learnViewModel.getLMResponse();
+                learnViewModel.getLMResponse().observe(getViewLifecycleOwner(), new Observer<List<LMResponse>>() {
+                    @Override
+                    public void onChanged(List<LMResponse> lmResponses) {
+                        LearnCardAdapter adapter = new LearnCardAdapter(getContext(), completionResponse, lmResponses);
+                        moduleList.setAdapter(adapter);
+                    }
+                });
 
-                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                // Drawer Item click listeners
+                moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Bundle bundle = new Bundle();
-                bundle.putString("moduleID", lmResponses.getValue().get(position).getMID().toString());
-                navController.navigate(R.id.nav_module_overview, bundle);
+                        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("moduleID", lmResponses.getValue().get(position).getMID().toString());
+                        navController.navigate(R.id.nav_module_overview, bundle);
+                    }
+                });
             }
         });
 

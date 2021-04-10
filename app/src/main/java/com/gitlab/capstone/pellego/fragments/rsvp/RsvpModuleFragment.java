@@ -43,6 +43,7 @@ import java.util.List;
 public class RsvpModuleFragment extends BaseFragment {
 
     private Integer wpm;
+    private int quizTextCount;
     public String difficulty;
     public String submoduleID;
     private static AsyncUpdateText asyncUpdateText;
@@ -55,6 +56,7 @@ public class RsvpModuleFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        quizTextCount = getArguments().getInt("quizTextCount");
         wpm = Integer.parseInt(getArguments().getString("wpm"));
         difficulty = getArguments().getString("difficulty");
         submoduleID = getArguments().getString("smID");
@@ -133,6 +135,7 @@ public class RsvpModuleFragment extends BaseFragment {
                 dialog.dismiss();
                 NavController navController = Navigation.findNavController(currentView, R.id.nav_host_fragment);
                 Bundle args = new Bundle();
+                args.putInt("quizTextCount", quizTextCount);
                 args.putString("difficulty", difficulty);
                 args.putString("wpm", String.valueOf(wpm));
                 args.putString("module", "rsvp");

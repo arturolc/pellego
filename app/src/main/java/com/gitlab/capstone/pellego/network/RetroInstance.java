@@ -3,17 +3,40 @@ package com.gitlab.capstone.pellego.network;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/***************************************************
+ *  Chris Bordoy and Arturo Lara
+ *
+ *  A retrofit instance that establishes the base
+ *  url and gson conversion
+ **************************************************/
+
 public class RetroInstance {
     public static String BASE_URL = "http://54.245.202.132:5000/";
+    public static String C_URL = "http://54.245.202.132:5001/";
     private static Retrofit retrofit;
 
     public static Retrofit getRetroClient() {
-        if (retrofit == null) {
+        //if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-        }
+        //}
+
+        return retrofit;
+    }
+
+
+    //TODO: Only for local implementation purposes, will delete this afterwards
+    //TODO: Comment out if not needed
+    public static Retrofit getRetroClient2() {
+       // if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(C_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+       // }
+
         return retrofit;
     }
 }

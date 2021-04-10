@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.network.models.CompletionResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
 
 import java.util.List;
@@ -25,6 +26,7 @@ import static java.lang.String.*;
  *****************************************************/
 
 public class LearnCardAdapter extends BaseAdapter {
+    private final int[] completionResponse;
     private final List<LMResponse> response;
     private final Context mContext;
 
@@ -32,7 +34,8 @@ public class LearnCardAdapter extends BaseAdapter {
     int idx;
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    public LearnCardAdapter(Context context, List<LMResponse> response) {
+    public LearnCardAdapter(Context context, int[] cresponse, List<LMResponse> response) {
+        this.completionResponse = cresponse;
         this.response = response;
         this.mContext = context;
         gradientBackgrounds = new Drawable[] {
@@ -82,10 +85,12 @@ public class LearnCardAdapter extends BaseAdapter {
         TextView subHeaderView = view.findViewById(R.id.description);
 
         LMResponse res = response.get(position);
-        titleView.setText( res.getName() );
+        int completionRes = completionResponse[position];
+
+        titleView.setText(res.getName());
         subtitleView.setText(
                 format("%d of %d submodules completed",
-                res.getCompleted(),
+                completionRes,
                 res.getTotalSubmodules()));
         Glide.with(mContext).load(res.getIcon()).into(iconView);
         subHeaderView.setText(res.getSubheader());

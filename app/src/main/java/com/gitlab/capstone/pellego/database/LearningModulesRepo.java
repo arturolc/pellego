@@ -26,7 +26,7 @@ import retrofit2.Response;
 /*****************************************************
  * Arturo Lara & Chris Bordoy
  *
- * Repository for all endpoint calls
+ * Repository for all Learning Modules endpoint calls
  *****************************************************/
 
 public class LearningModulesRepo {

@@ -71,6 +71,7 @@ public class QuizFragment extends BaseFragment {
         });
 
         // Set view model parameters
+        quizViewModel.setQuizTextCount(getArguments().getInt("quizTextCount"));
         quizViewModel.setDifficulty(getArguments().getString("difficulty"));
         quizViewModel.setWPM(Integer.parseInt(getArguments().getString("wpm")));
         quizViewModel.setModule(getArguments().getString("module"));
@@ -101,6 +102,8 @@ public class QuizFragment extends BaseFragment {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         if (quizViewModel.isLastQuestion()) {
                             NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                            Bundle args = new Bundle();
+                            args.putInt("quizTextCount", getArguments().getInt("quizTextCount"));
                             navController.navigate(R.id.nav_quiz_results);
                         }
                         // TODO: update icons based on button click
