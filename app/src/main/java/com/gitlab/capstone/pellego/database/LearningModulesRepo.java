@@ -1,12 +1,21 @@
 package com.gitlab.capstone.pellego.database;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
+import android.net.NetworkRequest;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.gitlab.capstone.pellego.database.daos.LearningModulesDao;
+import com.gitlab.capstone.pellego.database.entities.LM_Module;
 import com.gitlab.capstone.pellego.network.APIService;
 import com.gitlab.capstone.pellego.network.RetroInstance;
 import com.gitlab.capstone.pellego.network.models.AuthToken;
@@ -17,6 +26,8 @@ import com.gitlab.capstone.pellego.network.models.SMResponse;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.nio.channels.NetworkChannel;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -38,13 +49,20 @@ public class LearningModulesRepo {
     private final MutableLiveData<List<SMResponse>> smResponse = new MutableLiveData<>();
     private final MutableLiveData<List<QuizResponse>> quizResponse = new MutableLiveData<>();
     private static LearningModulesRepo INSTANCE;
+    private Application application;
+    private boolean isNetworkConnected;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private LearningModulesRepo(Application application) {
+        this.application = application;
         db = PellegoDatabase.getDatabase(application);
         dao = db.learningModulesDao();
         apiService = RetroInstance.getRetroClient().create(APIService.class);
+        registerNetworkCallback();
+
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     synchronized public static LearningModulesRepo getInstance(Application app) {
         if (INSTANCE == null) {
             INSTANCE = new LearningModulesRepo(app);
@@ -52,22 +70,39 @@ public class LearningModulesRepo {
         return INSTANCE;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public LiveData<List<LMResponse>> getModules() {
-        Call<List<LMResponse>> call = apiService.getModules(new AuthToken("Chris.Bordoy@gmail.com"));
-        call.enqueue(new Callback<List<LMResponse>>() {
-            @Override
-            public void onResponse(@NotNull Call<List<LMResponse>> call, @NotNull Response<List<LMResponse>> response) {
-                Log.i("RETROFIT", response.body().toString());
-                List<LMResponse> r = response.body();
-                lmResponse.setValue(r);
-            }
+        Log.d("LMRepo", isNetworkConnected + "");
+        if (isNetworkConnected) {
+            Call<List<LMResponse>> call = apiService.getModules(new AuthToken("Chris.Bordoy@gmail.com"));
+            call.enqueue(new Callback<List<LMResponse>>() {
+                @Override
+                public void onResponse(@NotNull Call<List<LMResponse>> call, @NotNull Response<List<LMResponse>> response) {
+                    Log.i("RETROFITsucc", response.body().toString());
+                    List<LMResponse> r = response.body();
+                    lmResponse.setValue(r);
+                }
 
-            @Override
-            public void onFailure(@NotNull Call<List<LMResponse>> call, Throwable t) {
-                Log.e("RETROFIT", t.toString());
-            }
-        });
+                @Override
+                public void onFailure(@NotNull Call<List<LMResponse>> call, Throwable t) {
+                    Log.e("RETROFITerror", t.toString());
+                }
+            });
+        }
+        else {
+            AsyncTask.execute(() -> {
+                List<LM_Module> mn = dao.getModules();
+                List<LMResponse> res = new ArrayList<>();
+                for(int i = 0; i < mn.size(); i++) {
+                    LM_Module m = mn.get(i);
+                    res.add(new LMResponse(m.getMID(), m.getName(), m.getSubheader(), m.getIcon(),
+                            dao.getModuleProgress(1, mn.get(i).getMID()),
+                            dao.getSubmodulesCount(mn.get(i).getMID())));
+                }
 
+                lmResponse.postValue(res);
+            });
+        }
         return lmResponse;
     }
 
@@ -124,5 +159,34 @@ public class LearningModulesRepo {
             }
         });
         return quizResponse;
+    }
+
+
+    // Network Check
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void registerNetworkCallback()
+    {
+        try {
+            ConnectivityManager connectivityManager = (ConnectivityManager) application.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkRequest.Builder builder = new NetworkRequest.Builder();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback(){
+                                                                       @Override
+                                                                       public void onAvailable(Network network) {
+                                                                           isNetworkConnected = true; // Global Static Variable
+                                                                       }
+                                                                       @Override
+                                                                       public void onLost(Network network) {
+                                                                           isNetworkConnected = false; // Global Static Variable
+                                                                       }
+                                                                   }
+
+                );
+            }
+            isNetworkConnected = false;
+        }catch (Exception e){
+            isNetworkConnected = false;
+        }
     }
 }

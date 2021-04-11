@@ -3,17 +3,18 @@ package com.gitlab.capstone.pellego.database.daos;
 import androidx.room.Dao;
 import androidx.room.Query;
 
+import com.gitlab.capstone.pellego.database.entities.LM_Module;
 import com.gitlab.capstone.pellego.database.entities.LM_Submodule;
 
 import java.util.List;
 
 @Dao
 public interface LearningModulesDao {
-    @Query("Select MID as mID, Name as name from LM_Module")
-    public List<ModuleName> getModuleNames();
+    @Query("Select MID, Name, Subheader, Description, Icon from LM_Module")
+    public List<LM_Module> getModules();
 
-    @Query("Select count(*) as countProgress from ProgressCompleted where UID = :uID and SMID = :smID")
-    public int getModuleProgress(int uID, int smID);
+    @Query("select count(*) from ProgressCompleted where UID = :uID and SMID in (select SMID from LM_Submodule where MID = :mID)")
+    public int getModuleProgress(int uID, int mID);
 
     @Query("Select Description from LM_Module where MID = :mID")
     public List<String> getModuleDescription(int mID);

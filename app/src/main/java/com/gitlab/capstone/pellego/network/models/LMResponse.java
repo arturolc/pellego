@@ -30,6 +30,15 @@ public class LMResponse {
     @Expose
     private Integer totalSubmodules;
 
+    public LMResponse(Integer mID, String name, String subheader, String icon, Integer completed, Integer totalSubmodules) {
+        this.mID = mID;
+        this.name = name;
+        this.subheader = subheader;
+        this.icon = icon;
+        this.completed = completed;
+        this.totalSubmodules = totalSubmodules;
+    }
+
     public String getSubheader() {
         return subheader;
     }
