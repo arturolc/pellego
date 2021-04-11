@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,11 +23,13 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
@@ -46,7 +49,7 @@ public class RsvpModuleFragment extends BaseFragment {
     private int quizTextCount;
     public String difficulty;
     public String submoduleID;
-    private static AsyncUpdateText asyncUpdateText;
+    private AsyncUpdateText asyncUpdateText;
     private String content = "";
     private ModuleViewModel moduleViewModel;
     private FragmentActivity currentView;
@@ -182,7 +185,7 @@ public class RsvpModuleFragment extends BaseFragment {
     /**
      * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
      */
-    private class AsyncUpdateText extends AsyncTask<Integer, String, Integer> {
+    public class AsyncUpdateText extends AsyncTask<Integer, String, Integer> {
 
         TextView rsvp_text;
         String[] words = content.split (" "); // split on non-word characters
@@ -198,7 +201,7 @@ public class RsvpModuleFragment extends BaseFragment {
                 // Verify that user has not navigated away from the RSVP fragment
                 NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
                 String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
-                if (!currFragment.contains("RsvpModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing)) {
+                if ((!currFragment.contains("RsvpModuleFragment") && (!currFragment.contains("ReaderFragment")))) {
                     cancel(true);
                     return 0;
                 } else {
@@ -206,14 +209,25 @@ public class RsvpModuleFragment extends BaseFragment {
                         wordCount++;
                         rsvp_text.setText(word + " " + wordCount);
                     }
-                    //rsvp_text.setText(wordCount);
                     if (PlayerWidget.playing) content = content.replaceFirst(word, "");
+                    if (playerWidget.marks != null){
+                        if (!playerWidget.marks.isEmpty() && word.isEmpty()) {
+                            //toggle Play button to Pause
+
+                            PlayerWidget.playing = false;
+                            playerWidget.marks.clear();
+                            playerWidget.setUserWordValues(wordCount, playerWidget.wpm);
+                            wordCount = 0;
+                            cancel(true);
+                            return 0;
+                        }
+                    }
                 }
                 try {
                     Thread.sleep((long) ((60.0 / (float) PlayerWidget.wpm) * 1000));
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
-                    return 0;
+                    break;
                 }
             }
 
