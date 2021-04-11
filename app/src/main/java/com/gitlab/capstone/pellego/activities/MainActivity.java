@@ -220,6 +220,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         }
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
