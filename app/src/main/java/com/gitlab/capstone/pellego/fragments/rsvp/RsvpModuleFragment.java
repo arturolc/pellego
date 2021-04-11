@@ -1,5 +1,6 @@
 package com.gitlab.capstone.pellego.fragments.rsvp;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
@@ -109,6 +110,7 @@ public class RsvpModuleFragment extends BaseFragment {
     private void showSubmodulePopupDialog() {
         // Setup the custom dialog
         Dialog dialog = new Dialog(getContext());
+        dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.ok_dialog);
         ((TextView) dialog.findViewById(R.id.text_dialog)).setText(R.string.submodule_popup_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -128,6 +130,7 @@ public class RsvpModuleFragment extends BaseFragment {
     private void showQuizPopupDialog() {
         // Setup the custom dialog
         Dialog dialog = new Dialog(getContext());
+        dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.ok_dialog);
         ((TextView) dialog.findViewById(R.id.text_dialog)).setText(R.string.quiz_popup_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -157,7 +160,7 @@ public class RsvpModuleFragment extends BaseFragment {
 
     public void play() {
         if (content.equals("")) {
-            playerWidget.selectNext();
+            content = playerWidget.selectNext();
         }
         if (PlayerWidget.playing) {
             asyncUpdateText = new AsyncUpdateText(); // start thread on ok
@@ -182,6 +185,7 @@ public class RsvpModuleFragment extends BaseFragment {
     }
 
     private int wordCount = 0;
+    int prevWPM = 0;
     /**
      * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
      */
@@ -195,39 +199,56 @@ public class RsvpModuleFragment extends BaseFragment {
             rsvp_text = currentView.findViewById(R.id.text_rsvp);
         }
 
+        @SuppressLint("WrongThread")
         @Override
         protected Integer doInBackground(Integer... ints) {
             for (String word : words) {
                 // Verify that user has not navigated away from the RSVP fragment
                 NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
                 String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
+
                 if ((!currFragment.contains("RsvpModuleFragment") && (!currFragment.contains("ReaderFragment")))) {
                     cancel(true);
                     return 0;
                 } else {
+                    if (currFragment.contains("ReaderFragment")) {
+                        if (!playerWidget.progressChanged && !playerWidget.playing) {
+                            prevWPM = PlayerWidget.wpm;
+                        } else if (playerWidget.progressChanged) {
+                            playerWidget.setUserWordValues(wordCount, prevWPM);
+                            wordCount = 0;
+                            playerWidget.progressChanged = false;
+                        }
+                    }
+
                     if (!word.isEmpty()) {
                         wordCount++;
-                        rsvp_text.setText(word + " " + wordCount);
+                        rsvp_text.setText(word);
                     }
-                    if (PlayerWidget.playing) content = content.replaceFirst(word, "");
-                    if (playerWidget.marks != null){
+                    if (currFragment.contains("ReaderFragment")) {
                         if (!playerWidget.marks.isEmpty() && word.isEmpty()) {
                             //toggle Play button to Pause
 
                             PlayerWidget.playing = false;
                             playerWidget.marks.clear();
-                            playerWidget.setUserWordValues(wordCount, playerWidget.wpm);
-                            wordCount = 0;
+                            if (wordCount != 0 && playerWidget.wpm != 0) {
+                                playerWidget.setUserWordValues(wordCount, playerWidget.wpm);
+                                wordCount = 0;
+                            }
                             cancel(true);
                             return 0;
                         }
+                    }
+                    if (PlayerWidget.playing && !content.isEmpty()) {
+                        content = content.replaceFirst(word, "");
                     }
                 }
                 try {
                     Thread.sleep((long) ((60.0 / (float) PlayerWidget.wpm) * 1000));
                 } catch (Exception e) {
+                    cancel(true);
                     e.printStackTrace();
-                    break;
+                    return 0;
                 }
             }
 

@@ -84,6 +84,8 @@ public class PlayerWidget {
     ArrayList<Runnable> onScrollFinished = new ArrayList<>();
     Handler handler = new Handler();
     int gravity;
+    public boolean progressChanged;
+    public ImageView playButton;
 
     public void setUserWordValues(int wordsRead, int wpm) {
         usersRepo.setUserWordValues(wordsRead, wpm);
@@ -423,7 +425,7 @@ public class PlayerWidget {
         this.activity = activity;
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.tts_popup, null);
-        ImageView playButton = activity.findViewById(R.id.button_play);
+        playButton = activity.findViewById(R.id.button_play);
         this.usersRepo = UsersRepo.getInstance(activity.getApplication());
         // skip back button pressed
         View prev = activity.findViewById(R.id.button_prev);
@@ -608,8 +610,10 @@ public class PlayerWidget {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
                 int val = (progress * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
+                togglePlay(playButton);
                 progressTextView.setText(String.valueOf(progress));
                 wpm = progress;
+                progressChanged = true;
                 int width = seekBar.getWidth() - seekBar.getPaddingLeft() - seekBar.getPaddingRight();
                 int thumbPos = seekBar.getPaddingLeft() + width * seekBar.getProgress() / seekBar.getMax();
 
@@ -910,18 +914,12 @@ public class PlayerWidget {
                 ZLTextPosition position = fb.getPosition();
                 Storage.Bookmark bm = expandWord(new Storage.Bookmark("", position, position));
                 fragment = new Fragment(bm);
-                runCount++;
             }
         } else {
-            if(runCount != 1) {
-                Storage.Bookmark bm = selectNext(fragment.fragment);
-                fragment = new Fragment(bm);
-            }
-            runCount++;
+            Storage.Bookmark bm = selectNext(fragment.fragment);
+            fragment = new Fragment(bm);
         }
-        if ((fb.app.BookTextView.getEndCursor().compareTo(fragment.fragment.start) <= 0)) {
-            marks.add(fragment.fragment);
-        }
+        marks.add(fragment.fragment);
         if (fb.widget instanceof ScrollWidget) {
             int pos = ((ScrollWidget) fb.widget).adapter.findPage(fragment.fragment.start);
             if (pos == -1)
