@@ -43,7 +43,6 @@ public class LearnCardAdapter extends BaseAdapter {
                 mContext.getResources().getDrawable(R.drawable.green_gradient),
                 mContext.getResources().getDrawable(R.drawable.pink_gradient),
                 mContext.getResources().getDrawable(R.drawable.blue_gradient),
-                mContext.getResources().getDrawable(R.drawable.silver_gradient)
         };
     }
 
@@ -75,7 +74,7 @@ public class LearnCardAdapter extends BaseAdapter {
             view = convertView;
         }
 
-        if (idx == 5) idx = 0;
+        if (idx == 4) idx = 0;
         view.setBackground(gradientBackgrounds[idx]);
         idx ++;
 
