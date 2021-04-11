@@ -253,6 +253,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
         @Override
         protected Integer doInBackground(Integer... ints) {
             String pageTxt = content;
+            int wordCount = pageTxt.split("\\s+").length;
             Layout layout = mtext.getLayout();
             mtext.setText(Html.fromHtml(pageTxt));
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
@@ -277,6 +278,9 @@ public class MetaguidingModuleFragment extends BaseFragment {
                         }
                     }
                 });
+                if (!pageTxt.isEmpty()) {
+                    playerWidget.setUserWordValues(wordCount, PlayerWidget.wpm);
+                }
                 idx++;
                 if (!currFragment.contains("MetaguidingModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing) || idx > pageTxt.length()) {
                     cancel(true);
