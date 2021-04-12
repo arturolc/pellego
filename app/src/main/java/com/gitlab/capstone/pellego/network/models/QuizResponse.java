@@ -20,7 +20,7 @@ public class QuizResponse {
     private String question;
     @SerializedName("Answers")
     @Expose
-    private List<Answer> answers = null;
+    private List<AnswerAll> answers = null;
 
     public Integer getQUID() {
         return qUID;
@@ -38,11 +38,11 @@ public class QuizResponse {
         this.question = question;
     }
 
-    public List<Answer> getAnswers() {
+    public List<AnswerAll> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<Answer> answers) {
+    public void setAnswers(List<AnswerAll> answers) {
         this.answers = answers;
     }
 

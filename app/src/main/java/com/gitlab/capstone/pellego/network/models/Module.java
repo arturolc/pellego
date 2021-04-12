@@ -1,16 +1,10 @@
-
 package com.gitlab.capstone.pellego.network.models;
 
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Generated("jsonschema2pojo")
-public class Submodule {
+public class Module {
 
-    @SerializedName("SMID")
-    @Expose
-    private Integer smid;
     @SerializedName("MID")
     @Expose
     private Integer mid;
@@ -20,40 +14,27 @@ public class Submodule {
     @SerializedName("Subheader")
     @Expose
     private String subheader;
-    @SerializedName("Text")
+    @SerializedName("Description")
     @Expose
-    private String text;
+    private String description;
+    @SerializedName("Icon")
+    @Expose
+    private String icon;
 
     /**
      * No args constructor for use in serialization
      * 
      */
-    public Submodule() {
+    public Module() {
     }
 
-    /**
-     * 
-     * @param smid
-     * @param subheader
-     * @param name
-     * @param mid
-     * @param text
-     */
-    public Submodule(Integer smid, Integer mid, String name, String subheader, String text) {
+    public Module(Integer mid, String name, String subheader, String description, String icon) {
         super();
-        this.smid = smid;
         this.mid = mid;
         this.name = name;
         this.subheader = subheader;
-        this.text = text;
-    }
-
-    public Integer getSmid() {
-        return smid;
-    }
-
-    public void setSmid(Integer smid) {
-        this.smid = smid;
+        this.description = description;
+        this.icon = icon;
     }
 
     public Integer getMid() {
@@ -80,12 +61,20 @@ public class Submodule {
         this.subheader = subheader;
     }
 
-    public String getText() {
-        return text;
+    public String getDescription() {
+        return description;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
 }

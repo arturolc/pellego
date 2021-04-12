@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /*****************************************************
  * Chris Bordoy
  *
- * Model that represents a Quiz Answer
+ * Model that represents a Quiz AnswerAll
  *****************************************************/
 
 public class Answer {
@@ -14,7 +14,7 @@ public class Answer {
     @SerializedName("QUID")
     @Expose
     private Integer qUID;
-    @SerializedName("Answer")
+    @SerializedName("AnswerAll")
     @Expose
     private String answer;
     @SerializedName("Correct")
@@ -47,7 +47,7 @@ public class Answer {
 
     @Override
     public String toString() {
-        return "Answer{" +
+        return "AnswerAll{" +
                 "qUID=" + qUID +
                 ", answer='" + answer + '\'' +
                 ", correct=" + correct +

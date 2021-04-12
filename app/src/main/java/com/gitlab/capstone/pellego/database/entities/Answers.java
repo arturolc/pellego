@@ -18,7 +18,7 @@ public class Answers {
     @ColumnInfo(name = "QUID")
     private int qUID;
 
-    @ColumnInfo(name = "Answer")
+    @ColumnInfo(name = "AnswerAll")
     private String answer;
 
     @ColumnInfo(name = "Correct")

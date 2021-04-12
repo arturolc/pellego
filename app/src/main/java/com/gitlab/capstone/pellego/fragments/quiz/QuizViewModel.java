@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.database.LearningModulesRepo;
-import com.gitlab.capstone.pellego.network.models.Answer;
+import com.gitlab.capstone.pellego.network.models.AnswerAll;
 import com.gitlab.capstone.pellego.network.models.QuizResponse;
 
 import java.util.ArrayList;
@@ -173,10 +173,10 @@ public class QuizViewModel extends AndroidViewModel {
         questions = new ArrayList<>();
     }
 
-    public void populateQuestionBank(List<String> questions, List<List<Answer>> answers) {
+    public void populateQuestionBank(List<String> questions, List<List<AnswerAll>> answers) {
         this.questions = new ArrayList<>();
         for (int i = 0; i < 4; i ++) {
-            Answer[] answersArray = answers.get(i).toArray(new Answer[0]);
+            AnswerAll[] answersArray = answers.get(i).toArray(new AnswerAll[0]);
             this.questions.add(new QuizQuestion(questions.get(i), new ArrayList<>(
                     Arrays.asList(answersArray[0],
                             answersArray[1],
@@ -202,8 +202,8 @@ public class QuizViewModel extends AndroidViewModel {
         return questions;
     }
 
-    public List<List<Answer>> getAnswers(List<QuizResponse> quizResponses) {
-        List<List<Answer>> answers = new ArrayList<>();
+    public List<List<AnswerAll>> getAnswers(List<QuizResponse> quizResponses) {
+        List<List<AnswerAll>> answers = new ArrayList<>();
 
         for (int i = 0; i < quizResponses.size(); i++) {
             answers.add(quizResponses.get(i).getAnswers());
@@ -212,7 +212,7 @@ public class QuizViewModel extends AndroidViewModel {
         return answers;
     }
 
-    public int getCorrectAnswerIndex(Answer[] answers) {
+    public int getCorrectAnswerIndex(AnswerAll[] answers) {
         int correctIdx = 0;
         for (int i = 0; i < answers.length; i++) {
             if (answers[i].getCorrect() == 1) {
@@ -233,9 +233,9 @@ public class QuizViewModel extends AndroidViewModel {
 
     private static class QuizQuestion {
         public String question;
-        public ArrayList<Answer> answers;
+        public ArrayList<AnswerAll> answers;
         public Integer correct_answer;
-        public QuizQuestion(String question, ArrayList<Answer> answers, Integer correct_answer) {
+        public QuizQuestion(String question, ArrayList<AnswerAll> answers, Integer correct_answer) {
             this.question = question;
             this.answers = answers;
             this.correct_answer = correct_answer;
