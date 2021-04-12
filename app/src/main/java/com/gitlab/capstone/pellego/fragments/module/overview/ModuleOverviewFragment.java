@@ -100,6 +100,9 @@ public class ModuleOverviewFragment extends BaseFragment {
                 args.putString("moduleID", moduleID);
                 args.putParcelableArrayList("subModules", (ArrayList<? extends Parcelable>) submoduleResponse);
                 moduleViewModel.setShowSubmodulePopupDialog(true);
+                System.out.println("DEBUG: MODULEID = " + moduleID);
+                System.out.println("DEBUG: Position = " + position);
+
                 switch(position) {
                     case 0:
                         navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_intro, args);
