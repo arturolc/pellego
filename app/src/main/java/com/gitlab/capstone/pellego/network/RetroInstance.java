@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  **************************************************/
 
 public class RetroInstance {
-    public static String BASE_URL = "http://54.245.202.132:5000/";
+    public static String BASE_URL = "http://54.245.202.132:5002/";
     public static String C_URL = "http://54.245.202.132:5001/";
     private static Retrofit retrofit;
 

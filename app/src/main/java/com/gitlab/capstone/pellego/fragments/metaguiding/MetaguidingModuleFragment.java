@@ -188,16 +188,20 @@ public class MetaguidingModuleFragment extends BaseFragment {
 
     public String getNextPage() {
         StringBuilder txt = new StringBuilder();
-        while(txt.length() < 900) {
-            txt.append(playerWidget.selectNext());
+        String result = playerWidget.selectNext();
+        while(txt.length() < 900 && !result.isEmpty()) {
+            txt.append(result);
+            result = playerWidget.selectNext();
         }
         return txt.toString();
     }
 
     public String getPrevPage() {
         StringBuilder txt = new StringBuilder();
-        while(txt.length() < 900) {
-            txt.append(playerWidget.selectPrev());
+        String result = playerWidget.selectPrev();
+        while(txt.length() < 900 && !result.isEmpty()) {
+            txt.append(result);
+            result = playerWidget.selectPrev();
         }
         return txt.toString();
     }
@@ -245,6 +249,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
     private class AsyncUpdateReaderText extends AsyncTask<Integer, String, Integer> {
 
         TextView mtext;
+        String currFragment;
         @Override
         protected void onPreExecute() {
             mtext = currentView.findViewById(R.id.mText);
@@ -260,7 +265,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
             scroller.scrollTo(0, layout.getLineTop(layout.getLineForOffset(idx)));
             NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
             while (idx < pageTxt.length() - 9) {
-                String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
+                currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -278,9 +283,6 @@ public class MetaguidingModuleFragment extends BaseFragment {
                         }
                     }
                 });
-                if (!pageTxt.isEmpty()) {
-                    playerWidget.setUserWordValues(wordCount, PlayerWidget.wpm);
-                }
                 idx++;
                 if (!currFragment.contains("MetaguidingModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing) || idx > pageTxt.length()) {
                     cancel(true);
@@ -291,6 +293,11 @@ public class MetaguidingModuleFragment extends BaseFragment {
                 } catch (InterruptedException e) {
                     cancel(true);
                     e.printStackTrace();
+                }
+            }
+            if (!pageTxt.isEmpty() && currFragment != null) {
+                if (currFragment.contains("ReaderFragment") && wordCount != 0 && PlayerWidget.wpm != 0) {
+                    playerWidget.setUserWordValues(wordCount, PlayerWidget.wpm);
                 }
             }
             return 0;
