@@ -108,6 +108,8 @@ public class ModuleIntroFragment extends BaseFragment {
                             return;
                         }
                     });
+                } else {
+                    btn_register.setVisibility(View.INVISIBLE);
                 }
             }
         });

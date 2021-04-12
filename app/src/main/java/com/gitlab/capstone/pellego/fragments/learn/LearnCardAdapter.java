@@ -3,6 +3,7 @@ package com.gitlab.capstone.pellego.fragments.learn;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +76,11 @@ public class LearnCardAdapter extends BaseAdapter {
         }
 
         if (idx == 4) idx = 0;
-        view.setBackground(gradientBackgrounds[idx]);
+        GradientDrawable gradientDrawable = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM, //set a gradient direction
+                getModuleGradientColors(idx)); //set the color of gradient
+        gradientDrawable.setCornerRadius(20f);
+        view.setBackground(gradientDrawable);
         idx ++;
 
         TextView titleView = view.findViewById(R.id.title);
@@ -95,5 +100,32 @@ public class LearnCardAdapter extends BaseAdapter {
         subHeaderView.setText(res.getSubheader());
 
         return view;
+    }
+
+    public int[] getModuleGradientColors(int idx){
+        int[] colors = new int[2];
+
+        switch(idx) {
+            case 0:
+                colors[0] = 0xFFF9D976;
+                colors[1] = 0xFFF39f86;
+                break;
+            case 1:
+                colors[0] = 0xFF20BF55;
+                colors[1] = 0xFF01BAEF;
+                break;
+            case 2:
+                colors[0] = 0xFFF53844;
+                colors[1] = 0xFF42378F;
+                break;
+            case 3:
+                colors[0] = 0xFF37D5D6;
+                colors[1] = 0xFF9B6DFF;
+                break;
+            default:
+                break;
+        }
+
+        return colors;
     }
 }

@@ -33,7 +33,7 @@ public class UsersRepo {
 
     private  UsersRepo(Application application) {
         db = PellegoDatabase.getDatabase(application);
-        apiService = RetroInstance.getRetroClient2().create(APIService.class);
+        apiService = RetroInstance.getRetroClient().create(APIService.class);
     }
 
     synchronized public static UsersRepo getInstance(Application app) {

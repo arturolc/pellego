@@ -62,7 +62,7 @@ public class QuizAnswerListAdapter extends BaseAdapter {
 
         TextView titleView = view.findViewById(R.id.title);
         TextView iconView = view.findViewById(R.id.icon);
-        iconView.setBackgroundColor(App.getAppResources().getColor(R.color.white_transparent));
+        iconView.setBackground(color);
         titleView.setText(mNavItems.get(position).mTitle);
         iconView.setText(mNavItems.get(position).mIcon);
 

@@ -93,6 +93,9 @@
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="submodule_popup_dialog">Read the words as they are displayed on the screen. After all the
         words have been displayed, you will be tested on your comprehension. Good luck!</string>
+    <string name="prereading_popup_dialog">Briefly scan the text to pre-read and then hit \'Next\' when you\'re ready to begin reading!</string>
+    <string name="prereading_main_popup_dialog">Read the text and then be ready to answer some questions!</string>
+
     <string name="quiz_popup_dialog">Now you will be tested on your
         comprehension. Good luck!</string>
     <!--    Module -->
@@ -359,6 +362,7 @@ dangerous behavior</item>
     </string-array>
 
     <string name="finish">Finish</string>
+    <string name="next">Next</string>
 
     <!--QUIZ STRINGS-->
     <string name="quiz_perfect_score">Perfection!</string>
