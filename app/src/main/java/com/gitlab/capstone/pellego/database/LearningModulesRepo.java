@@ -14,10 +14,16 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.amazonaws.mobileconnectors.cognitoauth.Auth;
 import com.gitlab.capstone.pellego.database.daos.LearningModulesDao;
+import com.gitlab.capstone.pellego.database.entities.Answers;
+import com.gitlab.capstone.pellego.database.entities.LM_Intro;
 import com.gitlab.capstone.pellego.database.entities.LM_Module;
+import com.gitlab.capstone.pellego.database.entities.LM_Submodule;
+import com.gitlab.capstone.pellego.database.entities.Questions;
 import com.gitlab.capstone.pellego.network.APIService;
 import com.gitlab.capstone.pellego.network.RetroInstance;
+import com.gitlab.capstone.pellego.network.models.AllContentsResponse;
 import com.gitlab.capstone.pellego.network.models.AuthToken;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
@@ -49,7 +55,7 @@ public class LearningModulesRepo {
     private final MutableLiveData<List<SMResponse>> smResponse = new MutableLiveData<>();
     private final MutableLiveData<List<QuizResponse>> quizResponse = new MutableLiveData<>();
     private static LearningModulesRepo INSTANCE;
-    private Application application;
+    private final Application application;
     private boolean isNetworkConnected;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -60,6 +66,14 @@ public class LearningModulesRepo {
         apiService = RetroInstance.getRetroClient().create(APIService.class);
         registerNetworkCallback();
 
+        // check to see if we have anything in local db
+        AsyncTask.execute(()-> {
+            int count = dao.getModulesCount();
+            Log.d("ModulesCount", "" + count);
+            if (count == 0) {
+                cacheModules();
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -92,6 +106,7 @@ public class LearningModulesRepo {
         else {
             AsyncTask.execute(() -> {
                 List<LM_Module> mn = dao.getModules();
+                Log.d("LMDAO", mn.toString());
                 List<LMResponse> res = new ArrayList<>();
                 for(int i = 0; i < mn.size(); i++) {
                     LM_Module m = mn.get(i);
@@ -159,6 +174,44 @@ public class LearningModulesRepo {
             }
         });
         return quizResponse;
+    }
+
+    public void cacheModules() {
+        Call<AllContentsResponse> call = apiService.getAllContentsModules(new AuthToken("Chris.Bordoy@gmail.com", "2021-01-01"));
+        call.enqueue(new Callback<AllContentsResponse>() {
+
+            @Override
+            public void onResponse(Call<AllContentsResponse> call, Response<AllContentsResponse> response) {
+                AsyncTask.execute(()-> {
+                    Log.d("cacheModules", "Caching...");
+                    Log.d("cacheModules", response.body().toString());
+                    for (LM_Module el : response.body().getModules()) {
+                        dao.insertModules(el);
+                    }
+
+                    for (LM_Intro el : response.body().getIntros()) {
+                        dao.insertIntros(el);
+                    }
+
+                    for (LM_Submodule el : response.body().getSubmodule()) {
+                        dao.insertSubmodules(el);
+                    }
+
+                    for (Questions el : response.body().getQuestions()) {
+                        dao.insertQuestions(el);
+                    }
+
+                    for (Answers el : response.body().getAnswers()) {
+                        dao.insertAnswers(el);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<AllContentsResponse> call, Throwable t) {
+                Log.d("cacheModules", t.toString());
+            }
+        });
     }
 
 

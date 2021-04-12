@@ -1,26 +1,34 @@
 package com.gitlab.capstone.pellego.network.models;
 
 import java.util.List;
+
+import com.gitlab.capstone.pellego.database.entities.Answers;
+import com.gitlab.capstone.pellego.database.entities.LM_Intro;
+import com.gitlab.capstone.pellego.database.entities.LM_Module;
+import com.gitlab.capstone.pellego.database.entities.LM_Submodule;
+import com.gitlab.capstone.pellego.database.entities.Questions;
 import com.google.gson.annotations.Expose;
+
 import com.google.gson.annotations.SerializedName;
+
 
 public class AllContentsResponse {
 
     @SerializedName("modules")
     @Expose
-    private List<Module> modules = null;
+    private List<LM_Module> modules;
     @SerializedName("intros")
     @Expose
-    private List<Intro> intros = null;
+    private List<LM_Intro> intros;
     @SerializedName("submodule")
     @Expose
-    private List<Submodule> submodule = null;
+    private List<LM_Submodule> submodule;
     @SerializedName("questions")
     @Expose
-    private List<Question> questions = null;
+    private List<Questions> questions;
     @SerializedName("answers")
     @Expose
-    private List<AnswerAll> answers = null;
+    private List<Answers> answers;
 
     /**
      * No args constructor for use in serialization
@@ -29,8 +37,7 @@ public class AllContentsResponse {
     public AllContentsResponse() {
     }
 
-    public AllContentsResponse(List<Module> modules, List<Intro> intros, List<Submodule> submodule, List<Question> questions, List<AnswerAll> answers) {
-        super();
+    public AllContentsResponse(List<LM_Module> modules, List<LM_Intro> intros, List<LM_Submodule> submodule, List<Questions> questions, List<Answers> answers) {
         this.modules = modules;
         this.intros = intros;
         this.submodule = submodule;
@@ -38,44 +45,43 @@ public class AllContentsResponse {
         this.answers = answers;
     }
 
-    public List<Module> getModules() {
+    public List<LM_Module> getModules() {
         return modules;
     }
 
-    public void setModules(List<Module> modules) {
+    public void setModules(List<LM_Module> modules) {
         this.modules = modules;
     }
 
-    public List<Intro> getIntros() {
+    public List<LM_Intro> getIntros() {
         return intros;
     }
 
-    public void setIntros(List<Intro> intros) {
+    public void setIntros(List<LM_Intro> intros) {
         this.intros = intros;
     }
 
-    public List<Submodule> getSubmodule() {
+    public List<LM_Submodule> getSubmodule() {
         return submodule;
     }
 
-    public void setSubmodule(List<Submodule> submodule) {
+    public void setSubmodule(List<LM_Submodule> submodule) {
         this.submodule = submodule;
     }
 
-    public List<Question> getQuestions() {
+    public List<Questions> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<Question> questions) {
+    public void setQuestions(List<Questions> questions) {
         this.questions = questions;
     }
 
-    public List<AnswerAll> getAnswers() {
+    public List<Answers> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<AnswerAll> answers) {
+    public void setAnswers(List<Answers> answers) {
         this.answers = answers;
     }
-
 }
