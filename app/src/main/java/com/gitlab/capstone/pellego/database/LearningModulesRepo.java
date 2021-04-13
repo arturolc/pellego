@@ -163,7 +163,6 @@ public class LearningModulesRepo {
                 public void onResponse(Call<List<SMResponse>> call, Response<List<SMResponse>> response) {
                     Log.i("RETROFIT", response.body().toString());
                     smResponse.setValue(response.body());
-                    //callback.onResponse(call, response);
                 }
 
                 @Override
@@ -281,11 +280,11 @@ public class LearningModulesRepo {
                 connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback(){
                                                                        @Override
                                                                        public void onAvailable(Network network) {
-                                                                           isNetworkConnected = true; // Global Static Variable
+                                                                           isNetworkConnected = true;
                                                                        }
                                                                        @Override
                                                                        public void onLost(Network network) {
-                                                                           isNetworkConnected = false; // Global Static Variable
+                                                                           isNetworkConnected = false;
                                                                        }
                                                                    }
 
