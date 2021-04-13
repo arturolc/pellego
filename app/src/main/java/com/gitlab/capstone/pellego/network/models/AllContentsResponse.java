@@ -7,10 +7,9 @@ import com.gitlab.capstone.pellego.database.entities.LM_Intro;
 import com.gitlab.capstone.pellego.database.entities.LM_Module;
 import com.gitlab.capstone.pellego.database.entities.LM_Submodule;
 import com.gitlab.capstone.pellego.database.entities.Questions;
+
 import com.google.gson.annotations.Expose;
-
 import com.google.gson.annotations.SerializedName;
-
 
 public class AllContentsResponse {
 

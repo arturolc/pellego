@@ -43,7 +43,8 @@ public interface APIService {
     Call<AllContentsResponse> getAllContentsModules(@Body AuthToken token);
 
     @POST("users/{module_id}/quiz_results/{submodule_id}")
-    Call<Void> setSubmoduleCompletion(@Body AuthToken email, @Path("module_id") String mID, @Path("submodule_id") String smID);
+    Call<Void> setSubmoduleCompletion(@Body AuthToken email, @Path("module_id") String mID,
+                                      @Path("submodule_id") String smID);
 
     @POST("users/completion_count")
     Call<List<CompletionResponse>> getUserLearningModulesCompletionCount(@Body AuthToken email);
@@ -56,14 +57,11 @@ public interface APIService {
     @POST("users/progress_values")
     Call<List<ProgressValuesResponse>> getProgressValues(@Body AuthToken email);
 
-    // library requests
     @GET("library")
     Call<List<LibraryResponse>> getLibrary();
 
     @GET("library/synopsis/{book_id}")
     Call<List<SynopsisResponse>> getSynopsis(@Path("book_id") String book_id);
-
-
 }
 
 
