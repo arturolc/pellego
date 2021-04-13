@@ -1,15 +1,19 @@
 package com.gitlab.capstone.pellego.network;
 
 import com.gitlab.capstone.pellego.network.models.AuthToken;
+import com.gitlab.capstone.pellego.network.models.CompletionResponse;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
+import com.gitlab.capstone.pellego.network.models.LibraryResponse;
 import com.gitlab.capstone.pellego.network.models.QuizResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
+import com.gitlab.capstone.pellego.network.models.SynopsisResponse;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
