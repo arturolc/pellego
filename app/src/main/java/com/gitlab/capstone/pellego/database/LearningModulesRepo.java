@@ -97,7 +97,6 @@ public class LearningModulesRepo {
             public void onResponse(Call<List<SMResponse>> call, Response<List<SMResponse>> response) {
                 Log.i("RETROFIT", response.body().toString());
                 smResponse.setValue(response.body());
-                //callback.onResponse(call, response);
             }
 
             @Override
@@ -105,6 +104,7 @@ public class LearningModulesRepo {
                 Log.e("RETROFIT", t.toString());
             }
         });
+
         return smResponse;
     }
 
@@ -123,6 +123,7 @@ public class LearningModulesRepo {
                 Log.e("RETROFIT", t.toString());
             }
         });
+
         return quizResponse;
     }
 }

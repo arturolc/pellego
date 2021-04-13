@@ -7,6 +7,7 @@ import com.gitlab.capstone.pellego.network.models.LMResponse;
 import com.gitlab.capstone.pellego.network.models.LibraryResponse;
 import com.gitlab.capstone.pellego.network.models.QuizResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
+import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 import com.gitlab.capstone.pellego.network.models.SynopsisResponse;
 
 import java.util.List;
@@ -48,6 +49,8 @@ public interface APIService {
                                  @Path("words_read") int wordsRead,
                                  @Path("wpm") int wpm);
 
+    @POST("users/progress_values")
+    Call<List<ProgressValuesResponse>> getProgressValues(@Body AuthToken email);
 
     // library requests
     @GET("library")
