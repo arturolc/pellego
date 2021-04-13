@@ -1,5 +1,6 @@
 package com.gitlab.capstone.pellego.widgets;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,6 +28,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
@@ -37,7 +39,9 @@ import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Reflow;
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.database.UsersRepo;
 import com.gitlab.capstone.pellego.fragments.metaguiding.MetaguidingModuleFragment;
+import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 
@@ -66,6 +70,7 @@ public class PlayerWidget {
     public Activity activity;
     private RsvpModuleFragment rsvpModuleFragment;
     private MetaguidingModuleFragment metaguidingModuleFragment;
+    private UsersRepo usersRepo;
     private TextView progressTextView;
     public static int wpm = 250;
     private AnimatedVectorDrawableCompat avd;
@@ -79,6 +84,12 @@ public class PlayerWidget {
     ArrayList<Runnable> onScrollFinished = new ArrayList<>();
     Handler handler = new Handler();
     int gravity;
+    public boolean progressChanged;
+    public ImageView playButton;
+
+    public void setUserWordValues(int wordsRead, int wpm) {
+        usersRepo.setUserWordValues(wordsRead, wpm);
+    }
 
     Runnable updateGravity = new Runnable() {
         @Override
@@ -414,8 +425,8 @@ public class PlayerWidget {
         this.activity = activity;
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.tts_popup, null);
-        ImageView playButton = activity.findViewById(R.id.button_play);
-
+        playButton = activity.findViewById(R.id.button_play);
+        this.usersRepo = UsersRepo.getInstance(activity.getApplication());
         // skip back button pressed
         View prev = activity.findViewById(R.id.button_prev);
         prev.setOnClickListener(new View.OnClickListener() {
@@ -481,6 +492,7 @@ public class PlayerWidget {
         // technique selector pressed
         Button techniqueSelector = (Button) activity.findViewById(R.id.button_technique);
         techniqueSelector.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
@@ -598,8 +610,10 @@ public class PlayerWidget {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
                 int val = (progress * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
+                togglePlay(playButton);
                 progressTextView.setText(String.valueOf(progress));
                 wpm = progress;
+                progressChanged = true;
                 int width = seekBar.getWidth() - seekBar.getPaddingLeft() - seekBar.getPaddingRight();
                 int thumbPos = seekBar.getPaddingLeft() + width * seekBar.getProgress() / seekBar.getMax();
 
@@ -670,7 +684,6 @@ public class PlayerWidget {
         popupWindow.setHeight(height);
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void togglePlay(ImageView playBtn) {
         playing = !playing;
@@ -689,7 +702,6 @@ public class PlayerWidget {
             avd2 = (AnimatedVectorDrawable) drawable;
             avd2.start();
         }
-
     }
 
     public Context getContext() {
@@ -887,6 +899,7 @@ public class PlayerWidget {
         return fragment.fragmentText;
     }
 
+    private int runCount = 0;
     // Get the next chunk of text
     public String selectNext() {
         marks.clear();

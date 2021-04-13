@@ -13,9 +13,6 @@ import com.gitlab.capstone.pellego.database.UsersRepo;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**********************************************
