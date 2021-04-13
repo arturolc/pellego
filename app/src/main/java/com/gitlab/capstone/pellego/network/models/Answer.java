@@ -6,14 +6,10 @@ import com.google.gson.annotations.SerializedName;
 /*****************************************************
  * Chris Bordoy
  *
- * Model that represents a Quiz Answer
+ * Model that represents a Quiz AnswerAll
  *****************************************************/
 
 public class Answer {
-
-    @SerializedName("QUID")
-    @Expose
-    private Integer qUID;
     @SerializedName("Answer")
     @Expose
     private String answer;
@@ -21,12 +17,9 @@ public class Answer {
     @Expose
     private Integer correct;
 
-    public Integer getQUID() {
-        return qUID;
-    }
-
-    public void setQUID(Integer qUID) {
-        this.qUID = qUID;
+    public Answer(String answer, Integer correct) {
+        this.answer = answer;
+        this.correct = correct;
     }
 
     public String getAnswer() {
@@ -48,8 +41,7 @@ public class Answer {
     @Override
     public String toString() {
         return "Answer{" +
-                "qUID=" + qUID +
-                ", answer='" + answer + '\'' +
+                "answer='" + answer + '\'' +
                 ", correct=" + correct +
                 '}';
     }

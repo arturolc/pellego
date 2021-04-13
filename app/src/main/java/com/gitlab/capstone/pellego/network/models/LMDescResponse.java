@@ -1,6 +1,8 @@
 package com.gitlab.capstone.pellego.network.models;
 
 import java.util.List;
+
+import com.gitlab.capstone.pellego.database.entities.LM_Submodule;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -24,7 +26,17 @@ public class LMDescResponse {
     private String description;
     @SerializedName("Submodules")
     @Expose
-    private List<Submodule> submodules = null;
+    private List<LM_Submodule> submodules = null;
+
+    public LMDescResponse() {
+    }
+
+    public LMDescResponse(Integer mID, String name, String description, List<LM_Submodule> submodules) {
+        this.mID = mID;
+        this.name = name;
+        this.description = description;
+        this.submodules = submodules;
+    }
 
     public Integer getMID() {
         return mID;
@@ -60,11 +72,11 @@ public class LMDescResponse {
                 '}';
     }
 
-    public List<Submodule> getSubmodules() {
+    public List<LM_Submodule> getSubmodules() {
         return submodules;
     }
 
-    public void setSubmodules(List<Submodule> submodules) {
+    public void setSubmodules(List<LM_Submodule> submodules) {
         this.submodules = submodules;
     }
 

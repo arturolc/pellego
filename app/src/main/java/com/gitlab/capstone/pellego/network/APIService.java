@@ -1,5 +1,6 @@
 package com.gitlab.capstone.pellego.network;
 
+import com.gitlab.capstone.pellego.network.models.AllContentsResponse;
 import com.gitlab.capstone.pellego.network.models.AuthToken;
 import com.gitlab.capstone.pellego.network.models.CompletionResponse;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
@@ -35,11 +36,15 @@ public interface APIService {
     @POST("modules/{module_id}/submodules")
     Call<List<SMResponse>> getSubmodules(@Path("module_id") String mID);
 
-    @POST("modules/{module_id}/submodules/{submodule_id}/quizzes/{quiz_id}")
-    Call<List<QuizResponse>> getQuizzes(@Path("module_id") String mID, @Path("submodule_id") String smID, @Path("quiz_id") String qID);
+    @POST("submodule/{submodule_id}/quizzes")
+    Call<List<QuizResponse>> getQuizzes(@Path("submodule_id") String smID);
+
+    @POST("modules/allcontent")
+    Call<AllContentsResponse> getAllContentsModules(@Body AuthToken token);
 
     @POST("users/{module_id}/quiz_results/{submodule_id}")
-    Call<Void> setSubmoduleCompletion(@Body AuthToken email, @Path("module_id") String mID, @Path("submodule_id") String smID);
+    Call<Void> setSubmoduleCompletion(@Body AuthToken email, @Path("module_id") String mID,
+                                      @Path("submodule_id") String smID);
 
     @POST("users/completion_count")
     Call<List<CompletionResponse>> getUserLearningModulesCompletionCount(@Body AuthToken email);
@@ -52,12 +57,9 @@ public interface APIService {
     @POST("users/progress_values")
     Call<List<ProgressValuesResponse>> getProgressValues(@Body AuthToken email);
 
-    // library requests
     @GET("library")
     Call<List<LibraryResponse>> getLibrary();
 
     @GET("library/synopsis/{book_id}")
     Call<List<SynopsisResponse>> getSynopsis(@Path("book_id") String book_id);
-
-
 }
