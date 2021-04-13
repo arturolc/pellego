@@ -4,13 +4,17 @@ import com.gitlab.capstone.pellego.network.models.AuthToken;
 import com.gitlab.capstone.pellego.network.models.CompletionResponse;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
+import com.gitlab.capstone.pellego.network.models.LibraryResponse;
 import com.gitlab.capstone.pellego.network.models.QuizResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
+import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
+import com.gitlab.capstone.pellego.network.models.SynopsisResponse;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -44,4 +48,16 @@ public interface APIService {
     Call<Void> setUserWordValues(@Body AuthToken email,
                                  @Path("words_read") int wordsRead,
                                  @Path("wpm") int wpm);
+
+    @POST("users/progress_values")
+    Call<List<ProgressValuesResponse>> getProgressValues(@Body AuthToken email);
+
+    // library requests
+    @GET("library")
+    Call<List<LibraryResponse>> getLibrary();
+
+    @GET("library/synopsis/{book_id}")
+    Call<List<SynopsisResponse>> getSynopsis(@Path("book_id") String book_id);
+
+
 }

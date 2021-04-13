@@ -622,6 +622,8 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
 
             for (int i = 0; i < rr.size(); i++) {
                 final Storage.RecentInfo info = rr.get(i);
+
+
                 TextView p = (TextView) inflater.inflate(R.layout.recent_item, pages, false);
                 if (info.position != null)
                     p.setText(info.position.getParagraphIndex() + "." + info.position.getElementIndex());

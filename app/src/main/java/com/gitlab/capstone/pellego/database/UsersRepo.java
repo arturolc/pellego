@@ -10,6 +10,7 @@ import com.gitlab.capstone.pellego.network.APIService;
 import com.gitlab.capstone.pellego.network.RetroInstance;
 import com.gitlab.capstone.pellego.network.models.AuthToken;
 import com.gitlab.capstone.pellego.network.models.CompletionResponse;
+import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -30,6 +31,7 @@ public class UsersRepo {
     private final APIService apiService;
     private static UsersRepo INSTANCE;
     private final MutableLiveData<List<CompletionResponse>> completionResponse = new MutableLiveData<>();
+    private final MutableLiveData<List<ProgressValuesResponse>> progressValuesResponse = new MutableLiveData<>();
 
     private  UsersRepo(Application application) {
         db = PellegoDatabase.getDatabase(application);
@@ -93,5 +95,26 @@ public class UsersRepo {
         });
 
         return completionResponse;
+    }
+
+    public LiveData<List<ProgressValuesResponse>> getProgressValues() {
+        Call<List<ProgressValuesResponse>> call =
+                apiService.getProgressValues(new AuthToken("Chris.Bordoy@gmail.com"));
+        call.enqueue(new Callback<List<ProgressValuesResponse>>() {
+
+            @Override
+            public void onResponse(@NotNull Call<List<ProgressValuesResponse>> call, Response<List<ProgressValuesResponse>> response) {
+                Log.d("RETROFIT: ", response.body().toString());
+                progressValuesResponse.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<List<ProgressValuesResponse>> call, @NotNull Throwable t) {
+                t.printStackTrace();
+                Log.e("RETROFIT: ", t.toString());
+            }
+        });
+
+        return progressValuesResponse;
     }
 }
