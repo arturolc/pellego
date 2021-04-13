@@ -31,8 +31,8 @@ public interface APIService {
     @POST("modules/{module_id}/submodules")
     Call<List<SMResponse>> getSubmodules(@Path("module_id") String mID);
 
-    @POST("modules/{module_id}/submodules/{submodule_id}/quizzes/{quiz_id}")
-    Call<List<QuizResponse>> getQuizzes(@Path("module_id") String mID, @Path("submodule_id") String smID, @Path("quiz_id") String qID);
+    @POST("submodule/{submodule_id}/quizzes")
+    Call<List<QuizResponse>> getQuizzes(@Path("submodule_id") String smID);
 
     @POST("modules/allcontent")
     Call<AllContentsResponse> getAllContentsModules(@Body AuthToken token);

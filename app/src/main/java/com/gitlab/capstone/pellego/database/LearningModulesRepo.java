@@ -24,7 +24,9 @@ import com.gitlab.capstone.pellego.database.entities.Questions;
 import com.gitlab.capstone.pellego.network.APIService;
 import com.gitlab.capstone.pellego.network.RetroInstance;
 import com.gitlab.capstone.pellego.network.models.AllContentsResponse;
+import com.gitlab.capstone.pellego.network.models.Answer;
 import com.gitlab.capstone.pellego.network.models.AuthToken;
+import com.gitlab.capstone.pellego.network.models.IntroContentModel;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
 import com.gitlab.capstone.pellego.network.models.QuizResponse;
@@ -32,6 +34,7 @@ import com.gitlab.capstone.pellego.network.models.SMResponse;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Array;
 import java.nio.channels.NetworkChannel;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +46,7 @@ import retrofit2.Response;
 /*****************************************************
  * Arturo Lara & Chris Bordoy
  *
- * Repository for all endpoint calls
+ * Repository for all Learning Modules API calls
  *****************************************************/
 
 public class LearningModulesRepo {
@@ -122,57 +125,108 @@ public class LearningModulesRepo {
     }
 
     public LiveData<List<LMDescResponse>> getModuleDesc(String moduleID) {
-        Call<List<LMDescResponse>> call = apiService.getModuleDescription(moduleID);
-        call.enqueue(new Callback<List<LMDescResponse>>() {
-            @Override
-            public void onResponse(@NotNull Call<List<LMDescResponse>> call, Response<List<LMDescResponse>> response) {
-                Log.i("RETROFIT", response.body().toString());
-                lmDescResponse.setValue(response.body());
-            }
+        if (isNetworkConnected) {
+            Call<List<LMDescResponse>> call = apiService.getModuleDescription(moduleID);
+            call.enqueue(new Callback<List<LMDescResponse>>() {
+                @Override
+                public void onResponse(@NotNull Call<List<LMDescResponse>> call, Response<List<LMDescResponse>> response) {
+                    Log.i("RETROFIT", response.body().toString());
+                    lmDescResponse.setValue(response.body());
+                }
 
-            @Override
-            public void onFailure(@NotNull Call<List<LMDescResponse>> call, @NotNull Throwable t) {
-                Log.e("RETROFIT", t.toString());
-            }
-        });
+                @Override
+                public void onFailure(@NotNull Call<List<LMDescResponse>> call, @NotNull Throwable t) {
+                    Log.e("RETROFIT", t.toString());
+                }
+            });
+        }
+        else {
+            AsyncTask.execute(() -> {
+                LM_Module mod = dao.getModule(Integer.parseInt(moduleID));
+                LMDescResponse resp = new LMDescResponse(mod.getMID(), mod.getName(),
+                        mod.getDescription(), dao.getSubmodules(mod.getMID()));
+                List<LMDescResponse> l = new ArrayList<>();
+                l.add(resp);
+                lmDescResponse.postValue(l);
+            });
+        }
 
         return lmDescResponse;
     }
 
     public LiveData<List<SMResponse>> getSubmodules(String mID) {
-        Call<List<SMResponse>> call = apiService.getSubmodules(mID);
-        call.enqueue(new Callback<List<SMResponse>>() {
+        if (isNetworkConnected) {
+            Call<List<SMResponse>> call = apiService.getSubmodules(mID);
+            call.enqueue(new Callback<List<SMResponse>>() {
 
-            @Override
-            public void onResponse(Call<List<SMResponse>> call, Response<List<SMResponse>> response) {
-                Log.i("RETROFIT", response.body().toString());
-                smResponse.setValue(response.body());
-                //callback.onResponse(call, response);
-            }
+                @Override
+                public void onResponse(Call<List<SMResponse>> call, Response<List<SMResponse>> response) {
+                    Log.i("RETROFIT", response.body().toString());
+                    smResponse.setValue(response.body());
+                    //callback.onResponse(call, response);
+                }
 
-            @Override
-            public void onFailure(Call<List<SMResponse>> call, Throwable t) {
-                Log.e("RETROFIT", t.toString());
-            }
-        });
+                @Override
+                public void onFailure(Call<List<SMResponse>> call, Throwable t) {
+                    Log.e("RETROFIT", t.toString());
+                }
+            });
+        }
+        else {
+            AsyncTask.execute(() -> {
+                List<SMResponse> result = new ArrayList<>();
+
+                List<LM_Intro> intro = dao.getIntro(Integer.parseInt(mID));
+                List<IntroContentModel> ic = new ArrayList<>();
+                for (LM_Intro el : intro) {
+                    ic.add(new IntroContentModel(el.getHeader(), el.getContent()));
+                }
+
+                List<LM_Submodule> submodules = dao.getSubmodules(Integer.parseInt(mID));
+                result.add(new SMResponse(submodules.get(0).getName(), submodules.get(0).getSubheader(), null, ic));
+                for (int i = 1; i < submodules.size(); i++) {
+                    LM_Submodule sm = submodules.get(i);
+                    result.add(new SMResponse(sm.getName(), sm.getSubheader(), sm.getText(), null));
+                }
+
+                smResponse.postValue(result);
+            });
+        }
         return smResponse;
     }
 
     public LiveData<List<QuizResponse>> getQuizzes(String mID, String smID, String qID) {
-        Call<List<QuizResponse>> call = apiService.getQuizzes(mID, smID, qID);
-        call.enqueue(new Callback<List<QuizResponse>>() {
+        if (isNetworkConnected) {
+            Call<List<QuizResponse>> call = apiService.getQuizzes(smID);
+            call.enqueue(new Callback<List<QuizResponse>>() {
 
-            @Override
-            public void onResponse(Call<List<QuizResponse>> call, Response<List<QuizResponse>> response) {
-                Log.i("RETROFIT", response.body().toString());
-                quizResponse.setValue(response.body());
-            }
+                @Override
+                public void onResponse(Call<List<QuizResponse>> call, Response<List<QuizResponse>> response) {
+                    Log.i("RETROFIT", response.body().toString());
+                    quizResponse.setValue(response.body());
+                }
 
-            @Override
-            public void onFailure(Call<List<QuizResponse>> call, Throwable t) {
-                Log.e("RETROFIT", t.toString());
-            }
-        });
+                @Override
+                public void onFailure(Call<List<QuizResponse>> call, Throwable t) {
+                    Log.e("RETROFIT", t.toString());
+                }
+            });
+        }
+        else {
+            AsyncTask.execute(() -> {
+                List<Questions> questions = dao.getQuestions(Integer.parseInt(smID));
+                List<QuizResponse> result = new ArrayList<>();
+
+                for (Questions q : questions) {
+                    List<Answer> answers = dao.getAnswers(Integer.parseInt(smID), q.getQUID());
+                    result.add(new QuizResponse(q.getQUID(), q.getQuestion(), answers));
+                }
+
+                Log.d("LMREPO", result.toString());
+                quizResponse.postValue(result);
+            });
+        }
+
         return quizResponse;
     }
 

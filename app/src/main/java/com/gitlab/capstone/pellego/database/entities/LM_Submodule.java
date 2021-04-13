@@ -36,11 +36,18 @@ public class LM_Submodule {
     @Expose
     private String subheader;
 
-    public LM_Submodule(int sMID, int mID, @NonNull String name, String subheader) {
+    @ColumnInfo(name = "Text")
+    @SerializedName("Text")
+    @Expose
+    private String text;
+
+
+    public LM_Submodule(int sMID, int mID, @NonNull String name, String subheader, String text) {
         this.sMID = sMID;
         this.mID = mID;
         this.name = name;
         this.subheader = subheader;
+        this.text = text;
     }
 
     public int getSMID() {
@@ -58,5 +65,9 @@ public class LM_Submodule {
 
     public String getSubheader() {
         return subheader;
+    }
+
+    public String getText() {
+        return text;
     }
 }

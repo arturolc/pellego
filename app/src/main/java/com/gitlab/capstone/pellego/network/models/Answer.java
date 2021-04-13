@@ -10,23 +10,16 @@ import com.google.gson.annotations.SerializedName;
  *****************************************************/
 
 public class Answer {
-
-    @SerializedName("QUID")
-    @Expose
-    private Integer qUID;
-    @SerializedName("AnswerAll")
+    @SerializedName("Answer")
     @Expose
     private String answer;
     @SerializedName("Correct")
     @Expose
     private Integer correct;
 
-    public Integer getQUID() {
-        return qUID;
-    }
-
-    public void setQUID(Integer qUID) {
-        this.qUID = qUID;
+    public Answer(String answer, Integer correct) {
+        this.answer = answer;
+        this.correct = correct;
     }
 
     public String getAnswer() {
@@ -47,9 +40,8 @@ public class Answer {
 
     @Override
     public String toString() {
-        return "AnswerAll{" +
-                "qUID=" + qUID +
-                ", answer='" + answer + '\'' +
+        return "Answer{" +
+                "answer='" + answer + '\'' +
                 ", correct=" + correct +
                 '}';
     }
