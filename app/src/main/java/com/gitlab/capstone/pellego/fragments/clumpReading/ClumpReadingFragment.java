@@ -22,6 +22,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
@@ -40,7 +42,7 @@ import java.util.List;
 public class ClumpReadingFragment extends BaseFragment {
 
     private View root;
-    private Integer wpm; //not sure we need
+    private Integer wpm;
     public String difficulty;
     public String submoduleID;
     private static ClumpReadingFragment.AsyncUpdateText asyncUpdateText;
@@ -116,8 +118,10 @@ public class ClumpReadingFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                asyncUpdateText = new ClumpReadingFragment.AsyncUpdateText(); // start thread on ok
-                asyncUpdateText.execute(wpm);
+               // asyncUpdateText = new ClumpReadingFragment.AsyncUpdateText(); // start thread on ok
+               // asyncUpdateText.execute(wpm);
+                showQuizPopupDialog();
+
             }
         });
         dialog.show();
@@ -125,11 +129,37 @@ public class ClumpReadingFragment extends BaseFragment {
     }
 
     private void showQuizPopupDialog() {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.ok_dialog);
+        ((TextView) dialog.findViewById(R.id.text_dialog)).setText(R.string.quiz_popup_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Button dialogButton = (Button) dialog.findViewById(R.id.ok_dialog_button);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                NavController navController = Navigation.findNavController(currentView, R.id.nav_host_fragment);
+                Bundle args = new Bundle();
+                args.putString("difficulty", difficulty);
+                args.putString("wpm", String.valueOf(wpm));
+                args.putString("module", "clump reading");
+                args.putString("smID", submoduleID);
+                navController.navigate(R.id.nav_quiz, args);
+            }
+        });
+        dialog.show();
+        moduleViewModel.setShowPopupDialog(false);
     }
 
+    //setup clump reader
     public class AsyncUpdateText {
         public void execute(Integer wpm) {
         }
+
+        protected void onPostExecute(Integer result) {
+            showQuizPopupDialog();
+        }
+        }
     }
-}
+
 
