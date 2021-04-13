@@ -61,6 +61,4 @@ public interface LearningModulesDao {
 
     @Query("select count(*) from ProgressCompleted where UID = :uID and SMID in (select SMID from LM_Submodule where MID = :mID)")
     public int getModuleProgress(int uID, int mID);
-
-
 }
