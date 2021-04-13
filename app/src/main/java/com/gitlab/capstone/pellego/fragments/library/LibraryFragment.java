@@ -83,6 +83,7 @@ import java.util.Comparator;
 
 public class LibraryFragment extends Fragment implements MainActivity.SearchListener {
     public static final String TAG = LibraryFragment.class.getSimpleName();
+    private static LibraryFragment INSTANCE;
 
     LibraryAdapter books;
     Storage storage;
@@ -91,482 +92,17 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
     Runnable invalidateOptionsMenu;
     public static View header;
 
-    public static class FragmentHolder {
-        RecyclerView grid;
-        View import_button;
-        public int layout;
-        private int scrolledDistance = 0;
-        private static final int HIDE_THRESHOLD = 20;
-        private boolean controlsVisible = true;
-        private TextView title;
-
-
-        View toolbar;
-        View searchpanel;
-        LinearLayout searchtoolbar;
-        View footer;
-        View footerButtons;
-        View footerNext;
-        View footerProgress;
-        View footerStop;
-
-        Context context;
-        AdapterView.OnItemClickListener clickListener;
-        AdapterView.OnItemLongClickListener longClickListener;
-
-        public FragmentHolder(Context context) {
-            this.context = context;
-        }
-
-        public void create(View v) {
-            grid = (RecyclerView) v.findViewById(R.id.grid);
-            import_button = v.findViewById(R.id.button_import_book);
-            // DividerItemDecoration divider = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
-            // grid.addItemDecoration(divider);
-
-            LayoutInflater inflater = LayoutInflater.from(context);
-            title = (TextView) v.findViewById(R.id.title_library);
-            grid.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
-                }
-
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-                    scrolledDistance = dy;
-                    if (scrolledDistance > HIDE_THRESHOLD && controlsVisible) {
-                        hideViews();
-                        controlsVisible = false;
-                    } else if (!grid.canScrollVertically(-1) && !controlsVisible) {
-                        showViews();
-                        controlsVisible = true;
-                    }
-                }
-            });
-            toolbar = v.findViewById(R.id.search_header_toolbar_parent);
-            searchpanel = v.findViewById(R.id.search_panel);
-            searchtoolbar = (LinearLayout) v.findViewById(R.id.search_header_toolbar);
-            toolbar.setVisibility(View.GONE);
-
-            footer = inflater.inflate(R.layout.library_footer, null);
-            footerButtons = footer.findViewById(R.id.search_footer_buttons);
-            footerNext = footer.findViewById(R.id.search_footer_next);
-            footerProgress = footer.findViewById(R.id.search_footer_progress);
-            footerStop = footer.findViewById(R.id.search_footer_stop);
-
-
-            footerNext.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "footer next");
-                }
-            });
-
-            addFooterView(footer);
-
-            updateGrid();
-        }
-
-        private void hideViews() {
-            title.animate().translationY(-title.getHeight()).setInterpolator(new AccelerateInterpolator(2));
-            header.animate().translationY(-header.getHeight()).setInterpolator(new AccelerateInterpolator(2));
-            import_button.animate().translationY(import_button.getHeight() * 2).setInterpolator(new AccelerateInterpolator(2));
-
-        }
-
-        private void showViews() {
-            title.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
-            header.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
-            import_button.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
-        }
-
-        public String getLayout() {
-            return "library";
-        }
-
-        public void updateGrid() {
-            final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
-            if (shared.getString(App.PREFERENCE_LIBRARY_LAYOUT + getLayout(), "").equals("book_list_item")) {
-                setNumColumns(1);
-                layout = R.layout.book_list_item;
-            } else {
-                setNumColumns(3);
-                layout = R.layout.book_item;
-            }
-        }
-
-        public void onCreateOptionsMenu(Menu menu) {
-            MenuItem grid = menu.findItem(R.id.action_grid);
-
-            updateGrid();
-
-            if (layout == R.layout.book_item)
-                grid.setIcon(R.drawable.ic_view_module_black_24dp);
-            else
-                grid.setIcon(R.drawable.ic_view_list_black_24dp);
-        }
-
-        public boolean onOptionsItemSelected(MenuItem item) {
-            final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
-            int id = item.getItemId();
-            if (id == R.id.action_grid) {
-                SharedPreferences.Editor editor = shared.edit();
-                if (layout == R.layout.book_list_item)
-                    editor.putString(App.PREFERENCE_LIBRARY_LAYOUT + getLayout(), "book_item");
-                else
-                    editor.putString(App.PREFERENCE_LIBRARY_LAYOUT + getLayout(), "book_list_item");
-                editor.commit();
-                updateGrid();
-                return true;
-            }
-            return false;
-        }
-
-        public void addFooterView(View v) {
-        }
-
-        public void setNumColumns(int i) {
-            LinearLayoutManager reset = null;
-            if (i == 1) {
-                LinearLayoutManager lm = new LinearLayoutManager(context);
-                RecyclerView.LayoutManager l = grid.getLayoutManager();
-                if (l == null || l instanceof GridLayoutManager)
-                    reset = lm;
-            } else {
-                GridLayoutManager lm = new GridLayoutManager(context, i);
-                lm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                    @Override
-                    public int getSpanSize(int position) {
-                        return FragmentHolder.this.getSpanSize(position);
-                    }
-                });
-                RecyclerView.LayoutManager l = grid.getLayoutManager();
-                if (l == null || !(l instanceof GridLayoutManager) || ((GridLayoutManager) l).getSpanCount() != i)
-                    reset = lm;
-            }
-            if (reset != null)
-                grid.setLayoutManager(reset);
-        }
-
-        public int getSpanSize(int position) {
-            return 1;
-        }
-
-        public void setOnItemClickListener(AdapterView.OnItemClickListener l) {
-            clickListener = l;
-        }
-
-        public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener l) {
-            longClickListener = l;
-        }
-    }
-
-    public static class ByRecent implements Comparator<Storage.Book> {
-        @Override
-        public int compare(Storage.Book o1, Storage.Book o2) {
-            return Long.valueOf(o1.info.last).compareTo(o2.info.last);
-        }
-    }
-
-    public static class ByCreated implements Comparator<Storage.Book> {
-        @Override
-        public int compare(Storage.Book o1, Storage.Book o2) {
-            return Long.valueOf(o1.info.created).compareTo(o2.info.created);
-        }
-    }
-
-    public static class ByName implements Comparator<Storage.Book> {
-        @Override
-        public int compare(Storage.Book o1, Storage.Book o2) {
-            return Storage.getTitle(o1.info).compareTo(Storage.getTitle(o2.info));
-        }
-    }
-
-    public class LibraryAdapter extends BooksAdapter {
-        ArrayList<Storage.Book> all = new ArrayList<>();
-        ArrayList<Storage.Book> list = new ArrayList<>();
-
-        public LibraryAdapter(FragmentHolder holder) {
-            super(LibraryFragment.this.getContext(), holder);
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return holder.layout;
-        }
-
-        @Override
-        public String getAuthors(int position) {
-            Storage.Book b = list.get(position);
-            return b.info.authors;
-        }
-
-        @Override
-        public String getTitle(int position) {
-            Storage.Book b = list.get(position);
-            return b.info.title;
-        }
-
-        @Override
-        public int getItemCount() {
-            return list.size();
-        }
-
-        public Storage.Book getItem(int position) {
-            return list.get(position);
-        }
-
-        public void load() {
-            all = storage.list();
-        }
-
-        public boolean hasBookmarks() {
-            for (Storage.Book b : all) {
-                if (b.info.bookmarks != null)
-                    return true;
-            }
-            return false;
-        }
-
-        public void delete(Storage.Book b) {
-            all.remove(b);
-            int i = list.indexOf(b);
-            list.remove(i);
-            notifyItemRemoved(i);
-        }
-
-        public void refresh() {
-            list.clear();
-            if (filter == null || filter.isEmpty()) {
-                list = new ArrayList<>(all);
-                clearTasks();
-            } else {
-                for (Storage.Book b : all) {
-                    if (SearchView.filter(filter, Storage.getTitle(b.info)))
-                        list.add(b);
-                }
-            }
-            getActivity().findViewById(R.id.nav_host_fragment);
-            sort();
-        }
-
-        public void sort() {
-            SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getContext());
-            int selected = getContext().getResources().getIdentifier(shared.getString(App.PREFERENCE_SORT, getContext().getResources().getResourceEntryName(R.id.sort_add_ask)), "id", getContext().getPackageName());
-            if (selected == R.id.sort_name_ask) {
-                Collections.sort(list, new ByName());
-            } else if (selected == R.id.sort_name_desc) {
-                Collections.sort(list, Collections.reverseOrder(new ByName()));
-            } else if (selected == R.id.sort_add_ask) {
-                Collections.sort(list, new ByCreated());
-            } else if (selected == R.id.sort_add_desc) {
-                Collections.sort(list, Collections.reverseOrder(new ByCreated()));
-            } else if (selected == R.id.sort_open_ask) {
-                Collections.sort(list, new ByRecent());
-            } else if (selected == R.id.sort_open_desc) {
-                Collections.sort(list, Collections.reverseOrder(new ByRecent()));
-            } else {
-                Collections.sort(list, new ByCreated());
-            }
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public void onBindViewHolder(final BookHolder h, int position) {
-            super.onBindViewHolder(h, position);
-
-            Storage.Book b = list.get(position);
-
-            View convertView = h.itemView;
-
-            if (b.cover == null || !b.cover.exists()) {
-                downloadTask(b, convertView);
-            } else {
-                downloadTaskClean(convertView);
-                downloadTaskUpdate(null, b, convertView);
-            }
-        }
-
-        @Override
-        public Bitmap downloadImageTask(CacheImagesAdapter.DownloadImageTask task) {
-            Process.setThreadPriority(Process.THREAD_PRIORITY_LOWEST);
-            Storage.Book book = (Storage.Book) task.item;
-            Storage.FBook fbook = null;
-            try {
-                fbook = storage.read(book);
-                File cover = Storage.coverFile(getContext(), book);
-                if (!cover.exists() || cover.length() == 0)
-                    storage.createCover(fbook, cover);
-                book.cover = cover;
-                try {
-                    Bitmap bm = BitmapFactory.decodeStream(new FileInputStream(cover));
-                    return bm;
-                } catch (IOException e) {
-                    cover.delete();
-                    throw new RuntimeException(e);
-                }
-            } catch (RuntimeException e) {
-                Log.e(TAG, "Unable to load cover", e);
-            } finally {
-                if (fbook != null)
-                    fbook.close();
-            }
-            return null;
-        }
-
-
-        @Override
-        public void downloadTaskUpdate(CacheImagesAdapter.DownloadImageTask task, Object item, Object view) {
-            super.downloadTaskUpdate(task, item, view);
-            BookHolder h = new BookHolder((View) view);
-            Storage.Book b = (Storage.Book) item;
-            if (b.cover != null && b.cover.exists()) {
-                try {
-                    Bitmap bm = BitmapFactory.decodeStream(new FileInputStream(b.cover));
-                    h.image.setImageBitmap(bm);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-
-    }
-
-    public static abstract class BooksAdapter extends CacheImagesRecyclerAdapter<BooksAdapter.BookHolder> {
-        String filter;
-        FragmentHolder holder;
-        HttpClient client = new HttpClient(); // images client
-
-        public static class BookHolder extends RecyclerView.ViewHolder {
-            TextView aa;
-            TextView tt;
-            ImageView image;
-            ProgressBar progress;
-
-            public BookHolder(View itemView) {
-                super(itemView);
-                aa = (TextView) itemView.findViewById(R.id.book_authors);
-                tt = (TextView) itemView.findViewById(R.id.book_title);
-                image = (ImageView) itemView.findViewById(R.id.book_cover);
-                progress = (ProgressBar) itemView.findViewById(R.id.book_progress);
-            }
-        }
-
-        public BooksAdapter(Context context, FragmentHolder holder) {
-            super(context);
-            this.holder = holder;
-        }
-
-        public Uri getCover(int position) {
-            return null;
-        }
-
-        public String getAuthors(int position) {
-            return "";
-        }
-
-        public String getTitle(int position) {
-            return "";
-        }
-
-        public void refresh() {
-        }
-
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return -1;
-        }
-
-        @Override
-        public BookHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            View convertView = inflater.inflate(viewType, parent, false);
-            return new BookHolder(convertView);
-        }
-
-        @Override
-        public void onBindViewHolder(final BookHolder h, int position) {
-            h.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (holder.clickListener != null)
-                        holder.clickListener.onItemClick(null, v, h.getAdapterPosition(), -1);
-                }
-            });
-            h.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    if (holder.longClickListener != null)
-                        holder.longClickListener.onItemLongClick(null, v, h.getAdapterPosition(), -1);
-                    return true;
-                }
-            });
-            setText(h.aa, getAuthors(position));
-            setText(h.tt, getTitle(position));
-        }
-
-        @Override
-        public Bitmap downloadImage(Uri cover, File f) throws IOException {
-            HttpClient.DownloadResponse w = client.getResponse(null, cover.toString());
-            FileOutputStream out = new FileOutputStream(f);
-            IOUtils.copy(w.getInputStream(), out);
-            w.getInputStream().close();
-            out.close();
-            Bitmap bm = CacheImagesAdapter.createScaled(new FileInputStream(f));
-            FileOutputStream os = new FileOutputStream(f);
-            bm.compress(Bitmap.CompressFormat.PNG, 100, os);
-            os.close();
-            return bm;
-        }
-
-        @Override
-        public void downloadTaskUpdate(CacheImagesAdapter.DownloadImageTask task, Object item, Object view) {
-            BookHolder h = new BookHolder((View) view);
-            updateView(task, h.image, h.progress);
-        }
-
-        @Override
-        public Bitmap downloadImageTask(CacheImagesAdapter.DownloadImageTask task) {
-            Uri u = (Uri) task.item;
-            return downloadImage(u);
-        }
-
-        void setText(TextView t, String s) {
-            if (t == null)
-                return;
-            TextMax m = null;
-            if (t.getParent() instanceof TextMax)
-                m = (TextMax) t.getParent();
-            ViewParent p = t.getParent();
-            if (s == null || s.isEmpty()) {
-                t.setVisibility(View.GONE);
-                if (m != null)
-                    m.setVisibility(View.GONE);
-                return;
-            }
-            t.setVisibility(View.VISIBLE);
-            t.setText(s);
-            if (m != null)
-                m.setVisibility(View.VISIBLE);
-        }
-    }
-
     public LibraryFragment() {
     }
 
     public static LibraryFragment newInstance() {
-        LibraryFragment fragment = new LibraryFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        if(INSTANCE == null) {
+            INSTANCE = new LibraryFragment();
+            Bundle args = new Bundle();
+            INSTANCE.setArguments(args);
+        }
+
+        return INSTANCE;
     }
 
     @Override
@@ -574,8 +110,15 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         super.onCreate(savedInstanceState);
         storage = new Storage(getContext());
         holder = new FragmentHolder(getContext());
-        books = new LibraryAdapter(holder);
+        books = new LibraryAdapter(holder, getContext());
         setHasOptionsMenu(true);
+
+        Log.d("LibraryFragment", storage.list().toString());
+//        Log.d("LibraryFragment", storage.list().get(0).toString());
+//        Log.d("LibraryFragment", storage.list().get(1).toString());
+//        Log.d("LibraryFragment", storage.list().get(2).toString());
+//        Log.d("LibraryFragment", Storage.getTitle(storage.list().get(0).info));
+
     }
 
     @Override
@@ -719,6 +262,27 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         });
 
         return v;
+    }
+
+    public static class ByRecent implements Comparator<Storage.Book> {
+        @Override
+        public int compare(Storage.Book o1, Storage.Book o2) {
+            return Long.valueOf(o1.info.last).compareTo(o2.info.last);
+        }
+    }
+
+    public static class ByCreated implements Comparator<Storage.Book> {
+        @Override
+        public int compare(Storage.Book o1, Storage.Book o2) {
+            return Long.valueOf(o1.info.created).compareTo(o2.info.created);
+        }
+    }
+
+    public static class ByName implements Comparator<Storage.Book> {
+        @Override
+        public int compare(Storage.Book o1, Storage.Book o2) {
+            return Storage.getTitle(o1.info).compareTo(Storage.getTitle(o2.info));
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
