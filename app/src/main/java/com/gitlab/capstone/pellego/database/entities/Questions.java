@@ -5,21 +5,30 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = @ForeignKey(entity = LM_Quiz.class, parentColumns = "QID", childColumns = "Quiz_ID"))
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+@Entity(foreignKeys = @ForeignKey(entity = LM_Submodule.class, parentColumns = "SMID", childColumns = "SMID"))
 public class Questions {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "QUID")
+    @SerializedName("QUID")
+    @Expose
     private int qUID;
 
-    @ColumnInfo(name = "Quiz_ID")
-    private int quiz_ID;
+    @ColumnInfo(name = "SMID")
+    @SerializedName("SMID")
+    @Expose
+    private int sMID;
 
     @ColumnInfo(name = "Question")
+    @SerializedName("Question")
+    @Expose
     private String question;
 
-    public Questions(int qUID, int quiz_ID, String question) {
+    public Questions(int qUID, int sMID, String question) {
         this.qUID = qUID;
-        this.quiz_ID = quiz_ID;
+        this.sMID = sMID;
         this.question = question;
     }
 
@@ -27,8 +36,8 @@ public class Questions {
         return qUID;
     }
 
-    public int getQuiz_ID() {
-        return quiz_ID;
+    public int getSMID() {
+        return sMID;
     }
 
     public String getQuestion() {

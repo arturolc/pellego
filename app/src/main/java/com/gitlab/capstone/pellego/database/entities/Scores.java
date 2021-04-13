@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.gitlab.capstone.pellego.database.TimestampConverter;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
@@ -15,16 +17,24 @@ import java.util.Date;
 public class Scores {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "SID")
+    @SerializedName("SID")
+    @Expose
     private int sID;
 
     @ColumnInfo(name = "Quiz")
+    @SerializedName("Quiz")
+    @Expose
     private int quiz;
 
     @ColumnInfo(name = "User")
+    @SerializedName("User")
+    @Expose
     private int user;
 
     @ColumnInfo(name = "Date_Taken")
     @TypeConverters({TimestampConverter.class})
+    @SerializedName("Date_Taken")
+    @Expose
     private Date dateTaken;
 
     public Scores(int sID, int quiz, int user, Date dateTaken) {
