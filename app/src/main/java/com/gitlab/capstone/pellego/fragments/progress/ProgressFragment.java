@@ -49,15 +49,12 @@ public class ProgressFragment extends BaseFragment {
     private ArrayList<String> days;
     private ArrayList<String> months;
     private View header;
-    private static final int HIDE_THRESHOLD = 20;
     private int scrolledDistance = 0;
     private boolean controlsVisible = true;
-    private int[] todayValues;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        todayValues = new int[2];
         progressViewModel =
                 new ViewModelProvider(requireActivity()).get(ProgressViewModel.class);
         root = inflater.inflate(R.layout.fragment_progress, container, false);
