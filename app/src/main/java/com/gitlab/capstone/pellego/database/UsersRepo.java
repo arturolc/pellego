@@ -10,6 +10,7 @@ import com.gitlab.capstone.pellego.network.APIService;
 import com.gitlab.capstone.pellego.network.RetroInstance;
 import com.gitlab.capstone.pellego.network.models.AuthToken;
 import com.gitlab.capstone.pellego.network.models.CompletionResponse;
+import com.gitlab.capstone.pellego.network.models.TodayProgressValueResponse;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -30,6 +31,7 @@ public class UsersRepo {
     private final APIService apiService;
     private static UsersRepo INSTANCE;
     private final MutableLiveData<List<CompletionResponse>> completionResponse = new MutableLiveData<>();
+    private final MutableLiveData<TodayProgressValueResponse> todayProgressValueResponse = new MutableLiveData<>();
 
     private  UsersRepo(Application application) {
         db = PellegoDatabase.getDatabase(application);
@@ -93,5 +95,29 @@ public class UsersRepo {
         });
 
         return completionResponse;
+    }
+
+    public LiveData<TodayProgressValueResponse> getTodayProgressValues() {
+        Call<TodayProgressValueResponse> call =
+                apiService.getTodayProgressValues(new AuthToken("Chris.Bordoy@gmail.com"));
+        call.enqueue(new Callback<TodayProgressValueResponse>() {
+
+            @Override
+            public void onResponse(@NotNull Call<TodayProgressValueResponse> call, Response<TodayProgressValueResponse> response) {
+                Log.d("RETROFIT CRAZY RESPONSE", response.body().toString());
+                TodayProgressValueResponse resp = new TodayProgressValueResponse();
+                resp.setWordsRead(response.body().getWordsRead());
+                resp.setWpm(response.body().getWpm());
+                todayProgressValueResponse.postValue(resp);
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<TodayProgressValueResponse> call, @NotNull Throwable t) {
+                t.printStackTrace();
+                Log.e("RETROFIT BROKE RESPONSE", t.toString());
+            }
+        });
+
+        return todayProgressValueResponse;
     }
 }

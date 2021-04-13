@@ -49,20 +49,36 @@ public class ProgressFragment extends BaseFragment {
     private static final int HIDE_THRESHOLD = 20;
     private int scrolledDistance = 0;
     private boolean controlsVisible = true;
+    private int[] todayValues;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        todayValues = new int[2];
         progressViewModel =
-                new ViewModelProvider(this).get(ProgressViewModel.class);
+                new ViewModelProvider(requireActivity()).get(ProgressViewModel.class);
         root = inflater.inflate(R.layout.fragment_progress, container, false);
                 final TextView textView = root.findViewById(R.id.text_progress);
         progressViewModel.getText().observe(getViewLifecycleOwner(),
                 s -> textView.setText(getString(R.string.title_progress_reports)));
+
         super.setupHeader(root);
         header = getActivity().findViewById(R.id.header_circular);
         lastWeekBarChart = root.findViewById(R.id.last_week_barChart);
         lastYearLineChart = root.findViewById(R.id.last_year_lineChart);
+
+        progressViewModel.getTodayValues().observe(getViewLifecycleOwner(),
+                s -> {
+                    todayValues[0] = s.getWordsRead();
+                    todayValues[1] = s.getWpm();
+                    loadProgressTextValues();
+                    populateDaysList();
+                    populateMonthsList();
+                    setupLastWeekBarChart();
+                    loadLastWeekBarChart();
+                    setupLastYearLineChart();
+                    loadLastYearLineChart();
+                });
 
         ScrollView scrollView = root.findViewById(R.id.progress_scroll_view);
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
@@ -81,14 +97,6 @@ public class ProgressFragment extends BaseFragment {
             }
         });
 
-        loadProgressTextValues();
-        populateDaysList();
-        populateMonthsList();
-        setupLastWeekBarChart();
-        loadLastWeekBarChart();
-        setupLastYearLineChart();
-        loadLastYearLineChart();
-
         return root;
     }
 
@@ -103,8 +111,8 @@ public class ProgressFragment extends BaseFragment {
     private void loadProgressTextValues() {
         TextView todayWordsReadTextview = root.findViewById(R.id.today_words_read_description);
         TextView todayWpmTextview = root.findViewById(R.id.today_wpm_description);
-        todayWordsReadTextview.setText(progressViewModel.getTodayValues()[0]);
-        todayWpmTextview.setText(progressViewModel.getTodayValues()[1]);
+        todayWordsReadTextview.setText(todayValues[0]);
+        todayWpmTextview.setText(todayValues[1]);
 
         TextView lastWeekWordsReadTextview = root.findViewById(R.id.last_week_words_read_description);
         TextView lastWeekWpmTextview = root.findViewById(R.id.last_week_wpm_description);

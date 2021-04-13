@@ -1,5 +1,9 @@
 package com.gitlab.capstone.pellego.fragments.progress;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -8,6 +12,8 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
+import com.gitlab.capstone.pellego.database.UsersRepo;
+import com.gitlab.capstone.pellego.network.models.TodayProgressValueResponse;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,11 +23,17 @@ import java.util.Collections;
 
     The Progress View Model
  **********************************************/
-public class ProgressViewModel extends ViewModel {
 
+public class ProgressViewModel extends AndroidViewModel {
+
+    private UsersRepo usersRepo;
     private MutableLiveData<String> mText;
+    private LiveData<TodayProgressValueResponse> todayProgressValueResponse;
 
-    public ProgressViewModel() {
+    public ProgressViewModel(@NonNull Application application) {
+        super(application);
+        usersRepo = UsersRepo.getInstance(application);
+        this.todayProgressValueResponse = new MutableLiveData<>();
         mText = new MutableLiveData<>();
         mText.setValue("Progress");
     }
@@ -30,10 +42,10 @@ public class ProgressViewModel extends ViewModel {
         return mText;
     }
 
-    public String[] getTodayValues() {
-        String[] todayValues = {"118", "236"};
+    public LiveData<TodayProgressValueResponse> getTodayValues() {
+        todayProgressValueResponse = usersRepo.getTodayProgressValues();
 
-        return todayValues;
+        return todayProgressValueResponse;
     }
 
     public String[] getLastWeekValues() {
