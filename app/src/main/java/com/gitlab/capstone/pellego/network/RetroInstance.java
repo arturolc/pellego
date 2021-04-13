@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  **************************************************/
 
 public class RetroInstance {
-    public static String BASE_URL = "http://54.245.202.132:5002/";
+    public static String BASE_URL = "http://54.245.202.132/";
     private static Retrofit retrofit;
 
     public static Retrofit getRetroClient() {
@@ -21,7 +21,6 @@ public class RetroInstance {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-
         return retrofit;
     }
 }
