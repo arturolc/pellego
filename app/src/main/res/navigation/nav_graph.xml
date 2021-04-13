@@ -158,10 +158,19 @@
         tools:layout="@layout/fragment_default_pager" />
     <fragment
         android:id="@+id/pellegoLibrary"
-        android:name="com.gitlab.capstone.pellego.fragments.pellegolibrary.PellegoLibrary"
-        tools:layout="@layout/pellego_library_fragment" />
+        android:name="com.gitlab.capstone.pellego.fragments.pellegolibrary.PellegoLibraryFragment"
+        tools:layout="@layout/pellego_library_fragment" >
+        <action
+            android:id="@+id/action_pellegoLibrary_to_bookPreviewFragment"
+            app:destination="@id/bookPreviewFragment" />
+    </fragment>
     <fragment
         android:id="@+id/reader"
         android:name="com.gitlab.capstone.pellego.fragments.reader.ReaderFragment"
         tools:layout="@layout/fragment_reader" />
+    <fragment
+        android:id="@+id/bookPreviewFragment"
+        android:name="com.gitlab.capstone.pellego.fragments.pellegolibrary.BookPreviewFragment"
+        android:label="fragment_book_preview"
+        tools:layout="@layout/fragment_book_preview" />
 </navigation>

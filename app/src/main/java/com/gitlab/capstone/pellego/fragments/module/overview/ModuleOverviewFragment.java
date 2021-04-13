@@ -98,10 +98,14 @@ public class ModuleOverviewFragment extends BaseFragment {
                 NavController navController = Navigation.findNavController(view);
                 Bundle args = new Bundle();
                 args.putString("moduleID", moduleID);
+                if (position != 0) {
+                    args.putInt("quizTextCount", moduleViewModel.getQuizTextCount(submoduleResponse.get(position).getText()));
+                }
                 args.putParcelableArrayList("subModules", (ArrayList<? extends Parcelable>) submoduleResponse);
                 moduleViewModel.setShowSubmodulePopupDialog(true);
                 switch(position) {
                     case 0:
+                        args.putString("smID", "1");
                         navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_intro, args);
                         break;
                     case 1:

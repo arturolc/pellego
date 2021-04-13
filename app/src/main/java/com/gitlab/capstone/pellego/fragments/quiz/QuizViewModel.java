@@ -29,6 +29,7 @@ public class QuizViewModel extends AndroidViewModel {
     private LiveData<List<QuizResponse>> quizResponse;
     private MutableLiveData<String> mText;
     private String difficulty;
+    private int quizTextCount;
     public Integer question_no;
     private ArrayList<QuizQuestion> questions;
     public int score;
@@ -101,7 +102,13 @@ public class QuizViewModel extends AndroidViewModel {
         this.difficulty = diff;
     }
     public void setWPM(Integer wpm) {this.wpm = wpm;}
+
     public void setModule(String m) {this.module = m;}
+
+    public void setQuizTextCount(int count) {this.quizTextCount = count; }
+
+    public int getQuizTextCount() {return this.quizTextCount; }
+
     public String getModule() {return this.module;}
 
     public boolean isLastQuestion() {

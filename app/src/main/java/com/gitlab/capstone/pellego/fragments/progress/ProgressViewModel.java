@@ -1,27 +1,41 @@
 package com.gitlab.capstone.pellego.fragments.progress;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
+import com.gitlab.capstone.pellego.database.UsersRepo;
+import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**********************************************
     Chris Bordoy
 
     The Progress View Model
  **********************************************/
-public class ProgressViewModel extends ViewModel {
 
+public class ProgressViewModel extends AndroidViewModel {
+
+    private UsersRepo usersRepo;
     private MutableLiveData<String> mText;
+    private LiveData<List<ProgressValuesResponse>> progressValueResponse;
+    private final int NUMBER_OF_DAYS_IN_WEEK = 7;
+    private final int NUMBER_OF_MONTHS_IN_YEAR = 12;
 
-    public ProgressViewModel() {
+    public ProgressViewModel(@NonNull Application application) {
+        super(application);
+        usersRepo = UsersRepo.getInstance(application);
+        this.progressValueResponse = new MutableLiveData<>();
         mText = new MutableLiveData<>();
         mText.setValue("Progress");
     }
@@ -30,20 +44,48 @@ public class ProgressViewModel extends ViewModel {
         return mText;
     }
 
-    public String[] getTodayValues() {
-        String[] todayValues = {"118", "236"};
+    public LiveData<List<ProgressValuesResponse>> getProgressValues() {
+        progressValueResponse = usersRepo.getProgressValues();
 
-        return todayValues;
+        return progressValueResponse;
     }
 
-    public String[] getLastWeekValues() {
-        String[] lastWeekValues = {"588", "255"};
+    public int[] getLastWeekValues(List<ProgressValuesResponse> response) {
+        int[] lastWeekValues = new int[2];
+        int wordsRead = 0;
+        int wpm = 0;
+
+        for (int i = 0; i < NUMBER_OF_DAYS_IN_WEEK; i++) {
+            wordsRead += response.get(i).getWordsRead();
+            wpm += response.get(i).getWpm();
+        }
+
+        if(wordsRead != 0 && wpm != 0) {
+            wordsRead = wordsRead/NUMBER_OF_DAYS_IN_WEEK;
+            wpm = wpm/NUMBER_OF_DAYS_IN_WEEK;
+            lastWeekValues[0] = wordsRead;
+            lastWeekValues[1] = wpm;
+        }
 
         return lastWeekValues;
     }
 
-    public String[] getLastYearValues() {
-        String[] lastYearValues = {"1529", "420"};
+    public int[] getLastYearValues(List<ProgressValuesResponse> response) {
+        int[] lastYearValues = new int[12];
+        int wordsRead = 0;
+        int wpm = 0;
+
+        for (int i = 7; i < response.size(); i++) {
+            wordsRead += response.get(i).getWordsRead();
+            wpm += response.get(i).getWpm();
+        }
+
+        if(wordsRead != 0 && wpm != 0) {
+            wordsRead = wordsRead/NUMBER_OF_MONTHS_IN_YEAR;
+            wpm = wpm/NUMBER_OF_MONTHS_IN_YEAR;
+            lastYearValues[0] = wordsRead;
+            lastYearValues[1] = wpm;
+        }
 
         return lastYearValues;
     }
@@ -62,64 +104,38 @@ public class ProgressViewModel extends ViewModel {
         return listOfMonths;
     }
     
-    public ArrayList<BarEntry> getMockLastWeekWordsReadData() {
+    public ArrayList<BarEntry> getLastWeekWordsReadData(List<ProgressValuesResponse> response) {
         ArrayList<BarEntry> wordsReadEntries = new ArrayList<>();
-        wordsReadEntries.add(new BarEntry(1,890));
-        wordsReadEntries.add(new BarEntry(2,600));
-        wordsReadEntries.add(new BarEntry(3,550));
-        wordsReadEntries.add(new BarEntry(4,533));
-        wordsReadEntries.add(new BarEntry(5,620));
-        wordsReadEntries.add(new BarEntry(6,420));
-        wordsReadEntries.add(new BarEntry(7,666));
+        for (int i = 0; i < NUMBER_OF_DAYS_IN_WEEK; i++) {
+            wordsReadEntries.add(new BarEntry( i + 1, response.get(i).getWordsRead()));
+        }
 
         return wordsReadEntries;
     }
 
-    public ArrayList<BarEntry> getMockLastWeekWpmData() {
+    public ArrayList<BarEntry> getLastWeekWpmData(List<ProgressValuesResponse> response) {
         ArrayList<BarEntry> wpmEntries = new ArrayList<>();
-        wpmEntries.add(new BarEntry(1,540));
-        wpmEntries.add(new BarEntry(2,230));
-        wpmEntries.add(new BarEntry(3,297));
-        wpmEntries.add(new BarEntry(4,89));
-        wpmEntries.add(new BarEntry(5,444));
-        wpmEntries.add(new BarEntry(6,33));
-        wpmEntries.add(new BarEntry(7,111));
+        for (int i = 0; i < NUMBER_OF_DAYS_IN_WEEK; i++) {
+            wpmEntries.add(new BarEntry(i + 1, response.get(i).getWpm()));
+        }
 
         return wpmEntries;
     }
 
-    public ArrayList<Entry> getMockLastYearWordsReadData() {
+    public ArrayList<Entry> getLastYearWordsReadData(List<ProgressValuesResponse> response) {
         ArrayList<Entry> wordsReadEntries = new ArrayList<>();
-        wordsReadEntries.add(new Entry(1, 233));
-        wordsReadEntries.add(new Entry(2, 120));
-        wordsReadEntries.add(new Entry(3, 450));
-        wordsReadEntries.add(new Entry(4, 500));
-        wordsReadEntries.add(new Entry(5, 80));
-        wordsReadEntries.add(new Entry(6, 145));
-        wordsReadEntries.add(new Entry(7, 278));
-        wordsReadEntries.add(new Entry(8, 333));
-        wordsReadEntries.add(new Entry(9, 444));
-        wordsReadEntries.add(new Entry(10, 580));
-        wordsReadEntries.add(new Entry(11, 700));
-        wordsReadEntries.add(new Entry(12, 490));
+        for (int i = 0; i < NUMBER_OF_MONTHS_IN_YEAR; i++) {
+            wordsReadEntries.add(new BarEntry(i + 1, response.get(i).getWordsRead()));
+        }
 
         return wordsReadEntries;
     }
 
-    public ArrayList<Entry> getMockLastYearWpmData() {
+    public ArrayList<Entry> getLastYearWpmData(List<ProgressValuesResponse> response) {
         ArrayList<Entry> wpmEntries = new ArrayList<>();
-        wpmEntries.add(new Entry(1, 100));
-        wpmEntries.add(new Entry(2, 120));
-        wpmEntries.add(new Entry(3, 140));
-        wpmEntries.add(new Entry(4, 150));
-        wpmEntries.add(new Entry(5, 180));
-        wpmEntries.add(new Entry(6, 200));
-        wpmEntries.add(new Entry(7, 190));
-        wpmEntries.add(new Entry(8, 125));
-        wpmEntries.add(new Entry(9, 175));
-        wpmEntries.add(new Entry(10, 195));
-        wpmEntries.add(new Entry(11, 205));
-        wpmEntries.add(new Entry(12, 211));
+        for (int i = 0; i < NUMBER_OF_MONTHS_IN_YEAR; i++) {
+            wpmEntries.add(new BarEntry(i + 1, response.get(i).getWpm()));
+        }
 
         return wpmEntries;
     }
