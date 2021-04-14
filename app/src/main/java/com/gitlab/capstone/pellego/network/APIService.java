@@ -10,6 +10,7 @@ import com.gitlab.capstone.pellego.network.models.QuizResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
 import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 import com.gitlab.capstone.pellego.network.models.SynopsisResponse;
+import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
 
 import java.util.List;
 
@@ -62,4 +63,7 @@ public interface APIService {
 
     @GET("library/synopsis/{book_id}")
     Call<List<SynopsisResponse>> getSynopsis(@Path("book_id") String book_id);
+
+    @POST("users/profile/total_words_read")
+    Call<TotalWordsReadResponse> getTotalWordsRead(@Body AuthToken email);
 }

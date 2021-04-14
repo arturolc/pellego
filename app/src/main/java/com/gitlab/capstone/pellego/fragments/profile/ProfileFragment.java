@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
@@ -50,7 +51,7 @@ public class ProfileFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel = ProfileModel.getInstance();
+        profileViewModel = ProfileModel.getInstance(getActivity().getApplication());
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         super.setupHeader(root);
         ImageView im1 = (ImageView) root.findViewById(R.id.profile_image);
@@ -77,6 +78,13 @@ public class ProfileFragment extends BaseFragment {
             public void onChanged(String s) {
                 ((TextView)root.findViewById(R.id.userEmail)).setText(s);
             }
+        });
+
+        profileViewModel.getTotalWordsReadResponse().observe(getViewLifecycleOwner(), new Observer<TotalWordsReadResponse>() {
+           @Override
+           public void onChanged(TotalWordsReadResponse response) {
+               ((TextView)root.findViewById(R.id.tv_address)).setText(String.valueOf(response.getTotalWordsRead()) + " Words Read");
+           }
         });
         return root;
     }

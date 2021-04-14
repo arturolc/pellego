@@ -1,12 +1,17 @@
 package com.gitlab.capstone.pellego.fragments.profile;
 
+import android.app.Application;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.amplifyframework.core.Amplify;
+import com.gitlab.capstone.pellego.database.UsersRepo;
+import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
 
 /**********************************************
  Eli Hebdon & Arturo Lara
@@ -14,12 +19,17 @@ import com.amplifyframework.core.Amplify;
  Profile Singleton Model
  **********************************************/
 
-public class ProfileModel {
+public class ProfileModel extends AndroidViewModel {
     private final MutableLiveData<String> userName;
     private final MutableLiveData<String> email;
     private static ProfileModel INSTANCE;
+    private final UsersRepo usersRepo;
+    private LiveData<TotalWordsReadResponse> totalWordsReadResponse;
 
-    private ProfileModel() {
+    private ProfileModel(@NonNull Application application) {
+        super(application);
+        this.usersRepo = UsersRepo.getInstance(application);
+        totalWordsReadResponse = new MutableLiveData<>();
         userName = new MutableLiveData<>();
         email = new MutableLiveData<>();
         Amplify.Auth.fetchUserAttributes(success ->  {
@@ -38,11 +48,17 @@ public class ProfileModel {
         }, fail -> Log.i("user", fail.toString()));
     }
 
-    public static ProfileModel getInstance() {
+    public static ProfileModel getInstance(@NonNull Application application) {
         if (INSTANCE != null) {
             return INSTANCE;
         }
-        return new ProfileModel();
+        return new ProfileModel(application);
+    }
+
+    public LiveData<TotalWordsReadResponse> getTotalWordsReadResponse() {
+        totalWordsReadResponse = usersRepo.getTotalWordsRead();
+
+        return totalWordsReadResponse;
     }
 
     public LiveData<String> getUserName() {

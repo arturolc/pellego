@@ -49,9 +49,8 @@
             android:layout_below="@+id/tv_name"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
-            android:text="5k words read"
             android:textAllCaps="true"
-            android:textColor="@color/white_transparent"
+            android:textColor="@color/white"
             android:textSize="12sp" />
 
     </RelativeLayout>
