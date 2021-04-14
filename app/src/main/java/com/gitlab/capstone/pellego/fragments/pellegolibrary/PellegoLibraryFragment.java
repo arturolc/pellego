@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.R;
@@ -42,7 +43,7 @@ public class PellegoLibraryFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.pellego_library_fragment, container, false);
-
+        ((ProgressBar)getActivity().findViewById(R.id.progress_loader)).setVisibility(View.VISIBLE);
         return root;
     }
 
@@ -93,6 +94,7 @@ public class PellegoLibraryFragment extends BaseFragment {
                         imgs, urls, hashStrings, getContext(), myFragment);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                ((ProgressBar)getActivity().findViewById(R.id.progress_loader)).setVisibility(View.INVISIBLE);
             }
         });
     }

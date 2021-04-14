@@ -63,7 +63,7 @@
     <style name="Theme.Pellego_Dark" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/dark_grey</item>
         <item name="colorSecondary">@color/light_blue</item>
-        <item name="color">@color/dark_grey</item>
+        <item name="color">@color/dark_grey_solid</item>
         <item name="colorAccent">@color/gray_hover</item>
         <item name="colorSecondaryVariant">@color/white</item>
         <item name="android:textColor">@color/primary_white</item>
