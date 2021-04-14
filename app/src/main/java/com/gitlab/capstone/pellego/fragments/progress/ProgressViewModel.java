@@ -15,7 +15,9 @@ import com.gitlab.capstone.pellego.database.UsersRepo;
 import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**********************************************
@@ -71,7 +73,7 @@ public class ProgressViewModel extends AndroidViewModel {
     }
 
     public int[] getLastYearValues(List<ProgressValuesResponse> response) {
-        int[] lastYearValues = new int[12];
+        int[] lastYearValues = new int[NUMBER_OF_MONTHS_IN_YEAR];
         int wordsRead = 0;
         int wpm = 0;
 
@@ -104,39 +106,87 @@ public class ProgressViewModel extends AndroidViewModel {
         return listOfMonths;
     }
     
-    public ArrayList<BarEntry> getLastWeekWordsReadData(List<ProgressValuesResponse> response) {
+    public ArrayList<BarEntry> getLastWeekWordsReadData(Integer[] response) {
         ArrayList<BarEntry> wordsReadEntries = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_DAYS_IN_WEEK; i++) {
-            wordsReadEntries.add(new BarEntry( i + 1, response.get(i).getWordsRead()));
+            wordsReadEntries.add(new BarEntry( i + 1, response[i]));
         }
 
         return wordsReadEntries;
     }
 
-    public ArrayList<BarEntry> getLastWeekWpmData(List<ProgressValuesResponse> response) {
+    public ArrayList<BarEntry> getLastWeekWpmData(Integer[] response) {
         ArrayList<BarEntry> wpmEntries = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_DAYS_IN_WEEK; i++) {
-            wpmEntries.add(new BarEntry(i + 1, response.get(i).getWpm()));
+            wpmEntries.add(new BarEntry(i + 1, response[i]));
         }
 
         return wpmEntries;
     }
 
-    public ArrayList<Entry> getLastYearWordsReadData(List<ProgressValuesResponse> response) {
+    public ArrayList<Entry> getLastYearWordsReadData(Integer[] response) {
         ArrayList<Entry> wordsReadEntries = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_MONTHS_IN_YEAR; i++) {
-            wordsReadEntries.add(new BarEntry(i + 1, response.get(i).getWordsRead()));
+            wordsReadEntries.add(new BarEntry(i + 1, response[i]));
         }
 
         return wordsReadEntries;
     }
 
-    public ArrayList<Entry> getLastYearWpmData(List<ProgressValuesResponse> response) {
+    public ArrayList<Entry> getLastYearWpmData(Integer[] response) {
         ArrayList<Entry> wpmEntries = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_MONTHS_IN_YEAR; i++) {
-            wpmEntries.add(new BarEntry(i + 1, response.get(i).getWpm()));
+            wpmEntries.add(new BarEntry(i + 1, response[i]));
         }
 
         return wpmEntries;
+    }
+
+    public Integer[] getLastWeekWordsReadMapping(List<ProgressValuesResponse> response) {
+        Integer[] dayIndices = new Integer[NUMBER_OF_DAYS_IN_WEEK];
+        for (int i = 0; i < dayIndices.length; i++) {
+            dayIndices[getDayNumberOld(response.get(i).getRecorded()) - 1] = response.get(i).getWordsRead();
+        }
+
+        return dayIndices;
+    }
+
+    public Integer[] getLastWeekWpmMapping(List<ProgressValuesResponse> response) {
+        Integer[] dayIndices = new Integer[NUMBER_OF_DAYS_IN_WEEK];
+        for (int i = 0; i < dayIndices.length; i++) {
+            dayIndices[getDayNumberOld(response.get(i).getRecorded()) - 1] = response.get(i).getWpm();
+        }
+
+        return dayIndices;
+    }
+
+    public Integer[] getLastYearWordsReadMapping(List<ProgressValuesResponse> response) {
+        Integer[] monthIndices = new Integer[NUMBER_OF_MONTHS_IN_YEAR];
+        for (int i = NUMBER_OF_DAYS_IN_WEEK; i < monthIndices.length + NUMBER_OF_DAYS_IN_WEEK; i++) {
+            monthIndices[getMonthNumberOld(response.get(i).getRecorded())] = response.get(i).getWordsRead();
+        }
+
+        return monthIndices;
+    }
+
+    public Integer[] getLastYearWpmMapping(List<ProgressValuesResponse> response) {
+        Integer[] monthIndices = new Integer[NUMBER_OF_MONTHS_IN_YEAR];
+        for (int i = NUMBER_OF_DAYS_IN_WEEK; i < monthIndices.length + NUMBER_OF_DAYS_IN_WEEK; i++) {
+            monthIndices[getMonthNumberOld(response.get(i).getRecorded())] = response.get(i).getWpm();
+        }
+
+        return monthIndices;
+    }
+
+    private static int getDayNumberOld(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.DAY_OF_WEEK);
+    }
+
+    private static int getMonthNumberOld(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.MONTH);
     }
 }

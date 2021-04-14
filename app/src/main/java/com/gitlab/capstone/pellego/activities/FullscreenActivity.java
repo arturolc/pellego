@@ -94,7 +94,7 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         NavigationView drawerNavigationView = findViewById(R.id.side_nav_view);
         View headerView = drawerNavigationView.getHeaderView(0);
 
-        ProfileModel p = ProfileModel.getInstance();
+        ProfileModel p = ProfileModel.getInstance(getApplication());
         p.getUserName().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {

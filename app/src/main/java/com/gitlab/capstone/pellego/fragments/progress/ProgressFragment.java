@@ -149,12 +149,15 @@ public class ProgressFragment extends BaseFragment {
     }
 
     private void loadLastWeekBarChart(List<ProgressValuesResponse> response) {
-        BarDataSet dataSet1 = new BarDataSet(progressViewModel.getLastWeekWordsReadData(response), "");
+        BarDataSet dataSet1 =
+                new BarDataSet(
+                        progressViewModel.
+                                getLastWeekWordsReadData(progressViewModel.getLastWeekWordsReadMapping(response)), "");
         dataSet1.setColor(getResources().getColor(R.color.green), 150);
         dataSet1.setValueTextColor(Color.WHITE);
         dataSet1.setValueTextSize(10);
 
-        BarDataSet dataSet2 = new BarDataSet(progressViewModel.getLastWeekWpmData(response), "");
+        BarDataSet dataSet2 = new BarDataSet(progressViewModel.getLastWeekWpmData(progressViewModel.getLastWeekWpmMapping(response)), "");
         dataSet2.setColor(getResources().getColor(R.color.purple), 150);
         dataSet2.setValueTextColor(Color.WHITE);
         dataSet2.setValueTextSize(10);
@@ -185,7 +188,7 @@ public class ProgressFragment extends BaseFragment {
     }
 
     private void loadLastYearLineChart(List<ProgressValuesResponse> response) {
-        LineDataSet d1 = new LineDataSet(progressViewModel.getLastYearWordsReadData(response),"");
+        LineDataSet d1 = new LineDataSet(progressViewModel.getLastYearWordsReadData(progressViewModel.getLastYearWordsReadMapping(response)),"");
         d1.setColor(getResources().getColor(R.color.green), 150);
         d1.setLineWidth(2.5f);
         d1.setCircleRadius(4f);
@@ -193,7 +196,7 @@ public class ProgressFragment extends BaseFragment {
         d1.setValueTextColor(Color.WHITE);
         d1.setValueTextSize(10);
 
-        LineDataSet d2 = new LineDataSet(progressViewModel.getLastYearWpmData(response), "");
+        LineDataSet d2 = new LineDataSet(progressViewModel.getLastYearWpmData(progressViewModel.getLastYearWpmMapping(response)), "");
         d2.setColor(getResources().getColor(R.color.purple), 150);
         d2.setLineWidth(2.5f);
         d2.setCircleRadius(4f);

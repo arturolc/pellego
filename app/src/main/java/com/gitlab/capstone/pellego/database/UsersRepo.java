@@ -11,6 +11,7 @@ import com.gitlab.capstone.pellego.network.RetroInstance;
 import com.gitlab.capstone.pellego.network.models.AuthToken;
 import com.gitlab.capstone.pellego.network.models.CompletionResponse;
 import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
+import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,6 +33,7 @@ public class UsersRepo {
     private static UsersRepo INSTANCE;
     private final MutableLiveData<List<CompletionResponse>> completionResponse = new MutableLiveData<>();
     private final MutableLiveData<List<ProgressValuesResponse>> progressValuesResponse = new MutableLiveData<>();
+    private final MutableLiveData<TotalWordsReadResponse> totalWordsReadResponse = new MutableLiveData<>();
 
     private  UsersRepo(Application application) {
         db = PellegoDatabase.getDatabase(application);
@@ -116,5 +118,26 @@ public class UsersRepo {
         });
 
         return progressValuesResponse;
+    }
+
+    public LiveData<TotalWordsReadResponse> getTotalWordsRead() {
+        Call<TotalWordsReadResponse> call =
+                apiService.getTotalWordsRead(new AuthToken("Chris.Bordoy@gmail.com"));
+        call.enqueue(new Callback<TotalWordsReadResponse>() {
+
+            @Override
+            public void onResponse(Call<TotalWordsReadResponse> call, Response<TotalWordsReadResponse> response) {
+                Log.d("RETROFIT: ", response.body().toString());
+                totalWordsReadResponse.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<TotalWordsReadResponse> call, Throwable t) {
+                t.printStackTrace();
+                Log.e("RETROFIT: ", t.toString());
+            }
+        });
+
+        return totalWordsReadResponse;
     }
 }
