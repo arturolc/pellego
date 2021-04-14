@@ -36,7 +36,7 @@ public interface APIService {
     @POST("modules/{module_id}/submodules")
     Call<List<SMResponse>> getSubmodules(@Path("module_id") String mID);
 
-    @POST("submodule/{submodule_id}/quizzes")
+    @POST("modules/submodule/{submodule_id}/quizzes")
     Call<List<QuizResponse>> getQuizzes(@Path("submodule_id") String smID);
 
     @POST("modules/allcontent")
