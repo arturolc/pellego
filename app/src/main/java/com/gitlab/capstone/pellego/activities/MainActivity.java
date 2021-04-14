@@ -90,7 +90,6 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     public static Bitmap bitmap;
     public static final int RESULT_FILE = 1;
     public static final int RESULT_ADD_CATALOG = 2;
-
     Storage storage;
     OpenChoicer choicer;
     boolean isRunning;
@@ -241,7 +240,6 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         Window window = this.getWindow();
         TypedValue typedValue = new TypedValue();
 //        loadImageFromStorage();
-
     }
 
     @SuppressLint("RestrictedApi")
