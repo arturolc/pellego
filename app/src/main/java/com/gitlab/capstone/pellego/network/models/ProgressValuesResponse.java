@@ -3,6 +3,8 @@ package com.gitlab.capstone.pellego.network.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 /**********************************************
  Chris Bordoy
 
@@ -12,7 +14,7 @@ import com.google.gson.annotations.SerializedName;
 public class ProgressValuesResponse {
     @SerializedName("Recorded")
     @Expose
-    private String recorded;
+    private Date recorded;
     @SerializedName("WordsRead")
     @Expose
     private Integer wordsRead;
@@ -20,11 +22,11 @@ public class ProgressValuesResponse {
     @Expose
     private Integer wpm;
 
-    public String getRecorded() {
+    public Date getRecorded() {
         return recorded;
     }
 
-    public void setRecorded(String recorded) {
+    public void setRecorded(Date recorded) {
         this.recorded = recorded;
     }
 
