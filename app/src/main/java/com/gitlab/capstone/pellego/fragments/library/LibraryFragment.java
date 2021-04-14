@@ -91,7 +91,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
     FragmentHolder holder;
     Runnable invalidateOptionsMenu;
     public static View header;
-
+    public static int numBooks;
     public LibraryFragment() {
     }
 
@@ -136,6 +136,7 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
             emptyLibraryMsg.setVisibility(View.INVISIBLE);
             lottieAnimationView.cancelAnimation();
         }
+        this.numBooks = books.all.size();
 //        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_menu, null);
 //        drawable = DrawableCompat.wrap(drawable);
 //        DrawableCompat.setTint(drawable, Color.WHITE);

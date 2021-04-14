@@ -9,22 +9,24 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
+import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
@@ -53,6 +55,9 @@ public class ProfileFragment extends BaseFragment {
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel = ProfileModel.getInstance(getActivity().getApplication());
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        ProgressBar pgsBar = (ProgressBar)getActivity().findViewById(R.id.progress_loader);
+        pgsBar.setVisibility(View.VISIBLE);
         super.setupHeader(root);
         ImageView im1 = (ImageView) root.findViewById(R.id.profile_image);
         RelativeLayout usr = root.findViewById(R.id.imgUser);
@@ -68,6 +73,7 @@ public class ProfileFragment extends BaseFragment {
         profileViewModel.getUserName().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                pgsBar.setVisibility(View.INVISIBLE);
                 ((TextView)root.findViewById(R.id.tv_name)).setText(s);
                 ((TextView)root.findViewById(R.id.userName)).setText(s);
             }
@@ -86,6 +92,8 @@ public class ProfileFragment extends BaseFragment {
                ((TextView)root.findViewById(R.id.tv_address)).setText(String.valueOf(response.getTotalWordsRead()) + " Words Read");
            }
         });
+
+        ((TextView)root.findViewById(R.id.total_books)).setText(String.valueOf(LibraryFragment.numBooks));
         return root;
     }
 

@@ -2,6 +2,7 @@ package com.gitlab.capstone.pellego.fragments.module.intro;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -90,7 +91,11 @@ public class ModuleIntroFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 if (position == totalPageCount - 1) {
-                    btn_register.setBackground(moduleViewModel.getGradient());
+                    GradientDrawable gradientDrawable = new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM, //set a gradient direction
+                            moduleViewModel.getModuleGradientColors()); //set the color of gradient
+                    gradientDrawable.setCornerRadius(20f);
+                    btn_register.setBackground(gradientDrawable);
                     btn_register.setVisibility(View.VISIBLE);
                     btn_register.setOnClickListener(new View.OnClickListener() {
                         @Override

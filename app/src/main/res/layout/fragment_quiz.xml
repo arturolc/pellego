@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/quiz_header_container"
             android:minHeight="200dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="15dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/title_quiz"
@@ -37,11 +37,11 @@
                 android:id="@+id/text_quiz_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:layout_marginTop="30dp"
+                android:paddingTop="7dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:paddingBottom="15dp"
-                android:textSize="25sp"
+                android:textSize="24sp"
                 android:textColor="@color/gray_card"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
