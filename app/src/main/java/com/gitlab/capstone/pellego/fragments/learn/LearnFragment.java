@@ -42,9 +42,10 @@ public class LearnFragment extends BaseFragment {
                              ViewGroup container, Bundle savedInstanceState) {
         learnViewModel = new ViewModelProvider(requireActivity()).get(LearnViewModel.class);
         View root = inflater.inflate(R.layout.fragment_learn, container, false);
-        moduleList = root.findViewById(R.id.nav_module_list);
-        ProgressBar pgsBar = (ProgressBar)root.findViewById(R.id.progress_loader);
+        ProgressBar pgsBar = (ProgressBar)getActivity().findViewById(R.id.progress_loader);
         pgsBar.setVisibility(View.VISIBLE);
+        moduleList = root.findViewById(R.id.nav_module_list);
+
         super.setupHeader(root);
 
         learnViewModel.getCompletionResponse().observe(getViewLifecycleOwner(), new Observer<List<CompletionResponse>>() {
@@ -56,6 +57,7 @@ public class LearnFragment extends BaseFragment {
                     @Override
                     public void onChanged(List<LMResponse> lmResponses) {
                         pgsBar.setVisibility(View.INVISIBLE);
+
                         LearnCardAdapter adapter = new LearnCardAdapter(getContext(), completionResponse, lmResponses);
                         moduleList.setAdapter(adapter);
                     }

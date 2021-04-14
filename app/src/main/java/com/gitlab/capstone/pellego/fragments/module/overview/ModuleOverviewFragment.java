@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,7 +52,6 @@ public class ModuleOverviewFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         String moduleID = getArguments().getString("moduleID");
         moduleViewModel =
                 new ViewModelProvider(
@@ -63,6 +63,8 @@ public class ModuleOverviewFragment extends BaseFragment {
         moduleViewModel.setModuleID(moduleID);
 
         View root = inflater.inflate(R.layout.fragment_module_overview, container, false);
+        ProgressBar pgsBar = (ProgressBar)getActivity().findViewById(R.id.progress_loader);
+        pgsBar.setVisibility(View.VISIBLE);
         moduleList = root.findViewById(R.id.nav_module_list);
         moduleViewModel.setTechniqueLabel(moduleViewModel.getModuleID());
         moduleViewModel.setTechnique(moduleViewModel.getTechniqueLabel());
@@ -83,6 +85,7 @@ public class ModuleOverviewFragment extends BaseFragment {
         moduleViewModel.getSubmodulesResponse(moduleViewModel.getModuleID()).observe(getViewLifecycleOwner(), new Observer<List<SMResponse>>() {
             @Override
             public void onChanged(List<SMResponse> response1) {
+                pgsBar.setVisibility(View.INVISIBLE);
                 submoduleResponse = response1;
                 ModuleListAdapter adapter = new ModuleListAdapter(getContext(), response1, ModuleOverviewFragment.this);
                 moduleList.setAdapter(adapter);
