@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -61,7 +62,8 @@ public class ProgressFragment extends BaseFragment {
                 final TextView textView = root.findViewById(R.id.text_progress);
         progressViewModel.getText().observe(getViewLifecycleOwner(),
                 s -> textView.setText(getString(R.string.title_progress_reports)));
-
+        ProgressBar pgsBar = (ProgressBar)getActivity().findViewById(R.id.progress_loader);
+        pgsBar.setVisibility(View.VISIBLE);
         super.setupHeader(root);
         header = getActivity().findViewById(R.id.header_circular);
         lastWeekBarChart = root.findViewById(R.id.last_week_barChart);
@@ -70,6 +72,7 @@ public class ProgressFragment extends BaseFragment {
         progressViewModel.getProgressValues().observe(getViewLifecycleOwner(), new Observer<List<ProgressValuesResponse>>() {
             @Override
             public void onChanged(List<ProgressValuesResponse> progressValuesResponse) {
+                pgsBar.setVisibility(View.INVISIBLE);
                 loadProgressTextValues(progressValuesResponse);
                 populateDaysList();
                 populateMonthsList();
