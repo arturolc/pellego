@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,7 +52,6 @@ public class ModuleOverviewFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         String moduleID = getArguments().getString("moduleID");
         moduleViewModel =
                 new ViewModelProvider(
@@ -63,6 +63,8 @@ public class ModuleOverviewFragment extends BaseFragment {
         moduleViewModel.setModuleID(moduleID);
 
         View root = inflater.inflate(R.layout.fragment_module_overview, container, false);
+        ProgressBar pgsBar = (ProgressBar)getActivity().findViewById(R.id.progress_loader);
+        pgsBar.setVisibility(View.VISIBLE);
         moduleList = root.findViewById(R.id.nav_module_list);
         moduleViewModel.setTechniqueLabel(moduleViewModel.getModuleID());
         moduleViewModel.setTechnique(moduleViewModel.getTechniqueLabel());
@@ -83,6 +85,7 @@ public class ModuleOverviewFragment extends BaseFragment {
         moduleViewModel.getSubmodulesResponse(moduleViewModel.getModuleID()).observe(getViewLifecycleOwner(), new Observer<List<SMResponse>>() {
             @Override
             public void onChanged(List<SMResponse> response1) {
+                pgsBar.setVisibility(View.INVISIBLE);
                 submoduleResponse = response1;
                 ModuleListAdapter adapter = new ModuleListAdapter(getContext(), response1, ModuleOverviewFragment.this);
                 moduleList.setAdapter(adapter);
@@ -103,43 +106,29 @@ public class ModuleOverviewFragment extends BaseFragment {
                 }
                 args.putParcelableArrayList("subModules", (ArrayList<? extends Parcelable>) submoduleResponse);
                 moduleViewModel.setShowSubmodulePopupDialog(true);
+                int[] submoduleIDs = getSubmoduleIDs(moduleID);
                 switch(position) {
                     case 0:
                         args.putString("smID", "1");
-                        navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_intro, args);
+                        navController.navigate(submoduleIDs[0], args);
                         break;
                     case 1:
                         args.putString("smID", "2");
                         args.putString("difficulty", "beginner");
                         args.putString("wpm", "120");
-                        if (moduleID.equals("1")){
-                            navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_beginner, args);
-                        }
-                        else {
-                            navController.navigate(R.id.action_nav_module_overview_to_nav_metaguiding_beginner, args);
-                        }
+                        navController.navigate(submoduleIDs[1], args);
                         break;
                     case 2:
                         args.putString("smID", "3");
                         args.putString("difficulty", "intermediate");
                         args.putString("wpm", "250");
-                        if (moduleID.equals("1")){
-                            navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_beginner, args);
-                        }
-                        else {
-                            navController.navigate(R.id.action_nav_module_overview_to_nav_metaguiding_beginner, args);
-                        }
+                        navController.navigate(submoduleIDs[1], args);
                         break;
                     case 3:
                         args.putString("smID", "4");
                         args.putString("difficulty", "advanced");
                         args.putString("wpm", "500");
-                        if (moduleID.equals("1")){
-                            navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_beginner, args);
-                        }
-                        else {
-                            navController.navigate(R.id.action_nav_module_overview_to_nav_metaguiding_beginner, args);
-                        }
+                        navController.navigate(submoduleIDs[1], args);
                         break;
                 }
             }
@@ -170,6 +159,27 @@ public class ModuleOverviewFragment extends BaseFragment {
         r.setColorFilter(moduleViewModel.getModuleGradientColors(moduleViewModel.getModuleID())[0],
                 PorterDuff.Mode.MULTIPLY);
         return r;
+    }
+
+    private int[] getSubmoduleIDs(String moduleID) {
+        switch(moduleID) {
+            case "1":
+                return new int[] {R.id.nav_rsvp_intro,
+                        R.id.nav_rsvp_module
+                };
+            case "2":
+                return new int[] {R.id.nav_metaguiding_intro,
+                        R.id.nav_metaguiding_module
+                };
+            case "3":
+                return new int[] {R.id.nav_clumpreading_intro,
+                        R.id.nav_clumpreading_module
+                };
+            default:
+                return new int[] {R.id.nav_prereading_intro,
+                        R.id.nav_prereading_module
+                };
+        }
     }
 
     private Drawable moduleGradientPicker(String moduleID) {

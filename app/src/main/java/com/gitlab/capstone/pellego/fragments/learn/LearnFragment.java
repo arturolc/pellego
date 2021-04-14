@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -41,6 +42,8 @@ public class LearnFragment extends BaseFragment {
                              ViewGroup container, Bundle savedInstanceState) {
         learnViewModel = new ViewModelProvider(requireActivity()).get(LearnViewModel.class);
         View root = inflater.inflate(R.layout.fragment_learn, container, false);
+        ProgressBar pgsBar = (ProgressBar)getActivity().findViewById(R.id.progress_loader);
+        pgsBar.setVisibility(View.VISIBLE);
         moduleList = root.findViewById(R.id.nav_module_list);
 
         super.setupHeader(root);
@@ -49,11 +52,12 @@ public class LearnFragment extends BaseFragment {
             @Override
             public void onChanged(List<CompletionResponse> completionResponses) {
                 completionResponse = learnViewModel.parseCompletionResponses(completionResponses);
-
                 lmResponses = learnViewModel.getLMResponse();
                 learnViewModel.getLMResponse().observe(getViewLifecycleOwner(), new Observer<List<LMResponse>>() {
                     @Override
                     public void onChanged(List<LMResponse> lmResponses) {
+                        pgsBar.setVisibility(View.INVISIBLE);
+
                         LearnCardAdapter adapter = new LearnCardAdapter(getContext(), completionResponse, lmResponses);
                         moduleList.setAdapter(adapter);
                     }

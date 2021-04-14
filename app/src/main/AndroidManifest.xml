@@ -262,7 +262,8 @@
 
 
         <activity android:name=".fragments.auth.AuthActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Pellego_Dark">
         </activity>
 
         <activity android:name="com.gitlab.capstone.pellego.fragments.pellegolibrary.BookPreviewActivity"></activity>
