@@ -172,11 +172,12 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/total_books"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:textColor="?android:textColor"
-                    android:text="15"
+                    android:text="0"
                     android:textSize="18sp" />
 
                 <View

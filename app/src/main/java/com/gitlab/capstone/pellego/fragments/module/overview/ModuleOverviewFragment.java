@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -113,19 +114,19 @@ public class ModuleOverviewFragment extends BaseFragment {
                         navController.navigate(submoduleIDs[0], args);
                         break;
                     case 1:
-                        args.putString("smID", "2");
+                        args.putString("smID", submoduleIDs[2]+ "");
                         args.putString("difficulty", "beginner");
                         args.putString("wpm", "120");
                         navController.navigate(submoduleIDs[1], args);
                         break;
                     case 2:
-                        args.putString("smID", "3");
+                        args.putString("smID", submoduleIDs[2] + 1 + "");
                         args.putString("difficulty", "intermediate");
                         args.putString("wpm", "250");
                         navController.navigate(submoduleIDs[1], args);
                         break;
                     case 3:
-                        args.putString("smID", "4");
+                        args.putString("smID", submoduleIDs[2] + 2 + "");
                         args.putString("difficulty", "advanced");
                         args.putString("wpm", "500");
                         navController.navigate(submoduleIDs[1], args);
@@ -147,7 +148,11 @@ public class ModuleOverviewFragment extends BaseFragment {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(colors[1]);
         ConstraintLayout header = root.findViewById(R.id.module_header_container);
-        header.setBackground(moduleViewModel.getGradient());
+        GradientDrawable gradientDrawable = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM, //set a gradient direction
+                moduleViewModel.getModuleGradientColors()); //set the color of gradient
+        gradientDrawable.setCornerRadii(new float[] {0, 0, 0, 0, 20, 20, 20, 20 });
+        header.setBackground(gradientDrawable);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -165,19 +170,19 @@ public class ModuleOverviewFragment extends BaseFragment {
         switch(moduleID) {
             case "1":
                 return new int[] {R.id.nav_rsvp_intro,
-                        R.id.nav_rsvp_module
+                        R.id.nav_rsvp_module, 2
                 };
             case "2":
                 return new int[] {R.id.nav_metaguiding_intro,
-                        R.id.nav_metaguiding_module
+                        R.id.nav_metaguiding_module, 6
                 };
             case "3":
                 return new int[] {R.id.nav_clumpreading_intro,
-                        R.id.nav_clumpreading_module
+                        R.id.nav_clumpreading_module, 10
                 };
             default:
                 return new int[] {R.id.nav_prereading_intro,
-                        R.id.nav_prereading_module
+                        R.id.nav_prereading_module, 14
                 };
         }
     }

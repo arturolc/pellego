@@ -157,6 +157,33 @@ public class ModuleViewModel extends AndroidViewModel {
         return colors;
     }
 
+    public int[] getModuleGradientColors(){
+        int[] colors = new int[2];
+
+        switch(moduleID) {
+            case "1":
+                colors[0] = 0xFFF39f86;
+                colors[1] = 0xFFF9D976;
+                break;
+            case "2":
+                colors[0] = 0xFF01BAEF;
+                colors[1] = 0xFF20BF55;
+                break;
+            case "3":
+                colors[0] = 0xFF42378F;
+                colors[1] = 0xFFF53844;
+                break;
+            case "4":
+                colors[0] = 0xFF9B6DFF;
+                colors[1] = 0xFF37D5D6;
+                break;
+            default:
+                break;
+        }
+
+        return colors;
+    }
+
     public void setGradient(Drawable gradient) {
         this.gradient = gradient;
     }
