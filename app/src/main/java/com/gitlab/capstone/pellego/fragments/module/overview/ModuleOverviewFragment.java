@@ -100,51 +100,59 @@ public class ModuleOverviewFragment extends BaseFragment {
                 args.putString("moduleID", moduleID);
                 args.putParcelableArrayList("subModules", (ArrayList<? extends Parcelable>) submoduleResponse);
                 moduleViewModel.setShowSubmodulePopupDialog(true);
-                System.out.println("DEBUG: MODULEID = " + moduleID);
-                System.out.println("DEBUG: Position = " + position);
 
+                int[] submoduleIDs = getSubmoduleIDs(moduleID);
                 switch(position) {
                     case 0:
-                        navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_intro, args);
+                        args.putString("smID", "1");
+                        navController.navigate(submoduleIDs[0], args);
                         break;
                     case 1:
                         args.putString("smID", "2");
                         args.putString("difficulty", "beginner");
                         args.putString("wpm", "120");
-                        if (moduleID.equals("1")){
-                            navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_beginner, args);
-                        }
-                        else {
-                            navController.navigate(R.id.action_nav_module_overview_to_nav_metaguiding_beginner, args);
-                        }
+                        navController.navigate(submoduleIDs[1], args);
                         break;
                     case 2:
                         args.putString("smID", "3");
                         args.putString("difficulty", "intermediate");
                         args.putString("wpm", "250");
-                        if (moduleID.equals("1")){
-                            navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_beginner, args);
-                        }
-                        else {
-                            navController.navigate(R.id.action_nav_module_overview_to_nav_metaguiding_beginner, args);
-                        }
+                        navController.navigate(submoduleIDs[1], args);
                         break;
                     case 3:
                         args.putString("smID", "4");
                         args.putString("difficulty", "advanced");
                         args.putString("wpm", "500");
-                        if (moduleID.equals("1")){
-                            navController.navigate(R.id.action_nav_module_overview_to_nav_rsvp_beginner, args);
-                        }
-                        else {
-                            navController.navigate(R.id.action_nav_module_overview_to_nav_metaguiding_beginner, args);
-                        }
+                        navController.navigate(submoduleIDs[1], args);
                         break;
                 }
+
             }
         });
 
         return root;
+    }
+
+    private int[] getSubmoduleIDs(String moduleID) {
+        switch(moduleID) {
+            case "1":
+                return new int[] {R.id.nav_rsvp_intro,
+                        R.id.nav_rsvp_module
+                };
+            case "2":
+                return new int[] {R.id.nav_metaguiding_intro,
+                        R.id.nav_metaguiding_module
+                };
+            case "3":
+                return new int[] {R.id.nav_clumpreading_intro,
+                        R.id.nav_clumpreading_module
+                };
+            default:
+//                return new int[] {R.id.nav_prereading_intro,
+//                        R.id.nav_prereading_module
+//                };
+                return null;
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

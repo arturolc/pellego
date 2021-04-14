@@ -51,6 +51,7 @@ public class QuizViewModel extends AndroidViewModel {
     }
 
     public String getQUID(String smid){
+        System.out.println("DEBUG: smid = " + smid); //smid for clump reader is 6 but should be 10
         String quid = null;
         switch(smid){
             case "2":
