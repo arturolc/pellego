@@ -32,4 +32,10 @@ public class ProgressResponse {
         this.wpm = wpm;
     }
 
+    @Override
+    public String toString() {
+        return "ProgressResponse{" +
+                "wpm=" + wpm +
+                '}';
+    }
 }

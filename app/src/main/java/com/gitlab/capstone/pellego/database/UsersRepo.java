@@ -10,11 +10,13 @@ import com.gitlab.capstone.pellego.network.APIService;
 import com.gitlab.capstone.pellego.network.RetroInstance;
 import com.gitlab.capstone.pellego.network.models.AuthToken;
 import com.gitlab.capstone.pellego.network.models.CompletionResponse;
+import com.gitlab.capstone.pellego.network.models.ProgressResponse;
 import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,10 +36,14 @@ public class UsersRepo {
     private final MutableLiveData<List<CompletionResponse>> completionResponse = new MutableLiveData<>();
     private final MutableLiveData<List<ProgressValuesResponse>> progressValuesResponse = new MutableLiveData<>();
     private final MutableLiveData<TotalWordsReadResponse> totalWordsReadResponse = new MutableLiveData<>();
+    private final MutableLiveData<ProgressResponse> progressResponse = new MutableLiveData<>();
 
     private  UsersRepo(Application application) {
         db = PellegoDatabase.getDatabase(application);
         apiService = RetroInstance.getRetroClient().create(APIService.class);
+
+        // check cached data
+
     }
 
     synchronized public static UsersRepo getInstance(Application app) {
@@ -139,5 +145,26 @@ public class UsersRepo {
         });
 
         return totalWordsReadResponse;
+    }
+
+    public LiveData<ProgressResponse> getProgress(long millis) {
+        Timestamp t = new java.sql.Timestamp(millis);
+        Call<ProgressResponse> call =
+                apiService.getProgressResponse(new AuthToken("Chris.Bordoy@gmail.com",
+                        t.toString()));
+        call.enqueue(new Callback<ProgressResponse>() {
+            @Override
+            public void onResponse(Call<ProgressResponse> call, Response<ProgressResponse> response) {
+                Log.d("ProgressResponse", response.body().toString());
+                progressResponse.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ProgressResponse> call, Throwable t) {
+                Log.e("ProgressReponse", t.toString());
+            }
+        });
+
+        return progressResponse;
     }
 }

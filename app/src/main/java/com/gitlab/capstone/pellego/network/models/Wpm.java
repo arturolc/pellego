@@ -78,4 +78,14 @@ public class Wpm {
         this.recorded = recorded;
     }
 
+    @Override
+    public String toString() {
+        return "Wpm{" +
+                "uwID=" + uwID +
+                ", uid=" + uid +
+                ", wordsRead=" + wordsRead +
+                ", wpm=" + wpm +
+                ", recorded='" + recorded + '\'' +
+                '}';
+    }
 }
