@@ -58,6 +58,9 @@ public interface APIService {
     @POST("users/progress_values")
     Call<List<ProgressValuesResponse>> getProgressValues(@Body AuthToken email);
 
+    @POST("users/progress")
+    Call<List<P>>
+
     @GET("library")
     Call<List<LibraryResponse>> getLibrary();
 
