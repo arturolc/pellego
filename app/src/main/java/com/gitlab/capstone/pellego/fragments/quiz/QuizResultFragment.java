@@ -112,7 +112,9 @@ public class QuizResultFragment extends BaseFragment {
             {
                 quizViewModel.clear();
                 moduleViewModel.clear();
-                navController.navigate(R.id.nav_learn);
+                navController.navigateUp();
+                navController.navigateUp();
+                navController.navigateUp();
                 return;
             }
         });
