@@ -22,6 +22,12 @@ public class QuizResponse {
     @Expose
     private List<Answer> answers = null;
 
+    public QuizResponse(Integer qUID, String question, List<Answer> answers) {
+        this.qUID = qUID;
+        this.question = question;
+        this.answers = answers;
+    }
+
     public Integer getQUID() {
         return qUID;
     }

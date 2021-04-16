@@ -13,6 +13,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -87,13 +90,13 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     public static Bitmap bitmap;
     public static final int RESULT_FILE = 1;
     public static final int RESULT_ADD_CATALOG = 2;
-
     Storage storage;
     OpenChoicer choicer;
     boolean isRunning;
     String lastSearch;
     LibraryFragment libraryFragment = LibraryFragment.newInstance();
     public boolean volumeEnabled = true; // tmp enabled / disable volume keys
+    Context context;
 
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -231,13 +234,12 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
             openIntent(getIntent());
         }
 
-
+        context = getApplicationContext();
 
         RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
         Window window = this.getWindow();
         TypedValue typedValue = new TypedValue();
 //        loadImageFromStorage();
-
     }
 
     @SuppressLint("RestrictedApi")
@@ -621,6 +623,8 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
 
             for (int i = 0; i < rr.size(); i++) {
                 final Storage.RecentInfo info = rr.get(i);
+
+
                 TextView p = (TextView) inflater.inflate(R.layout.recent_item, pages, false);
                 if (info.position != null)
                     p.setText(info.position.getParagraphIndex() + "." + info.position.getElementIndex());

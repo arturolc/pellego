@@ -27,7 +27,6 @@
                 android:layout_margin="10dp"
                 android:src="@drawable/ic_default_user_profile" />
 
-
         </RelativeLayout>
 
         <TextView
@@ -41,7 +40,6 @@
             android:textColor="@color/white"
             android:textSize="28sp" />
 
-
         <TextView
             android:id="@+id/tv_address"
             android:layout_width="wrap_content"
@@ -49,13 +47,11 @@
             android:layout_below="@+id/tv_name"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
-            android:text="5k words read"
             android:textAllCaps="true"
-            android:textColor="@color/white_transparent"
+            android:textColor="@color/white"
             android:textSize="12sp" />
 
     </RelativeLayout>
-
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -172,11 +168,12 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/total_books"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:textColor="?android:textColor"
-                    android:text="15"
+                    android:text="0"
                     android:textSize="18sp" />
 
                 <View

@@ -3,18 +3,19 @@ package com.gitlab.capstone.pellego.fragments.progress;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -29,14 +30,17 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**********************************************
     Chris Bordoy
 
     The Progress Component
  **********************************************/
+
 public class ProgressFragment extends BaseFragment {
 
     private View root;
@@ -46,7 +50,6 @@ public class ProgressFragment extends BaseFragment {
     private ArrayList<String> days;
     private ArrayList<String> months;
     private View header;
-    private static final int HIDE_THRESHOLD = 20;
     private int scrolledDistance = 0;
     private boolean controlsVisible = true;
 
@@ -54,15 +57,31 @@ public class ProgressFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         progressViewModel =
-                new ViewModelProvider(this).get(ProgressViewModel.class);
+                new ViewModelProvider(requireActivity()).get(ProgressViewModel.class);
         root = inflater.inflate(R.layout.fragment_progress, container, false);
                 final TextView textView = root.findViewById(R.id.text_progress);
         progressViewModel.getText().observe(getViewLifecycleOwner(),
                 s -> textView.setText(getString(R.string.title_progress_reports)));
+        ProgressBar pgsBar = (ProgressBar)getActivity().findViewById(R.id.progress_loader);
+        pgsBar.setVisibility(View.VISIBLE);
         super.setupHeader(root);
         header = getActivity().findViewById(R.id.header_circular);
         lastWeekBarChart = root.findViewById(R.id.last_week_barChart);
         lastYearLineChart = root.findViewById(R.id.last_year_lineChart);
+
+        progressViewModel.getProgressValues().observe(getViewLifecycleOwner(), new Observer<List<ProgressValuesResponse>>() {
+            @Override
+            public void onChanged(List<ProgressValuesResponse> progressValuesResponse) {
+                pgsBar.setVisibility(View.INVISIBLE);
+                loadProgressTextValues(progressValuesResponse);
+                populateDaysList();
+                populateMonthsList();
+                setupLastWeekBarChart();
+                loadLastWeekBarChart(progressValuesResponse);
+                setupLastYearLineChart();
+                loadLastYearLineChart(progressValuesResponse);
+            }
+        });
 
         ScrollView scrollView = root.findViewById(R.id.progress_scroll_view);
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
@@ -81,14 +100,6 @@ public class ProgressFragment extends BaseFragment {
             }
         });
 
-        loadProgressTextValues();
-        populateDaysList();
-        populateMonthsList();
-        setupLastWeekBarChart();
-        loadLastWeekBarChart();
-        setupLastYearLineChart();
-        loadLastYearLineChart();
-
         return root;
     }
 
@@ -100,21 +111,21 @@ public class ProgressFragment extends BaseFragment {
         header.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
     }
 
-    private void loadProgressTextValues() {
+    private void loadProgressTextValues(List<ProgressValuesResponse> resp) {
         TextView todayWordsReadTextview = root.findViewById(R.id.today_words_read_description);
         TextView todayWpmTextview = root.findViewById(R.id.today_wpm_description);
-        todayWordsReadTextview.setText(progressViewModel.getTodayValues()[0]);
-        todayWpmTextview.setText(progressViewModel.getTodayValues()[1]);
+        todayWordsReadTextview.setText(Integer.toString(resp.get(0).getWordsRead()));
+        todayWpmTextview.setText(Integer.toString(resp.get(0).getWpm()));
 
         TextView lastWeekWordsReadTextview = root.findViewById(R.id.last_week_words_read_description);
         TextView lastWeekWpmTextview = root.findViewById(R.id.last_week_wpm_description);
-        lastWeekWordsReadTextview.setText(progressViewModel.getLastWeekValues()[0]);
-        lastWeekWpmTextview.setText(progressViewModel.getLastWeekValues()[1]);
+        lastWeekWordsReadTextview.setText(Integer.toString(progressViewModel.getLastWeekValues(resp)[0]));
+        lastWeekWpmTextview.setText(Integer.toString(progressViewModel.getLastWeekValues(resp)[1]));
 
         TextView lastYearWordsReadTextview = root.findViewById(R.id.last_year_words_read_description);
         TextView lastYearWpmTextview = root.findViewById(R.id.last_year_wpm_description);
-        lastYearWordsReadTextview.setText(progressViewModel.getLastYearValues()[0]);
-        lastYearWpmTextview.setText(progressViewModel.getLastYearValues()[1]);
+        lastYearWordsReadTextview.setText(Integer.toString(progressViewModel.getLastYearValues(resp)[0]));
+        lastYearWpmTextview.setText(Integer.toString(progressViewModel.getLastYearValues(resp)[1]));
     }
 
     private void populateDaysList() {
@@ -137,13 +148,16 @@ public class ProgressFragment extends BaseFragment {
         lastWeekBarChart.setTouchEnabled(false);
     }
 
-    private void loadLastWeekBarChart() {
-        BarDataSet dataSet1 = new BarDataSet(progressViewModel.getMockLastWeekWordsReadData(), "");
+    private void loadLastWeekBarChart(List<ProgressValuesResponse> response) {
+        BarDataSet dataSet1 =
+                new BarDataSet(
+                        progressViewModel.
+                                getLastWeekWordsReadData(progressViewModel.getLastWeekWordsReadMapping(response)), "");
         dataSet1.setColor(getResources().getColor(R.color.green), 150);
         dataSet1.setValueTextColor(Color.WHITE);
         dataSet1.setValueTextSize(10);
 
-        BarDataSet dataSet2 = new BarDataSet(progressViewModel.getMockLastWeekWpmData(), "");
+        BarDataSet dataSet2 = new BarDataSet(progressViewModel.getLastWeekWpmData(progressViewModel.getLastWeekWpmMapping(response)), "");
         dataSet2.setColor(getResources().getColor(R.color.purple), 150);
         dataSet2.setValueTextColor(Color.WHITE);
         dataSet2.setValueTextSize(10);
@@ -173,8 +187,8 @@ public class ProgressFragment extends BaseFragment {
         lastYearLineChart.setTouchEnabled(false);
     }
 
-    private void loadLastYearLineChart() {
-        LineDataSet d1 = new LineDataSet(progressViewModel.getMockLastYearWordsReadData(),"");
+    private void loadLastYearLineChart(List<ProgressValuesResponse> response) {
+        LineDataSet d1 = new LineDataSet(progressViewModel.getLastYearWordsReadData(progressViewModel.getLastYearWordsReadMapping(response)),"");
         d1.setColor(getResources().getColor(R.color.green), 150);
         d1.setLineWidth(2.5f);
         d1.setCircleRadius(4f);
@@ -182,7 +196,7 @@ public class ProgressFragment extends BaseFragment {
         d1.setValueTextColor(Color.WHITE);
         d1.setValueTextSize(10);
 
-        LineDataSet d2 = new LineDataSet(progressViewModel.getMockLastYearWpmData(), "");
+        LineDataSet d2 = new LineDataSet(progressViewModel.getLastYearWpmData(progressViewModel.getLastYearWpmMapping(response)), "");
         d2.setColor(getResources().getColor(R.color.purple), 150);
         d2.setLineWidth(2.5f);
         d2.setCircleRadius(4f);

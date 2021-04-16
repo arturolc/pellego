@@ -35,7 +35,7 @@ public class App extends MainApplication {
         return resources;
     }
     public static int getTheme(Context context, int light, int dark) {
-        return MainApplication.getTheme(context, PREFERENCE_THEME, light, dark, context.getString(R.string.Theme_Dark));
+        return MainApplication.getTheme(context, PREFERENCE_THEME, dark, light, context.getString(R.string.Theme_Dark));
     }
 
     public static int getStringIdentifier(String name) {

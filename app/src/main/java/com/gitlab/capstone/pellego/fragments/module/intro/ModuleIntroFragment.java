@@ -2,6 +2,7 @@ package com.gitlab.capstone.pellego.fragments.module.intro;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,6 +40,8 @@ public class ModuleIntroFragment extends BaseFragment {
     private Button btn_register;
     private SharedPreferences sharedPref;
     private int totalPageCount;
+    private String mID;
+    private String submoduleID;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -47,17 +50,20 @@ public class ModuleIntroFragment extends BaseFragment {
         System.out.println("DEBUG: In the Module Intro Fragment OnCreate");
         List<SMResponse> submoduleResponses = getArguments()
                 .getParcelableArrayList("subModules");
-        String mid = getArguments().getString("moduleID");
+        mID = getArguments().getString("moduleID");
+        submoduleID = getArguments().getString("smID");
 
         moduleViewModel =
                 new ViewModelProvider(
                         requireActivity(),
                         new ModuleViewModelFactory(
                                 getActivity().getApplication(),
-                                mid)).
+                                mID)).
                         get(ModuleViewModel.class);
 
-        int[] colors = moduleViewModel.getModuleGradientColors(mid);
+        moduleViewModel.setSubModuleID(submoduleID);
+
+        int[] colors = moduleViewModel.getModuleGradientColors(mID);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(colors[1]);
         toolbar.setTitle(null);
@@ -87,14 +93,18 @@ public class ModuleIntroFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 if (position == totalPageCount - 1) {
-                    btn_register.setBackground(moduleViewModel.getGradient());
+                    GradientDrawable gradientDrawable = new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM, //set a gradient direction
+                            moduleViewModel.getModuleGradientColors()); //set the color of gradient
+                    gradientDrawable.setCornerRadius(20f);
+                    btn_register.setBackground(gradientDrawable);
                     btn_register.setVisibility(View.VISIBLE);
                     btn_register.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view){
                             NavController navController = Navigation.findNavController(getActivity(),
                                     R.id.nav_host_fragment);
-                            // TODO: update DB that intro was completed
+                            moduleViewModel.setSubModuleCompletion(mID, submoduleID);
                             // Store results in shared preference
                             sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
                             updateModuleProgress();
@@ -105,6 +115,8 @@ public class ModuleIntroFragment extends BaseFragment {
                             return;
                         }
                     });
+                } else {
+                    btn_register.setVisibility(View.INVISIBLE);
                 }
             }
         });

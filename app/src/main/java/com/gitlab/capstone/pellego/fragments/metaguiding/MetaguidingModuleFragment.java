@@ -50,6 +50,7 @@ import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiTh
 public class MetaguidingModuleFragment extends BaseFragment {
 
     private Integer wpm;
+    private int quizTextCount;
     public String difficulty;
     private static AsyncUpdateReaderText asyncUpdateReaderText;
     private TextView mtext;
@@ -66,6 +67,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        quizTextCount = getArguments().getInt("quizTextCount");
         wpm = Integer.parseInt(getArguments().getString("wpm"));
         difficulty = getArguments().getString("difficulty");
         submoduleID = getArguments().getString("smID");
@@ -129,6 +131,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
                 dialog.dismiss();
                 NavController navController = Navigation.findNavController(currentView, R.id.nav_host_fragment);
                 Bundle args = new Bundle();
+                args.putInt("quizTextCount", quizTextCount);
                 args.putString("difficulty", difficulty);
                 args.putString("wpm", String.valueOf(wpm));
                 args.putString("module", "metaguiding");
@@ -186,16 +189,20 @@ public class MetaguidingModuleFragment extends BaseFragment {
 
     public String getNextPage() {
         StringBuilder txt = new StringBuilder();
-        while(txt.length() < 900) {
-            txt.append(playerWidget.selectNext());
+        String result = playerWidget.selectNext();
+        while(txt.length() < 900 && !result.isEmpty()) {
+            txt.append(result);
+            result = playerWidget.selectNext();
         }
         return txt.toString();
     }
 
     public String getPrevPage() {
         StringBuilder txt = new StringBuilder();
-        while(txt.length() < 900) {
-            txt.append(playerWidget.selectPrev());
+        String result = playerWidget.selectPrev();
+        while(txt.length() < 900 && !result.isEmpty()) {
+            txt.append(result);
+            result = playerWidget.selectPrev();
         }
         return txt.toString();
     }
@@ -243,6 +250,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
     private class AsyncUpdateReaderText extends AsyncTask<Integer, String, Integer> {
 
         TextView mtext;
+        String currFragment;
         @Override
         protected void onPreExecute() {
             mtext = currentView.findViewById(R.id.mText);
@@ -251,13 +259,14 @@ public class MetaguidingModuleFragment extends BaseFragment {
         @Override
         protected Integer doInBackground(Integer... ints) {
             String pageTxt = content;
+            int wordCount = pageTxt.split("\\s+").length;
             Layout layout = mtext.getLayout();
             mtext.setText(Html.fromHtml(pageTxt));
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
             scroller.scrollTo(0, layout.getLineTop(layout.getLineForOffset(idx)));
             NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
             while (idx < pageTxt.length() - 9) {
-                String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
+                currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -285,6 +294,11 @@ public class MetaguidingModuleFragment extends BaseFragment {
                 } catch (InterruptedException e) {
                     cancel(true);
                     e.printStackTrace();
+                }
+            }
+            if (!pageTxt.isEmpty() && currFragment != null) {
+                if (currFragment.contains("ReaderFragment") && wordCount != 0 && PlayerWidget.wpm != 0) {
+                    playerWidget.setUserWordValues(wordCount, PlayerWidget.wpm);
                 }
             }
             return 0;

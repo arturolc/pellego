@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.gitlab.capstone.pellego.database.LearningModulesRepo;
+import com.gitlab.capstone.pellego.database.UsersRepo;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
 
@@ -22,7 +23,9 @@ import java.util.List;
 
 public class ModuleViewModel extends AndroidViewModel {
     private String moduleID;
-    private final LearningModulesRepo repo;
+    private String submoduleID;
+    private final LearningModulesRepo learningModulesRepo;
+    private final UsersRepo usersRepo;
     private LiveData<List<LMDescResponse>> lmDescResponse;
     private LiveData<List<SMResponse>> submoduleResponse;
     private String techniqueLabel;
@@ -34,7 +37,8 @@ public class ModuleViewModel extends AndroidViewModel {
 
     public ModuleViewModel(@NonNull Application application, String moduleID) {
         super(application);
-        this.repo = LearningModulesRepo.getInstance(application);
+        this.learningModulesRepo = LearningModulesRepo.getInstance(application);
+        this.usersRepo = UsersRepo.getInstance(application);
         this.moduleID = moduleID;
         showSubmodulePopupDialog = false;
         showPopupDialog = false;
@@ -44,15 +48,33 @@ public class ModuleViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<LMDescResponse>> getLMDescResponse(String mid) {
-        lmDescResponse = repo.getModuleDesc(mid);
+        lmDescResponse = learningModulesRepo.getModuleDesc(mid);
 
         return lmDescResponse;
     }
 
     public LiveData<List<SMResponse>> getSubmodulesResponse(String MID) {
-        submoduleResponse = repo.getSubmodules(MID);
+        submoduleResponse = learningModulesRepo.getSubmodules(MID);
 
         return submoduleResponse;
+    }
+
+    public void setSubModuleCompletion(String MID, String SMID) {
+        usersRepo.setSubmoduleCompletion(MID, SMID);
+    }
+
+    public void setUserWordValues(int wordsRead, int wpm) {
+        usersRepo.setUserWordValues(wordsRead, wpm);
+    }
+
+    public int getQuizTextCount(String quizText) {
+        if (quizText.isEmpty() || quizText == null) {
+            return 0;
+        }
+
+        String[] words = quizText.split("\\s+");
+
+        return words.length;
     }
 
     public String getModuleID(){
@@ -63,10 +85,13 @@ public class ModuleViewModel extends AndroidViewModel {
         moduleID = MID;
     }
 
+    public String getSubModuleID() { return submoduleID; }
+
+    public void setSubModuleID(String SMID) { submoduleID = SMID; }
+
     public void setShowPopupDialog(boolean showSubmodulePopupDialog) {
         this.showPopupDialog = showSubmodulePopupDialog;
     }
-
 
     public boolean isShowSubmodulePopupDialog() {
         return showSubmodulePopupDialog;
@@ -124,6 +149,33 @@ public class ModuleViewModel extends AndroidViewModel {
             case "4":
                 colors[0] = 0xFF37D5D6;
                 colors[1] = 0xFF9B6DFF;
+                break;
+            default:
+                break;
+        }
+
+        return colors;
+    }
+
+    public int[] getModuleGradientColors(){
+        int[] colors = new int[2];
+
+        switch(moduleID) {
+            case "1":
+                colors[0] = 0xFFF39f86;
+                colors[1] = 0xFFF9D976;
+                break;
+            case "2":
+                colors[0] = 0xFF01BAEF;
+                colors[1] = 0xFF20BF55;
+                break;
+            case "3":
+                colors[0] = 0xFF42378F;
+                colors[1] = 0xFFF53844;
+                break;
+            case "4":
+                colors[0] = 0xFF9B6DFF;
+                colors[1] = 0xFF37D5D6;
                 break;
             default:
                 break;

@@ -1,8 +1,11 @@
 package com.gitlab.capstone.pellego.fragments.quiz;
 
 import android.app.Application;
+import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -29,6 +32,7 @@ public class QuizViewModel extends AndroidViewModel {
     private LiveData<List<QuizResponse>> quizResponse;
     private MutableLiveData<String> mText;
     private String difficulty;
+    private int quizTextCount;
     public Integer question_no;
     private ArrayList<QuizQuestion> questions;
     public int score;
@@ -36,6 +40,7 @@ public class QuizViewModel extends AndroidViewModel {
     private Integer wpm;
     private String submoduleID;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public QuizViewModel(@NonNull Application application){
         super(application);
         this.repo = LearningModulesRepo.getInstance(application);
@@ -53,7 +58,9 @@ public class QuizViewModel extends AndroidViewModel {
     public String getQUID(String smid){
         System.out.println("DEBUG: smid = " + smid); //smid for clump reader is 6 but should be 10
         String quid = null;
+        Log.d("SMID: ", smid);
         switch(smid){
+               // RSVP
             case "2":
                 quid = "1";
                 break;
@@ -63,6 +70,7 @@ public class QuizViewModel extends AndroidViewModel {
             case "4":
                 quid = "9";
                 break;
+                // metaguiding
             case "6":
                 quid = "13";
                 break;
@@ -72,6 +80,26 @@ public class QuizViewModel extends AndroidViewModel {
             case "8":
                 quid = "21";
                 break;
+                // clump reading
+            case "10":
+                quid = "25";
+                break;
+            case "11":
+                quid = "29";
+                break;
+            case "12":
+                quid = "33";
+                break;
+                // prereading
+            case "14":
+                quid = "37";
+                break;
+            case "15":
+                quid = "40";
+                break;
+            case "16":
+                quid = "43";
+                break;
             default:
                 break;
         }
@@ -79,30 +107,17 @@ public class QuizViewModel extends AndroidViewModel {
         return quid;
     }
 
-    public String convertSmid(String moduleID, String submoduleID) {
-        String converted = "";
-        if (moduleID.equals("1")) {
-            converted = submoduleID;
-        }
-        else {
-            if (submoduleID.equals("2")) {
-                converted = "6";
-            }
-            else if (submoduleID.equals("3")){
-                converted = "7";
-            }
-            else if (submoduleID.equals("4")) {
-                converted = "8";
-            }
-        }
-
-        return converted;
-    }
     public void setDifficulty(String diff) {
         this.difficulty = diff;
     }
     public void setWPM(Integer wpm) {this.wpm = wpm;}
+
     public void setModule(String m) {this.module = m;}
+
+    public void setQuizTextCount(int count) {this.quizTextCount = count; }
+
+    public int getQuizTextCount() {return this.quizTextCount; }
+
     public String getModule() {return this.module;}
 
     public boolean isLastQuestion() {
@@ -176,7 +191,7 @@ public class QuizViewModel extends AndroidViewModel {
 
     public void populateQuestionBank(List<String> questions, List<List<Answer>> answers) {
         this.questions = new ArrayList<>();
-        for (int i = 0; i < 4; i ++) {
+        for (int i = 0; i < questions.size(); i ++) {
             Answer[] answersArray = answers.get(i).toArray(new Answer[0]);
             this.questions.add(new QuizQuestion(questions.get(i), new ArrayList<>(
                     Arrays.asList(answersArray[0],

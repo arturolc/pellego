@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gitlab.capstone.pellego.fragments.pellegolibrary.PellegoLibrary">
+    tools:context="com.gitlab.capstone.pellego.fragments.pellegolibrary.PellegoLibraryFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView

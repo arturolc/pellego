@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -15,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,7 +53,6 @@ public class ModuleOverviewFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         String moduleID = getArguments().getString("moduleID");
         moduleViewModel =
                 new ViewModelProvider(
@@ -63,6 +64,8 @@ public class ModuleOverviewFragment extends BaseFragment {
         moduleViewModel.setModuleID(moduleID);
 
         View root = inflater.inflate(R.layout.fragment_module_overview, container, false);
+        ProgressBar pgsBar = (ProgressBar)getActivity().findViewById(R.id.progress_loader);
+        pgsBar.setVisibility(View.VISIBLE);
         moduleList = root.findViewById(R.id.nav_module_list);
         moduleViewModel.setTechniqueLabel(moduleViewModel.getModuleID());
         moduleViewModel.setTechnique(moduleViewModel.getTechniqueLabel());
@@ -83,6 +86,7 @@ public class ModuleOverviewFragment extends BaseFragment {
         moduleViewModel.getSubmodulesResponse(moduleViewModel.getModuleID()).observe(getViewLifecycleOwner(), new Observer<List<SMResponse>>() {
             @Override
             public void onChanged(List<SMResponse> response1) {
+                pgsBar.setVisibility(View.INVISIBLE);
                 submoduleResponse = response1;
                 ModuleListAdapter adapter = new ModuleListAdapter(getContext(), response1, ModuleOverviewFragment.this);
                 moduleList.setAdapter(adapter);
@@ -98,9 +102,11 @@ public class ModuleOverviewFragment extends BaseFragment {
                 NavController navController = Navigation.findNavController(view);
                 Bundle args = new Bundle();
                 args.putString("moduleID", moduleID);
+                if (position != 0) {
+                    args.putInt("quizTextCount", moduleViewModel.getQuizTextCount(submoduleResponse.get(position).getText()));
+                }
                 args.putParcelableArrayList("subModules", (ArrayList<? extends Parcelable>) submoduleResponse);
                 moduleViewModel.setShowSubmodulePopupDialog(true);
-
                 int[] submoduleIDs = getSubmoduleIDs(moduleID);
                 switch(position) {
                     case 0:
@@ -108,51 +114,28 @@ public class ModuleOverviewFragment extends BaseFragment {
                         navController.navigate(submoduleIDs[0], args);
                         break;
                     case 1:
-                        args.putString("smID", "2");
+                        args.putString("smID", submoduleIDs[2]+ "");
                         args.putString("difficulty", "beginner");
                         args.putString("wpm", "120");
                         navController.navigate(submoduleIDs[1], args);
                         break;
                     case 2:
-                        args.putString("smID", "3");
+                        args.putString("smID", submoduleIDs[2] + 1 + "");
                         args.putString("difficulty", "intermediate");
                         args.putString("wpm", "250");
                         navController.navigate(submoduleIDs[1], args);
                         break;
                     case 3:
-                        args.putString("smID", "4");
+                        args.putString("smID", submoduleIDs[2] + 2 + "");
                         args.putString("difficulty", "advanced");
                         args.putString("wpm", "500");
                         navController.navigate(submoduleIDs[1], args);
                         break;
                 }
-
             }
         });
 
         return root;
-    }
-
-    private int[] getSubmoduleIDs(String moduleID) {
-        switch(moduleID) {
-            case "1":
-                return new int[] {R.id.nav_rsvp_intro,
-                        R.id.nav_rsvp_module
-                };
-            case "2":
-                return new int[] {R.id.nav_metaguiding_intro,
-                        R.id.nav_metaguiding_module
-                };
-            case "3":
-                return new int[] {R.id.nav_clumpreading_intro,
-                        R.id.nav_clumpreading_module
-                };
-            default:
-//                return new int[] {R.id.nav_prereading_intro,
-//                        R.id.nav_prereading_module
-//                };
-                return null;
-        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -165,7 +148,11 @@ public class ModuleOverviewFragment extends BaseFragment {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(colors[1]);
         ConstraintLayout header = root.findViewById(R.id.module_header_container);
-        header.setBackground(moduleViewModel.getGradient());
+        GradientDrawable gradientDrawable = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM, //set a gradient direction
+                moduleViewModel.getModuleGradientColors()); //set the color of gradient
+        gradientDrawable.setCornerRadii(new float[] {0, 0, 0, 0, 20, 20, 20, 20 });
+        header.setBackground(gradientDrawable);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -177,6 +164,27 @@ public class ModuleOverviewFragment extends BaseFragment {
         r.setColorFilter(moduleViewModel.getModuleGradientColors(moduleViewModel.getModuleID())[0],
                 PorterDuff.Mode.MULTIPLY);
         return r;
+    }
+
+    private int[] getSubmoduleIDs(String moduleID) {
+        switch(moduleID) {
+            case "1":
+                return new int[] {R.id.nav_rsvp_intro,
+                        R.id.nav_rsvp_module, 2
+                };
+            case "2":
+                return new int[] {R.id.nav_metaguiding_intro,
+                        R.id.nav_metaguiding_module, 6
+                };
+            case "3":
+                return new int[] {R.id.nav_clumpreading_intro,
+                        R.id.nav_clumpreading_module, 10
+                };
+            default:
+                return new int[] {R.id.nav_prereading_intro,
+                        R.id.nav_prereading_module, 14
+                };
+        }
     }
 
     private Drawable moduleGradientPicker(String moduleID) {

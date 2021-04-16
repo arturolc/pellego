@@ -1,8 +1,10 @@
 package com.gitlab.capstone.pellego.fragments.quiz;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -53,7 +56,8 @@ public class QuizFragment extends BaseFragment {
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
         View root = inflater.inflate(R.layout.fragment_quiz, container, false);
-
+        ProgressBar pgsBar = (ProgressBar)getActivity().findViewById(R.id.progress_loader);
+        pgsBar.setVisibility(View.VISIBLE);
         this.setupHeader(root, moduleViewModel.getModuleID());
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
@@ -71,10 +75,11 @@ public class QuizFragment extends BaseFragment {
         });
 
         // Set view model parameters
+        quizViewModel.setQuizTextCount(getArguments().getInt("quizTextCount"));
         quizViewModel.setDifficulty(getArguments().getString("difficulty"));
         quizViewModel.setWPM(Integer.parseInt(getArguments().getString("wpm")));
         quizViewModel.setModule(getArguments().getString("module"));
-        quizViewModel.setSMID(quizViewModel.convertSmid(moduleViewModel.getModuleID(), getArguments().getString("smID")));
+        quizViewModel.setSMID(getArguments().getString("smID"));
 
         quizViewModel.getQuizResponse(
                 moduleViewModel.getModuleID(),
@@ -82,6 +87,7 @@ public class QuizFragment extends BaseFragment {
                 quizViewModel.getQUID(quizViewModel.getSMID())).observe(getViewLifecycleOwner(), new Observer<List<QuizResponse>>() {
             @Override
             public void onChanged(List<QuizResponse> response1) {
+                pgsBar.setVisibility(View.INVISIBLE);
                 quizViewModel.getQuestions(response1);
                 quizViewModel.populateQuestionBank(quizViewModel.getQuestions(response1), quizViewModel.getAnswers(response1));
 
@@ -91,7 +97,7 @@ public class QuizFragment extends BaseFragment {
 
                 // Populate the Navigation Drawer with options
                 moduleList = root.findViewById(R.id.nav_question_list);
-                QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), mNavItems, moduleViewModel.getGradient());
+                QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), mNavItems, moduleViewModel.getModuleGradientColors());
                 moduleList.setAdapter(adapter);
 
                 // Drawer Item click listeners
@@ -101,6 +107,8 @@ public class QuizFragment extends BaseFragment {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         if (quizViewModel.isLastQuestion()) {
                             NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                            Bundle args = new Bundle();
+                            args.putInt("quizTextCount", getArguments().getInt("quizTextCount"));
                             navController.navigate(R.id.nav_quiz_results);
                         }
                         // TODO: update icons based on button click
@@ -120,7 +128,7 @@ public class QuizFragment extends BaseFragment {
                         mNavItems = quizViewModel.getNextAnswers();
                         // Populate the Navigation Drawer with options
                         moduleList = root.findViewById(R.id.nav_question_list);
-                        QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), mNavItems, moduleViewModel.getGradient());
+                        QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), mNavItems, moduleViewModel.getModuleGradientColors());
                         moduleList.setAdapter(adapter);
                     }
                 });
@@ -140,6 +148,10 @@ public class QuizFragment extends BaseFragment {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(colors[1]);
         LinearLayout header = root.findViewById(R.id.quiz_header_container);
-        header.setBackground(moduleViewModel.getGradient());
+        GradientDrawable gradientDrawable = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM, //set a gradient direction
+                moduleViewModel.getModuleGradientColors()); //set the color of gradient
+        gradientDrawable.setCornerRadii(new float[] {0, 0, 0, 0, 20, 20, 20, 20 });
+        header.setBackground(gradientDrawable);
     }
 }
