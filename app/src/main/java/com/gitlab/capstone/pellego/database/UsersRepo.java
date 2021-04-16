@@ -55,7 +55,8 @@ public class UsersRepo {
     private final MutableLiveData<List<CompletionResponse>> completionResponse = new MutableLiveData<>();
     private final MutableLiveData<List<ProgressValuesResponse>> progressValuesResponse = new MutableLiveData<>();
     private final MutableLiveData<TotalWordsReadResponse> totalWordsReadResponse = new MutableLiveData<>();
-    private final MutableLiveData<Users> user = new MutableLiveData<>();
+//    private final MutableLiveData<Users> user = new MutableLiveData<>();
+    private Users user;
     private boolean isNetworkConnected;
     private Application application;
 
@@ -70,7 +71,7 @@ public class UsersRepo {
         dao.getUser(u.getUsername()).observeForever(new Observer<Users>() {
             @Override
             public void onChanged(Users users) {
-                user.setValue(users);
+                user = users;
                 Log.d("UsersRepo", users.toString());
                 sync();
             }
@@ -87,20 +88,20 @@ public class UsersRepo {
 
     public LiveData<Users> getUser() {
         AuthUser u = Amplify.Auth.getCurrentUser();
-
+        MutableLiveData<Users> res = new MutableLiveData<>();
         dao.getUser(u.getUsername()).observeForever(new Observer<Users>() {
             @Override
             public void onChanged(Users users) {
-                user.setValue(users);
+                res.postValue(users);
                 Log.d("UsersRepo", users.toString());
             }
         });
 
-        return user;
+        return res;
     }
 
     public void setSubmoduleCompletion(String mID, String smID) {
-        Call<Void> call = apiService.setSubmoduleCompletion(new AuthToken(user.getValue().getEmail()), mID, smID);
+        Call<Void> call = apiService.setSubmoduleCompletion(new AuthToken(user.getEmail()), mID, smID);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, Response<Void> response) {
@@ -114,14 +115,14 @@ public class UsersRepo {
         });
 
         AsyncTask.execute(() -> {
-            dao.setProgressCompleted(new ProgressCompleted(0, user.getValue().getUID(),
+            dao.setProgressCompleted(new ProgressCompleted(0, user.getUID(),
                     Integer.parseInt(smID)));
         });
     }
 
     public void setUserWordValues(int wordsRead, int wpm) {
         Call<Void> call = apiService.setUserWordValues(
-                new AuthToken(user.getValue().getEmail()),
+                new AuthToken(user.getEmail()),
                 wordsRead,
                 wpm);
         call.enqueue(new Callback<Void>() {
@@ -137,7 +138,7 @@ public class UsersRepo {
         });
 
         AsyncTask.execute(() -> {
-            dao.setUserWordValues(new UserWordValues(0, user.getValue().getUID(),
+            dao.setUserWordValues(new UserWordValues(0, user.getUID(),
              wordsRead, wpm, new Date(System.currentTimeMillis())));
         });
 
@@ -146,7 +147,7 @@ public class UsersRepo {
     public LiveData<List<CompletionResponse>> getUserLearningModulesCompletionCount() {
         if (isNetworkConnected) {
             Call<List<CompletionResponse>> call =
-                    apiService.getUserLearningModulesCompletionCount(new AuthToken(user.getValue().getEmail()));
+                    apiService.getUserLearningModulesCompletionCount(new AuthToken(user.getEmail()));
             call.enqueue(new Callback<List<CompletionResponse>>() {
                 @Override
                 public void onResponse(@NotNull Call<List<CompletionResponse>> call, Response<List<CompletionResponse>> response) {
@@ -162,7 +163,7 @@ public class UsersRepo {
         }
         else {
             List<CompletionResponse> list = new ArrayList<>();
-            dao.getProgressCompleted(user.getValue().getUID()).observeForever(new Observer<List<ProgressCompleted>>() {
+            dao.getProgressCompleted(user.getUID()).observeForever(new Observer<List<ProgressCompleted>>() {
                 @Override
                 public void onChanged(List<ProgressCompleted> progressCompleteds) {
                     for (ProgressCompleted el:
@@ -179,7 +180,7 @@ public class UsersRepo {
     public LiveData<List<ProgressValuesResponse>> getProgressValues() {
         if(isNetworkConnected) {
             Call<List<ProgressValuesResponse>> call =
-                    apiService.getProgressValues(new AuthToken(user.getValue().getEmail()));
+                    apiService.getProgressValues(new AuthToken(user.getEmail()));
             call.enqueue(new Callback<List<ProgressValuesResponse>>() {
 
                 @Override
@@ -204,7 +205,7 @@ public class UsersRepo {
 
             c.add(Calendar.DATE, -7);
 
-            dao.getProgressLast7Days(user.getValue().getUID(),c.getTime()).observeForever(new Observer<List<UserWordValues>>() {
+            dao.getProgressLast7Days(user.getUID(),c.getTime()).observeForever(new Observer<List<UserWordValues>>() {
                 @Override
                 public void onChanged(List<UserWordValues> userWordValues) {
                     for (UserWordValues el:
@@ -218,7 +219,7 @@ public class UsersRepo {
             c.add(Calendar.DATE, 7);
             c.add(Calendar.MONTH, -12);
 
-            dao.getProgressLast12Months(user.getValue().getUID(), c.getTime()).observeForever(new Observer<List<UserWordValues>>() {
+            dao.getProgressLast12Months(user.getUID(), c.getTime()).observeForever(new Observer<List<UserWordValues>>() {
                 @Override
                 public void onChanged(List<UserWordValues> userWordValues) {
                     for (UserWordValues el:
@@ -238,7 +239,7 @@ public class UsersRepo {
     public LiveData<TotalWordsReadResponse> getTotalWordsRead() {
         if (isNetworkConnected) {
             Call<TotalWordsReadResponse> call =
-                    apiService.getTotalWordsRead(new AuthToken(user.getValue().getEmail()));
+                    apiService.getTotalWordsRead(new AuthToken(user.getEmail()));
             call.enqueue(new Callback<TotalWordsReadResponse>() {
 
                 @Override
@@ -255,7 +256,7 @@ public class UsersRepo {
             });
         }
         else {
-            dao.getTotalWordsRead(user.getValue().getUID()).observeForever(new Observer<Integer>() {
+            dao.getTotalWordsRead(user.getUID()).observeForever(new Observer<Integer>() {
                 @Override
                 public void onChanged(Integer integer) {
                     totalWordsReadResponse.postValue(new TotalWordsReadResponse(integer));
@@ -268,7 +269,7 @@ public class UsersRepo {
 
     public void sync() {
         Call<LastRecordedDate> call =
-                apiService.getLastRecordedDate(new AuthToken(user.getValue().getEmail())) ;
+                apiService.getLastRecordedDate(new AuthToken(user.getEmail())) ;
         call.enqueue(new Callback<LastRecordedDate>() {
             @Override
             public void onResponse(Call<LastRecordedDate> call, Response<LastRecordedDate> response) {
@@ -283,7 +284,7 @@ public class UsersRepo {
 
                         if (localDate.compareTo(networkDate) > 0) {
                             // local date occurs after networkDate
-                            dao.getUpdatedRecords(networkDate, user.getValue().getUID()).observeForever(new Observer<List<UserWordValues>>() {
+                            dao.getUpdatedRecords(networkDate, user.getUID()).observeForever(new Observer<List<UserWordValues>>() {
                                 @Override
                                 public void onChanged(List<UserWordValues> userWordValues) {
                                     Log.d("userWordValues", userWordValues.toString());
@@ -299,7 +300,7 @@ public class UsersRepo {
                         else if (localDate.compareTo(networkDate) < 0) {
                             // local date occurs before networkDate
                             Call<ProgressResponse> call =
-                                    apiService.getProgressResponse(new AuthToken(user.getValue().getEmail(),
+                                    apiService.getProgressResponse(new AuthToken(user.getEmail(),
                                             new Timestamp(localDate.getTime()).toString()));
                             call.enqueue(new Callback<ProgressResponse>() {
                                 @Override
@@ -308,7 +309,7 @@ public class UsersRepo {
 
                                     for (UserWordValues el:
                                          response.body().getValues()) {
-                                        el.setUID(user.getValue().getUID());
+                                        el.setUID(user.getUID());
                                         el.setUwID(0);
                                         AsyncTask.execute(() -> {
                                             dao.setUserWordValues(el);
