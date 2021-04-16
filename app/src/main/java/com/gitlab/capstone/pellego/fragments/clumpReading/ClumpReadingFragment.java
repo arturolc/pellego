@@ -50,15 +50,12 @@ public class ClumpReadingFragment extends BaseFragment {
     private String content = "";
     private ModuleViewModel moduleViewModel;
     private FragmentActivity currentView;
-    private PlayerWidget playerWidget;
     private List<SMResponse> submoduleResponses;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //get submoduleID
-        //set difficulty
 
         wpm = Integer.parseInt(getArguments().getString("wpm"));
         difficulty = getArguments().getString("difficulty");
@@ -152,8 +149,6 @@ public class ClumpReadingFragment extends BaseFragment {
     }
 
 
-    //private int wordCount = 0;
-    //int prevWPM = 0;
     /**
      * Asynchronously updates the text in the Clump Reading fragment at the provided WPM rate
      */
@@ -174,7 +169,7 @@ public class ClumpReadingFragment extends BaseFragment {
             for(i = 0; i < words.length -5; i+= 5) {
                 String word = getClump(words, i);
 
-                // Verify that user has not navigated away from the RSVP fragment
+                // Verify that user has not navigated away from the ClumpReading fragment
                 NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
                 String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
                 if (!currFragment.contains("ClumpReadingFragment")) {
@@ -204,7 +199,7 @@ public class ClumpReadingFragment extends BaseFragment {
         }
 
         /**
-         * Gets the next 5 words
+         * Gets the next 5 words in the array and concatenate them together
          * @param words
          * @param i
          * @return the string clump
