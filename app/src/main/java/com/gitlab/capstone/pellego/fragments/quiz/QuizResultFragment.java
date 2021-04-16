@@ -61,7 +61,7 @@ public class QuizResultFragment extends BaseFragment {
             }
         });
 
-        // TODO: POST quiz result data to DB
+        // POST quiz result data to DB
         if (quizViewModel.getQuizTextCount() != 0){
             moduleViewModel.setUserWordValues(quizViewModel.getQuizTextCount(), quizViewModel.getWPM());
         }
