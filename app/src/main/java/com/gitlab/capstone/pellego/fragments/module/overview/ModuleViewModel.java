@@ -117,7 +117,7 @@ public class ModuleViewModel extends AndroidViewModel {
                 techniqueLabel = "metaguiding";
                 break;
             case "3":
-                techniqueLabel="ClumpReading";
+                techniqueLabel="clumpreading";
                 break;
             case"4":
                 techniqueLabel="prereading";

@@ -139,7 +139,7 @@ public class ClumpReadingFragment extends BaseFragment {
                 //args.putInt("quizTextCount", quizTextCount);
                 args.putString("difficulty", difficulty);
                 args.putString("wpm", String.valueOf(wpm));
-                args.putString("module", "ClumpReading");
+                args.putString("module", "clumpreading");
                 args.putString("smID", submoduleID);
                 navController.navigate(R.id.nav_quiz, args);
             }
