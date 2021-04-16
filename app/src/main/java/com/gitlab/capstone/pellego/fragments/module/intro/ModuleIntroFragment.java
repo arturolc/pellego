@@ -46,8 +46,6 @@ public class ModuleIntroFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        System.out.println("DEBUG: In the Module Intro Fragment OnCreate");
         List<SMResponse> submoduleResponses = getArguments()
                 .getParcelableArrayList("subModules");
         mID = getArguments().getString("moduleID");
