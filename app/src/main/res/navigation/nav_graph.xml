@@ -165,8 +165,8 @@
 
     <fragment
         android:id="@+id/nav_clumpreading_module"
-        android:name="com.gitlab.capstone.pellego.fragments.prereading.PreReadingFragment"
-        tools:layout="@layout/fragment_pre_reading" />
+        android:name="com.gitlab.capstone.pellego.fragments.clumpReading.ClumpReadingFragment"
+        tools:layout="@layout/fragment_clump_reading" />
 
     <fragment
         android:id="@+id/nav_quiz"

@@ -570,7 +570,8 @@ public class PlayerWidget {
                     togglePlay(playButton);
                     metaguidingModuleFragment.play();
                     break;
-                default:
+
+                    default:
                     Toast.makeText(activity, "Select a technique to start speed reading",
                             Toast.LENGTH_SHORT).show();
                     break;
