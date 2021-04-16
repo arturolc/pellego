@@ -1,17 +1,22 @@
 # Application
 
-Pellego android development
+Pellego Android 
 
-## Testing
+## Building the App
 
-### Unit Tests
+Unzip and open the project with Android Studio. Click Build -> Make Project. 
 
-Unit tests are located in the Pellego/app/src/test/java/com/example/pellego/ui/quiz folder by default. Unit tests are run in the CI/CD testing pipeline.
+## Installing an emulator
 
-### Emulated Instrumentation Tests
+In Android Studio go to Tools -> AVD Manager \
+Click on "Create Virtual Device" \
+Follow the prompts to select the phone you want to run the app on. \
+Select Android R as the system image
+Click "Finish"  
 
-Espresso instrumented tests are located in the Pellego/app/src/androidTest/java/com/example/pellego folder. Instrumented tests require an emulator and should be ran locally before pushing up for a merge request to make sure there were no breaking changes. If your MR requires changes to the UI, you may need to update/re-record a test to reflect the changes. 
+## Runing the app
 
-To run instrumented tests, right click on the test folder and click run all. 
-
-To record new espresso instrumented test in Android Studio go to Run->Record Espresso Test.
+Make sure your emulator device name is displayed in the top menu bar. \
+Click Run -> Run 'app' \
+Android studio will start your AVD and initiate a gradle build. \
+After a few moments, the app should install and launch on your emulator.
