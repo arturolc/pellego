@@ -1,9 +1,15 @@
 package com.gitlab.capstone.pellego.database;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkRequest;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -26,7 +32,6 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-import java.util.Observable;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,24 +51,26 @@ public class UsersRepo {
     private final MutableLiveData<List<CompletionResponse>> completionResponse = new MutableLiveData<>();
     private final MutableLiveData<List<ProgressValuesResponse>> progressValuesResponse = new MutableLiveData<>();
     private final MutableLiveData<TotalWordsReadResponse> totalWordsReadResponse = new MutableLiveData<>();
-    private final MutableLiveData<ProgressResponse> progressResponse = new MutableLiveData<>();
     private final MutableLiveData<Users> user = new MutableLiveData<>();
+    private boolean isNetworkConnected;
+    private Application application;
 
     private  UsersRepo(Application application) {
+        this.application = application;
         db = PellegoDatabase.getDatabase(application);
         dao = db.userDao();
         apiService = RetroInstance.getRetroClient().create(APIService.class);
         String email = Amplify.Auth.getCurrentUser().getUsername();
-        user.setValue(dao.getUser(email).getValue());
 
         dao.getUser(email).observeForever(new Observer<Users>() {
             @Override
             public void onChanged(Users users) {
                 user.setValue(users);
                 Log.d("UsersRepo", user.getValue().toString());
+                sync();
             }
         });
-        sync();
+
     }
 
     synchronized public static UsersRepo getInstance(Application app) {
@@ -74,7 +81,7 @@ public class UsersRepo {
     }
 
     public void setSubmoduleCompletion(String mID, String smID) {
-        Call<Void> call = apiService.setSubmoduleCompletion(new AuthToken("Chris.Bordoy@gmail.com"), mID, smID);
+        Call<Void> call = apiService.setSubmoduleCompletion(new AuthToken(user.getValue().getEmail()), mID, smID);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, Response<Void> response) {
@@ -90,7 +97,7 @@ public class UsersRepo {
 
     public void setUserWordValues(int wordsRead, int wpm) {
         Call<Void> call = apiService.setUserWordValues(
-                new AuthToken("arturolc_97@hotmail.com"),
+                new AuthToken(user.getValue().getEmail()),
                 wordsRead,
                 wpm);
         call.enqueue(new Callback<Void>() {
@@ -108,7 +115,7 @@ public class UsersRepo {
 
     public LiveData<List<CompletionResponse>> getUserLearningModulesCompletionCount() {
         Call<List<CompletionResponse>> call =
-                apiService.getUserLearningModulesCompletionCount(new AuthToken("Chris.Bordoy@gmail.com"));
+                apiService.getUserLearningModulesCompletionCount(new AuthToken(user.getValue().getEmail()));
         call.enqueue(new Callback<List<CompletionResponse>>() {
             @Override
             public void onResponse(@NotNull Call<List<CompletionResponse>> call, Response<List<CompletionResponse>> response) {
@@ -127,7 +134,7 @@ public class UsersRepo {
 
     public LiveData<List<ProgressValuesResponse>> getProgressValues() {
         Call<List<ProgressValuesResponse>> call =
-                apiService.getProgressValues(new AuthToken("Chris.Bordoy@gmail.com"));
+                apiService.getProgressValues(new AuthToken(user.getValue().getEmail()));
         call.enqueue(new Callback<List<ProgressValuesResponse>>() {
 
             @Override
@@ -148,7 +155,7 @@ public class UsersRepo {
 
     public LiveData<TotalWordsReadResponse> getTotalWordsRead() {
         Call<TotalWordsReadResponse> call =
-                apiService.getTotalWordsRead(new AuthToken("Chris.Bordoy@gmail.com"));
+                apiService.getTotalWordsRead(new AuthToken(user.getValue().getEmail()));
         call.enqueue(new Callback<TotalWordsReadResponse>() {
 
             @Override
@@ -167,16 +174,9 @@ public class UsersRepo {
         return totalWordsReadResponse;
     }
 
-    public LiveData<ProgressResponse> getProgress(long millis) {
-
-
-        return progressResponse;
-    }
-
-
     public void sync() {
         Call<LastRecordedDate> call =
-                apiService.getLastRecordedDate(new AuthToken("arturolc_97@hotmail.com")) ;
+                apiService.getLastRecordedDate(new AuthToken(user.getValue().getEmail())) ;
         call.enqueue(new Callback<LastRecordedDate>() {
             @Override
             public void onResponse(Call<LastRecordedDate> call, Response<LastRecordedDate> response) {
@@ -207,7 +207,7 @@ public class UsersRepo {
                         else if (localDate.compareTo(networkDate) < 0) {
                             // local date occurs before networkDate
                             Call<ProgressResponse> call =
-                                    apiService.getProgressResponse(new AuthToken("arturolc_97@hotmail.com",
+                                    apiService.getProgressResponse(new AuthToken(user.getValue().getEmail(),
                                             new Timestamp(localDate.getTime()).toString()));
                             call.enqueue(new Callback<ProgressResponse>() {
                                 @Override
@@ -244,5 +244,32 @@ public class UsersRepo {
                 Log.e("SYNC", t.toString());
             }
         });
+    }
+
+    // Network Check
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void registerNetworkCallback()
+    {
+        try {
+            ConnectivityManager connectivityManager = (ConnectivityManager) application.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkRequest.Builder builder = new NetworkRequest.Builder();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {
+                   @Override
+                   public void onAvailable(Network network) {
+                       isNetworkConnected = true;
+                       sync();
+                   }
+                   @Override
+                   public void onLost(Network network) {
+                       isNetworkConnected = false;
+                   }
+                });
+            }
+            isNetworkConnected = false;
+        }catch (Exception e){
+            isNetworkConnected = false;
+        }
     }
 }
