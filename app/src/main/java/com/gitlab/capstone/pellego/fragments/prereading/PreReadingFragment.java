@@ -11,9 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,10 +24,8 @@ import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
-import com.gitlab.capstone.pellego.fragments.metaguiding.MetaguidingModuleFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
-import com.gitlab.capstone.pellego.widgets.PlayerWidget;
 
 import java.util.List;
 
@@ -40,7 +36,6 @@ public class PreReadingFragment extends BaseFragment {
     private TextView mtext;
     private String content = "";
     private ModuleViewModel moduleViewModel;
-    private int idx = 0;
     private FragmentActivity currentView;
     public String submoduleID;
     private Button btnNext;
@@ -49,7 +44,7 @@ public class PreReadingFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         quizTextCount = getArguments().getInt("quizTextCount");
-        wpm = Integer.parseInt(getArguments().getString("wpm"));
+        wpm = 0;
         difficulty = getArguments().getString("difficulty");
         submoduleID = getArguments().getString("smID");
         List<SMResponse> submoduleResponses = getArguments().getParcelableArrayList("subModules");

@@ -44,7 +44,7 @@ import java.util.List;
 public class RsvpModuleFragment extends BaseFragment {
 
     private Integer wpm;
-    private int quizTextCount;
+    private Integer quizTextCount;
     public String difficulty;
     public String submoduleID;
     private AsyncUpdateText asyncUpdateText;
@@ -217,7 +217,9 @@ public class RsvpModuleFragment extends BaseFragment {
                             playerWidget.progressChanged = false;
                         }
                     }
-
+                    if (currFragment.contains("RsvpModuleFragment")) {
+                        PlayerWidget.wpm = wpm;
+                    }
                     if (!word.isEmpty()) {
                         wordCount++;
                         rsvp_text.setText(word);

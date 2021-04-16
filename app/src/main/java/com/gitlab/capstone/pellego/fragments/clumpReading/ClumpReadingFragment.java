@@ -1,7 +1,6 @@
 package com.gitlab.capstone.pellego.fragments.clumpReading;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -44,6 +43,7 @@ public class ClumpReadingFragment extends BaseFragment {
 
     private View root;
     private Integer wpm;
+    private Integer quizTextCount;
     public String difficulty;
     public String submoduleID;
     private static ClumpReadingFragment.AsyncUpdateText asyncUpdateText;
@@ -57,7 +57,11 @@ public class ClumpReadingFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+        quizTextCount = getArguments().getInt("quizTextCount");
         wpm = Integer.parseInt(getArguments().getString("wpm"));
+        if (wpm == 500) {
+            wpm = 350;
+        }
         difficulty = getArguments().getString("difficulty");
         submoduleID = getArguments().getString("smID");
         submoduleResponses = getArguments().getParcelableArrayList("subModules");
@@ -136,7 +140,7 @@ public class ClumpReadingFragment extends BaseFragment {
                 dialog.dismiss();
                 NavController navController = Navigation.findNavController(currentView, R.id.nav_host_fragment);
                 Bundle args = new Bundle();
-                //args.putInt("quizTextCount", quizTextCount);
+                args.putInt("quizTextCount", quizTextCount);
                 args.putString("difficulty", difficulty);
                 args.putString("wpm", String.valueOf(wpm));
                 args.putString("module", "clumpreading");
@@ -176,12 +180,15 @@ public class ClumpReadingFragment extends BaseFragment {
                     cancel(true);
                     return 0;
                 }
+                if (currFragment.contains("ClumpReadingFragment")) {
+                    PlayerWidget.wpm = wpm;
+                }
                 if (!word.isEmpty()) {
                     clump_text.setText(word);
                 }
 
                 try {
-                    Thread.sleep((long) ((60.0 / ((float) PlayerWidget.wpm) / .25) * 1000));
+                    Thread.sleep((long) ((60.0 / ((float) PlayerWidget.wpm) * 1000)));
                 } catch (Exception e) {
                     cancel(true);
                     e.printStackTrace();

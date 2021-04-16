@@ -69,6 +69,9 @@ public class MetaguidingModuleFragment extends BaseFragment {
                              ViewGroup container, Bundle savedInstanceState) {
         quizTextCount = getArguments().getInt("quizTextCount");
         wpm = Integer.parseInt(getArguments().getString("wpm"));
+        if (wpm == 500) {
+            wpm = 400;
+        }
         difficulty = getArguments().getString("difficulty");
         submoduleID = getArguments().getString("smID");
         List<SMResponse> submoduleResponses = getArguments().getParcelableArrayList("subModules");
@@ -287,6 +290,9 @@ public class MetaguidingModuleFragment extends BaseFragment {
                 if (!currFragment.contains("MetaguidingModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing) || idx > pageTxt.length()) {
                     cancel(true);
                     return 0;
+                }
+                if (currFragment.contains("MetaguidingModuleFragment")) {
+                    PlayerWidget.wpm = wpm;
                 }
                 try {
                     Thread.sleep((long) (((60.0 / (float) PlayerWidget.wpm) * 90)));
