@@ -411,32 +411,9 @@ dangerous behavior</item>
     <string name="title_today">Today</string>
     <string name="title_last_week">Last Week</string>
     <string name="title_last_year">Last Year</string>
-    <string-array name="days_abbr">
-        <item>Sun</item>
-        <item>Mon</item>
-        <item>Tue</item>
-        <item>Wed</item>
-        <item>Thu</item>
-        <item>Fri</item>
-        <item>Sat</item>
-    </string-array>
-    <string-array name="months_abbr">
-        <item>Jan</item>
-        <item>Feb</item>
-        <item>Mar</item>
-        <item>Apr</item>
-        <item>May</item>
-        <item>Jun</item>
-        <item>Jul</item>
-        <item>Aug</item>
-        <item>Sep</item>
-        <item>Oct</item>
-        <item>Nov</item>
-        <item>Dec</item>
-    </string-array>
 
     <string name="quiz_try_again">TRY AGAIN</string>
-    <string name="quiz_return">RETURN TO LEARNING MODULES</string>
+    <string name="quiz_return">RETURN TO LEARNING MODULE</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
