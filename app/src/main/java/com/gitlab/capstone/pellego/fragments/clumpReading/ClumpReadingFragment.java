@@ -43,14 +43,14 @@ import java.util.List;
 public class ClumpReadingFragment extends BaseFragment {
 
     private View root;
-    private Integer wpm; //not sure we need
+    private Integer wpm;
     public String difficulty;
     public String submoduleID;
     private static ClumpReadingFragment.AsyncUpdateText asyncUpdateText;
     private String content = "";
     private ModuleViewModel moduleViewModel;
     private FragmentActivity currentView;
-    private PlayerWidget playerWidget; //I think we need this
+    private PlayerWidget playerWidget;
     private List<SMResponse> submoduleResponses;
 
 
@@ -177,13 +177,16 @@ public class ClumpReadingFragment extends BaseFragment {
                 // Verify that user has not navigated away from the RSVP fragment
                 NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
                 String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
-
+                if (!currFragment.contains("ClumpReadingFragment")) {
+                    cancel(true);
+                    return 0;
+                }
                 if (!word.isEmpty()) {
                     clump_text.setText(word);
                 }
 
                 try {
-                    Thread.sleep((long) ((60.0 / ((float) PlayerWidget.wpm) / .95) * 1000));
+                    Thread.sleep((long) ((60.0 / ((float) PlayerWidget.wpm) / .25) * 1000));
                 } catch (Exception e) {
                     cancel(true);
                     e.printStackTrace();
