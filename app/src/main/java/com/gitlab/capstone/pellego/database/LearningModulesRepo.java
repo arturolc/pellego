@@ -280,15 +280,15 @@ public class LearningModulesRepo {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback(){
-                                                                       @Override
-                                                                       public void onAvailable(Network network) {
-                                                                           isNetworkConnected = true;
-                                                                       }
-                                                                       @Override
-                                                                       public void onLost(Network network) {
-                                                                           isNetworkConnected = false;
-                                                                       }
-                                                                   }
+                   @Override
+                   public void onAvailable(Network network) {
+                       isNetworkConnected = true;
+                   }
+                   @Override
+                   public void onLost(Network network) {
+                       isNetworkConnected = false;
+                   }
+               }
 
                 );
             }

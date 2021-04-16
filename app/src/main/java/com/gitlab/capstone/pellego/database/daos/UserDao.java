@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.gitlab.capstone.pellego.database.entities.ProgressCompleted;
 import com.gitlab.capstone.pellego.database.entities.UserWordValues;
 import com.gitlab.capstone.pellego.database.entities.Users;
 
@@ -20,8 +21,14 @@ public interface UserDao {
     @Insert
     void setUserWordValues(UserWordValues... values);
 
+    @Insert
+    void setProgressCompleted(ProgressCompleted... pc);
+
     @Query("select * from Users where Email= :email")
     LiveData<Users> getUser(String email);
+
+    @Query("select count(*) from Users where Email = :email")
+    LiveData<Boolean> userExists(String email);
 
     @Query("select Recorded from User_Word_Values where uID = :uID order by Recorded desc limit 1")
     LiveData<Date> getLastRecordedDate(int uID);
@@ -29,4 +36,6 @@ public interface UserDao {
     @Query("select * from User_Word_Values where Recorded > :date and uID = :uID order by Recorded asc")
     LiveData<List<UserWordValues>> getUpdatedRecords(Date date, int uID);
 
+    @Query("select * from ProgressCompleted where UID = :userID")
+    LiveData<List<ProgressCompleted>> getProgressCompleted(int userID);
 }

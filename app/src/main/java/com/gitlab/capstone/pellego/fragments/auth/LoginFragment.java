@@ -21,6 +21,9 @@ import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amplifyframework.core.Amplify;
 import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.database.PellegoDatabase;
+import com.gitlab.capstone.pellego.database.daos.UserDao;
+import com.gitlab.capstone.pellego.database.entities.Users;
 
 /**********************************************
  Arturo Lara
@@ -82,6 +85,26 @@ public class LoginFragment extends Fragment {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+
+                            Amplify.Auth.fetchUserAttributes(s ->  {
+                                String name = "";
+                                String email = "";
+
+                                for(int i = 0; i < s.size(); i++) {
+                                    if (s.get(i).getKey().getKeyString().equals("name")) {
+                                        name = s.get(i).getValue();
+                                    }
+                                    else if (s.get(i).getKey().getKeyString().equals("email")) {
+                                        email = s.get(i).getValue();
+                                    }
+                                }
+                                PellegoDatabase db = PellegoDatabase.getDatabase(getActivity().getApplication());
+                                UserDao dao = db.userDao();
+                                dao.addUser(new Users(0, name, email));
+                            }, fail ->  {
+                                Log.i("user", fail.toString());
+                            });
+
                             Intent i = new Intent(getActivity(), MainActivity.class);
                             startActivity(i);
                             getActivity().finish();

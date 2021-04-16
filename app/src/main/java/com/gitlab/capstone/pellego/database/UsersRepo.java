@@ -14,8 +14,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.gitlab.capstone.pellego.database.daos.UserDao;
+import com.gitlab.capstone.pellego.database.entities.ProgressCompleted;
 import com.gitlab.capstone.pellego.database.entities.UserWordValues;
 import com.gitlab.capstone.pellego.database.entities.Users;
 import com.gitlab.capstone.pellego.network.APIService;
@@ -55,29 +57,44 @@ public class UsersRepo {
     private boolean isNetworkConnected;
     private Application application;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private  UsersRepo(Application application) {
         this.application = application;
         db = PellegoDatabase.getDatabase(application);
         dao = db.userDao();
         apiService = RetroInstance.getRetroClient().create(APIService.class);
-        String email = Amplify.Auth.getCurrentUser().getUsername();
+        AuthUser u = Amplify.Auth.getCurrentUser();
 
-        dao.getUser(email).observeForever(new Observer<Users>() {
+        dao.getUser(u.getUsername()).observeForever(new Observer<Users>() {
             @Override
             public void onChanged(Users users) {
                 user.setValue(users);
-                Log.d("UsersRepo", user.getValue().toString());
+                Log.d("UsersRepo", users.toString());
                 sync();
             }
         });
-
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     synchronized public static UsersRepo getInstance(Application app) {
         if (INSTANCE == null) {
             INSTANCE = new UsersRepo(app);
         }
         return INSTANCE;
+    }
+
+    public LiveData<Users> getUser() {
+        AuthUser u = Amplify.Auth.getCurrentUser();
+
+        dao.getUser(u.getUsername()).observeForever(new Observer<Users>() {
+            @Override
+            public void onChanged(Users users) {
+                user.setValue(users);
+                Log.d("UsersRepo", users.toString());
+            }
+        });
+
+        return user;
     }
 
     public void setSubmoduleCompletion(String mID, String smID) {
@@ -92,6 +109,11 @@ public class UsersRepo {
             public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
                 Log.e("RETROFIT", t.toString());
             }
+        });
+
+        AsyncTask.execute(() -> {
+            dao.setProgressCompleted(new ProgressCompleted(0, user.getValue().getUID(),
+                    Integer.parseInt(smID)));
         });
     }
 
@@ -111,6 +133,12 @@ public class UsersRepo {
                 Log.e("RETROFIT", t.toString());
             }
         });
+
+        AsyncTask.execute(() -> {
+            dao.setUserWordValues(new UserWordValues(0, user.getValue().getUID(),
+             wordsRead, wpm, new Date(System.currentTimeMillis())));
+        });
+
     }
 
     public LiveData<List<CompletionResponse>> getUserLearningModulesCompletionCount() {

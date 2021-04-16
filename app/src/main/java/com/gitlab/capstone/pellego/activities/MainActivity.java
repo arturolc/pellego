@@ -62,6 +62,7 @@ import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 import com.gitlab.capstone.pellego.fragments.profile.ProfileFragment;
+import com.gitlab.capstone.pellego.fragments.profile.ProfileModel;
 import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
 import com.google.android.material.internal.NavigationMenuItemView;
@@ -227,6 +228,9 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ProfileModel profile = ProfileModel.getInstance(getApplication());
+
         storage = new Storage(this);
         registerReceiver(receiver, new IntentFilter(FBReaderView.ACTION_MENU));
         if (savedInstanceState == null && getIntent().getParcelableExtra(SAVE_INSTANCE_STATE) == null) {
