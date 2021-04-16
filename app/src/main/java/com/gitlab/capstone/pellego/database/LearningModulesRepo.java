@@ -13,6 +13,7 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.amazonaws.mobileconnectors.cognitoauth.Auth;
 import com.amplifyframework.core.Amplify;
@@ -22,6 +23,7 @@ import com.gitlab.capstone.pellego.database.entities.LM_Intro;
 import com.gitlab.capstone.pellego.database.entities.LM_Module;
 import com.gitlab.capstone.pellego.database.entities.LM_Submodule;
 import com.gitlab.capstone.pellego.database.entities.Questions;
+import com.gitlab.capstone.pellego.database.entities.Users;
 import com.gitlab.capstone.pellego.network.APIService;
 import com.gitlab.capstone.pellego.network.RetroInstance;
 import com.gitlab.capstone.pellego.network.models.AllContentsResponse;
@@ -58,6 +60,7 @@ public class LearningModulesRepo {
     private final MutableLiveData<List<LMDescResponse>> lmDescResponse = new MutableLiveData<>();
     private final MutableLiveData<List<SMResponse>> smResponse = new MutableLiveData<>();
     private final MutableLiveData<List<QuizResponse>> quizResponse = new MutableLiveData<>();
+    private Users user;
     private static LearningModulesRepo INSTANCE;
     private final Application application;
     private boolean isNetworkConnected;
@@ -68,6 +71,13 @@ public class LearningModulesRepo {
         db = PellegoDatabase.getDatabase(application);
         dao = db.learningModulesDao();
         apiService = RetroInstance.getRetroClient().create(APIService.class);
+        UsersRepo  u = UsersRepo.getInstance(application);
+        u.getUser().observeForever(new Observer<Users>() {
+            @Override
+            public void onChanged(Users users) {
+                user = users;
+            }
+        });
         registerNetworkCallback();
         Log.d("auth", Amplify.Auth.getCurrentUser().toString());
 
@@ -93,7 +103,7 @@ public class LearningModulesRepo {
     public LiveData<List<LMResponse>> getModules() {
         Log.d("LMRepo", isNetworkConnected + "");
         if (isNetworkConnected) {
-            Call<List<LMResponse>> call = apiService.getModules(new AuthToken("Chris.Bordoy@gmail.com"));
+            Call<List<LMResponse>> call = apiService.getModules(new AuthToken(user.getEmail()));
             call.enqueue(new Callback<List<LMResponse>>() {
                 @Override
                 public void onResponse(@NotNull Call<List<LMResponse>> call, @NotNull Response<List<LMResponse>> response) {
@@ -232,7 +242,7 @@ public class LearningModulesRepo {
     }
 
     public void cacheModules() {
-        Call<AllContentsResponse> call = apiService.getAllContentsModules(new AuthToken("Chris.Bordoy@gmail.com", "2021-01-01"));
+        Call<AllContentsResponse> call = apiService.getAllContentsModules(new AuthToken(user.getEmail(), "2021-01-01"));
         call.enqueue(new Callback<AllContentsResponse>() {
 
             @Override
