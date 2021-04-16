@@ -10,10 +10,15 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
@@ -21,8 +26,11 @@ import com.gitlab.capstone.pellego.app.Storage;
 import com.github.axet.androidlibrary.activities.AppCompatSettingsThemeActivity;
 import com.github.axet.androidlibrary.preferences.RotatePreferenceCompat;
 import com.github.axet.androidlibrary.preferences.StoragePathPreferenceCompat;
+
 /****************************************
  * Eli Hebdon
+ *
+ * Activity for Settings
  ***************************************/
 public class SettingsActivity extends AppCompatSettingsThemeActivity {
     public static final int RESULT_STORAGE = 1;
@@ -59,7 +67,11 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
         storage = new Storage(this);
         setContentView(R.layout.fragment_settings);
         RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
-        setupActionBar();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         if (savedInstanceState == null && getIntent().getParcelableExtra(SAVE_INSTANCE_STATE) == null)
             showSettingsFragment(new GeneralPreferenceFragment());
     }
@@ -92,16 +104,17 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
         }
 
         @Override
+        public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
+
+            final RecyclerView rv = getListView(); // This holds the PreferenceScreen's items
+            rv.setPadding(0, 200, 0, 0); // (left, top, right, bottom)
+        }
+
+        @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             getActivity().setTheme(R.style.PreferenceStyle);
         }
-
-//        @Override
-//        public void onResume() {
-//            super.onResume();
-//            RotatePreferenceCompat r = (RotatePreferenceCompat) findPreference(App.PREFERENCE_ROTATE);
-//            r.onResume();
-//        }
 
         @Override
         public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

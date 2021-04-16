@@ -240,9 +240,6 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.gitlab.capstone.pellego.activities.SettingsActivity" />
-            android:label="@string/menu_settings" />
         <provider
             android:name="com.github.axet.androidlibrary.services.FileProvider"
             android:authorities="com.github.axet.bookreader.files"
@@ -259,7 +256,11 @@
             android:exported="false"
             android:grantUriPermissions="true" />
 
-
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/menu_settings"
+            android:theme="@style/Theme.Pellego_Dark">
+        </activity>
 
         <activity android:name=".fragments.auth.AuthActivity"
             android:windowSoftInputMode="adjustResize"
