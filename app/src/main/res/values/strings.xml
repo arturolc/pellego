@@ -92,6 +92,7 @@
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="submodule_popup_dialog">Read the words as they are displayed on the screen. After all the
         words have been displayed, you will be tested on your comprehension. Good luck!</string>
+    <string name="clumpreading_popup_dialog">Read the words as they are displayed on the screen. Try to keep your eye focused on the center word!</string>
     <string name="prereading_popup_dialog">Briefly scan the text to pre-read and then hit \'Next\' when you\'re ready to begin reading!</string>
     <string name="prereading_main_popup_dialog">Read the text and then be ready to answer some questions!</string>
 

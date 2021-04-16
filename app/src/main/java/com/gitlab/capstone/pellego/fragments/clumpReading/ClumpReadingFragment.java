@@ -110,7 +110,7 @@ public class ClumpReadingFragment extends BaseFragment {
     private void showSubmodulePopupDialog() {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.ok_dialog);
-        ((TextView) dialog.findViewById(R.id.text_dialog)).setText(R.string.submodule_popup_dialog);
+        ((TextView) dialog.findViewById(R.id.text_dialog)).setText(R.string.clumpreading_popup_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         Button dialogButton = (Button) dialog.findViewById(R.id.ok_dialog_button);
         dialogButton.setOnClickListener(new View.OnClickListener() {
