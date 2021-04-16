@@ -44,4 +44,25 @@ public class Users {
     public String getEmail() {
         return email;
     }
+
+    public void setuID(int uID) {
+        this.uID = uID;
+    }
+
+    public void setName(@NonNull String name) {
+        this.name = name;
+    }
+
+    public void setEmail(@NonNull String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "uID=" + uID +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

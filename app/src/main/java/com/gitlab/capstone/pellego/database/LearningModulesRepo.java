@@ -15,6 +15,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.amazonaws.mobileconnectors.cognitoauth.Auth;
+import com.amplifyframework.core.Amplify;
 import com.gitlab.capstone.pellego.database.daos.LearningModulesDao;
 import com.gitlab.capstone.pellego.database.entities.Answers;
 import com.gitlab.capstone.pellego.database.entities.LM_Intro;
@@ -68,6 +69,7 @@ public class LearningModulesRepo {
         dao = db.learningModulesDao();
         apiService = RetroInstance.getRetroClient().create(APIService.class);
         registerNetworkCallback();
+        Log.d("auth", Amplify.Auth.getCurrentUser().toString());
 
         // check to see if we have anything in local db
         AsyncTask.execute(()-> {

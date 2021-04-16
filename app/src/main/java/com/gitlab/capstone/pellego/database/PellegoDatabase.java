@@ -22,6 +22,7 @@ import com.gitlab.capstone.pellego.database.entities.Library;
 import com.gitlab.capstone.pellego.database.entities.ProgressCompleted;
 import com.gitlab.capstone.pellego.database.entities.Questions;
 import com.gitlab.capstone.pellego.database.entities.Scores;
+import com.gitlab.capstone.pellego.database.entities.UserWordValues;
 import com.gitlab.capstone.pellego.database.entities.User_Analytics;
 import com.gitlab.capstone.pellego.database.entities.Users;
 
@@ -38,7 +39,8 @@ import com.gitlab.capstone.pellego.database.entities.Users;
         Scores.class,
         ProgressCompleted.class,
         User_Analytics.class,
-        Users.class},
+        Users.class,
+        UserWordValues.class},
         version = 1, exportSchema = false)
 @TypeConverters({TimestampConverter.class})
 public abstract class PellegoDatabase extends RoomDatabase {

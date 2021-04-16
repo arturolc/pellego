@@ -5,6 +5,7 @@ import com.gitlab.capstone.pellego.network.models.AuthToken;
 import com.gitlab.capstone.pellego.network.models.CompletionResponse;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
+import com.gitlab.capstone.pellego.network.models.LastRecordedDate;
 import com.gitlab.capstone.pellego.network.models.LibraryResponse;
 import com.gitlab.capstone.pellego.network.models.ProgressResponse;
 import com.gitlab.capstone.pellego.network.models.QuizResponse;
@@ -60,8 +61,13 @@ public interface APIService {
     Call<List<ProgressValuesResponse>> getProgressValues(@Body AuthToken email);
 
     @POST("users/progress")
-    Call<ProgressResponse
-            > getProgressResponse(@Body AuthToken email);
+    Call<ProgressResponse> getProgressResponse(@Body AuthToken email);
+
+    @POST("users/profile/total_words_read")
+    Call<TotalWordsReadResponse> getTotalWordsRead(@Body AuthToken email);
+
+    @POST("users/progress/last")
+    Call<LastRecordedDate> getLastRecordedDate(@Body AuthToken email);
 
     @GET("library")
     Call<List<LibraryResponse>> getLibrary();
@@ -69,6 +75,5 @@ public interface APIService {
     @GET("library/synopsis/{book_id}")
     Call<List<SynopsisResponse>> getSynopsis(@Path("book_id") String book_id);
 
-    @POST("users/profile/total_words_read")
-    Call<TotalWordsReadResponse> getTotalWordsRead(@Body AuthToken email);
+
 }

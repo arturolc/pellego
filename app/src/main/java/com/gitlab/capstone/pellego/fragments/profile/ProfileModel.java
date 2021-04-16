@@ -31,6 +31,7 @@ public class ProfileModel extends AndroidViewModel {
         totalWordsReadResponse = new MutableLiveData<>();
         userName = new MutableLiveData<>();
         email = new MutableLiveData<>();
+
         Amplify.Auth.fetchUserAttributes(success ->  {
             Log.i("user", success.get(2).getValue());
             Log.i("user", success.toString());

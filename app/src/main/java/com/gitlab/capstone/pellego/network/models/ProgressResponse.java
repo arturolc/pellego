@@ -2,14 +2,15 @@ package com.gitlab.capstone.pellego.network.models;
 
 import java.util.List;
 
+import com.gitlab.capstone.pellego.database.entities.UserWordValues;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class ProgressResponse {
 
-    @SerializedName("WPM")
+    @SerializedName("values")
     @Expose
-    private List<Wpm> wpm = null;
+    private List<UserWordValues> values = null;
 
     /**
      * No args constructor for use in serialization
@@ -19,23 +20,22 @@ public class ProgressResponse {
     }
 
 
-    public ProgressResponse(List<Wpm> wpm) {
-        super();
-        this.wpm = wpm;
+    public ProgressResponse(List<UserWordValues> values) {
+        this.values = values;
     }
 
-    public List<Wpm> getWpm() {
-        return wpm;
+    public List<UserWordValues> getValues() {
+        return values;
     }
 
-    public void setWpm(List<Wpm> wpm) {
-        this.wpm = wpm;
+    public void setValues(List<UserWordValues> values) {
+        this.values = values;
     }
 
     @Override
     public String toString() {
         return "ProgressResponse{" +
-                "wpm=" + wpm +
+                "values=" + values +
                 '}';
     }
 }
