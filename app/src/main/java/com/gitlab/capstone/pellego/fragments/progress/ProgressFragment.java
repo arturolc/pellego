@@ -30,6 +30,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 
 import java.util.ArrayList;
@@ -74,8 +75,8 @@ public class ProgressFragment extends BaseFragment {
             public void onChanged(List<ProgressValuesResponse> progressValuesResponse) {
                 pgsBar.setVisibility(View.INVISIBLE);
                 loadProgressTextValues(progressValuesResponse);
-                populateDaysList();
-                populateMonthsList();
+                populateDaysList(progressValuesResponse);
+                populateMonthsList(progressValuesResponse);
                 setupLastWeekBarChart();
                 loadLastWeekBarChart(progressValuesResponse);
                 setupLastYearLineChart();
@@ -128,12 +129,12 @@ public class ProgressFragment extends BaseFragment {
         lastYearWpmTextview.setText(Integer.toString(progressViewModel.getLastYearValues(resp)[1]));
     }
 
-    private void populateDaysList() {
-        days = progressViewModel.getDaysList();
+    private void populateDaysList(List<ProgressValuesResponse> resp) {
+        days = progressViewModel.getDaysList(resp);
     }
 
-    private void populateMonthsList() {
-        months = progressViewModel.getMonthsList();
+    private void populateMonthsList(List<ProgressValuesResponse> resp) {
+        months = progressViewModel.getMonthsList(resp);
     }
 
     private void setupLastWeekBarChart() {
