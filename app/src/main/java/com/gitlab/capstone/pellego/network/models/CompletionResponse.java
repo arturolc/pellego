@@ -17,6 +17,11 @@ public class CompletionResponse {
     @Expose
     private Integer smid;
 
+    public CompletionResponse(Integer mid, Integer smid) {
+        this.mid = mid;
+        this.smid = smid;
+    }
+
     public Integer getMid() {
         return mid;
     }

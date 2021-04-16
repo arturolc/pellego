@@ -8,6 +8,7 @@ import androidx.room.Query;
 import com.gitlab.capstone.pellego.database.entities.ProgressCompleted;
 import com.gitlab.capstone.pellego.database.entities.UserWordValues;
 import com.gitlab.capstone.pellego.database.entities.Users;
+import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 
 import java.util.Date;
 import java.util.List;
@@ -38,4 +39,16 @@ public interface UserDao {
 
     @Query("select * from ProgressCompleted where UID = :userID")
     LiveData<List<ProgressCompleted>> getProgressCompleted(int userID);
+
+    @Query("select uwID, UID, round(cast(avg(WordsRead) as UNSIGNED), 0) as WordsRead, round(cast(avg(WPM) as UNSIGNED), 0) as WPM, Recorded from User_Word_Values where UID = :userID and Recorded = :date")
+    LiveData<List<UserWordValues>> getProgressLast7Days(int userID, Date date);
+
+    @Query("select uwID, UID, round(cast(avg(WordsRead) as UNSIGNED), 0) as WordsRead, " +
+            "round(cast(avg(WPM) as UNSIGNED), 0) as WPM, Recorded from User_Word_Values " +
+            "where UID = :userID and CAST(strftime('%m', datetime(Recorded/1000, 'unixepoch')) AS int) = " +
+            "CAST(strftime('%m', datetime(:date/1000, 'unixepoch')) AS int)")
+    LiveData<List<UserWordValues>> getProgressLast12Months(int userID, Date date);
+
+    @Query("select SUM(WordsRead) as TotalWordsRead from User_Word_Values where UID = :userID")
+    LiveData<Integer> getTotalWordsRead(int userID);
 }

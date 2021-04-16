@@ -32,6 +32,8 @@ import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -142,62 +144,124 @@ public class UsersRepo {
     }
 
     public LiveData<List<CompletionResponse>> getUserLearningModulesCompletionCount() {
-        Call<List<CompletionResponse>> call =
-                apiService.getUserLearningModulesCompletionCount(new AuthToken(user.getValue().getEmail()));
-        call.enqueue(new Callback<List<CompletionResponse>>() {
-            @Override
-            public void onResponse(@NotNull Call<List<CompletionResponse>> call, Response<List<CompletionResponse>> response) {
-                Log.i("RETROFIT", response.body().toString());
-                completionResponse.setValue(response.body());
-            }
+        if (isNetworkConnected) {
+            Call<List<CompletionResponse>> call =
+                    apiService.getUserLearningModulesCompletionCount(new AuthToken(user.getValue().getEmail()));
+            call.enqueue(new Callback<List<CompletionResponse>>() {
+                @Override
+                public void onResponse(@NotNull Call<List<CompletionResponse>> call, Response<List<CompletionResponse>> response) {
+                    Log.i("RETROFIT", response.body().toString());
+                    completionResponse.setValue(response.body());
+                }
 
-            @Override
-            public void onFailure(@NotNull Call<List<CompletionResponse>> call, @NotNull Throwable t) {
-                Log.e("RETROFIT", t.toString());
-            }
-        });
+                @Override
+                public void onFailure(@NotNull Call<List<CompletionResponse>> call, @NotNull Throwable t) {
+                    Log.e("RETROFIT", t.toString());
+                }
+            });
+        }
+        else {
+            List<CompletionResponse> list = new ArrayList<>();
+            dao.getProgressCompleted(user.getValue().getUID()).observeForever(new Observer<List<ProgressCompleted>>() {
+                @Override
+                public void onChanged(List<ProgressCompleted> progressCompleteds) {
+                    for (ProgressCompleted el:
+                         progressCompleteds) {
+                        list.add(new CompletionResponse(el.getMID(), el.getSMID()));
+                    }
+                }
+            });
+        }
 
         return completionResponse;
     }
 
     public LiveData<List<ProgressValuesResponse>> getProgressValues() {
-        Call<List<ProgressValuesResponse>> call =
-                apiService.getProgressValues(new AuthToken(user.getValue().getEmail()));
-        call.enqueue(new Callback<List<ProgressValuesResponse>>() {
+        if(isNetworkConnected) {
+            Call<List<ProgressValuesResponse>> call =
+                    apiService.getProgressValues(new AuthToken(user.getValue().getEmail()));
+            call.enqueue(new Callback<List<ProgressValuesResponse>>() {
 
-            @Override
-            public void onResponse(@NotNull Call<List<ProgressValuesResponse>> call, Response<List<ProgressValuesResponse>> response) {
-                Log.d("RETROFIT: ", response.body().toString());
-                progressValuesResponse.setValue(response.body());
-            }
+                @Override
+                public void onResponse(@NotNull Call<List<ProgressValuesResponse>> call, Response<List<ProgressValuesResponse>> response) {
+                    Log.d("RETROFIT: ", response.body().toString());
+                    Log.d("RETROFIT: ", response.body().size() + "");
+                    progressValuesResponse.setValue(response.body());
+                }
 
-            @Override
-            public void onFailure(@NotNull Call<List<ProgressValuesResponse>> call, @NotNull Throwable t) {
-                t.printStackTrace();
-                Log.e("RETROFIT: ", t.toString());
-            }
-        });
+                @Override
+                public void onFailure(@NotNull Call<List<ProgressValuesResponse>> call, @NotNull Throwable t) {
+                    t.printStackTrace();
+                    Log.e("RETROFIT: ", t.toString());
+                }
+            });
+        }
+        else {
+            List<ProgressValuesResponse> res = new ArrayList<>();
+            Date d = new Date();
+            Calendar c = Calendar.getInstance();
+            c.setTime(d);
+
+            c.add(Calendar.DATE, -7);
+
+            dao.getProgressLast7Days(user.getValue().getUID(),c.getTime()).observeForever(new Observer<List<UserWordValues>>() {
+                @Override
+                public void onChanged(List<UserWordValues> userWordValues) {
+                    for (UserWordValues el:
+                         userWordValues) {
+                        res.add(new ProgressValuesResponse(el.getRecorded(), el.getWordsRead(),
+                                el.getWpm()));
+                    }
+                }
+            });
+
+            c.add(Calendar.DATE, 7);
+            c.add(Calendar.MONTH, -12);
+
+            dao.getProgressLast12Months(user.getValue().getUID(), c.getTime()).observeForever(new Observer<List<UserWordValues>>() {
+                @Override
+                public void onChanged(List<UserWordValues> userWordValues) {
+                    for (UserWordValues el:
+                         userWordValues) {
+                        res.add(new ProgressValuesResponse(el.getRecorded(), el.getWordsRead(),
+                                el.getWpm()));
+                    }
+                    progressValuesResponse.postValue(res);
+                    Log.d("getProgValues", res.toString());
+                }
+            });
+        }
 
         return progressValuesResponse;
     }
 
     public LiveData<TotalWordsReadResponse> getTotalWordsRead() {
-        Call<TotalWordsReadResponse> call =
-                apiService.getTotalWordsRead(new AuthToken(user.getValue().getEmail()));
-        call.enqueue(new Callback<TotalWordsReadResponse>() {
+        if (isNetworkConnected) {
+            Call<TotalWordsReadResponse> call =
+                    apiService.getTotalWordsRead(new AuthToken(user.getValue().getEmail()));
+            call.enqueue(new Callback<TotalWordsReadResponse>() {
 
-            @Override
-            public void onResponse(Call<TotalWordsReadResponse> call, Response<TotalWordsReadResponse> response) {
-                Log.d("RETROFIT: ", response.body().toString());
-                totalWordsReadResponse.setValue(response.body());
-            }
+                @Override
+                public void onResponse(Call<TotalWordsReadResponse> call, Response<TotalWordsReadResponse> response) {
+                    Log.d("RETROFIT: ", response.body().toString());
+                    totalWordsReadResponse.setValue(response.body());
+                }
 
-            @Override
-            public void onFailure(Call<TotalWordsReadResponse> call, Throwable t) {
-                t.printStackTrace();
-                Log.e("RETROFIT: ", t.toString());
-            }
-        });
+                @Override
+                public void onFailure(Call<TotalWordsReadResponse> call, Throwable t) {
+                    t.printStackTrace();
+                    Log.e("RETROFIT: ", t.toString());
+                }
+            });
+        }
+        else {
+            dao.getTotalWordsRead(user.getValue().getUID()).observeForever(new Observer<Integer>() {
+                @Override
+                public void onChanged(Integer integer) {
+                    totalWordsReadResponse.postValue(new TotalWordsReadResponse(integer));
+                }
+            });
+        }
 
         return totalWordsReadResponse;
     }
