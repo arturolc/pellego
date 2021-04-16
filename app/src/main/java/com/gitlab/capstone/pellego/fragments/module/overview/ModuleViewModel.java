@@ -2,8 +2,10 @@ package com.gitlab.capstone.pellego.fragments.module.overview;
 
 import android.app.Application;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -35,6 +37,7 @@ public class ModuleViewModel extends AndroidViewModel {
     private boolean showSubmodulePopupDialog;
     private boolean showPopupDialog;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public ModuleViewModel(@NonNull Application application, String moduleID) {
         super(application);
         this.learningModulesRepo = LearningModulesRepo.getInstance(application);
@@ -112,6 +115,12 @@ public class ModuleViewModel extends AndroidViewModel {
                 break;
             case "2":
                 techniqueLabel = "metaguiding";
+                break;
+            case "3":
+                techniqueLabel="ClumpReading";
+                break;
+            case"4":
+                techniqueLabel="prereading";
                 break;
             default:
                 break;
