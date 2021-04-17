@@ -204,39 +204,15 @@ public class RsvpModuleFragment extends BaseFragment {
                 NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
                 String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
 
-                if ((!currFragment.contains("RsvpModuleFragment") && (!currFragment.contains("ReaderFragment")))) {
+                if (!currFragment.contains("RsvpModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing)) {
                     cancel(true);
                     return 0;
                 } else {
-                    if (currFragment.contains("ReaderFragment")) {
-                        if (!playerWidget.progressChanged && !playerWidget.playing) {
-                            prevWPM = PlayerWidget.wpm;
-                        } else if (playerWidget.progressChanged) {
-                            playerWidget.setUserWordValues(wordCount, prevWPM);
-                            wordCount = 0;
-                            playerWidget.progressChanged = false;
-                        }
-                    }
                     if (currFragment.contains("RsvpModuleFragment")) {
                         PlayerWidget.wpm = wpm;
                     }
                     if (!word.isEmpty()) {
-                        wordCount++;
                         rsvp_text.setText(word);
-                    }
-                    if (currFragment.contains("ReaderFragment")) {
-                        if (!playerWidget.marks.isEmpty() && word.isEmpty()) {
-                            //toggle Play button to Pause
-
-                            PlayerWidget.playing = false;
-                            playerWidget.marks.clear();
-                            if (wordCount != 0 && playerWidget.wpm != 0) {
-                                playerWidget.setUserWordValues(wordCount, playerWidget.wpm);
-                                wordCount = 0;
-                            }
-                            cancel(true);
-                            return 0;
-                        }
                     }
                     if (PlayerWidget.playing && !content.isEmpty()) {
                         content = content.replaceFirst(word, "");
@@ -254,6 +230,7 @@ public class RsvpModuleFragment extends BaseFragment {
             return 0;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         protected void onPostExecute(Integer result) {
             try {

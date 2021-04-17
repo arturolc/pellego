@@ -201,10 +201,8 @@ public class MetaguidingModuleFragment extends BaseFragment {
 
     public String getPrevPage() {
         StringBuilder txt = new StringBuilder();
-        String result = playerWidget.selectPrev();
-        while(txt.length() < 900 && !result.isEmpty()) {
-            txt.append(result);
-            result = playerWidget.selectPrev();
+        while(txt.length() < 900) {
+            txt.append(playerWidget.selectPrev());
         }
         return txt.toString();
     }
@@ -261,7 +259,6 @@ public class MetaguidingModuleFragment extends BaseFragment {
         @Override
         protected Integer doInBackground(Integer... ints) {
             String pageTxt = content;
-            int wordCount = pageTxt.split("\\s+").length;
             Layout layout = mtext.getLayout();
             mtext.setText(Html.fromHtml(pageTxt));
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
@@ -301,11 +298,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
                     e.printStackTrace();
                 }
             }
-            if (!pageTxt.isEmpty() && currFragment != null) {
-                if (currFragment.contains("ReaderFragment") && wordCount != 0 && PlayerWidget.wpm != 0) {
-                    playerWidget.setUserWordValues(wordCount, PlayerWidget.wpm);
-                }
-            }
+
             return 0;
         }
 

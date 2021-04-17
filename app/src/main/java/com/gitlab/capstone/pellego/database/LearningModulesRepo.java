@@ -91,7 +91,7 @@ public class LearningModulesRepo {
     public LiveData<List<LMResponse>> getModules() {
         Log.d("LMRepo", isNetworkConnected + "");
         if (isNetworkConnected) {
-            Call<List<LMResponse>> call = apiService.getModules(new AuthToken("Chris.Bordoy@gmail.com"));
+            Call<List<LMResponse>> call = apiService.getModules(new AuthToken("chris.bordoy@gmail.com"));
             call.enqueue(new Callback<List<LMResponse>>() {
                 @Override
                 public void onResponse(@NotNull Call<List<LMResponse>> call, @NotNull Response<List<LMResponse>> response) {
@@ -230,7 +230,7 @@ public class LearningModulesRepo {
     }
 
     public void cacheModules() {
-        Call<AllContentsResponse> call = apiService.getAllContentsModules(new AuthToken("Chris.Bordoy@gmail.com", "2021-01-01"));
+        Call<AllContentsResponse> call = apiService.getAllContentsModules(new AuthToken("chris.bordoy@gmail.com", "2021-01-01"));
         call.enqueue(new Callback<AllContentsResponse>() {
 
             @Override
