@@ -148,6 +148,7 @@
         android:id="@+id/nav_prereading_intro"
         android:name="com.gitlab.capstone.pellego.fragments.module.intro.ModuleIntroFragment"
         tools:layout="@layout/fragment_module_intro" />
+
     <fragment
         android:id="@+id/nav_prereading_module"
         android:name="com.gitlab.capstone.pellego.fragments.prereading.PreReadingFragment"
