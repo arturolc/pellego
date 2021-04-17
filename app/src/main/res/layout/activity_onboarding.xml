@@ -9,11 +9,10 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/onboard_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp"
-        android:orientation="vertical">
-    </androidx.viewpager2.widget.ViewPager2>
+        android:layout_marginTop="37dp"
+        android:orientation="vertical"></androidx.viewpager2.widget.ViewPager2>
 
     <Button
         android:id="@+id/onboard_finish_btn"
