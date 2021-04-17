@@ -68,10 +68,6 @@ public class SettingsActivity extends AppCompatSettingsThemeActivity {
         setContentView(R.layout.fragment_settings);
         RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         if (savedInstanceState == null && getIntent().getParcelableExtra(SAVE_INSTANCE_STATE) == null)
             showSettingsFragment(new GeneralPreferenceFragment());
     }
