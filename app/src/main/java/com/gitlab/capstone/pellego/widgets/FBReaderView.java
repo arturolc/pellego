@@ -23,15 +23,6 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PowerManager;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.graphics.ColorUtils;
-import androidx.core.view.ViewCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.preference.ListPreference;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.ClipboardManager;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -46,21 +37,29 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.gitlab.capstone.pellego.app.Storage;
-import com.gitlab.capstone.pellego.fragments.reader.ReaderNavigationPopup;
-import com.gitlab.capstone.pellego.services.ImagesProvider;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.graphics.ColorUtils;
+import androidx.core.view.ViewCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.github.axet.androidlibrary.net.HttpClient;
 import com.github.axet.androidlibrary.preferences.AboutPreferenceCompat;
 import com.github.axet.androidlibrary.widgets.PinchView;
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
-import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.App;
-import com.gitlab.capstone.pellego.app.Plugin;
-import com.gitlab.capstone.pellego.app.Reflow;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.OnClickWrapper;
 import com.github.johnpersano.supertoasts.util.OnDismissWrapper;
+import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.App;
+import com.gitlab.capstone.pellego.app.Plugin;
+import com.gitlab.capstone.pellego.app.Reflow;
+import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.fragments.reader.ReaderNavigationPopup;
+import com.gitlab.capstone.pellego.services.ImagesProvider;
 
 import org.geometerplus.android.fbreader.PopupPanel;
 import org.geometerplus.android.fbreader.SelectionPopup;
@@ -121,6 +120,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+/****************************************
+ * Eli Hebdon
+ *
+ * Represents a E-Book reader that is used
+ * directly with the library
+ ***************************************/
 
 public class FBReaderView extends RelativeLayout {
     public static final String ACTION_MENU = FBReaderView.class.getCanonicalName() + ".ACTION_MENU";
@@ -732,7 +738,6 @@ public class FBReaderView extends RelativeLayout {
             float level = fb.w.getAttributes().screenBrightness;
             level = level >= 0 ? level : .5f;
 
-            // level = .01f + (percent - 25) * .99f / 75;
             return 25 + (int) ((level - .01f) * 75 / .99f);
         }
     }
@@ -1149,13 +1154,11 @@ public class FBReaderView extends RelativeLayout {
         } else if (shared.getString(App.READER_THEME, "").equals(getContext().getString(R.string.Theme_Light))) {
             config.setValue(app.ViewOptions.ColorProfileName, ColorProfile.DAY);
             ColorProfile p = ColorProfile.get(ColorProfile.DAY);
-            // sets background color
             config.setValue(p.BackgroundOption, 0xFFFFFF);
             config.setValue(p.WallpaperOption, "");
         } else {
             config.setValue(app.ViewOptions.ColorProfileName, ColorProfile.DAY);
             ColorProfile p = ColorProfile.get(ColorProfile.DAY);
-            // sets background color
             config.setValue(p.BackgroundOption, 0xF5E5CC);
             config.setValue(p.WallpaperOption, "");
         }

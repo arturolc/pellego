@@ -28,7 +28,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
@@ -41,7 +40,6 @@ import com.gitlab.capstone.pellego.app.Reflow;
 import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.database.UsersRepo;
 import com.gitlab.capstone.pellego.fragments.metaguiding.MetaguidingModuleFragment;
-import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 
@@ -60,6 +58,13 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static android.view.View.INVISIBLE;
+
+/****************************************
+ * Eli Hebdon and Chris Bordoy
+ *
+ * Represents the Player and its controls
+ * that are used directly on the reader
+ ***************************************/
 
 public class PlayerWidget {
     public static String[] EOL = {"\n", "\r"};
@@ -86,6 +91,7 @@ public class PlayerWidget {
     int gravity;
     public boolean progressChanged;
     public ImageView playButton;
+    public Integer wordCount;
 
     public void setUserWordValues(int wordsRead, int wpm) {
         usersRepo.setUserWordValues(wordsRead, wpm);
@@ -423,6 +429,7 @@ public class PlayerWidget {
         this.context = v.getContext();
         fb = v;
         this.activity = activity;
+        this.wordCount = 0;
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.tts_popup, null);
         playButton = activity.findViewById(R.id.button_play);
@@ -611,7 +618,6 @@ public class PlayerWidget {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
                 int val = (progress * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
-                togglePlay(playButton);
                 progressTextView.setText(String.valueOf(progress));
                 wpm = progress;
                 progressChanged = true;
@@ -626,7 +632,10 @@ public class PlayerWidget {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                if (wordCount != 0) {
+                    setUserWordValues(wordCount,PlayerWidget.wpm);
+                    wordCount = 0;
+                }
             }
 
             @Override
@@ -692,6 +701,10 @@ public class PlayerWidget {
             playBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.avd_play_to_pause));
         } else {
             playBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.avd_pause_to_play));
+            if (wordCount != 0) {
+                setUserWordValues(wordCount,PlayerWidget.wpm);
+                wordCount = 0;
+            }
         }
 
         // Display animation
@@ -900,8 +913,8 @@ public class PlayerWidget {
         return fragment.fragmentText;
     }
 
-    private int runCount = 0;
     // Get the next chunk of text
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public String selectNext() {
         marks.clear();
         if (fragment == null) {
@@ -991,6 +1004,16 @@ public class PlayerWidget {
                     }
                 }
             }
+        }
+
+        wordCount += (fragment.fragmentText).split("\\w+").length;
+        ZLTextPosition end;
+        end = fb.app.BookTextView.getEndCursor();
+        if (end.compareTo(fragment.fragment.start) <= 0 && fragment.fragmentText.isEmpty() && PlayerWidget.playing) {
+            setUserWordValues(wordCount, wpm);
+            playButton = activity.findViewById(R.id.button_play);
+            togglePlay(playButton);
+            wordCount = 0;
         }
         return fragment.fragmentText;
     }

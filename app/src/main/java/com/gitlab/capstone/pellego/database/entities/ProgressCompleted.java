@@ -9,6 +9,13 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/****************************************
+ * Chris Bordoy
+ *
+ * Represents a Progress Completion object
+ * used for Learning Submodules
+ ***************************************/
+
 @Entity(foreignKeys = {@ForeignKey(entity = Users.class, parentColumns = "UID", childColumns = "UID"),
     @ForeignKey(entity = LM_Submodule.class, parentColumns = "SMID", childColumns = "SMID")})
 public class ProgressCompleted {

@@ -5,6 +5,13 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+/****************************************
+ * Chris Bordoy
+ *
+ * Represents a Learning Modules
+ * Quiz object
+ ***************************************/
+
 @Entity(foreignKeys = @ForeignKey(entity = LM_Submodule.class, parentColumns = "SMID", childColumns = "SMID"))
 public class LM_Quiz {
     @PrimaryKey(autoGenerate = true)

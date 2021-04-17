@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
@@ -17,6 +16,7 @@ import com.gitlab.capstone.pellego.app.BaseFragment;
 
  This fragment displays the application's privacy policy.
  *********************************************************/
+
 public class PrivacyPolicyFragment extends BaseFragment {
 
         public View onCreateView(@NonNull LayoutInflater inflater,

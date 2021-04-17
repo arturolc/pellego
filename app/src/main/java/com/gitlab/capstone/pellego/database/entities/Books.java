@@ -6,8 +6,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import org.geometerplus.android.fbreader.sync.SyncOperations;
-
 @Entity
 public class Books {
     @PrimaryKey(autoGenerate = true)

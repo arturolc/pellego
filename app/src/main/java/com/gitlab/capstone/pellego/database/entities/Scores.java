@@ -12,6 +12,13 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+/****************************************
+ * Arturo Lara
+ *
+ * Represents a data collection Scores
+ * object that is used with quizzes
+ ***************************************/
+
 @Entity(foreignKeys = {@ForeignKey(entity = LM_Quiz.class, parentColumns = "QID", childColumns = "Quiz"),
         @ForeignKey(entity = Users.class, parentColumns = "UID", childColumns = "User")})
 public class Scores {

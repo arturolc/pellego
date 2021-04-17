@@ -15,6 +15,13 @@ import com.gitlab.capstone.pellego.app.Storage;
 
 import java.io.File;
 
+/****************************************
+ * Eli Hebdon
+ *
+ * Manages storage preference options for
+ * the Settings fragment
+ ***************************************/
+
 public class StoragePathPreferenceCompat extends com.github.axet.androidlibrary.preferences.StoragePathPreferenceCompat {
     CharSequence defSummary;
 

@@ -6,6 +6,12 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+/****************************************
+ * Arturo Lara
+ *
+ * Represents a Library object
+ ***************************************/
+
 @Entity(foreignKeys = {@ForeignKey(entity = Users.class, parentColumns = "UID", childColumns = "UID"),
         @ForeignKey(entity = Books.class, parentColumns = "BID", childColumns = "BID")})
 public class Library {

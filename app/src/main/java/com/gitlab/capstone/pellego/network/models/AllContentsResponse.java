@@ -1,15 +1,21 @@
 package com.gitlab.capstone.pellego.network.models;
 
-import java.util.List;
-
 import com.gitlab.capstone.pellego.database.entities.Answers;
 import com.gitlab.capstone.pellego.database.entities.LM_Intro;
 import com.gitlab.capstone.pellego.database.entities.LM_Module;
 import com.gitlab.capstone.pellego.database.entities.LM_Submodule;
 import com.gitlab.capstone.pellego.database.entities.Questions;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+/****************************************
+ * Arturo Lara
+ *
+ * Represents an all contents object
+ * for use with data caching
+ ***************************************/
 
 public class AllContentsResponse {
 

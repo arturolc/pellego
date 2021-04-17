@@ -5,8 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
 
 import com.github.axet.androidlibrary.net.HttpClient;
 import com.github.axet.androidlibrary.preferences.OptimizationPreferenceCompat;
@@ -25,6 +26,13 @@ import com.gitlab.capstone.pellego.app.Storage;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/****************************************
+ * Eli Hebdon
+ *
+ * Represents a dialog popup object that
+ * works with the Library
+ ***************************************/
 
 public class BookmarksDialog extends AlertDialog.Builder { // bookmarks list dialog
     BMAdapter a;

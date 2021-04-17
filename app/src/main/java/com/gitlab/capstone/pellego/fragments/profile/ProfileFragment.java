@@ -24,8 +24,8 @@ import androidx.lifecycle.Observer;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.BaseFragment;
-import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
 import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
+import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
@@ -115,10 +115,8 @@ public class ProfileFragment extends BaseFragment {
                         storeImage(bitmap);
 
                     } catch (FileNotFoundException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
