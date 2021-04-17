@@ -32,6 +32,9 @@ import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,7 +58,6 @@ public class UsersRepo {
     private final MutableLiveData<List<CompletionResponse>> completionResponse = new MutableLiveData<>();
     private final MutableLiveData<List<ProgressValuesResponse>> progressValuesResponse = new MutableLiveData<>();
     private final MutableLiveData<TotalWordsReadResponse> totalWordsReadResponse = new MutableLiveData<>();
-//    private final MutableLiveData<Users> user = new MutableLiveData<>();
     private Users user;
     private boolean isNetworkConnected;
     private Application application;
@@ -73,7 +75,7 @@ public class UsersRepo {
             public void onChanged(Users users) {
                 user = users;
                 Log.d("UsersRepo", users.toString());
-                sync();
+                registerNetworkCallback();
             }
         });
     }
@@ -115,7 +117,7 @@ public class UsersRepo {
         });
 
         AsyncTask.execute(() -> {
-            dao.setProgressCompleted(new ProgressCompleted(0, user.getUID(),
+            dao.setProgressCompleted(new ProgressCompleted(user.getUID(), Integer.parseInt(mID),
                     Integer.parseInt(smID)));
         });
     }
@@ -138,10 +140,18 @@ public class UsersRepo {
         });
 
         AsyncTask.execute(() -> {
-            dao.setUserWordValues(new UserWordValues(0, user.getUID(),
-             wordsRead, wpm, new Date(System.currentTimeMillis())));
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date today = new Date();
+            Date todayWithZeroTime;
+            try {
+                todayWithZeroTime = formatter.parse(formatter.format(today));
+                dao.setUserWordValues(new UserWordValues(0, user.getUID(),
+                        wordsRead, wpm, todayWithZeroTime));
+            }
+            catch(ParseException e) {
+                Log.e("UsersRepo", e.toString());
+            }
         });
-
     }
 
     public LiveData<List<CompletionResponse>> getUserLearningModulesCompletionCount() {
@@ -152,7 +162,7 @@ public class UsersRepo {
                 @Override
                 public void onResponse(@NotNull Call<List<CompletionResponse>> call, Response<List<CompletionResponse>> response) {
                     Log.i("RETROFIT", response.body().toString());
-                    completionResponse.setValue(response.body());
+                    completionResponse.postValue(response.body());
                 }
 
                 @Override
@@ -199,40 +209,42 @@ public class UsersRepo {
         }
         else {
             List<ProgressValuesResponse> res = new ArrayList<>();
-            Date d = new Date();
             Calendar c = Calendar.getInstance();
-            c.setTime(d);
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date today = new Date();
+            Date todayWithZeroTime;
 
-            c.add(Calendar.DATE, -7);
+            try {
+                todayWithZeroTime = formatter.parse(formatter.format(today));
+                c.setTime(todayWithZeroTime);
+            }
+            catch(ParseException e) {
+                Log.e("UsersRepo", e.toString());
+            }
 
-            dao.getProgressLast7Days(user.getUID(),c.getTime()).observeForever(new Observer<List<UserWordValues>>() {
-                @Override
-                public void onChanged(List<UserWordValues> userWordValues) {
-                    for (UserWordValues el:
-                         userWordValues) {
-                        res.add(new ProgressValuesResponse(el.getRecorded(), el.getWordsRead(),
-                                el.getWpm()));
-                    }
+            AsyncTask.execute(()-> {
+                for (int i = 0; i < 7; i++) {
+                    UserWordValues el = dao.getProgressLast7Days(user.getUID(),c.getTime());
+                    if (el.getRecorded() == null)
+                        el.setRecorded(c.getTime());
+                    res.add(new ProgressValuesResponse(el.getRecorded(), el.getWordsRead(), el.getWpm()));
+
+                    c.add(Calendar.DATE, -1);
                 }
-            });
+                // putting it back to current date
+                c.add(Calendar.DATE, 7);
 
-            c.add(Calendar.DATE, 7);
-            c.add(Calendar.MONTH, -12);
-
-            dao.getProgressLast12Months(user.getUID(), c.getTime()).observeForever(new Observer<List<UserWordValues>>() {
-                @Override
-                public void onChanged(List<UserWordValues> userWordValues) {
-                    for (UserWordValues el:
-                         userWordValues) {
-                        res.add(new ProgressValuesResponse(el.getRecorded(), el.getWordsRead(),
-                                el.getWpm()));
-                    }
-                    progressValuesResponse.postValue(res);
-                    Log.d("getProgValues", res.toString());
+                for (int i = 0; i < 12; i++) {
+                    UserWordValues el = dao.getProgressLast12Months(user.getUID(), TimestampConverter.fromDate(c.getTime()));
+                    if (el.getRecorded() == null)
+                        el.setRecorded(c.getTime());
+                    res.add(new ProgressValuesResponse(el.getRecorded(), el.getWordsRead(), el.getWpm()));
+                    c.add(Calendar.MONTH, -1);
                 }
+                Log.d("ProgValRes", res.toString());
+                progressValuesResponse.postValue(res);
             });
         }
-
         return progressValuesResponse;
     }
 
@@ -259,6 +271,8 @@ public class UsersRepo {
             dao.getTotalWordsRead(user.getUID()).observeForever(new Observer<Integer>() {
                 @Override
                 public void onChanged(Integer integer) {
+                    integer = integer == null? 0 : integer;
+                    Log.d("totalread", integer.toString());
                     totalWordsReadResponse.postValue(new TotalWordsReadResponse(integer));
                 }
             });
@@ -290,7 +304,21 @@ public class UsersRepo {
                                     Log.d("userWordValues", userWordValues.toString());
                                     for (UserWordValues el :
                                             userWordValues) {
-                                        setUserWordValues(el.getWordsRead(), el.getWpm());
+                                        Call<Void> call = apiService.setUserWordValues(
+                                                new AuthToken(user.getEmail()),
+                                                el.getWordsRead(),
+                                                el.getWpm());
+                                        call.enqueue(new Callback<Void>() {
+                                            @Override
+                                            public void onResponse(@NotNull Call<Void> call, Response<Void> response) {
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
+                                                Log.e("RETROFIT", t.toString());
+                                            }
+                                        });
                                     }
                                     Log.d("SYNC", "updated network records with local db");
                                 }

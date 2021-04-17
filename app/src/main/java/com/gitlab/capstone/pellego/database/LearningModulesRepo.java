@@ -76,19 +76,21 @@ public class LearningModulesRepo {
             @Override
             public void onChanged(Users users) {
                 user = users;
+
+                // check to see if we have anything in local db
+                AsyncTask.execute(()-> {
+                    int count = dao.getModulesCount();
+                    Log.d("ModulesCount", "" + count);
+                    if (count == 0) {
+                        cacheModules();
+                    }
+                });
             }
         });
         registerNetworkCallback();
-        Log.d("auth", Amplify.Auth.getCurrentUser().toString());
 
-        // check to see if we have anything in local db
-        AsyncTask.execute(()-> {
-            int count = dao.getModulesCount();
-            Log.d("ModulesCount", "" + count);
-            if (count == 0) {
-                cacheModules();
-            }
-        });
+        // TODO refactor how we save user from SQL to shared prefernces to avoid race conditions
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
