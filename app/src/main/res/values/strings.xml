@@ -147,20 +147,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!--    Onboarding Text    -->
-    <string-array name="onboarding_header">
-        <item>Welcome to Pellego!</item>
-        <item>Learn</item>
-        <item>Comprehension Quizzes</item>
-        <item>Library</item>
-    </string-array>
-
-    <string-array name="onboarding_content">
-        <item>The premium speed reading app</item>
-        <item>Learn scientifically proven methods to increase your reading comprehension and speed</item>
-        <item>Prove your mastery in the comprehension quizzes at the end of every learning module</item>
-        <item>Apply the tools you learned to your own ebooks, pdf\'s, and txt document. Happy Reading!</item>
-    </string-array>
-
 
 </resources>
