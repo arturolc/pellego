@@ -2,22 +2,14 @@ package com.gitlab.capstone.pellego.widgets;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import androidx.annotation.Nullable;
-
 import com.gitlab.capstone.pellego.R;
-
-/****************************************
- * Eli Hebdon
- *
- * Represents a class that manages
- * full-screen compatibility
- ***************************************/
 
 public class FullWidthActionView extends FrameLayout {
     public FullWidthActionView(Context context) {
@@ -57,4 +49,5 @@ public class FullWidthActionView extends FrameLayout {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
     }
+
 }

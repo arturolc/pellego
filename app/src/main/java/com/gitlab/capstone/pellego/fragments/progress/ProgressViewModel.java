@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.database.UsersRepo;
 import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 
@@ -16,9 +18,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**********************************************
     Chris Bordoy

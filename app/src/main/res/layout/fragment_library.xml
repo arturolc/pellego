@@ -65,7 +65,7 @@
         >
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/empty_anim"
-            app:lottie_loop="true"
+            app:lottie_loop="false"
             android:layout_width="match_parent"
             app:lottie_fileName="astronaut.json"
             android:layout_gravity="center"

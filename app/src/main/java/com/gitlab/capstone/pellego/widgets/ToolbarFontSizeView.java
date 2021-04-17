@@ -2,21 +2,13 @@ package com.gitlab.capstone.pellego.widgets;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.util.AttributeSet;
-
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import android.util.AttributeSet;
 
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.gitlab.capstone.pellego.R;
-
-/****************************************
- * Eli Hebdon
- *
- * Represents the view for the Toolbar
- * font size
- ***************************************/
 
 @Keep
 public class ToolbarFontSizeView extends ToolbarButtonView {

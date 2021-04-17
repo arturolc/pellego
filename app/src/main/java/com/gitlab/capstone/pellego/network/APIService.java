@@ -6,9 +6,9 @@ import com.gitlab.capstone.pellego.network.models.CompletionResponse;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
 import com.gitlab.capstone.pellego.network.models.LibraryResponse;
-import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 import com.gitlab.capstone.pellego.network.models.QuizResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
+import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 import com.gitlab.capstone.pellego.network.models.SynopsisResponse;
 import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
 

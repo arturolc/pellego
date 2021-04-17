@@ -7,14 +7,9 @@ import androidx.room.Query;
 
 import com.gitlab.capstone.pellego.database.entities.Books;
 
-import java.util.List;
+import org.geometerplus.fbreader.book.Book;
 
-/****************************************
- * Arturo Lara
- *
- * Represents a Library
- * data access object for caching
- ***************************************/
+import java.util.List;
 
 @Dao
 public interface LibraryDao {

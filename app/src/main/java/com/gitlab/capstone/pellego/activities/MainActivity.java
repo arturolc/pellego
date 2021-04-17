@@ -247,6 +247,9 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         context = getApplicationContext();
 
         RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
+        Window window = this.getWindow();
+        TypedValue typedValue = new TypedValue();
+//        loadImageFromStorage();
     }
 
     @SuppressLint("RestrictedApi")

@@ -4,9 +4,31 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Process;
 import android.preference.PreferenceManager;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -16,40 +38,48 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.github.axet.androidlibrary.net.HttpClient;
 import com.github.axet.androidlibrary.services.StorageProvider;
+import com.github.axet.androidlibrary.widgets.CacheImagesAdapter;
+import com.github.axet.androidlibrary.widgets.CacheImagesRecyclerAdapter;
 import com.github.axet.androidlibrary.widgets.InvalidateOptionsMenuCompat;
 import com.github.axet.androidlibrary.widgets.OpenFileDialog;
+import com.github.axet.androidlibrary.widgets.SearchView;
+import com.github.axet.androidlibrary.widgets.TextMax;
 import com.gitlab.capstone.pellego.R;
+
 import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.App;
+import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.fragments.profile.ProfileFragment;
 import com.gitlab.capstone.pellego.widgets.BookmarksDialog;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
 
-import java.util.Comparator;
+import org.apache.commons.io.IOUtils;
+import org.w3c.dom.Text;
 
-/****************************************
- * Eli Hebdon
- *
- * Represents the standard Pellego Library
- ***************************************/
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class LibraryFragment extends Fragment implements MainActivity.SearchListener {
     public static final String TAG = LibraryFragment.class.getSimpleName();
@@ -82,6 +112,13 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
         holder = new FragmentHolder(getContext());
         books = new LibraryAdapter(holder, getContext());
         setHasOptionsMenu(true);
+
+        Log.d("LibraryFragment", storage.list().toString());
+//        Log.d("LibraryFragment", storage.list().get(0).toString());
+//        Log.d("LibraryFragment", storage.list().get(1).toString());
+//        Log.d("LibraryFragment", storage.list().get(2).toString());
+//        Log.d("LibraryFragment", Storage.getTitle(storage.list().get(0).info));
+
     }
 
     @Override
@@ -100,6 +137,11 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
             lottieAnimationView.cancelAnimation();
         }
         this.numBooks = books.all.size();
+//        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_menu, null);
+//        drawable = DrawableCompat.wrap(drawable);
+//        DrawableCompat.setTint(drawable, Color.WHITE);
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(drawable);
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -317,10 +359,13 @@ public class LibraryFragment extends Fragment implements MainActivity.SearchList
             });
         }
 
+//        reflow.setVisible(false);
+//        searchMenu.setVisible(true);
         homeMenu.setVisible(false);
         tocMenu.setVisible(false);
         bookmarksMenu.setVisible(books.hasBookmarks());
         fontsize.setVisible(false);
+//        debug.setVisible(false);
         rtl.setVisible(false);
         mode.setVisible(false);
         tts.setVisible(false);

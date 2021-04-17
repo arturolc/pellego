@@ -7,11 +7,11 @@ import android.graphics.Rect;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
+import com.gitlab.capstone.pellego.widgets.ScrollWidget;
 import com.github.axet.androidlibrary.app.RarSAF;
 import com.github.axet.androidlibrary.app.ZipSAF;
 import com.github.axet.androidlibrary.services.StorageProvider;
 import com.github.axet.androidlibrary.widgets.CacheImagesAdapter;
-import com.gitlab.capstone.pellego.widgets.ScrollWidget;
 
 import net.lingala.zip4j.core.ZipFile;
 
@@ -46,12 +46,6 @@ import de.innosystec.unrar.Archive;
 import de.innosystec.unrar.NativeStorage;
 import de.innosystec.unrar.exception.RarException;
 import de.innosystec.unrar.rarfile.FileHeader;
-
-/****************************************
- * Eli Hebdon
- *
- * Manages comic importing for library
- ***************************************/
 
 public class ComicsPlugin extends BuiltinFormatPlugin implements Plugin {
     public static String TAG = ComicsPlugin.class.getSimpleName();

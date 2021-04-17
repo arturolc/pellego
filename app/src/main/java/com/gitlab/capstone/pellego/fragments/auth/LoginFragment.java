@@ -2,6 +2,13 @@ package com.gitlab.capstone.pellego.fragments.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,28 +17,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amplifyframework.core.Amplify;
-import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.activities.MainActivity;
+import com.gitlab.capstone.pellego.R;
 
 /**********************************************
  Arturo Lara
-
- Handles all Login interactions
+ Login screen
  **********************************************/
-
 public class LoginFragment extends Fragment {
 
     private AuthViewModel model;
 
     public LoginFragment() {
+        // Required empty public constructor
     }
 
     public static LoginFragment newInstance(String param1, String param2) {
@@ -42,6 +42,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -86,7 +87,11 @@ public class LoginFragment extends Fragment {
                             getActivity().finish();
                         },
                         error -> Log.e("AUTHENTICATION", error.toString()));
+
             }
         });
     }
+
+
+
 }

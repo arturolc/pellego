@@ -1,6 +1,14 @@
 package com.gitlab.capstone.pellego.fragments.auth;
 
+import android.nfc.FormatException;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -9,12 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.amplifyframework.auth.AuthException;
 import com.amplifyframework.core.Amplify;
@@ -28,14 +30,13 @@ import java.util.regex.Pattern;
 
 /**********************************************
  Arturo Lara
-
  Email Fragment prompting the user for their email address
  **********************************************/
-
 public class EmailFragment extends Fragment {
 
     AuthViewModel model;
     public EmailFragment() {
+        // Required empty public constructor
     }
 
     public static EmailFragment newInstance(String param1, String param2) {
@@ -117,7 +118,9 @@ public class EmailFragment extends Fragment {
                 }
             }
         });
+
     }
+
 
     private boolean verifyUserExists(String email) {
         AtomicBoolean res = new AtomicBoolean(false);
@@ -136,4 +139,11 @@ public class EmailFragment extends Fragment {
 
         return res.get();
     }
+
+
+
+
+
+
+
 }

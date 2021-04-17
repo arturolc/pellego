@@ -7,13 +7,6 @@ import androidx.room.Query;
 
 import com.gitlab.capstone.pellego.database.entities.Users;
 
-/****************************************
- * Arturo Lara
- *
- * Represents a User
- * data access object for caching
- ***************************************/
-
 @Dao
 public interface UserDao {
 

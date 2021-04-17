@@ -9,12 +9,6 @@ import com.gitlab.capstone.pellego.R;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
-/****************************************
- * Eli Hebdon and Chris Bordoy
- *
- * Resource management class
- ***************************************/
-
 public class App extends MainApplication {
     public static String PREFERENCE_THEME = "theme";
     public static String READER_THEME= "readerTheme";
@@ -42,6 +36,14 @@ public class App extends MainApplication {
     }
     public static int getTheme(Context context, int light, int dark) {
         return MainApplication.getTheme(context, PREFERENCE_THEME, dark, light, context.getString(R.string.Theme_Dark));
+    }
+
+    public static int getStringIdentifier(String name) {
+        return resources.getIdentifier(name, "string", PACKAGE_NAME);
+    }
+
+    public static int getArrayIdentifier(String name) {
+        return resources.getIdentifier(name, "array", PACKAGE_NAME);
     }
 
     @Override

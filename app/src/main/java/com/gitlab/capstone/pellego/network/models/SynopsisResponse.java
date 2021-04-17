@@ -3,12 +3,6 @@ package com.gitlab.capstone.pellego.network.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/****************************************
- * Arturo Lara
- *
- * Represents a Synopsis for all Pellego
- * Library books
- ***************************************/
 
 public class SynopsisResponse {
 
@@ -18,11 +12,13 @@ public class SynopsisResponse {
 
     /**
      * No args constructor for use in serialization
+     *
      */
     public SynopsisResponse() {
     }
 
     /**
+     *
      * @param synopsis
      */
     public SynopsisResponse(String synopsis) {

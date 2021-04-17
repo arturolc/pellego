@@ -1,9 +1,8 @@
-package com.gitlab.capstone.pellego.network.models;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+package com.gitlab.capstone.pellego.network.models; ;
 
 import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 /*****************************************************
  * Chris Bordoy

@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.OpenableColumns;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -23,12 +22,6 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
-
-/****************************************
- * Eli Hebdon
- *
- * Manages all image interactions
- ***************************************/
 
 public class ImagesProvider extends StorageProvider {
     public static String TAG = ImagesProvider.class.getSimpleName();

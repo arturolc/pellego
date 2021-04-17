@@ -17,16 +17,12 @@ import com.github.axet.androidlibrary.sound.Sound;
 import com.github.axet.androidlibrary.widgets.Toast;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import java.util.UUID;
 
 import static android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME;
-
-/****************************************
- * Eli Hebdon
- *
- * Manages RSVP text to speech functionality
- ***************************************/
 
 public class RSVP extends Sound {
     public static final String TAG = com.github.axet.androidlibrary.sound.TTS.class.getSimpleName();

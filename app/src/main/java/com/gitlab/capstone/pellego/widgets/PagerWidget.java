@@ -22,13 +22,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
-/****************************************
- * Eli Hebdon
- *
- * Represents a pager system that is directly
- * used the FBReaderView
- ***************************************/
-
 public class PagerWidget extends ZLAndroidWidget {
     FBReaderView fb;
     FBReaderView.PinchGesture pinch;
@@ -130,7 +123,6 @@ public class PagerWidget extends ZLAndroidWidget {
                 dst = new Rect(0, t, p.w, t + (int) (p.pageBox.h / p.ratio));
             }
         }
-
         return dst;
     }
 
