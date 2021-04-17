@@ -99,7 +99,7 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     /**
-     * By Joann Lowry
+     * By Joanna Lowry
      * Adapter class used for the PageView in OnboardingActivity
      */
     public class OnboardingPagerAdapter extends RecyclerView.Adapter<com.gitlab.capstone.pellego.activities.OnboardingActivity.OnboardingPagerAdapter.OnboardingViewHolder> {
@@ -151,7 +151,7 @@ public class OnboardingActivity extends AppCompatActivity {
         }
 
         /**
-         * Holder class used in the Adapter class, which is used in the OnboardingActivity to make the PageView work
+         *  Holder class used in the Adapter class, which is used in the OnboardingActivity to make the PageView work
          */
         public class OnboardingViewHolder extends RecyclerView.ViewHolder {
             TextView header_text_view;
