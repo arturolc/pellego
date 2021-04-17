@@ -1,5 +1,6 @@
 package com.gitlab.capstone.pellego.fragments.library;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -20,13 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
-
-/****************************************
- * Eli Hebdon
- *
- * Represents a component that can
- * manage multiple fragments
- ***************************************/
 
 public class FragmentHolder {
     RecyclerView grid;
@@ -58,6 +52,8 @@ public class FragmentHolder {
     public void create(View v) {
         grid = (RecyclerView) v.findViewById(R.id.grid);
         import_button = v.findViewById(R.id.button_import_book);
+        // DividerItemDecoration divider = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+        // grid.addItemDecoration(divider);
 
         LayoutInflater inflater = LayoutInflater.from(context);
         title = (TextView) v.findViewById(R.id.title_library);
@@ -91,6 +87,7 @@ public class FragmentHolder {
         footerProgress = footer.findViewById(R.id.search_footer_progress);
         footerStop = footer.findViewById(R.id.search_footer_stop);
 
+
         footerNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +96,7 @@ public class FragmentHolder {
         });
 
         addFooterView(footer);
+
         updateGrid();
     }
 
@@ -106,6 +104,7 @@ public class FragmentHolder {
         title.animate().translationY(-title.getHeight()).setInterpolator(new AccelerateInterpolator(2));
         LibraryFragment.header.animate().translationY(-LibraryFragment.header.getHeight()).setInterpolator(new AccelerateInterpolator(2));
         import_button.animate().translationY(import_button.getHeight() * 2).setInterpolator(new AccelerateInterpolator(2));
+
     }
 
     private void showViews() {
@@ -182,6 +181,10 @@ public class FragmentHolder {
         if (reset != null)
             grid.setLayoutManager(reset);
     }
+
+//    public int getSpanSize(int position) {
+//        return 1;
+//    }
 
     public void setOnItemClickListener(AdapterView.OnItemClickListener l) {
         clickListener = l;

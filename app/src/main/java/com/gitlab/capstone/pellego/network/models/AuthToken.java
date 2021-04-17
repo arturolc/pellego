@@ -1,11 +1,6 @@
 package com.gitlab.capstone.pellego.network.models;
 
-/****************************************
- * Arturo Lara
- *
- * Represents an Authorization Token that
- * is used for all API calls
- ***************************************/
+import com.gitlab.capstone.pellego.fragments.auth.AuthActivity;
 
 public class AuthToken {
     private String email;

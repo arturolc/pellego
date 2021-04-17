@@ -10,7 +10,8 @@ import org.jetbrains.annotations.NotNull;
 /**********************************************
  Chris Bordoy
 
- Class that creates viewmodels with parameters
+ Class that creates a viewmodel with specific
+ parameters
  **********************************************/
 
 public class ModuleViewModelFactory implements ViewModelProvider.Factory {

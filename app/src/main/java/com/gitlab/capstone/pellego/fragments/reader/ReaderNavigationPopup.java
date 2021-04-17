@@ -5,26 +5,19 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
-
-import com.gitlab.capstone.pellego.R;
+import android.widget.*;
 
 import org.geometerplus.android.fbreader.NavigationWindow;
-import org.geometerplus.fbreader.bookmodel.TOCTree;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 
-/****************************************
- * Eli Hebdon
- *
- * Handles Reader navigation popups
- ***************************************/
+import com.gitlab.capstone.pellego.R;
+
+import org.geometerplus.fbreader.bookmodel.TOCTree;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 public final class ReaderNavigationPopup extends ZLApplication.PopupPanel {
     public final static String ID = "NavigationPopup";

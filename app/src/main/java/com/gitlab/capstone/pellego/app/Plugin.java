@@ -8,9 +8,8 @@ import android.graphics.Color;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
-
 import androidx.core.graphics.ColorUtils;
+import android.util.Log;
 
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
 import com.gitlab.capstone.pellego.widgets.ScrollWidget;
@@ -29,14 +28,6 @@ import org.geometerplus.zlibrary.text.view.ZLTextView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
-
-/****************************************
- * Eli Hebdon
- *
- * Represents a plugin to be used by all
- * management objects for library
- * imports
- ***************************************/
 
 public interface Plugin {
 

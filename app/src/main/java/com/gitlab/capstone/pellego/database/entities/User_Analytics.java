@@ -8,13 +8,6 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-/****************************************
- * Arturo Lara
- *
- * Represents a User Analytics object
- * that is used for data collection
- ***************************************/
-
 @Entity(foreignKeys = @ForeignKey(entity = Users.class, parentColumns = "UID", childColumns = "UID"))
 public class User_Analytics {
     @PrimaryKey(autoGenerate = true)

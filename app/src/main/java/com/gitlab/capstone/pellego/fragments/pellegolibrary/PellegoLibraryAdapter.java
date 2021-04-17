@@ -2,6 +2,8 @@ package com.gitlab.capstone.pellego.fragments.pellegolibrary;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +22,11 @@ import com.gitlab.capstone.pellego.R;
 
 /**********************************************
  Arturo Lara
-
  Adapter for Recycler view
  **********************************************/
-
 public class PellegoLibraryAdapter extends RecyclerView.Adapter<PellegoLibraryAdapter.MyViewHolder> {
 
-    String[] s1, s2, ids, imgs, urls, hashStrings;
+    String s1[], s2[], ids[], imgs[], urls[], hashStrings[];
     Context context;
     Fragment myFragment;
 

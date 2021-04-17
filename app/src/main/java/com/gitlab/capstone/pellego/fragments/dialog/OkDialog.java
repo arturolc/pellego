@@ -9,12 +9,6 @@ import android.widget.Button;
 
 import com.gitlab.capstone.pellego.R;
 
-/****************************************
- * EliHebdon
- *
- * Represents a OKDialog component
- ***************************************/
-
 public class OkDialog extends Dialog implements
         View.OnClickListener {
 
@@ -24,6 +18,7 @@ public class OkDialog extends Dialog implements
 
     public OkDialog(Activity a) {
         super(a);
+        // TODO Auto-generated constructor stub
         this.c = a;
     }
 

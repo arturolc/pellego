@@ -205,6 +205,7 @@ public class ModuleViewModel extends AndroidViewModel {
     }
 
     public LiveData<String> getText() {
+
         return  moduleTitle;
     }
 }

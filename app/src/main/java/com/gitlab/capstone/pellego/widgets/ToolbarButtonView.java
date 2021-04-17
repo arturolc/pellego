@@ -3,26 +3,19 @@ package com.gitlab.capstone.pellego.widgets;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.appcompat.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Keep;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.view.ContextThemeWrapper;
-import androidx.appcompat.widget.AppCompatImageButton;
-
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.gitlab.capstone.pellego.R;
-
-/****************************************
- * Eli Hebdon
- *
- * Represents the view of a toolbar button
- ***************************************/
 
 @Keep
 public class ToolbarButtonView extends FrameLayout {

@@ -5,11 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.SparseArray;
 
+import com.gitlab.capstone.pellego.widgets.FBReaderView;
+import com.gitlab.capstone.pellego.widgets.ScrollWidget;
 import com.github.axet.androidlibrary.app.Natives;
 import com.github.axet.androidlibrary.widgets.CacheImagesAdapter;
 import com.github.axet.djvulibre.Config;
-import com.gitlab.capstone.pellego.widgets.FBReaderView;
-import com.gitlab.capstone.pellego.widgets.ScrollWidget;
 
 import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.book.BookUtil;
@@ -36,12 +36,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-/****************************************
- * Eli Hebdon
- *
- * Manages DJVU importing for library
- ***************************************/
 
 public class DjvuPlugin extends BuiltinFormatPlugin implements Plugin {
     public static String TAG = DjvuPlugin.class.getSimpleName();

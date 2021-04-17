@@ -14,14 +14,13 @@ import java.util.List;
 
 /**********************************************
  Arturo Lara
-
  Model for PellegoLibraryFragment fragment. Pulls data from remote server
  **********************************************/
-
 public class PellegoLibraryViewModel extends AndroidViewModel {
     private LiveData<List<LibraryResponse>> libResp;
     private BooksRepo repo;
 
+    // TODO: Implement the ViewModel
     public PellegoLibraryViewModel(@NonNull Application application) {
         super(application);
         repo = BooksRepo.getInstance(application);

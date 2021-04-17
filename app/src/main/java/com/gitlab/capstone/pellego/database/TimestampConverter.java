@@ -7,12 +7,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/****************************************
- * Arturo Lara
- *
- * Handles all TimeStamp conversions
- ***************************************/
-
 public class TimestampConverter {
     static DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
