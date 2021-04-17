@@ -32,10 +32,6 @@ public class ProfileModel extends AndroidViewModel {
         userName = new MutableLiveData<>();
         email = new MutableLiveData<>();
         Amplify.Auth.fetchUserAttributes(success ->  {
-            Log.i("user", success.get(2).getValue());
-            Log.i("user", success.toString());
-            Log.i("user", success.get(3).getValue());
-
             for(int i = 0; i < success.size(); i++) {
                 if (success.get(i).getKey().getKeyString().equals("name")) {
                     userName.postValue(success.get(i).getValue());

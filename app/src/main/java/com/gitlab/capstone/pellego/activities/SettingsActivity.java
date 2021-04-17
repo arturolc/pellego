@@ -5,33 +5,30 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.preference.PreferenceFragmentCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.App;
-import com.gitlab.capstone.pellego.app.Storage;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.github.axet.androidlibrary.activities.AppCompatSettingsThemeActivity;
 import com.github.axet.androidlibrary.preferences.RotatePreferenceCompat;
 import com.github.axet.androidlibrary.preferences.StoragePathPreferenceCompat;
+import com.gitlab.capstone.pellego.R;
+import com.gitlab.capstone.pellego.app.App;
+import com.gitlab.capstone.pellego.app.Storage;
 
 /****************************************
  * Eli Hebdon
  *
  * Activity for Settings
  ***************************************/
+
 public class SettingsActivity extends AppCompatSettingsThemeActivity {
     public static final int RESULT_STORAGE = 1;
 

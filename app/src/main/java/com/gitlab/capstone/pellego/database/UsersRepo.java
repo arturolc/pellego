@@ -52,7 +52,6 @@ public class UsersRepo {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, Response<Void> response) {
-
             }
 
             @Override
@@ -70,7 +69,6 @@ public class UsersRepo {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, Response<Void> response) {
-
             }
 
             @Override

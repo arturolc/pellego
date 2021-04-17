@@ -13,6 +13,13 @@ import com.gitlab.capstone.pellego.network.models.Answer;
 
 import java.util.List;
 
+/****************************************
+ * Arturo Lara
+ *
+ * Represents a Learning Modules
+ * data access object for caching
+ ***************************************/
+
 @Dao
 public interface LearningModulesDao {
     // Module

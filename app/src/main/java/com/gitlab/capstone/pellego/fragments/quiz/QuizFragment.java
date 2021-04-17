@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +73,6 @@ public class QuizFragment extends BaseFragment {
             }
         });
 
-        // Set view model parameters
         quizViewModel.setQuizTextCount(getArguments().getInt("quizTextCount"));
         quizViewModel.setDifficulty(getArguments().getString("difficulty"));
         quizViewModel.setWPM(Integer.parseInt(getArguments().getString("wpm")));
@@ -95,12 +93,10 @@ public class QuizFragment extends BaseFragment {
                 quizQuestionTextView.setText(quizViewModel.getNextQuestion());
                 mNavItems = quizViewModel.getNextAnswers();
 
-                // Populate the Navigation Drawer with options
                 moduleList = root.findViewById(R.id.nav_question_list);
                 QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), mNavItems, moduleViewModel.getModuleGradientColors());
                 moduleList.setAdapter(adapter);
 
-                // Drawer Item click listeners
                 moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @SuppressLint("ResourceAsColor")
                     @Override
@@ -111,14 +107,8 @@ public class QuizFragment extends BaseFragment {
                             args.putInt("quizTextCount", getArguments().getInt("quizTextCount"));
                             navController.navigate(R.id.nav_quiz_results);
                         }
-                        // TODO: update icons based on button click
-                        // Right answer
                         if (quizViewModel.getCorrectIndex() == position) {
                             quizViewModel.score++;
-                        }
-                        // Wrong answer
-                        else {
-                            // TODO: update UI to reflect incorrect response?
                         }
                         if (!quizViewModel.isLastQuestion()) {
                             quizViewModel.incrementQuestionCount();
@@ -126,7 +116,6 @@ public class QuizFragment extends BaseFragment {
 
                         quizQuestionTextView.setText(quizViewModel.getNextQuestion());
                         mNavItems = quizViewModel.getNextAnswers();
-                        // Populate the Navigation Drawer with options
                         moduleList = root.findViewById(R.id.nav_question_list);
                         QuizAnswerListAdapter adapter = new QuizAnswerListAdapter(getContext(), mNavItems, moduleViewModel.getModuleGradientColors());
                         moduleList.setAdapter(adapter);
@@ -149,8 +138,8 @@ public class QuizFragment extends BaseFragment {
         window.setStatusBarColor(colors[1]);
         LinearLayout header = root.findViewById(R.id.quiz_header_container);
         GradientDrawable gradientDrawable = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM, //set a gradient direction
-                moduleViewModel.getModuleGradientColors()); //set the color of gradient
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                moduleViewModel.getModuleGradientColors());
         gradientDrawable.setCornerRadii(new float[] {0, 0, 0, 0, 20, 20, 20, 20 });
         header.setBackground(gradientDrawable);
     }

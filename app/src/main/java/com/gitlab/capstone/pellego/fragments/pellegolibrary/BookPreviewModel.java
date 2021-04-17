@@ -18,9 +18,11 @@ import java.util.List;
 
 /**********************************************
  Arturo Lara
+
  Model for BookPreviewActivity class. Pulls data from remote server
  using Volley. Loads images using Glide.
  **********************************************/
+
 public class BookPreviewModel extends AndroidViewModel {
     private LiveData<List<SynopsisResponse>> synopsis;
     private BooksRepo repo;
@@ -52,7 +54,6 @@ public class BookPreviewModel extends AndroidViewModel {
         ArrayList<Storage.Book> b = s.list();
         for (int i = 0; i < b.size(); i++) {
             String title = b.get(i).md5;
-            Log.d("BookPreviewModel", title);
             set.add(title);
         }
     }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.gitlab.capstone.pellego"
     android:installLocation="auto">
 
@@ -267,7 +266,6 @@
             android:theme="@style/Theme.Pellego_Dark">
         </activity>
 
-        <activity android:name="com.gitlab.capstone.pellego.fragments.pellegolibrary.BookPreviewActivity"></activity>
         <activity android:name="com.amazonaws.mobileconnectors.cognitoauth.activities.CustomTabsRedirectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

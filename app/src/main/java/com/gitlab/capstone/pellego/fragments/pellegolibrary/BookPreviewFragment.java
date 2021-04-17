@@ -1,14 +1,7 @@
 package com.gitlab.capstone.pellego.fragments.pellegolibrary;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +10,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.bumptech.glide.Glide;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.app.Storage;
-import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 import com.gitlab.capstone.pellego.network.models.SynopsisResponse;
 
-import org.jsoup.Connection;
-
-import java.util.HashSet;
 import java.util.List;
+
+/****************************************
+ * Arturo Lara
+ *
+ * Represents a Book Preview object for the
+ * Pellego Library
+ ***************************************/
 
 public class BookPreviewFragment extends BaseFragment {
     private BookPreviewModel model;
@@ -49,7 +49,6 @@ public class BookPreviewFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_book_preview, container, false);
     }
 
@@ -70,7 +69,6 @@ public class BookPreviewFragment extends BaseFragment {
                 syn.setText(synopsisResponses.get(0).getSynopsis());
             }
         });
-
 
         if (!model.inStorage(hashString)) {
             view.findViewById(R.id.addToLibraryBtn).setOnClickListener(new View.OnClickListener() {

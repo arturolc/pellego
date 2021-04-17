@@ -13,12 +13,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.network.models.CompletionResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
 
 import java.util.List;
 
-import static java.lang.String.*;
+import static java.lang.String.format;
 
 /*****************************************************
  * Arturo Lara & Chris Bordoy

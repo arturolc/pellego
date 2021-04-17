@@ -29,6 +29,13 @@ import com.gitlab.capstone.pellego.network.models.SMResponse;
 
 import java.util.List;
 
+/****************************************
+ * Eli Hebdon
+ *
+ * Represents a Pre-Reading Learning
+ * Module
+ ***************************************/
+
 public class PreReadingFragment extends BaseFragment {
     private Integer wpm;
     private int quizTextCount;
@@ -49,7 +56,6 @@ public class PreReadingFragment extends BaseFragment {
         submoduleID = getArguments().getString("smID");
         List<SMResponse> submoduleResponses = getArguments().getParcelableArrayList("subModules");
 
-        // Set the displayed text to the appropriate level
         switch(difficulty) {
             case "beginner":
                 content = (submoduleResponses.get(1).getText()).replaceAll("\\s+", " ");

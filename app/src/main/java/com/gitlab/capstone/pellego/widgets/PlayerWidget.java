@@ -28,7 +28,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
@@ -41,7 +40,6 @@ import com.gitlab.capstone.pellego.app.Reflow;
 import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.database.UsersRepo;
 import com.gitlab.capstone.pellego.fragments.metaguiding.MetaguidingModuleFragment;
-import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 
@@ -60,6 +58,13 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static android.view.View.INVISIBLE;
+
+/****************************************
+ * Eli Hebdon and Chris Bordoy
+ *
+ * Represents the Player and its controls
+ * that are used directly on the reader
+ ***************************************/
 
 public class PlayerWidget {
     public static String[] EOL = {"\n", "\r"};

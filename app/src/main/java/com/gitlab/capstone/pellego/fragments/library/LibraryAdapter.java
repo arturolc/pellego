@@ -22,6 +22,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/****************************************
+ * Eli Hebdon
+ *
+ * Extended class for data to UI interaction
+ * flow for library
+ ***************************************/
+
 public class LibraryAdapter extends BooksAdapter {
     ArrayList<Storage.Book> all = new ArrayList<>();
     ArrayList<Storage.Book> list = new ArrayList<>();

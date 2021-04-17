@@ -37,8 +37,9 @@ import java.util.List;
 /**********************************************
  Eli Hebdon and Joanna Lowry
 
- The Clump Reading Fragment
+ The Clump Reading Learning Module Fragment
  **********************************************/
+
 public class ClumpReadingFragment extends BaseFragment {
 
     private View root;
@@ -51,7 +52,6 @@ public class ClumpReadingFragment extends BaseFragment {
     private ModuleViewModel moduleViewModel;
     private FragmentActivity currentView;
     private List<SMResponse> submoduleResponses;
-
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -152,7 +152,6 @@ public class ClumpReadingFragment extends BaseFragment {
         moduleViewModel.setShowPopupDialog(false);
     }
 
-
     /**
      * Asynchronously updates the text in the Clump Reading fragment at the provided WPM rate
      */
@@ -195,7 +194,6 @@ public class ClumpReadingFragment extends BaseFragment {
                     return 0;
                 }
             }
-
             String word = "";
             for(int k = i; k < words.length; k++)
                 word += words[k] + " ";
@@ -235,7 +233,6 @@ public class ClumpReadingFragment extends BaseFragment {
             }
         }
     }
-
 }
 
 

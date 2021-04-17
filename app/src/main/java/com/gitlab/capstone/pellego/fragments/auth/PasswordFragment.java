@@ -1,13 +1,6 @@
 package com.gitlab.capstone.pellego.fragments.auth;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,23 +10,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.amplifyframework.core.Amplify;
 import com.gitlab.capstone.pellego.R;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 /**********************************************
  Arturo Lara
+
  prompts the user for their password
  **********************************************/
+
 public class PasswordFragment extends Fragment {
 
     private AuthViewModel model;
 
     public PasswordFragment() {
-
     }
 
     public static PasswordFragment newInstance(String param1, String param2) {
@@ -44,7 +42,6 @@ public class PasswordFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
