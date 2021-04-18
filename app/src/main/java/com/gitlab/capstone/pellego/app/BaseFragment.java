@@ -1,5 +1,7 @@
 package com.gitlab.capstone.pellego.app;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -10,9 +12,15 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.github.axet.androidlibrary.widgets.InvalidateOptionsMenuCompat;
@@ -71,4 +79,5 @@ public class BaseFragment extends Fragment {
         tts.setVisible(false);
         toggleGrid.setVisible(false);
     }
+
 }

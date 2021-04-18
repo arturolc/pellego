@@ -16,13 +16,14 @@ import com.gitlab.capstone.pellego.R;
 
 Sign Out Fragment
  **********************************************/
-
 public class SignOutFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_sign_out, container, false);
         final TextView textView = root.findViewById(R.id.text_sign_out);
         textView.setText("Sign Out");
+        // sign out logic
+
 
         return root;
     }

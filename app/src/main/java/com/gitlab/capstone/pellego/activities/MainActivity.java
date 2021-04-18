@@ -11,18 +11,26 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -30,12 +38,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
 import com.github.axet.androidlibrary.app.FileTypeDetector;
 import com.github.axet.androidlibrary.preferences.RotatePreferenceCompat;
 import com.github.axet.androidlibrary.widgets.CacheImagesAdapter;
@@ -51,6 +64,7 @@ import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 import com.gitlab.capstone.pellego.fragments.profile.ProfileFragment;
 import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
+import com.google.android.material.internal.NavigationMenuItemView;
 import com.google.android.material.navigation.NavigationView;
 
 import org.geometerplus.fbreader.fbreader.options.ImageOptions;
@@ -60,18 +74,17 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
+import static com.gitlab.capstone.pellego.fragments.profile.ProfileFragment.GET_FROM_GALLERY;
 /****************************************
  * Eli Hebdon
- *
- * Represents the Main Screen Activity
- * which manages library functionality
  ***************************************/
-
 public class MainActivity extends FullscreenActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String TAG = MainActivity.class.getSimpleName();
     public static Bitmap bitmap;
@@ -80,7 +93,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     Storage storage;
     OpenChoicer choicer;
     boolean isRunning;
-
+    String lastSearch;
     LibraryFragment libraryFragment = LibraryFragment.newInstance();
     public boolean volumeEnabled = true; // tmp enabled / disable volume keys
     Context context;
@@ -112,6 +125,34 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
             if (r != 0)
                 return r;
             return Integer.valueOf(o1.position.getElementIndex()).compareTo(o2.position.getElementIndex());
+        }
+    }
+
+    @SuppressLint("RestrictedApi")
+    public static View findView(ViewGroup p, MenuItem item) {
+        for (int i = 0; i < p.getChildCount(); i++) {
+            View v = p.getChildAt(i);
+            if (v instanceof ViewGroup) {
+                View m = findView((ViewGroup) v, item);
+                if (m != null)
+                    return m;
+            }
+            if (v instanceof NavigationMenuItemView) {
+                if (((NavigationMenuItemView) v).getItemData() == item)
+                    return v;
+            }
+            if (v.getId() == item.getItemId())
+                return v;
+        }
+        return null;
+    }
+
+    public static class ResourcesMap extends HashMap<String, String> {
+        public ResourcesMap(Context context, int k, int v) {
+            String[] kk = context.getResources().getStringArray(k);
+            String[] vv = context.getResources().getStringArray(v);
+            for (int i = 0; i < kk.length; i++)
+                put(kk[i], vv[i]);
         }
     }
 
@@ -186,6 +227,16 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //do the onboarding tutorial stuff
+        SharedPreferences preferences =
+                getSharedPreferences("my_preferences", MODE_PRIVATE);
+
+        if(!preferences.getBoolean("onboarding_complete",false)){
+            OnboardingActivity.startActivity(this);
+            return;
+        }
+
         storage = new Storage(this);
         registerReceiver(receiver, new IntentFilter(FBReaderView.ACTION_MENU));
         if (savedInstanceState == null && getIntent().getParcelableExtra(SAVE_INSTANCE_STATE) == null) {
@@ -196,6 +247,9 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         context = getApplicationContext();
 
         RotatePreferenceCompat.onCreate(this, App.PREFERENCE_ROTATE);
+        Window window = this.getWindow();
+        TypedValue typedValue = new TypedValue();
+//        loadImageFromStorage();
     }
 
     @SuppressLint("RestrictedApi")
@@ -253,7 +307,72 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         } catch (Exception e) {
             Log.d("bitmap" , e.getMessage());
         }
+//        MenuItem searchMenu = menu.findItem(R.id.action_search);
         final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
+//        MenuItem theme = menu.findItem(R.id.action_theme);
+//        String t = shared.getString(BookApplication.PREFERENCE_THEME, "");
+//        String d = getString(R.string.Theme_Dark);
+//        theme.setIcon(t.equals(d) ? R.drawable.ic_brightness_night_white_24dp : R.drawable.ic_brightness_day_white_24dp);
+//        ResourcesMap map = new ResourcesMap(this, R.array.theme_value, R.array.theme_text);
+//        theme.setTitle(map.get(getString(t.equals(d) ? R.string.Theme_Dark : R.string.Theme_Light)));
+
+//        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenu);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @SuppressLint("RestrictedApi")
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                lastSearch = query;
+//                searchView.clearFocus();
+//
+//                FragmentManager fm = getSupportFragmentManager();
+//                for (Fragment f : fm.getFragments()) {
+//                    if (f != null && f.isVisible() && f instanceof SearchListener) {
+//                        SearchListener s = (SearchListener) f;
+//                        s.search(searchView.getQuery().toString());
+//                    }
+//                }
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
+//        searchView.setOnSearchClickListener(new View.OnClickListener() {
+//            @SuppressLint("RestrictedApi")
+//            @Override
+//            public void onClick(View v) {
+//                if (lastSearch != null && !lastSearch.isEmpty())
+//                    searchView.setQuery(lastSearch, false);
+//                FragmentManager fm = getSupportFragmentManager();
+//                for (Fragment f : fm.getFragments()) {
+//                    if (f != null && f.isVisible() && f instanceof SearchListener) {
+//                        SearchListener s = (SearchListener) f;
+//                        searchView.setQueryHint(s.getHint());
+//                    }
+//                }
+//            }
+//        });
+//        searchView.setOnCollapsedListener(new SearchView.OnCollapsedListener() {
+//            @SuppressLint("RestrictedApi")
+//            @Override
+//            public void onCollapsed() {
+//                FragmentManager fm = getSupportFragmentManager();
+//                for (Fragment f : fm.getFragments()) {
+//                    if (f != null && f.isVisible() && f instanceof SearchListener) {
+//                        SearchListener s = (SearchListener) f;
+//                        s.searchClose();
+//                    }
+//                }
+//            }
+//        });
+//        searchView.setOnCloseButtonListener(new SearchView.OnCloseButtonListener() {
+//            @Override
+//            public void onClosed() {
+//                lastSearch = "";
+//            }
+//        });
 
         return true;
     }
@@ -261,11 +380,59 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+//
+//        if (id == R.id.action_about) {
+//            AboutPreferenceCompat.buildDialog(this, R.raw.about).show();
+//            return true;
+//        }
 
         if (id == R.id.action_settings) {
             SettingsActivity.startActivity(this);
             return true;
         }
+
+//        final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
+//        if (id == R.id.action_file) {
+//            String last = shared.getString(BookApplication.PREFERENCE_LAST_PATH, null);
+//            Uri old = null;
+//            if (last != null) {
+//                old = Uri.parse(last);
+//                File f = Storage.getFile(old);
+//                while (f != null && !f.exists())
+//                    f = f.getParentFile();
+//                if (f != null)
+//                    old = Uri.fromFile(f);
+//            } else {
+//                old = Uri.parse(ContentResolver.SCHEME_CONTENT + Storage.CSS); // show SAF default
+//            }
+//            choicer = new OpenChoicer(OpenFileDialog.DIALOG_TYPE.FILE_DIALOG, true) {
+//                @Override
+//                public void onResult(Uri uri) {
+//                    String s = uri.getScheme();
+//                    if (s.equals(ContentResolver.SCHEME_FILE)) {
+//                        File f = Storage.getFile(uri);
+//                        f = f.getParentFile();
+//                        SharedPreferences.Editor editor = shared.edit();
+//                        editor.putString(BookApplication.PREFERENCE_LAST_PATH, f.toString());
+//                        editor.commit();
+//                    }
+//                    loadBook(uri, null);
+//                }
+//            };
+//            choicer.setStorageAccessFramework(this, RESULT_FILE);
+//            choicer.setPermissionsDialog(this, Storage.PERMISSIONS_RO, RESULT_FILE);
+//            choicer.show(old);
+//        }
+
+//        if (id == R.id.action_theme) {
+//            SharedPreferences.Editor edit = shared.edit();
+//            String t = shared.getString(BookApplication.PREFERENCE_THEME, "");
+//            String d = getString(R.string.Theme_Dark);
+//            edit.putString(BookApplication.PREFERENCE_THEME, t.equals(d) ? getString(R.string.Theme_Light) : d);
+//            edit.commit();
+//            restartActivity();
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -424,6 +591,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
             View v = inflater.inflate(R.layout.recent, null);
 
             final FBReaderView r = (FBReaderView) v.findViewById(R.id.recent_fbview);
+            // r.config.setValue(r.app.ViewOptions.ScrollbarType, 0);
             r.config.setValue(r.app.MiscOptions.WordTappingAction, MiscOptions.WordTappingActionEnum.doNothing);
             r.config.setValue(r.app.ImageOptions.TapAction, ImageOptions.TapActionEnum.doNothing);
 
@@ -548,6 +716,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         navController.navigate(R.id.reader, ReaderFragment.newInstance(uri, pos));
 
         popBackStack(ReaderFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//        addFragment(ReaderFragment.newInstance(uri, pos), ReaderFragment.TAG);
     }
 
     public void openLibrary() {
@@ -567,6 +736,8 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         if (f instanceof LibraryFragment) {
             navController.navigate(R.id.nav_library);
         }
+
+//        return fm.beginTransaction().replace(R.id.nav_host_fragment, f, tag);
     }
 
 

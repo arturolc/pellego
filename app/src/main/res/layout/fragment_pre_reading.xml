@@ -17,7 +17,7 @@
 
     <ScrollView
         android:layout_width="0dp"
-        android:layout_height="520dp"
+        android:layout_height="0dp"
         android:id="@+id/mscroller"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@id/btn_pre_reading"
@@ -29,9 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?colorAccent"
-            android:paddingTop="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingTop="25dp"
             android:textSize="20sp"
             android:paddingBottom="7dp"
             app:layout_constraintBottom_toTopOf="@+id/btn_pre_reading"
@@ -41,6 +39,8 @@
 
         </TextView>
     </ScrollView>
+
+
 
     <Button
         android:id="@+id/btn_pre_reading"

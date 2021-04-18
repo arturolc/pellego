@@ -1,10 +1,10 @@
 package com.gitlab.capstone.pellego.network.models;
 
+import java.util.List;
+
 import com.gitlab.capstone.pellego.database.entities.LM_Submodule;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 /*****************************************************
  * Arturo Lara & Chris Bordoy

@@ -1,12 +1,15 @@
 package com.gitlab.capstone.pellego.database;
 
 import android.app.Application;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.gitlab.capstone.pellego.database.daos.LibraryDao;
+import com.gitlab.capstone.pellego.database.entities.Books;
+import com.gitlab.capstone.pellego.database.entities.Library;
 import com.gitlab.capstone.pellego.network.APIService;
 import com.gitlab.capstone.pellego.network.RetroInstance;
 import com.gitlab.capstone.pellego.network.models.LibraryResponse;
@@ -17,13 +20,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-/****************************************
- * Arturo Lara
- *
- * Represents a Books repository for the
- * library
- ***************************************/
 
 public class BooksRepo {
     private LibraryDao libDao;
@@ -74,6 +70,7 @@ public class BooksRepo {
             public void onResponse(Call<List<SynopsisResponse>> call, Response<List<SynopsisResponse>> response) {
                 Log.i("LIBRARYREPO", response.body().toString());
                 synResponse.setValue(response.body());
+
             }
 
             @Override
@@ -84,4 +81,9 @@ public class BooksRepo {
 
         return synResponse;
     }
+
+
+
+
+
 }

@@ -5,7 +5,6 @@ package com.gitlab.capstone.pellego.fragments.quiz;
 
  Representation of a single question in a quiz
  **********************************************/
-
 public class QuizQuestionModel {
     String mTitle;
     String mIcon;

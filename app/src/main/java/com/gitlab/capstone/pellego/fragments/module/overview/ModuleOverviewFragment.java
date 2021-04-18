@@ -33,7 +33,6 @@ import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.network.models.LMDescResponse;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +95,7 @@ public class ModuleOverviewFragment extends BaseFragment {
 
         this.setupHeader(root, moduleViewModel.getModuleID());
 
+        // menu Item click listeners
         moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

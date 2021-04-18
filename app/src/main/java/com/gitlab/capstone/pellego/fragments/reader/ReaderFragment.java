@@ -19,6 +19,16 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.core.view.MenuItemCompat;
+import androidx.core.view.ViewCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -39,16 +49,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.MenuItemCompat;
-import androidx.core.view.ViewCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.axet.androidlibrary.preferences.ScreenlockPreference;
 import com.github.axet.androidlibrary.widgets.ErrorDialog;
@@ -87,13 +87,6 @@ import java.util.TreeSet;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
-/****************************************
- * Eli Hebdon
- *
- * Represents the Reader for all text files
- * and library books
- ***************************************/
-
 public class ReaderFragment extends Fragment implements MainActivity.SearchListener, SharedPreferences.OnSharedPreferenceChangeListener, FullscreenActivity.FullscreenListener, MainActivity.OnBackPressed {
     public static final String TAG = ReaderFragment.class.getSimpleName();
 
@@ -105,6 +98,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public static final int REFLOW_END = 15;
     public static Menu optionsMenu;
     public Activity activity;
+
 
     Handler handler = new Handler();
     Storage storage;
@@ -149,6 +143,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         rtl.setVisible(false);
         tts.setVisible(false);
     }
+
 
     public static class FontsPopup extends PopupWindow {
         FontAdapter fonts;
@@ -361,6 +356,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             {
                 holder.tv.setCheckMarkDrawable(R.drawable.ic_empty_circle);
             }
+//            holder.tv.setCheckMarkDrawable(R.drawable.ic_empty_circle);
             holder.tv.setChecked(selected == position);
             holder.tv.setTypeface(ff.get(position).font);
             holder.tv.setText(ff.get(position).name);
@@ -393,8 +389,8 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                 TreeListView.TreeNode n = new TreeListView.TreeNode(r, t);
                 r.nodes.add(n);
                 if (equals(t, current)) {
-                    n.selected = true;
-                    r.expanded = true;
+                    n.selected = true; // current selected
+                    r.expanded = true; // parent expanded
                 }
                 if (t.hasChildren()) {
                     loadTOC(n, t.subtrees());
@@ -615,6 +611,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         return fonts.isEmpty() ? null : fonts;
     }
 
+
     public static Bundle newInstance(Uri uri) {
         ReaderFragment fragment = new ReaderFragment();
         Bundle args = new Bundle();
@@ -679,6 +676,8 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         }
         return null;
     }
+
+
 
     @Override
     public void onStart() {
@@ -782,6 +781,7 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
 
         FrameLayout constraintLayout = getActivity().findViewById(R.id.host_fragment_container);
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
+//        layoutParams.bottomToTop = R.id.bottom_nav_view;
         constraintLayout.setLayoutParams(layoutParams);
         return v;
     }
@@ -932,6 +932,19 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
             dialog.show();
             return true;
         }
+//        if (id == R.id.action_reflow) {
+//            fb.setReflow(!fb.isReflow());
+//            updateToolbar();
+//        }
+//        if (id == R.id.action_debug) {
+//            fb.pluginview.reflowDebug = !fb.pluginview.reflowDebug;
+//            if (fb.pluginview.reflowDebug) {
+//                fb.pluginview.reflow = true;
+//                fb.setWidget(FBReaderView.Widgets.PAGING);
+//            }
+//            fb.reset();
+//            updateToolbar();
+//        }
         if (id == R.id.action_fontsize) {
             if (fb.pluginview == null) {
                 fontsPopup = new FontsPopup(getContext()) {
@@ -1070,17 +1083,21 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
     public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         optionsMenu = menu;
+//        addDropDownSeekBar(getActivity(), menu, "wpm");
         invalidateOptionsMenu = InvalidateOptionsMenuCompat.onCreateOptionsMenu(this, menu, inflater);
         MenuItem homeMenu = menu.findItem(R.id.action_home);
         MenuItem tocMenu = menu.findItem(R.id.action_toc);
         MenuItem settings = menu.findItem(R.id.action_settings);
         settings.setVisible(false);
-
+//        searchMenu = menu.findItem(R.id.action_search);
+//        MenuItem reflow = menu.findItem(R.id.action_reflow);
+//        MenuItem debug = menu.findItem(R.id.action_debug);
         MenuItem bookmarksMenu = menu.findItem(R.id.action_bm);
         final MenuItem fontsize = menu.findItem(R.id.action_fontsize);
         final MenuItem rtl = menu.findItem(R.id.action_rtl);
         MenuItem grid = menu.findItem(R.id.action_grid);
         MenuItem mode = menu.findItem(R.id.action_mode);
+//        MenuItem theme = menu.findItem(R.id.action_theme);
         MenuItem sort = menu.findItem(R.id.action_sort);
         MenuItem tts = menu.findItem(R.id.action_tts);
 
@@ -1097,13 +1114,20 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
                 search = true;
             }
             if (fb.pluginview.reflow || fb.pluginview instanceof ComicsPlugin.ComicsView)
-                tts.setVisible(false);
+                tts.setVisible(false); // TODO reflow - possible and can be very practical
         }
 
         grid.setVisible(false);
         homeMenu.setVisible(false);
         sort.setVisible(false);
         tocMenu.setVisible(fb.app.Model != null && fb.app.Model.TOCTree != null && fb.app.Model.TOCTree.hasChildren());
+//        searchMenu.setVisible(search);
+//        reflow.setVisible(fb.pluginview != null && !(fb.pluginview instanceof ComicsPlugin.ComicsView));
+
+//        if (BuildConfig.DEBUG && fb.pluginview != null && !(fb.pluginview instanceof ComicsPlugin.ComicsView))
+//            debug.setVisible(true);
+//        else
+//            debug.setVisible(false);
 
         fontsize.setVisible(fb.pluginview == null || fb.pluginview.reflow);
         if (fb.pluginview == null)
@@ -1135,6 +1159,9 @@ public class ReaderFragment extends Fragment implements MainActivity.SearchListe
         ((ToolbarButtonView) MenuItemCompat.getActionView(rtl)).text.setText(fb.app.BookTextView.rtlMode ? "RTL" : "LTR");
         if (fb.book != null) // call before onCreateView
             bookmarksMenu.setVisible(fb.book.info.bookmarks != null && fb.book.info.bookmarks.size() > 0);
+
+//        if (fb.pluginview instanceof ComicsPlugin.ComicsView)
+//            theme.setVisible(false);
     }
 
     void showTOC() {

@@ -3,6 +3,8 @@ package com.gitlab.capstone.pellego.widgets;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import androidx.core.graphics.ColorUtils;
+import androidx.appcompat.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.graphics.ColorUtils;
-
 import com.github.axet.androidlibrary.widgets.PopupWindowCompat;
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.gitlab.capstone.pellego.R;
@@ -22,14 +21,7 @@ import com.gitlab.capstone.pellego.app.Storage;
 
 import java.util.ArrayList;
 
-/****************************************
- * Eli Hebdon
- *
- * Represents a bookmark popup that is used
- * with all library books
- ***************************************/
-
-public class BookmarkPopup {
+public class BookmarkPopup { // bookmark click popup
     public static int COLORS[] = new int[]{0xffff0000, 0xffFF8000, 0xffFFFF00, 0xff00FF00, 0xff0000FF, 0xff3F00FF, 0xff7F00FF};
 
     public Context context;

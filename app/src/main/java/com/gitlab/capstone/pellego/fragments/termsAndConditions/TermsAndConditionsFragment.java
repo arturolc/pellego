@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
@@ -16,7 +17,6 @@ import com.gitlab.capstone.pellego.app.BaseFragment;
 
 This fragment displays the applications EULA
  **********************************************/
-
 public class TermsAndConditionsFragment extends BaseFragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,

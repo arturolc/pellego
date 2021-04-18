@@ -1,13 +1,8 @@
 package com.gitlab.capstone.pellego.fragments.auth;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,20 +10,29 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import com.gitlab.capstone.pellego.R;
 
 /**********************************************
  Arturo Lara
-
  Prompts the user for their name
  **********************************************/
-
 public class NameFragment extends Fragment {
 
     private AuthViewModel model;
 
     public NameFragment() {
+        // Required empty public constructor
     }
+
 
     public static NameFragment newInstance() {
         NameFragment fragment = new NameFragment();
@@ -39,6 +43,7 @@ public class NameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -46,6 +51,7 @@ public class NameFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_name, container, false);
+
     }
 
     @Override
