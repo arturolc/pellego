@@ -1,10 +1,13 @@
 package com.gitlab.capstone.pellego.fragments.auth;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -86,35 +89,12 @@ public class LoginFragment extends Fragment {
                                 e.printStackTrace();
                             }
 
-                            Amplify.Auth.fetchUserAttributes(s ->  {
-                                String name = "";
-                                String email = "";
-
-                                for(int i = 0; i < s.size(); i++) {
-                                    if (s.get(i).getKey().getKeyString().equals("name")) {
-                                        name = s.get(i).getValue();
-                                    }
-                                    else if (s.get(i).getKey().getKeyString().equals("email")) {
-                                        email = s.get(i).getValue();
-                                    }
-                                }
-                                PellegoDatabase db = PellegoDatabase.getDatabase(getActivity().getApplication());
-                                UserDao dao = db.userDao();
-                                dao.addUser(new Users(0, name, email));
-                            }, fail ->  {
-                                Log.i("user", fail.toString());
-                            });
-
                             Intent i = new Intent(getActivity(), MainActivity.class);
                             startActivity(i);
                             getActivity().finish();
                         },
                         error -> Log.e("AUTHENTICATION", error.toString()));
-
             }
         });
     }
-
-
-
 }

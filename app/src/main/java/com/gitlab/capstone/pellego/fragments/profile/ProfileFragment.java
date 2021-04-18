@@ -24,6 +24,7 @@ import androidx.lifecycle.Observer;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.activities.MainActivity;
 import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.database.entities.Users;
 import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
 import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -69,21 +70,26 @@ public class ProfileFragment extends BaseFragment {
         });
 
         im1.setImageBitmap(bitmap);
-        profileViewModel.getUserName().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                pgsBar.setVisibility(View.INVISIBLE);
-                ((TextView)root.findViewById(R.id.tv_name)).setText(s);
-                ((TextView)root.findViewById(R.id.userName)).setText(s);
-            }
-        });
 
-        profileViewModel.getEmail().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                ((TextView)root.findViewById(R.id.userEmail)).setText(s);
-            }
-        });
+        Users user = profileViewModel.getUser();
+        pgsBar.setVisibility(View.INVISIBLE);
+        ((TextView)root.findViewById(R.id.tv_name)).setText(user.getName());
+        ((TextView)root.findViewById(R.id.userName)).setText(user.getName());
+//        profileViewModel.getUserName().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(String s) {
+//
+//            }
+//        });
+
+        ((TextView)root.findViewById(R.id.userEmail)).setText(user.getEmail());
+
+//        profileViewModel.getEmail().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(String s) {
+//
+//            }
+//        });
 
         profileViewModel.getTotalWordsReadResponse().observe(getViewLifecycleOwner(), new Observer<TotalWordsReadResponse>() {
            @Override

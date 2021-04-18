@@ -2,6 +2,8 @@ package com.gitlab.capstone.pellego.database;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.icu.util.TimeZone;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkRequest;
@@ -16,6 +18,7 @@ import androidx.lifecycle.Observer;
 
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
+import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.database.daos.UserDao;
 import com.gitlab.capstone.pellego.database.entities.ProgressCompleted;
 import com.gitlab.capstone.pellego.database.entities.UserWordValues;
@@ -35,6 +38,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -68,16 +72,14 @@ public class UsersRepo {
         db = PellegoDatabase.getDatabase(application);
         dao = db.userDao();
         apiService = RetroInstance.getRetroClient().create(APIService.class);
-        AuthUser u = Amplify.Auth.getCurrentUser();
 
-        dao.getUser(u.getUsername()).observeForever(new Observer<Users>() {
-            @Override
-            public void onChanged(Users users) {
-                user = users;
-                Log.d("UsersRepo", users.toString());
-                registerNetworkCallback();
-            }
-        });
+        SharedPreferences sharedPref = application.getSharedPreferences("User", Context.MODE_PRIVATE);
+        long uid = sharedPref.getLong("UserID", -1);
+        String name = sharedPref.getString("UserName", "");
+        String email = sharedPref.getString("UserEmail", "");
+        user = new Users((int)uid, name, email);
+        Log.d("USERSREPO", user.toString());
+        registerNetworkCallback();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -209,11 +211,10 @@ public class UsersRepo {
         }
         else {
             List<ProgressValuesResponse> res = new ArrayList<>();
-            Calendar c = Calendar.getInstance();
+            Calendar c = Calendar.getInstance(java.util.TimeZone.getTimeZone("GMT"));
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date today = new Date();
             Date todayWithZeroTime;
-
             try {
                 todayWithZeroTime = formatter.parse(formatter.format(today));
                 c.setTime(todayWithZeroTime);
@@ -222,9 +223,13 @@ public class UsersRepo {
                 Log.e("UsersRepo", e.toString());
             }
 
+            Log.d("timezone", c.getTime().toString());
+//            Log.d("timezone", Instant.now().toString());
+//            Log.d("timezone", Instant.now().toEpochMilli() + "");
+//            Log.d("timezone", c.getTime() + "");
             AsyncTask.execute(()-> {
                 for (int i = 0; i < 7; i++) {
-                    UserWordValues el = dao.getProgressLast7Days(user.getUID(),c.getTime());
+                    UserWordValues el = dao.getProgressLast7Days(user.getUID(), c.getTime());
                     if (el.getRecorded() == null)
                         el.setRecorded(c.getTime());
                     res.add(new ProgressValuesResponse(el.getRecorded(), el.getWordsRead(), el.getWpm()));

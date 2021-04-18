@@ -49,6 +49,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
+import com.amplifyframework.core.Amplify;
 import com.github.axet.androidlibrary.app.FileTypeDetector;
 import com.github.axet.androidlibrary.preferences.RotatePreferenceCompat;
 import com.github.axet.androidlibrary.widgets.CacheImagesAdapter;
@@ -60,6 +62,9 @@ import com.github.axet.androidlibrary.widgets.WebViewCustom;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.database.PellegoDatabase;
+import com.gitlab.capstone.pellego.database.daos.UserDao;
+import com.gitlab.capstone.pellego.database.entities.Users;
 import com.gitlab.capstone.pellego.fragments.library.LibraryFragment;
 import com.gitlab.capstone.pellego.fragments.profile.ProfileFragment;
 import com.gitlab.capstone.pellego.fragments.profile.ProfileModel;
@@ -228,9 +233,6 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ProfileModel profile = ProfileModel.getInstance(getApplication());
-
         storage = new Storage(this);
         registerReceiver(receiver, new IntentFilter(FBReaderView.ACTION_MENU));
         if (savedInstanceState == null && getIntent().getParcelableExtra(SAVE_INSTANCE_STATE) == null) {

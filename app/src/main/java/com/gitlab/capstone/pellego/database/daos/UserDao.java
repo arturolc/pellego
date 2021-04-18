@@ -17,13 +17,16 @@ import java.util.List;
 public interface UserDao {
 
     @Insert
-    void addUser(Users user);
+    long addUser(Users user);
 
     @Insert
     void setUserWordValues(UserWordValues... values);
 
     @Insert
     void setProgressCompleted(ProgressCompleted... pc);
+
+    @Query("select UID from Users where Email = :email")
+    int getUserID(String email);
 
     @Query("select * from Users where Email= :email")
     LiveData<Users> getUser(String email);

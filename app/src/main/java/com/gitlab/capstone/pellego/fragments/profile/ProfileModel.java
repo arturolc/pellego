@@ -1,6 +1,8 @@
 package com.gitlab.capstone.pellego.fragments.profile;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
@@ -22,8 +24,8 @@ import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
  **********************************************/
 
 public class ProfileModel extends AndroidViewModel {
-    private final MutableLiveData<String> userName;
-    private final MutableLiveData<String> email;
+    private Users user;
+
     private static ProfileModel INSTANCE;
     private final UsersRepo usersRepo;
     private LiveData<TotalWordsReadResponse> totalWordsReadResponse;
@@ -33,10 +35,15 @@ public class ProfileModel extends AndroidViewModel {
         super(application);
         this.usersRepo = UsersRepo.getInstance(application);
         totalWordsReadResponse = new MutableLiveData<>();
-        userName = new MutableLiveData<>();
-        email = new MutableLiveData<>();
+
+        SharedPreferences sharedPref = application.getSharedPreferences("User", Context.MODE_PRIVATE);
+        long uid = sharedPref.getLong("UserID", -1);
+        String name = sharedPref.getString("UserName", "");
+        String email = sharedPref.getString("UserEmail", "");
+        this.user = new Users((int)uid, name, email);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static ProfileModel getInstance(@NonNull Application application) {
         if (INSTANCE != null) {
             return INSTANCE;
@@ -50,11 +57,7 @@ public class ProfileModel extends AndroidViewModel {
         return totalWordsReadResponse;
     }
 
-    public LiveData<String> getUserName() {
-        return userName;
-    }
-
-    public LiveData<String> getEmail() {
-        return email;
+    public Users getUser() {
+        return user;
     }
 }

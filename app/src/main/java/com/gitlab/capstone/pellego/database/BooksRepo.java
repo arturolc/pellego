@@ -81,9 +81,4 @@ public class BooksRepo {
 
         return synResponse;
     }
-
-
-
-
-
 }

@@ -2,6 +2,7 @@ package com.gitlab.capstone.pellego.database;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
@@ -71,26 +72,20 @@ public class LearningModulesRepo {
         db = PellegoDatabase.getDatabase(application);
         dao = db.learningModulesDao();
         apiService = RetroInstance.getRetroClient().create(APIService.class);
-        UsersRepo  u = UsersRepo.getInstance(application);
-        u.getUser().observeForever(new Observer<Users>() {
-            @Override
-            public void onChanged(Users users) {
-                user = users;
-
-                // check to see if we have anything in local db
-                AsyncTask.execute(()-> {
-                    int count = dao.getModulesCount();
-                    Log.d("ModulesCount", "" + count);
-                    if (count == 0) {
-                        cacheModules();
-                    }
-                });
+        SharedPreferences sharedPref = application.getSharedPreferences("User", Context.MODE_PRIVATE);
+        long uid = sharedPref.getLong("UserID", -1);
+        String name = sharedPref.getString("UserName", "");
+        String email = sharedPref.getString("UserEmail", "");
+        user = new Users((int)uid, name, email);
+        registerNetworkCallback();
+        isNetworkConnected = false;
+        AsyncTask.execute(()-> {
+            int count = dao.getModulesCount();
+            Log.d("ModulesCount", "" + count);
+            if (count == 0) {
+                cacheModules();
             }
         });
-        registerNetworkCallback();
-
-        // TODO refactor how we save user from SQL to shared prefernces to avoid race conditions
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -121,18 +116,20 @@ public class LearningModulesRepo {
             });
         }
         else {
-            AsyncTask.execute(() -> {
-                List<LM_Module> mn = dao.getModules();
-                Log.d("LMDAO", mn.toString());
-                List<LMResponse> res = new ArrayList<>();
-                for(int i = 0; i < mn.size(); i++) {
-                    LM_Module m = mn.get(i);
-                    res.add(new LMResponse(m.getMID(), m.getName(), m.getSubheader(), m.getIcon(),
-                            dao.getModuleProgress(1, mn.get(i).getMID()),
-                            dao.getSubmodulesCount(mn.get(i).getMID())));
-                }
 
-                lmResponse.postValue(res);
+            dao.getModules().observeForever(new Observer<List<LM_Module>>() {
+                @Override
+                public void onChanged(List<LM_Module> mn) {
+                    Log.d("LMDAO", mn.toString());
+                    List<LMResponse> res = new ArrayList<>();
+                    for(int i = 0; i < mn.size(); i++) {
+                        LM_Module m = mn.get(i);
+                        res.add(new LMResponse(m.getMID(), m.getName(), m.getSubheader(), m.getIcon(),
+                                dao.getModuleProgress(1, mn.get(i).getMID()),
+                                dao.getSubmodulesCount(mn.get(i).getMID())));
+                    }
+                    lmResponse.postValue(res);
+                }
             });
         }
         return lmResponse;
@@ -155,16 +152,24 @@ public class LearningModulesRepo {
             });
         }
         else {
-            AsyncTask.execute(() -> {
-                LM_Module mod = dao.getModule(Integer.parseInt(moduleID));
-                LMDescResponse resp = new LMDescResponse(mod.getMID(), mod.getName(),
-                        mod.getDescription(), dao.getSubmodules(mod.getMID()));
-                List<LMDescResponse> l = new ArrayList<>();
-                l.add(resp);
-                lmDescResponse.postValue(l);
-            });
-        }
+                dao.getModule(Integer.parseInt(moduleID)).observeForever(new Observer<LM_Module>() {
+                    @Override
+                    public void onChanged(LM_Module mod) {
+                        dao.getSubmodules(mod.getMID()).observeForever(new Observer<List<LM_Submodule>>() {
+                            @Override
+                            public void onChanged(List<LM_Submodule> lm_submodules) {
+                                LMDescResponse resp = new LMDescResponse(mod.getMID(), mod.getName(),
+                                        mod.getDescription(), lm_submodules);
+                                List<LMDescResponse> l = new ArrayList<>();
+                                l.add(resp);
+                                lmDescResponse.postValue(l);
+                            }
+                        });
 
+                    }
+                });
+
+        }
         return lmDescResponse;
     }
 
@@ -186,24 +191,29 @@ public class LearningModulesRepo {
             });
         }
         else {
-            AsyncTask.execute(() -> {
                 List<SMResponse> result = new ArrayList<>();
 
-                List<LM_Intro> intro = dao.getIntro(Integer.parseInt(mID));
-                List<IntroContentModel> ic = new ArrayList<>();
-                for (LM_Intro el : intro) {
-                    ic.add(new IntroContentModel(el.getHeader(), el.getContent()));
-                }
+                dao.getIntro(Integer.parseInt(mID)).observeForever(new Observer<List<LM_Intro>>() {
+                    @Override
+                    public void onChanged(List<LM_Intro> intro) {
+                        List<IntroContentModel> ic = new ArrayList<>();
+                        for (LM_Intro el : intro) {
+                            ic.add(new IntroContentModel(el.getHeader(), el.getContent()));
+                        }
 
-                List<LM_Submodule> submodules = dao.getSubmodules(Integer.parseInt(mID));
-                result.add(new SMResponse(submodules.get(0).getName(), submodules.get(0).getSubheader(), null, ic));
-                for (int i = 1; i < submodules.size(); i++) {
-                    LM_Submodule sm = submodules.get(i);
-                    result.add(new SMResponse(sm.getName(), sm.getSubheader(), sm.getText(), null));
-                }
-
-                smResponse.postValue(result);
-            });
+                        dao.getSubmodules(Integer.parseInt(mID)).observeForever(new Observer<List<LM_Submodule>>() {
+                            @Override
+                            public void onChanged(List<LM_Submodule> submodules) {
+                                result.add(new SMResponse(submodules.get(0).getName(), submodules.get(0).getSubheader(), null, ic));
+                                for (int i = 1; i < submodules.size(); i++) {
+                                    LM_Submodule sm = submodules.get(i);
+                                    result.add(new SMResponse(sm.getName(), sm.getSubheader(), sm.getText(), null));
+                                }
+                                smResponse.postValue(result);
+                            }
+                        });
+                    }
+                });
         }
         return smResponse;
     }
@@ -226,20 +236,25 @@ public class LearningModulesRepo {
             });
         }
         else {
-            AsyncTask.execute(() -> {
-                List<Questions> questions = dao.getQuestions(Integer.parseInt(smID));
-                List<QuizResponse> result = new ArrayList<>();
+                dao.getQuestions(Integer.parseInt(smID)).observeForever(new Observer<List<Questions>>() {
+                    @Override
+                    public void onChanged(List<Questions> questions) {
+                        List<QuizResponse> result = new ArrayList<>();
 
-                for (Questions q : questions) {
-                    List<Answer> answers = dao.getAnswers(Integer.parseInt(smID), q.getQUID());
-                    result.add(new QuizResponse(q.getQUID(), q.getQuestion(), answers));
-                }
+                        for (Questions q : questions) {
+                            dao.getAnswers(Integer.parseInt(smID), q.getQUID()).observeForever(new Observer<List<Answer>>() {
+                                @Override
+                                public void onChanged(List<Answer> answers) {
+                                    result.add(new QuizResponse(q.getQUID(), q.getQuestion(), answers));
+                                    Log.d("LMREPO", result.toString());
+                                    quizResponse.postValue(result);
+                                }
+                            });
 
-                Log.d("LMREPO", result.toString());
-                quizResponse.postValue(result);
-            });
+                        }
+                    }
+                });
         }
-
         return quizResponse;
     }
 
