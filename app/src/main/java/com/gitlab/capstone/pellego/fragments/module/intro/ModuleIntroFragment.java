@@ -40,40 +40,43 @@ public class ModuleIntroFragment extends BaseFragment {
     private Button btn_register;
     private SharedPreferences sharedPref;
     private int totalPageCount;
+    private String mID;
+    private String submoduleID;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        List<SMResponse> submoduleResponses = getArguments().getParcelableArrayList("subModules");
-
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(0xFFF9D976);
-        toolbar.setTitle(null);
-        Window window = getActivity().getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(0xFFF9D976);
+        List<SMResponse> submoduleResponses = getArguments()
+                .getParcelableArrayList("subModules");
+        mID = getArguments().getString("moduleID");
+        submoduleID = getArguments().getString("smID");
 
         moduleViewModel =
                 new ViewModelProvider(
                         requireActivity(),
                         new ModuleViewModelFactory(
                                 getActivity().getApplication(),
-                                getArguments().getString("moduleID"))).
+                                mID)).
                         get(ModuleViewModel.class);
+
+        moduleViewModel.setSubModuleID(submoduleID);
+
+        int[] colors = moduleViewModel.getModuleGradientColors(mID);
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(colors[1]);
+        toolbar.setTitle(null);
+        Window window = getActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(colors[1]);
 
         View root = inflater.inflate(R.layout.fragment_module_intro, container, false);
 
         DotsIndicator dotsIndicator = root.findViewById(R.id.dots_indicator);
         ViewPager2 viewPager2 = root.findViewById(R.id.view_pager);
 
-        GradientDrawable gd = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{0xFFF9D976, 0xFFF39f86});
-        gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
-
         btn_register = root.findViewById(R.id.intro_finish_btn);
 
-        viewPager2.setBackground(gd);
+        viewPager2.setBackground(moduleViewModel.getGradient());
 
         //set data
         ModuleIntroPagerAdapter pagerAdapter = new ModuleIntroPagerAdapter(
@@ -88,14 +91,18 @@ public class ModuleIntroFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 if (position == totalPageCount - 1) {
-                    btn_register.setBackground(moduleViewModel.getGradient());
+                    GradientDrawable gradientDrawable = new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM, //set a gradient direction
+                            moduleViewModel.getModuleGradientColors()); //set the color of gradient
+                    gradientDrawable.setCornerRadius(20f);
+                    btn_register.setBackground(gradientDrawable);
                     btn_register.setVisibility(View.VISIBLE);
                     btn_register.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view){
                             NavController navController = Navigation.findNavController(getActivity(),
                                     R.id.nav_host_fragment);
-                            // TODO: update DB that intro was completed
+                            moduleViewModel.setSubModuleCompletion(mID, submoduleID);
                             // Store results in shared preference
                             sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
                             updateModuleProgress();
@@ -106,6 +113,8 @@ public class ModuleIntroFragment extends BaseFragment {
                             return;
                         }
                     });
+                } else {
+                    btn_register.setVisibility(View.INVISIBLE);
                 }
             }
         });

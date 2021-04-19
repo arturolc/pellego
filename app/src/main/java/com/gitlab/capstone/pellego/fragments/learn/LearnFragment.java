@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -18,6 +19,7 @@ import androidx.navigation.Navigation;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
+import com.gitlab.capstone.pellego.network.models.CompletionResponse;
 import com.gitlab.capstone.pellego.network.models.LMResponse;
 
 import java.util.List;
@@ -25,7 +27,7 @@ import java.util.List;
 /**********************************************
     Chris Bordoy, Arturo Lara & Eli Hebdon
 
-    The Learn Modules Component
+    The Learning Modules Component
  **********************************************/
 
 public class LearnFragment extends BaseFragment {
@@ -33,56 +35,46 @@ public class LearnFragment extends BaseFragment {
     private LearnViewModel learnViewModel;
     private ListView moduleList;
     private LiveData<List<LMResponse>> lmResponses;
+    public int[] completionResponse;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         learnViewModel = new ViewModelProvider(requireActivity()).get(LearnViewModel.class);
         View root = inflater.inflate(R.layout.fragment_learn, container, false);
+        ProgressBar pgsBar = (ProgressBar)getActivity().findViewById(R.id.progress_loader);
+        pgsBar.setVisibility(View.VISIBLE);
         moduleList = root.findViewById(R.id.nav_module_list);
 
         super.setupHeader(root);
 
-        lmResponses = learnViewModel.getLMResponse();
-        learnViewModel.getLMResponse().observe(getViewLifecycleOwner(), new Observer<List<LMResponse>>() {
+        learnViewModel.getCompletionResponse().observe(getViewLifecycleOwner(), new Observer<List<CompletionResponse>>() {
             @Override
-            public void onChanged(List<LMResponse> lmResponses) {
-                LearnCardAdapter adapter = new LearnCardAdapter(getContext(), lmResponses);
-                moduleList.setAdapter(adapter);
-            }
-        });
+            public void onChanged(List<CompletionResponse> completionResponses) {
+                completionResponse = learnViewModel.parseCompletionResponses(completionResponses);
+                lmResponses = learnViewModel.getLMResponse();
+                learnViewModel.getLMResponse().observe(getViewLifecycleOwner(), new Observer<List<LMResponse>>() {
+                    @Override
+                    public void onChanged(List<LMResponse> lmResponses) {
+                        pgsBar.setVisibility(View.INVISIBLE);
 
-        //TODO: NEED TO CLEAN UP AND HOOK UP META GUIDING
-        // Drawer Item click listeners
-        moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-                // TODO: navigate to fragment based on click id
-                switch(position) {
-                    case 0: // rsvp
+                        LearnCardAdapter adapter = new LearnCardAdapter(getContext(), completionResponse, lmResponses);
+                        moduleList.setAdapter(adapter);
+                    }
+                });
+
+                // Drawer Item click listeners
+                moduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+
                         Bundle bundle = new Bundle();
                         bundle.putString("moduleID", lmResponses.getValue().get(position).getMID().toString());
                         navController.navigate(R.id.nav_module_overview, bundle);
-                        break;
-                    case 1:
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putString("moduleID", lmResponses.getValue().get(position).getMID().toString());
-                        navController.navigate(R.id.nav_module_overview, bundle1);
-                    case 2:
-                        Bundle bundle2 = new Bundle();
-                        bundle2.putString("moduleID", lmResponses.getValue().get(position).getMID().toString());
-                        navController.navigate(R.id.nav_module_overview, bundle2);
-                        break;
-                    case 3: // metaguiding
-                        //TODO: NEED TO IMPLEMENT META-GUIDING DATA COMMUNICATIONS
-                        Bundle bundle3 = new Bundle();
-                        bundle3.putString("moduleID", lmResponses.getValue().get(position).getMID().toString());
-                        navController.navigate(R.id.nav_module_overview, bundle3);
-                        break;
-                    default:
-                        break;
-                }
+                    }
+                });
             }
         });
 

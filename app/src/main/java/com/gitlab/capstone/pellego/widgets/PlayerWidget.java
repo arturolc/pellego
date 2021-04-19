@@ -1,5 +1,6 @@
 package com.gitlab.capstone.pellego.widgets;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -37,12 +38,12 @@ import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Reflow;
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.database.UsersRepo;
 import com.gitlab.capstone.pellego.fragments.metaguiding.MetaguidingModuleFragment;
 import com.gitlab.capstone.pellego.fragments.reader.ReaderFragment;
 import com.gitlab.capstone.pellego.fragments.rsvp.RsvpModuleFragment;
 
 import org.geometerplus.fbreader.fbreader.TextBuildTraverser;
-import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 import org.geometerplus.zlibrary.text.view.ZLTextElement;
 import org.geometerplus.zlibrary.text.view.ZLTextElementArea;
 import org.geometerplus.zlibrary.text.view.ZLTextElementAreaVector;
@@ -58,6 +59,13 @@ import java.util.Collections;
 
 import static android.view.View.INVISIBLE;
 
+/****************************************
+ * Eli Hebdon and Chris Bordoy
+ *
+ * Represents the Player and its controls
+ * that are used directly on the reader
+ ***************************************/
+
 public class PlayerWidget {
     public static String[] EOL = {"\n", "\r"};
     public static String[] STOPS = {".", ";"}; // ",", "\"", "'", "!", "?", "“", "”", ":", "(", ")"};
@@ -67,6 +75,7 @@ public class PlayerWidget {
     public Activity activity;
     private RsvpModuleFragment rsvpModuleFragment;
     private MetaguidingModuleFragment metaguidingModuleFragment;
+    private UsersRepo usersRepo;
     private TextView progressTextView;
     public static int wpm = 250;
     private AnimatedVectorDrawableCompat avd;
@@ -80,6 +89,13 @@ public class PlayerWidget {
     ArrayList<Runnable> onScrollFinished = new ArrayList<>();
     Handler handler = new Handler();
     int gravity;
+    public boolean progressChanged;
+    public ImageView playButton;
+    public Integer wordCount;
+
+    public void setUserWordValues(int wordsRead, int wpm) {
+        usersRepo.setUserWordValues(wordsRead, wpm);
+    }
 
     Runnable updateGravity = new Runnable() {
         @Override
@@ -413,10 +429,11 @@ public class PlayerWidget {
         this.context = v.getContext();
         fb = v;
         this.activity = activity;
+        this.wordCount = 0;
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.tts_popup, null);
-        ImageView playButton = activity.findViewById(R.id.button_play);
-
+        playButton = activity.findViewById(R.id.button_play);
+        this.usersRepo = UsersRepo.getInstance(activity.getApplication());
         // skip back button pressed
         View prev = activity.findViewById(R.id.button_prev);
         prev.setOnClickListener(new View.OnClickListener() {
@@ -482,6 +499,7 @@ public class PlayerWidget {
         // technique selector pressed
         Button techniqueSelector = (Button) activity.findViewById(R.id.button_technique);
         techniqueSelector.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
@@ -559,7 +577,8 @@ public class PlayerWidget {
                     togglePlay(playButton);
                     metaguidingModuleFragment.play();
                     break;
-                default:
+
+                    default:
                     Toast.makeText(activity, "Select a technique to start speed reading",
                             Toast.LENGTH_SHORT).show();
                     break;
@@ -583,7 +602,6 @@ public class PlayerWidget {
         return prefs.getString(App.READER_THEME, "");
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private SeekBar addDropDownSeekBar(Button wpmSelector) {
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -602,6 +620,7 @@ public class PlayerWidget {
                 int val = (progress * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
                 progressTextView.setText(String.valueOf(progress));
                 wpm = progress;
+                progressChanged = true;
                 int width = seekBar.getWidth() - seekBar.getPaddingLeft() - seekBar.getPaddingRight();
                 int thumbPos = seekBar.getPaddingLeft() + width * seekBar.getProgress() / seekBar.getMax();
 
@@ -613,7 +632,10 @@ public class PlayerWidget {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                if (wordCount != 0) {
+                    setUserWordValues(wordCount,PlayerWidget.wpm);
+                    wordCount = 0;
+                }
             }
 
             @Override
@@ -672,7 +694,6 @@ public class PlayerWidget {
         popupWindow.setHeight(height);
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void togglePlay(ImageView playBtn) {
         playing = !playing;
@@ -680,6 +701,10 @@ public class PlayerWidget {
             playBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.avd_play_to_pause));
         } else {
             playBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.avd_pause_to_play));
+            if (wordCount != 0) {
+                setUserWordValues(wordCount,PlayerWidget.wpm);
+                wordCount = 0;
+            }
         }
 
         // Display animation
@@ -691,13 +716,11 @@ public class PlayerWidget {
             avd2 = (AnimatedVectorDrawable) drawable;
             avd2.start();
         }
-
     }
 
     public Context getContext() {
         return context;
     }
-
 
     public String selectPrev() {
         marks.clear();
@@ -891,6 +914,7 @@ public class PlayerWidget {
     }
 
     // Get the next chunk of text
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public String selectNext() {
         marks.clear();
         if (fragment == null) {
@@ -981,6 +1005,16 @@ public class PlayerWidget {
                 }
             }
         }
+
+        wordCount += (fragment.fragmentText).split("\\w+").length;
+        ZLTextPosition end;
+        end = fb.app.BookTextView.getEndCursor();
+        if (end.compareTo(fragment.fragment.start) <= 0 && fragment.fragmentText.isEmpty() && PlayerWidget.playing) {
+            setUserWordValues(wordCount, wpm);
+            playButton = activity.findViewById(R.id.button_play);
+            togglePlay(playButton);
+            wordCount = 0;
+        }
         return fragment.fragmentText;
     }
 
@@ -1047,7 +1081,6 @@ public class PlayerWidget {
         view.setVisibility(View.VISIBLE);
     }
 
-
     public void ensureVisible(Storage.Bookmark bm) { // same page
         int pos = ((ScrollWidget) fb.widget).adapter.findPage(bm.start);
         ScrollWidget.ScrollAdapter.PageCursor c = ((ScrollWidget) fb.widget).adapter.pages.get(pos);
@@ -1076,7 +1109,6 @@ public class PlayerWidget {
             dy = rect.top - fb.getTop();
         ((ScrollWidget) fb.widget).smoothScrollBy(0, dy);
     }
-
 
     public void updateGravity(int g) {
         gravity = g;
@@ -1169,8 +1201,6 @@ public class PlayerWidget {
             return tt.getText();
         }
     }
-
-
 
     public static ZLTextPosition expandLeft(ZLTextPosition start) {
         if (fb.pluginview != null) {

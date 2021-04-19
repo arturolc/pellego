@@ -7,24 +7,41 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.gitlab.capstone.pellego.database.TimestampConverter;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+
+/****************************************
+ * Arturo Lara
+ *
+ * Represents a data collection Scores
+ * object that is used with quizzes
+ ***************************************/
 
 @Entity(foreignKeys = {@ForeignKey(entity = LM_Quiz.class, parentColumns = "QID", childColumns = "Quiz"),
         @ForeignKey(entity = Users.class, parentColumns = "UID", childColumns = "User")})
 public class Scores {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "SID")
+    @SerializedName("SID")
+    @Expose
     private int sID;
 
     @ColumnInfo(name = "Quiz")
+    @SerializedName("Quiz")
+    @Expose
     private int quiz;
 
     @ColumnInfo(name = "User")
+    @SerializedName("User")
+    @Expose
     private int user;
 
     @ColumnInfo(name = "Date_Taken")
     @TypeConverters({TimestampConverter.class})
+    @SerializedName("Date_Taken")
+    @Expose
     private Date dateTaken;
 
     public Scores(int sID, int quiz, int user, Date dateTaken) {

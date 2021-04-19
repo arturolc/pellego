@@ -5,18 +5,18 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
-import androidx.annotation.NonNull;
-import androidx.core.view.ViewCompat;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
+
 import com.github.axet.androidlibrary.widgets.PopupWindowCompat;
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.gitlab.capstone.pellego.R;
-
 
 import org.geometerplus.fbreader.fbreader.TapZoneMap;
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
@@ -24,8 +24,11 @@ import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 import java.util.HashMap;
 
 /**
+ * Eli Hebdon
+ *
  * Displays book reader controls and then fades out
  */
+
 public class ActiveAreasView extends RelativeLayout {
     public static int PERC = 10000; // precision
     public static int BACKGROUND = 0x22333333;
@@ -34,7 +37,6 @@ public class ActiveAreasView extends RelativeLayout {
     HashMap<String, ZoneView> views = new HashMap<>();
 
     HashMap<String, String> names = new HashMap<>();
-
     {
         names.put("menu", getContext().getString(R.string.controls_fullscreen));
         names.put("navigate", getContext().getString(R.string.controls_navigate));
@@ -171,5 +173,4 @@ public class ActiveAreasView extends RelativeLayout {
         MarginLayoutParams lp = new MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         setLayoutParams(lp);
     }
-
 }

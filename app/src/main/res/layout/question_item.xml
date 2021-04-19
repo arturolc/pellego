@@ -28,7 +28,7 @@
         android:layout_toEndOf="@+id/icon"
         android:paddingBottom="2dp"
         android:layout_toRightOf="@+id/icon"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

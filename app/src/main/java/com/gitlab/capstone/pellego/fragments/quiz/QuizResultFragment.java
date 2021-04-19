@@ -2,7 +2,6 @@ package com.gitlab.capstone.pellego.fragments.quiz;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -50,7 +49,7 @@ public class QuizResultFragment extends BaseFragment {
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         View root = inflater.inflate(R.layout.fragment_quiz_results, container, false);
 
-        this.setupHeader(root);
+        this.setupHeader(root, moduleViewModel.getModuleID());
 
         final TextView textView = root.findViewById(R.id.title_results);
         quizViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -60,43 +59,41 @@ public class QuizResultFragment extends BaseFragment {
             }
         });
 
-        // TODO: POST quiz result data to DB
-        // Display score
+        if (quizViewModel.getQuizTextCount() != 0){
+            moduleViewModel.setUserWordValues(quizViewModel.getQuizTextCount(), quizViewModel.getWPM());
+        }
+
         TextView txt = root.findViewById(R.id.text_results);
         txt.setText(quizViewModel.getFinalScore());
         sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-        // Store results in shared preference
         if (quizViewModel.quizPassed()) {
+            moduleViewModel.setSubModuleCompletion(moduleViewModel.getModuleID(), quizViewModel.getSMID());
             updateModuleProgress();
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean(quizViewModel.generateSubmoduleCompleteKey(), quizViewModel.quizPassed());
             editor.apply();
         }
 
-        // Display message
         TextView msg = root.findViewById(R.id.text_results_message);
         msg.setText(quizViewModel.getFinalMessage());
 
-        // Setup button listeners
-        // retry the current module
         Button retry = root.findViewById(R.id.button_results_retry);
         retry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
                 Bundle args = new Bundle();
+                args.putString("smID", quizViewModel.getSMID());
                 args.putString("difficulty", quizViewModel.getDifficulty());
                 args.putString("wpm", quizViewModel.getWPM().toString());
                 args.putString("module", quizViewModel.getModule());
                 quizViewModel =
                         new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
                 navController.navigate(R.id.nav_quiz, args);
-                return;
             }
         });
 
-        // Return to learning modules
         Button ret = root.findViewById(R.id.button_results_return);
         ret.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,8 +101,9 @@ public class QuizResultFragment extends BaseFragment {
             {
                 quizViewModel.clear();
                 moduleViewModel.clear();
-                navController.navigate(R.id.nav_learn);
-                return;
+                navController.navigateUp();
+                navController.navigateUp();
+                navController.navigateUp();
             }
         });
 
@@ -113,10 +111,8 @@ public class QuizResultFragment extends BaseFragment {
     }
 
     public void updateModuleProgress() {
-        // TODO: post to DB and default to local data if connection can't be established
         String key = moduleViewModel.getTechnique() + "_submodule_progress";
         int count = sharedPref.getInt(key, 0);
-        // Store results in shared preference
         boolean complete = sharedPref.getBoolean(quizViewModel.generateSubmoduleCompleteKey(), false);
         if (!complete) {
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -126,19 +122,15 @@ public class QuizResultFragment extends BaseFragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void setupHeader(View root) {
+    public void setupHeader(View root, String moduleID) {
+        int[] colors = moduleViewModel.getModuleGradientColors(moduleID);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(0xFFF9D976);
+        toolbar.setBackgroundColor(colors[1]);
         toolbar.setTitle(null);
         Window window = getActivity().getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(0xFFF9D976);
+        window.setStatusBarColor(colors[1]);
         TextView header = root.findViewById(R.id.title_results);
-        GradientDrawable gd = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[] {0xFFF9D976, 0xFFF39f86});
-        gd.setCornerRadii(new float[] {0f, 0f, 0f, 0f, 90f, 90f, 90f, 90f});
-        gd.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
-        header.setBackgroundDrawable(gd);
+        header.setBackground(moduleViewModel.getGradient());
     }
 }

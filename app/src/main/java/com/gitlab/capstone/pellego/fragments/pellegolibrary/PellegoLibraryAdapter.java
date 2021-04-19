@@ -1,8 +1,8 @@
 package com.gitlab.capstone.pellego.fragments.pellegolibrary;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,20 +20,25 @@ import com.gitlab.capstone.pellego.R;
 
 /**********************************************
  Arturo Lara
+
  Adapter for Recycler view
  **********************************************/
+
 public class PellegoLibraryAdapter extends RecyclerView.Adapter<PellegoLibraryAdapter.MyViewHolder> {
 
-    String s1[], s2[], ids[];
-    String imgs[];
+    String[] s1, s2, ids, imgs, urls, hashStrings;
     Context context;
     Fragment myFragment;
 
-    public PellegoLibraryAdapter(String[] ids, String[] s1, String[] s2, String[] imgs, Context context, Fragment myFragment) {
+    public PellegoLibraryAdapter(String[] ids, String[] s1, String[] s2, String[] imgs,
+                                 String[] urls, String[] hashStrings, Context context,
+                                 Fragment myFragment) {
         this.s1 = s1;
         this.s2 = s2;
         this.ids = ids;
         this.imgs = imgs;
+        this.urls = urls;
+        this.hashStrings = hashStrings;
         this.context = context;
         this.myFragment = myFragment;
     }
@@ -54,12 +61,15 @@ public class PellegoLibraryAdapter extends RecyclerView.Adapter<PellegoLibraryAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, BookPreviewActivity.class);
-                i.putExtra("id", ids[position]);
-                i.putExtra("title", s1[position]);
-                i.putExtra("author", s2[position]);
-                i.putExtra("image", imgs[position]);
-                context.startActivity(i);
+                Bundle bundle = new Bundle();
+                bundle.putString("id", ids[position]);
+                bundle.putString("title", s1[position]);
+                bundle.putString("author", s2[position]);
+                bundle.putString("image", imgs[position]);
+                bundle.putString("bookUrl", urls[position]);
+                bundle.putString("hashString", hashStrings[position]);
+                NavController navController = Navigation.findNavController((Activity)context, R.id.nav_host_fragment);
+                navController.navigate(R.id.bookPreviewFragment, bundle);
             }
         });
     }

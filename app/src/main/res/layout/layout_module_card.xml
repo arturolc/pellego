@@ -50,7 +50,6 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:id="@+id/title"
-                        android:text="@string/title_rsvp"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -58,7 +57,6 @@
                         android:id="@+id/description"
                         android:textColor="@color/light_blue"
                         android:textSize="10sp"
-                        android:text="@string/short_description_rsvp"
                         />
                 </LinearLayout>
 

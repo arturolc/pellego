@@ -1,5 +1,6 @@
 package com.gitlab.capstone.pellego.fragments.rsvp;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
@@ -28,27 +29,25 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.BaseFragment;
-import com.gitlab.capstone.pellego.app.Storage;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 import com.gitlab.capstone.pellego.network.models.SMResponse;
-import com.gitlab.capstone.pellego.widgets.FBReaderView;
 import com.gitlab.capstone.pellego.widgets.PlayerWidget;
-import com.gitlab.capstone.pellego.widgets.TTSPopup;
 
 import java.util.List;
-
 
 /**********************************************
  Eli Hebdon and Chris Bordoy
 
  RSVP module fragment that displays words, one at a time, at 'wpm'
  **********************************************/
+
 public class RsvpModuleFragment extends BaseFragment {
 
-    private View root;
     private Integer wpm;
+    private Integer quizTextCount;
     public String difficulty;
-    private static AsyncUpdateText asyncUpdateText;
+    public String submoduleID;
+    private AsyncUpdateText asyncUpdateText;
     private String content = "";
     private ModuleViewModel moduleViewModel;
     private FragmentActivity currentView;
@@ -58,11 +57,12 @@ public class RsvpModuleFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        quizTextCount = getArguments().getInt("quizTextCount");
         wpm = Integer.parseInt(getArguments().getString("wpm"));
         difficulty = getArguments().getString("difficulty");
+        submoduleID = getArguments().getString("smID");
         submoduleResponses = getArguments().getParcelableArrayList("subModules");
-        // Set the displayed text to the appropriate level
-        // TODO: Query the DB for content
+
         switch(difficulty) {
             case "beginner":
                 content = (submoduleResponses.get(1).getText()).replaceAll("\\s+", " ");
@@ -79,14 +79,13 @@ public class RsvpModuleFragment extends BaseFragment {
         moduleViewModel =
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
 
-
-        root = inflater.inflate(R.layout.fragment_rsvp_module, container, false);
+        View root = inflater.inflate(R.layout.fragment_rsvp_module, container, false);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(null);
-        final TextView textView = root.findViewById(R.id.title_rsvp);
+
         this.setupHeader(root);
-        // Only show popup if user navigated to the Rsvp module
-       if (moduleViewModel.isShowSubmodulePopupDialog()) showSubmodulePopupDialog();
+        if (moduleViewModel.isShowSubmodulePopupDialog()) showSubmodulePopupDialog();
+
         return root;
     }
 
@@ -103,10 +102,9 @@ public class RsvpModuleFragment extends BaseFragment {
         window.setStatusBarColor(color);
     }
 
-
     private void showSubmodulePopupDialog() {
-        // Setup the custom dialog
         Dialog dialog = new Dialog(getContext());
+        dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.ok_dialog);
         ((TextView) dialog.findViewById(R.id.text_dialog)).setText(R.string.submodule_popup_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -115,7 +113,7 @@ public class RsvpModuleFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                asyncUpdateText = new AsyncUpdateText(); // start thread on ok
+                asyncUpdateText = new AsyncUpdateText();
                 asyncUpdateText.execute(wpm);
             }
         });
@@ -124,8 +122,8 @@ public class RsvpModuleFragment extends BaseFragment {
     }
 
     private void showQuizPopupDialog() {
-        // Setup the custom dialog
         Dialog dialog = new Dialog(getContext());
+        dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.ok_dialog);
         ((TextView) dialog.findViewById(R.id.text_dialog)).setText(R.string.quiz_popup_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -136,9 +134,11 @@ public class RsvpModuleFragment extends BaseFragment {
                 dialog.dismiss();
                 NavController navController = Navigation.findNavController(currentView, R.id.nav_host_fragment);
                 Bundle args = new Bundle();
+                args.putInt("quizTextCount", quizTextCount);
                 args.putString("difficulty", difficulty);
                 args.putString("wpm", String.valueOf(wpm));
                 args.putString("module", "rsvp");
+                args.putString("smID", submoduleID);
                 navController.navigate(R.id.nav_quiz, args);
             }
         });
@@ -152,14 +152,13 @@ public class RsvpModuleFragment extends BaseFragment {
     }
 
     public void play() {
-        if (content == "") {
-            playerWidget.selectNext();
+        if (content.equals("")) {
+            content = playerWidget.selectNext();
         }
         if (PlayerWidget.playing) {
             asyncUpdateText = new AsyncUpdateText(); // start thread on ok
             asyncUpdateText.execute(PlayerWidget.wpm);
         }
-
     }
 
     public void startNext() {
@@ -178,12 +177,10 @@ public class RsvpModuleFragment extends BaseFragment {
         asyncUpdateText.cancel(true);
     }
 
-
-
     /**
      * Asynchronously updates the text in the RSVP fragment at the provided WPM rate
      */
-    private class AsyncUpdateText extends AsyncTask<Integer, String, Integer> {
+    public class AsyncUpdateText extends AsyncTask<Integer, String, Integer> {
 
         TextView rsvp_text;
         String[] words = content.split (" "); // split on non-word characters
@@ -193,29 +190,40 @@ public class RsvpModuleFragment extends BaseFragment {
             rsvp_text = currentView.findViewById(R.id.text_rsvp);
         }
 
+        @SuppressLint("WrongThread")
         @Override
         protected Integer doInBackground(Integer... ints) {
             for (String word : words) {
-                // Verify that user has not navigated away from the RSVP fragment
                 NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
                 String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
+
                 if (!currFragment.contains("RsvpModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing)) {
                     cancel(true);
                     return 0;
                 } else {
-                    rsvp_text.setText(word);
-                    if (PlayerWidget.playing) content = content.replaceFirst(word, "");
+                    if (currFragment.contains("RsvpModuleFragment")) {
+                        PlayerWidget.wpm = wpm;
+                    }
+                    if (!word.isEmpty()) {
+                        rsvp_text.setText(word);
+                    }
+                    if (PlayerWidget.playing && !content.isEmpty()) {
+                        content = content.replaceFirst(word, "");
+                    }
                 }
                 try {
                     Thread.sleep((long) ((60.0 / (float) PlayerWidget.wpm) * 1000));
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
+                    cancel(true);
                     e.printStackTrace();
                     return 0;
                 }
             }
+
             return 0;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         protected void onPostExecute(Integer result) {
             try {
@@ -228,9 +236,7 @@ public class RsvpModuleFragment extends BaseFragment {
             } catch (Exception e) {
                 Log.d("error" , e.getMessage());
             }
-
         }
     }
-
 }
 

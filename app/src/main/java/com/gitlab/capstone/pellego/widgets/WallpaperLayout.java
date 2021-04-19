@@ -3,12 +3,20 @@ package com.gitlab.capstone.pellego.widgets;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.gitlab.capstone.pellego.app.Plugin;
+
+/****************************************
+ * Eli Hebdon
+ *
+ * Represents the wall paper layout which
+ * is used directly with the library
+ ***************************************/
 
 public class WallpaperLayout extends FrameLayout {
     Plugin.View bg = new Plugin.View();

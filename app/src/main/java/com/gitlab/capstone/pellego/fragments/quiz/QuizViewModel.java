@@ -1,8 +1,11 @@
 package com.gitlab.capstone.pellego.fragments.quiz;
 
 import android.app.Application;
+import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -26,33 +29,94 @@ import java.util.List;
 public class QuizViewModel extends AndroidViewModel {
 
     public LearningModulesRepo repo;
-    private LiveData<List<QuizResponse>> quizResponse = new MutableLiveData<>();
+    private LiveData<List<QuizResponse>> quizResponse;
     private MutableLiveData<String> mText;
     private String difficulty;
-    public static Integer question_no;
-    private static ArrayList<QuizQuestion> questions;
-    public static int score;
-    private static String module;
-    private static Integer wpm;
+    private int quizTextCount;
+    public Integer question_no;
+    private ArrayList<QuizQuestion> questions;
+    public int score;
+    private String module;
+    private Integer wpm;
+    private String submoduleID;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public QuizViewModel(@NonNull Application application){
         super(application);
         this.repo = LearningModulesRepo.getInstance(application);
+        question_no = 0;
+        questions = new ArrayList<>();
+        quizResponse = new MutableLiveData<>();
     }
 
-    public LiveData<List<QuizResponse>> getQuizResponse(String MID, String SMID) {
-        if (quizResponse.getValue() == null) {
-            quizResponse = repo.getQuizzes(MID, SMID);
-        }
+    public LiveData<List<QuizResponse>> getQuizResponse(String MID, String SMID, String QUID) {
+        quizResponse = repo.getQuizzes(MID, SMID, QUID);
 
         return quizResponse;
+    }
+
+    public String getQUID(String smid){
+        String quid = null;
+        Log.d("SMID: ", smid);
+        switch(smid){
+               // RSVP
+            case "2":
+                quid = "1";
+                break;
+            case "3":
+                quid = "5";
+                break;
+            case "4":
+                quid = "9";
+                break;
+                // metaguiding
+            case "6":
+                quid = "13";
+                break;
+            case "7":
+                quid = "17";
+                break;
+            case "8":
+                quid = "21";
+                break;
+                // clump reading
+            case "10":
+                quid = "25";
+                break;
+            case "11":
+                quid = "29";
+                break;
+            case "12":
+                quid = "33";
+                break;
+                // prereading
+            case "14":
+                quid = "37";
+                break;
+            case "15":
+                quid = "40";
+                break;
+            case "16":
+                quid = "43";
+                break;
+            default:
+                break;
+        }
+
+        return quid;
     }
 
     public void setDifficulty(String diff) {
         this.difficulty = diff;
     }
     public void setWPM(Integer wpm) {this.wpm = wpm;}
+
     public void setModule(String m) {this.module = m;}
+
+    public void setQuizTextCount(int count) {this.quizTextCount = count; }
+
+    public int getQuizTextCount() {return this.quizTextCount; }
+
     public String getModule() {return this.module;}
 
     public boolean isLastQuestion() {
@@ -126,7 +190,7 @@ public class QuizViewModel extends AndroidViewModel {
 
     public void populateQuestionBank(List<String> questions, List<List<Answer>> answers) {
         this.questions = new ArrayList<>();
-        for (int i = 0; i < 4; i ++) {
+        for (int i = 0; i < questions.size(); i ++) {
             Answer[] answersArray = answers.get(i).toArray(new Answer[0]);
             this.questions.add(new QuizQuestion(questions.get(i), new ArrayList<>(
                     Arrays.asList(answersArray[0],
@@ -172,6 +236,14 @@ public class QuizViewModel extends AndroidViewModel {
         }
 
         return correctIdx;
+    }
+
+    public void setSMID(String smid){
+        submoduleID = smid;
+    }
+
+    public String getSMID() {
+        return submoduleID;
     }
 
     private static class QuizQuestion {

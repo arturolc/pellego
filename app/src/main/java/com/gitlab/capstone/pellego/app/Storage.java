@@ -26,9 +26,9 @@ import com.github.axet.androidlibrary.app.RarSAF;
 import com.github.axet.androidlibrary.net.HttpClient;
 import com.github.axet.androidlibrary.widgets.CacheImagesAdapter;
 import com.github.axet.androidlibrary.widgets.WebViewCustom;
+import com.github.axet.wget.SpeedInfo;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
-import com.github.axet.wget.SpeedInfo;
 
 import org.apache.commons.io.IOUtils;
 import org.geometerplus.fbreader.book.BookUtil;
@@ -78,6 +78,12 @@ import java.util.zip.ZipOutputStream;
 import de.innosystec.unrar.Archive;
 import de.innosystec.unrar.NativeStorage;
 import de.innosystec.unrar.rarfile.FileHeader;
+
+/****************************************
+ * Eli Hebdon
+ *
+ * Handles all file storage operations
+ ***************************************/
 
 public class Storage extends com.github.axet.androidlibrary.app.Storage {
     public static String TAG = Storage.class.getCanonicalName();
@@ -333,6 +339,7 @@ public class Storage extends com.github.axet.androidlibrary.app.Storage {
 
     public static class Book {
         public Uri url;
+        public String name;
         public String ext;
         public String md5; // can be filename if user renamed file
         public RecentInfo info;
@@ -342,10 +349,22 @@ public class Storage extends com.github.axet.androidlibrary.app.Storage {
         }
 
         public Book(Context context, Uri u) {
-            String name = Storage.getName(context, u);
+            name = Storage.getName(context, u);
             url = u;
             md5 = Storage.getNameNoExt(name);
             ext = Storage.getExt(name);
+        }
+
+        @Override
+        public String toString() {
+            return "Book{" +
+                    "url=" + url +
+                    ", name='" + name + '\'' +
+                    ", ext='" + ext + '\'' +
+                    ", md5='" + md5 + '\'' +
+                    ", info=" + info +
+                    ", cover=" + cover +
+                    '}';
         }
     }
 

@@ -1,14 +1,16 @@
 package com.gitlab.capstone.pellego.database;
 
 import android.app.Application;
-import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.gitlab.capstone.pellego.database.daos.LibraryDao;
-import com.gitlab.capstone.pellego.database.entities.Books;
 import com.gitlab.capstone.pellego.network.APIService;
 import com.gitlab.capstone.pellego.network.RetroInstance;
+import com.gitlab.capstone.pellego.network.models.LibraryResponse;
+import com.gitlab.capstone.pellego.network.models.SynopsisResponse;
 
 import java.util.List;
 
@@ -16,51 +18,70 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/****************************************
+ * Arturo Lara
+ *
+ * Represents a Books repository for the
+ * library
+ ***************************************/
+
 public class BooksRepo {
     private LibraryDao libDao;
-    private static BooksRepo sInstance;
+    private static BooksRepo INSTANCE;
     private final PellegoDatabase db;
-
-    private LiveData<List<Books>> mAllBooks;
+    private final APIService apiService;
+    private final MutableLiveData<List<LibraryResponse>> libResponse;
+    private final MutableLiveData<List<SynopsisResponse>> synResponse;
 
     public BooksRepo(Application application) {
         db = PellegoDatabase.getDatabase(application);
         libDao = db.libraryDao();
-        mAllBooks = db.libraryDao().getBooks();
+        apiService = RetroInstance.getRetroClient().create(APIService.class);
+        libResponse = new MutableLiveData<>();
+        synResponse = new MutableLiveData<>();
     }
 
-    public void insertBook(Books book) {
-        libDao.insert(book);
+    synchronized public static BooksRepo getInstance(Application app) {
+        if (INSTANCE == null) {
+            INSTANCE = new BooksRepo(app);
+        }
+        return INSTANCE;
     }
 
-//    LiveData<List<Books>> getAllBooks() {
-//        APIService apiService = RetroInstance.getRetroClient().create(APIService.class);
-//        Call<List<Books>> call = apiService.getBooks();
-//        call.enqueue(new Callback<List<Books>>() {
-//            @Override
-//            public void onResponse(Call<List<Books>> call, Response<List<Books>> response) {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Books>> call, Throwable t) {
-//
-//            }
-//        })
-//        return mAllBooks;
-//    }
+    public LiveData<List<LibraryResponse>> getLibrary() {
+        Call<List<LibraryResponse>> call = apiService.getLibrary();
+        call.enqueue(new Callback<List<LibraryResponse>>() {
 
-    private static class InsertAsyncTask extends AsyncTask<Books, Void, Void> {
-        private LibraryDao asyncLibDao;
+            @Override
+            public void onResponse(Call<List<LibraryResponse>> call, Response<List<LibraryResponse>> response) {
+                Log.i("LIBRARYREPO", response.body().toString());
+                libResponse.setValue(response.body());
+            }
 
-        InsertAsyncTask(LibraryDao dao) {
-            asyncLibDao = dao;
-        }
+            @Override
+            public void onFailure(Call<List<LibraryResponse>> call, Throwable t) {
+                Log.e("LIBRARYREPO", t.toString());
+            }
+        });
 
-        @Override
-        protected Void doInBackground(final Books... params) {
-            asyncLibDao.insert(params[0]);
-            return null;
-        }
+        return libResponse;
+    }
+
+    public LiveData<List<SynopsisResponse>> getSynopsis(int bID) {
+        Call<List<SynopsisResponse>> call = apiService.getSynopsis("" + bID);
+        call.enqueue(new Callback<List<SynopsisResponse>>() {
+            @Override
+            public void onResponse(Call<List<SynopsisResponse>> call, Response<List<SynopsisResponse>> response) {
+                Log.i("LIBRARYREPO", response.body().toString());
+                synResponse.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<SynopsisResponse>> call, Throwable t) {
+                Log.e("LIBRARYREPO", t.toString());
+            }
+        });
+
+        return synResponse;
     }
 }

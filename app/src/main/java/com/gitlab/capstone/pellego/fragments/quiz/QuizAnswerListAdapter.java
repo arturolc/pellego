@@ -1,7 +1,7 @@
 package com.gitlab.capstone.pellego.fragments.quiz;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +22,11 @@ public class QuizAnswerListAdapter extends BaseAdapter {
 
     Context mContext;
     ArrayList<QuizQuestionModel> mNavItems;
-    Drawable color;
+    int[] color;
 
     public QuizAnswerListAdapter(Context context,
                                  ArrayList<QuizQuestionModel> mNavItems,
-                                 Drawable color) {
+                                 int[] color) {
         mContext = context;
         this.mNavItems = mNavItems;
         this.color = color;
@@ -59,9 +59,13 @@ public class QuizAnswerListAdapter extends BaseAdapter {
             view = convertView;
         }
 
-        TextView titleView = (TextView) view.findViewById(R.id.title);
-        TextView iconView = (TextView) view.findViewById(R.id.icon);
-        iconView.setBackground(color);
+        TextView titleView = view.findViewById(R.id.title);
+        TextView iconView = view.findViewById(R.id.icon);
+        GradientDrawable gradientDrawable = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                color);
+        gradientDrawable.setCornerRadius(20f);
+        iconView.setBackground(gradientDrawable);
         titleView.setText(mNavItems.get(position).mTitle);
         iconView.setText(mNavItems.get(position).mIcon);
 

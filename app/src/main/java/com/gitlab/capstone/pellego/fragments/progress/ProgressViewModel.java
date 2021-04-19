@@ -1,27 +1,43 @@
 package com.gitlab.capstone.pellego.fragments.progress;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.App;
+import com.gitlab.capstone.pellego.database.UsersRepo;
+import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**********************************************
     Chris Bordoy
 
     The Progress View Model
  **********************************************/
-public class ProgressViewModel extends ViewModel {
 
+public class ProgressViewModel extends AndroidViewModel {
+
+    private UsersRepo usersRepo;
     private MutableLiveData<String> mText;
+    private LiveData<List<ProgressValuesResponse>> progressValueResponse;
+    private final int NUMBER_OF_DAYS_IN_WEEK = 7;
+    private final int NUMBER_OF_MONTHS_IN_YEAR = 12;
 
-    public ProgressViewModel() {
+    public ProgressViewModel(@NonNull Application application) {
+        super(application);
+        usersRepo = UsersRepo.getInstance(application);
+        this.progressValueResponse = new MutableLiveData<>();
         mText = new MutableLiveData<>();
         mText.setValue("Progress");
     }
@@ -30,97 +46,160 @@ public class ProgressViewModel extends ViewModel {
         return mText;
     }
 
-    public String[] getTodayValues() {
-        String[] todayValues = {"118", "236"};
+    public LiveData<List<ProgressValuesResponse>> getProgressValues() {
+        progressValueResponse = usersRepo.getProgressValues();
 
-        return todayValues;
+        return progressValueResponse;
     }
 
-    public String[] getLastWeekValues() {
-        String[] lastWeekValues = {"588", "255"};
+    public int[] getLastWeekValues(List<ProgressValuesResponse> response) {
+        int[] lastWeekValues = new int[2];
+        int wordsRead = 0;
+        int wpm = 0;
+
+        for (int i = 0; i < NUMBER_OF_DAYS_IN_WEEK; i++) {
+            wordsRead += response.get(i).getWordsRead();
+            wpm += response.get(i).getWpm();
+        }
+
+        if(wordsRead != 0 && wpm != 0) {
+            wpm = wpm/NUMBER_OF_DAYS_IN_WEEK;
+            lastWeekValues[0] = wordsRead;
+            lastWeekValues[1] = wpm;
+        }
 
         return lastWeekValues;
     }
 
-    public String[] getLastYearValues() {
-        String[] lastYearValues = {"1529", "420"};
+    public int[] getLastYearValues(List<ProgressValuesResponse> response) {
+        int[] lastYearValues = new int[NUMBER_OF_MONTHS_IN_YEAR];
+        int wordsRead = 0;
+        int wpm = 0;
+
+        for (int i = 7; i < response.size(); i++) {
+            wordsRead += response.get(i).getWordsRead();
+            wpm += response.get(i).getWpm();
+        }
+
+        if(wordsRead != 0 && wpm != 0) {
+            wpm = wpm/NUMBER_OF_MONTHS_IN_YEAR;
+            lastYearValues[0] = wordsRead;
+            lastYearValues[1] = wpm;
+        }
 
         return lastYearValues;
     }
 
-    public ArrayList<String> getDaysList() {
+    public ArrayList<String> getDaysList(List<ProgressValuesResponse> response) {
         ArrayList<String> listOfDays = new ArrayList<>();
-        Collections.addAll(listOfDays, App.getAppResources().getStringArray(R.array.days_abbr));
+        String[] week = new String[NUMBER_OF_DAYS_IN_WEEK];
+
+        for (int i = 0; i < NUMBER_OF_DAYS_IN_WEEK; i++) {
+            week[i] = getDayStringOld(response.get(i).getRecorded());
+        }
+        Collections.reverse(Arrays.asList(week));
+        Collections.addAll(listOfDays, week);
 
         return listOfDays;
     }
 
-    public ArrayList<String> getMonthsList() {
+    public ArrayList<String> getMonthsList(List<ProgressValuesResponse> response) {
         ArrayList<String> listOfMonths = new ArrayList<>();
-        Collections.addAll(listOfMonths, App.getAppResources().getStringArray(R.array.months_abbr));
+
+        String[] months = new String[NUMBER_OF_MONTHS_IN_YEAR];
+
+        for (int i = NUMBER_OF_DAYS_IN_WEEK; i < response.size(); i++) {
+            months[i - NUMBER_OF_DAYS_IN_WEEK] = getMonthStringOld(response.get(i).getRecorded());
+        }
+        Collections.reverse(Arrays.asList(months));
+        Collections.addAll(listOfMonths, months);
 
         return listOfMonths;
     }
     
-    public ArrayList<BarEntry> getMockLastWeekWordsReadData() {
+    public ArrayList<BarEntry> getLastWeekWordsReadData(Integer[] response) {
         ArrayList<BarEntry> wordsReadEntries = new ArrayList<>();
-        wordsReadEntries.add(new BarEntry(1,890));
-        wordsReadEntries.add(new BarEntry(2,600));
-        wordsReadEntries.add(new BarEntry(3,550));
-        wordsReadEntries.add(new BarEntry(4,533));
-        wordsReadEntries.add(new BarEntry(5,620));
-        wordsReadEntries.add(new BarEntry(6,420));
-        wordsReadEntries.add(new BarEntry(7,666));
+        for (int i = 0; i < NUMBER_OF_DAYS_IN_WEEK; i++) {
+            wordsReadEntries.add(new BarEntry( i + 1, response[i]));
+        }
 
         return wordsReadEntries;
     }
 
-    public ArrayList<BarEntry> getMockLastWeekWpmData() {
+    public ArrayList<BarEntry> getLastWeekWpmData(Integer[] response) {
         ArrayList<BarEntry> wpmEntries = new ArrayList<>();
-        wpmEntries.add(new BarEntry(1,540));
-        wpmEntries.add(new BarEntry(2,230));
-        wpmEntries.add(new BarEntry(3,297));
-        wpmEntries.add(new BarEntry(4,89));
-        wpmEntries.add(new BarEntry(5,444));
-        wpmEntries.add(new BarEntry(6,33));
-        wpmEntries.add(new BarEntry(7,111));
+        for (int i = 0; i < NUMBER_OF_DAYS_IN_WEEK; i++) {
+            wpmEntries.add(new BarEntry(i + 1, response[i]));
+        }
 
         return wpmEntries;
     }
 
-    public ArrayList<Entry> getMockLastYearWordsReadData() {
+    public ArrayList<Entry> getLastYearWordsReadData(Integer[] response) {
         ArrayList<Entry> wordsReadEntries = new ArrayList<>();
-        wordsReadEntries.add(new Entry(1, 233));
-        wordsReadEntries.add(new Entry(2, 120));
-        wordsReadEntries.add(new Entry(3, 450));
-        wordsReadEntries.add(new Entry(4, 500));
-        wordsReadEntries.add(new Entry(5, 80));
-        wordsReadEntries.add(new Entry(6, 145));
-        wordsReadEntries.add(new Entry(7, 278));
-        wordsReadEntries.add(new Entry(8, 333));
-        wordsReadEntries.add(new Entry(9, 444));
-        wordsReadEntries.add(new Entry(10, 580));
-        wordsReadEntries.add(new Entry(11, 700));
-        wordsReadEntries.add(new Entry(12, 490));
+        for (int i = 0; i < NUMBER_OF_MONTHS_IN_YEAR; i++) {
+            wordsReadEntries.add(new BarEntry(i + 1, response[i]));
+        }
 
         return wordsReadEntries;
     }
 
-    public ArrayList<Entry> getMockLastYearWpmData() {
+    public ArrayList<Entry> getLastYearWpmData(Integer[] response) {
         ArrayList<Entry> wpmEntries = new ArrayList<>();
-        wpmEntries.add(new Entry(1, 100));
-        wpmEntries.add(new Entry(2, 120));
-        wpmEntries.add(new Entry(3, 140));
-        wpmEntries.add(new Entry(4, 150));
-        wpmEntries.add(new Entry(5, 180));
-        wpmEntries.add(new Entry(6, 200));
-        wpmEntries.add(new Entry(7, 190));
-        wpmEntries.add(new Entry(8, 125));
-        wpmEntries.add(new Entry(9, 175));
-        wpmEntries.add(new Entry(10, 195));
-        wpmEntries.add(new Entry(11, 205));
-        wpmEntries.add(new Entry(12, 211));
+        for (int i = 0; i < NUMBER_OF_MONTHS_IN_YEAR; i++) {
+            wpmEntries.add(new BarEntry(i + 1, response[i]));
+        }
 
         return wpmEntries;
+    }
+
+    public Integer[] getLastWeekWordsReadMapping(List<ProgressValuesResponse> response) {
+        Integer[] dayIndices = new Integer[NUMBER_OF_DAYS_IN_WEEK];
+        for (int i = 0; i < dayIndices.length; i++) {
+            dayIndices[i] = response.get(i).getWordsRead();
+        }
+        Collections.reverse(Arrays.asList(dayIndices));
+
+        return dayIndices;
+    }
+
+    public Integer[] getLastWeekWpmMapping(List<ProgressValuesResponse> response) {
+        Integer[] dayIndices = new Integer[NUMBER_OF_DAYS_IN_WEEK];
+        for (int i = 0; i < dayIndices.length; i++) {
+            dayIndices[i] = response.get(i).getWpm();
+        }
+        Collections.reverse(Arrays.asList(dayIndices));
+
+        return dayIndices;
+    }
+
+    public Integer[] getLastYearWordsReadMapping(List<ProgressValuesResponse> response) {
+        Integer[] monthIndices = new Integer[NUMBER_OF_MONTHS_IN_YEAR];
+        for (int i = NUMBER_OF_DAYS_IN_WEEK; i < response.size(); i++) {
+            monthIndices[i - NUMBER_OF_DAYS_IN_WEEK] = response.get(i).getWordsRead();
+        }
+        Collections.reverse(Arrays.asList(monthIndices));
+
+        return monthIndices;
+    }
+
+    public Integer[] getLastYearWpmMapping(List<ProgressValuesResponse> response) {
+        Integer[] monthIndices = new Integer[NUMBER_OF_MONTHS_IN_YEAR];
+        for (int i = NUMBER_OF_DAYS_IN_WEEK; i < response.size(); i++) {
+            monthIndices[i - NUMBER_OF_DAYS_IN_WEEK] = response.get(i).getWpm();
+        }
+        Collections.reverse(Arrays.asList(monthIndices));
+
+        return monthIndices;
+    }
+
+    private static String getDayStringOld(Date date) {
+        DateFormat formatter = new SimpleDateFormat("E");
+        return formatter.format(date);
+    }
+
+    private static String getMonthStringOld(Date date) {
+        DateFormat formatter = new SimpleDateFormat("MMM");
+        return formatter.format(date);
     }
 }

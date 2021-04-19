@@ -1,14 +1,6 @@
 package com.gitlab.capstone.pellego.fragments.auth;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,31 +11,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
-import com.gitlab.capstone.pellego.app.DatabaseHelper;
 import com.gitlab.capstone.pellego.R;
-import com.gitlab.capstone.pellego.app.UserModel;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**********************************************
  Arturo Lara
+
  email verification
  **********************************************/
+
 public class VerifyFragment extends Fragment {
 
     AuthViewModel model;
 
     public VerifyFragment() {
-        // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static VerifyFragment newInstance() {
         VerifyFragment fragment = new VerifyFragment();
         return fragment;
@@ -52,7 +49,6 @@ public class VerifyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -80,8 +76,6 @@ public class VerifyFragment extends Fragment {
                     AuthSignUpOptions.builder().userAttributes(list).build(),
                     result -> {
                         Log.i("AUTHENTICATION", "Result: " + result.toString());
-
-
                     },
                     error -> Log.e("AUTHENTICATION", "Sign up failed" + error.toString())
             );

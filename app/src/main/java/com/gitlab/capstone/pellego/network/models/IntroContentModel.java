@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /*****************************************************
- * Chris Bordoy
+ * Chris Bordoy, Arturo Lara
  *
  * Model that represents a modules introduction content
  * It implements the Parcelable interface so it can be
@@ -21,6 +21,11 @@ public class IntroContentModel implements Parcelable {
     @SerializedName("Content")
     @Expose
     private String content;
+
+    public IntroContentModel(String header, String content) {
+        this.header = header;
+        this.content = content;
+    }
 
     protected IntroContentModel(Parcel in) {
         header = in.readString();

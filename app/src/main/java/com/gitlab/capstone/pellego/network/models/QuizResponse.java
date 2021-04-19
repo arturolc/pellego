@@ -1,8 +1,9 @@
-package com.gitlab.capstone.pellego.network.models; ;
+package com.gitlab.capstone.pellego.network.models;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 /*****************************************************
  * Chris Bordoy
@@ -21,6 +22,12 @@ public class QuizResponse {
     @SerializedName("Answers")
     @Expose
     private List<Answer> answers = null;
+
+    public QuizResponse(Integer qUID, String question, List<Answer> answers) {
+        this.qUID = qUID;
+        this.question = question;
+        this.answers = answers;
+    }
 
     public Integer getQUID() {
         return qUID;
