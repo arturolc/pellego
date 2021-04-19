@@ -234,7 +234,6 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
 
         if(!preferences.getBoolean("onboarding_complete",false)){
             OnboardingActivity.startActivity(this);
-            return;
         }
 
         storage = new Storage(this);
