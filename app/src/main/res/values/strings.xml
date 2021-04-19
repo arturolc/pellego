@@ -144,8 +144,5 @@
 
     <string name="quiz_try_again">TRY AGAIN</string>
     <string name="quiz_return">RETURN TO LEARNING MODULE</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
 </resources>
