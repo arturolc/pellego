@@ -27,7 +27,7 @@ import java.util.List;
 /**********************************************
     Chris Bordoy, Arturo Lara & Eli Hebdon
 
-    The Learn Modules Component
+    The Learning Modules Component
  **********************************************/
 
 public class LearnFragment extends BaseFragment {

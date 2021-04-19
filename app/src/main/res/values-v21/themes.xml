@@ -73,6 +73,7 @@
         <item name="subtitleTextColor">@color/light_gray</item>
         <item name="colorOnSecondary">@color/light_blue</item>
         <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:itemTextAppearance">@style/DarkActionBar.MenuTextStyle</item>
         <item name="itemTextColor">@color/bottom_nav_color_dark</item>

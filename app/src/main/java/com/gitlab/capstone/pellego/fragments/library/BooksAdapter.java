@@ -26,6 +26,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/****************************************
+ * Eli Hebdon
+ *
+ * Abstract class for handling data
+ * to UI flow for library
+ ***************************************/
+
 public abstract class BooksAdapter extends CacheImagesRecyclerAdapter<BooksAdapter.BookHolder> {
     String filter;
     FragmentHolder holder;

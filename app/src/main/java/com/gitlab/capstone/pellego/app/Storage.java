@@ -26,9 +26,9 @@ import com.github.axet.androidlibrary.app.RarSAF;
 import com.github.axet.androidlibrary.net.HttpClient;
 import com.github.axet.androidlibrary.widgets.CacheImagesAdapter;
 import com.github.axet.androidlibrary.widgets.WebViewCustom;
+import com.github.axet.wget.SpeedInfo;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.widgets.FBReaderView;
-import com.github.axet.wget.SpeedInfo;
 
 import org.apache.commons.io.IOUtils;
 import org.geometerplus.fbreader.book.BookUtil;
@@ -78,6 +78,12 @@ import java.util.zip.ZipOutputStream;
 import de.innosystec.unrar.Archive;
 import de.innosystec.unrar.NativeStorage;
 import de.innosystec.unrar.rarfile.FileHeader;
+
+/****************************************
+ * Eli Hebdon
+ *
+ * Handles all file storage operations
+ ***************************************/
 
 public class Storage extends com.github.axet.androidlibrary.app.Storage {
     public static String TAG = Storage.class.getCanonicalName();

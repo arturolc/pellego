@@ -48,11 +48,10 @@ public class UsersRepo {
     }
 
     public void setSubmoduleCompletion(String mID, String smID) {
-        Call<Void> call = apiService.setSubmoduleCompletion(new AuthToken("Chris.Bordoy@gmail.com"), mID, smID);
+        Call<Void> call = apiService.setSubmoduleCompletion(new AuthToken("chris.bordoy@gmail.com"), mID, smID);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, Response<Void> response) {
-
             }
 
             @Override
@@ -64,13 +63,12 @@ public class UsersRepo {
 
     public void setUserWordValues(int wordsRead, int wpm) {
         Call<Void> call = apiService.setUserWordValues(
-                new AuthToken("Chris.Bordoy@gmail.com"),
+                new AuthToken("chris.bordoy@gmail.com"),
                 wordsRead,
                 wpm);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, Response<Void> response) {
-
             }
 
             @Override
@@ -82,7 +80,7 @@ public class UsersRepo {
 
     public LiveData<List<CompletionResponse>> getUserLearningModulesCompletionCount() {
         Call<List<CompletionResponse>> call =
-                apiService.getUserLearningModulesCompletionCount(new AuthToken("Chris.Bordoy@gmail.com"));
+                apiService.getUserLearningModulesCompletionCount(new AuthToken("chris.bordoy@gmail.com"));
         call.enqueue(new Callback<List<CompletionResponse>>() {
             @Override
             public void onResponse(@NotNull Call<List<CompletionResponse>> call, Response<List<CompletionResponse>> response) {
@@ -101,7 +99,7 @@ public class UsersRepo {
 
     public LiveData<List<ProgressValuesResponse>> getProgressValues() {
         Call<List<ProgressValuesResponse>> call =
-                apiService.getProgressValues(new AuthToken("Chris.Bordoy@gmail.com"));
+                apiService.getProgressValues(new AuthToken("chris.bordoy@gmail.com"));
         call.enqueue(new Callback<List<ProgressValuesResponse>>() {
 
             @Override
@@ -122,7 +120,7 @@ public class UsersRepo {
 
     public LiveData<TotalWordsReadResponse> getTotalWordsRead() {
         Call<TotalWordsReadResponse> call =
-                apiService.getTotalWordsRead(new AuthToken("Chris.Bordoy@gmail.com"));
+                apiService.getTotalWordsRead(new AuthToken("chris.bordoy@gmail.com"));
         call.enqueue(new Callback<TotalWordsReadResponse>() {
 
             @Override

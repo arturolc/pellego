@@ -69,6 +69,9 @@ public class MetaguidingModuleFragment extends BaseFragment {
                              ViewGroup container, Bundle savedInstanceState) {
         quizTextCount = getArguments().getInt("quizTextCount");
         wpm = Integer.parseInt(getArguments().getString("wpm"));
+        if (wpm == 500) {
+            wpm = 400;
+        }
         difficulty = getArguments().getString("difficulty");
         submoduleID = getArguments().getString("smID");
         List<SMResponse> submoduleResponses = getArguments().getParcelableArrayList("subModules");
@@ -198,10 +201,8 @@ public class MetaguidingModuleFragment extends BaseFragment {
 
     public String getPrevPage() {
         StringBuilder txt = new StringBuilder();
-        String result = playerWidget.selectPrev();
-        while(txt.length() < 900 && !result.isEmpty()) {
-            txt.append(result);
-            result = playerWidget.selectPrev();
+        while(txt.length() < 900) {
+            txt.append(playerWidget.selectPrev());
         }
         return txt.toString();
     }
@@ -258,7 +259,6 @@ public class MetaguidingModuleFragment extends BaseFragment {
         @Override
         protected Integer doInBackground(Integer... ints) {
             String pageTxt = content;
-            int wordCount = pageTxt.split("\\s+").length;
             Layout layout = mtext.getLayout();
             mtext.setText(Html.fromHtml(pageTxt));
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
@@ -288,6 +288,9 @@ public class MetaguidingModuleFragment extends BaseFragment {
                     cancel(true);
                     return 0;
                 }
+                if (currFragment.contains("MetaguidingModuleFragment")) {
+                    PlayerWidget.wpm = wpm;
+                }
                 try {
                     Thread.sleep((long) (((60.0 / (float) PlayerWidget.wpm) * 90)));
                 } catch (InterruptedException e) {
@@ -295,11 +298,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
                     e.printStackTrace();
                 }
             }
-            if (!pageTxt.isEmpty() && currFragment != null) {
-                if (currFragment.contains("ReaderFragment") && wordCount != 0 && PlayerWidget.wpm != 0) {
-                    playerWidget.setUserWordValues(wordCount, PlayerWidget.wpm);
-                }
-            }
+
             return 0;
         }
 

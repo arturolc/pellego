@@ -15,6 +15,13 @@ import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/****************************************
+ * Eli Hebdon
+ *
+ * Handles text formatting operations for
+ * library
+ ***************************************/
+
 public class TextFormatter {
 
     public static class Replacement {

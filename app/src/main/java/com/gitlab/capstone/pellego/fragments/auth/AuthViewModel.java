@@ -1,22 +1,21 @@
 package com.gitlab.capstone.pellego.fragments.auth;
 
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 /*****************************************
  * Arturo Lara
- * AuthViewModel will handle authentication using AWS Amplify,
+ *
+ * AuthViewModel handles authentication using AWS Amplify,
  * user data collection for Pellego Remote and Local Databases.
  *****************************************/
+
 public class AuthViewModel extends ViewModel {
     private String name;
     private String email;
     private String password;
     private String confirmationCode;
 
-
     public AuthViewModel() {
-
     }
 
     public String getName() {

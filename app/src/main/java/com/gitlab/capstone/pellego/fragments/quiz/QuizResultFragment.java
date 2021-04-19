@@ -26,8 +26,6 @@ import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.BaseFragment;
 import com.gitlab.capstone.pellego.fragments.module.overview.ModuleViewModel;
 
-import java.time.LocalDate;
-
 /**********************************************
  Eli Hebdon & Chris Bordoy
 
@@ -61,19 +59,15 @@ public class QuizResultFragment extends BaseFragment {
             }
         });
 
-        // POST quiz result data to DB
         if (quizViewModel.getQuizTextCount() != 0){
             moduleViewModel.setUserWordValues(quizViewModel.getQuizTextCount(), quizViewModel.getWPM());
         }
 
-        // Display score
         TextView txt = root.findViewById(R.id.text_results);
         txt.setText(quizViewModel.getFinalScore());
         sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-        // Store results in shared preference
         if (quizViewModel.quizPassed()) {
-            //update complete status for module/submodule
             moduleViewModel.setSubModuleCompletion(moduleViewModel.getModuleID(), quizViewModel.getSMID());
             updateModuleProgress();
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -81,12 +75,9 @@ public class QuizResultFragment extends BaseFragment {
             editor.apply();
         }
 
-        // Display message
         TextView msg = root.findViewById(R.id.text_results_message);
         msg.setText(quizViewModel.getFinalMessage());
 
-        // Setup button listeners
-        // retry the current module
         Button retry = root.findViewById(R.id.button_results_retry);
         retry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,11 +91,9 @@ public class QuizResultFragment extends BaseFragment {
                 quizViewModel =
                         new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
                 navController.navigate(R.id.nav_quiz, args);
-                return;
             }
         });
 
-        // Return to learning modules
         Button ret = root.findViewById(R.id.button_results_return);
         ret.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +104,6 @@ public class QuizResultFragment extends BaseFragment {
                 navController.navigateUp();
                 navController.navigateUp();
                 navController.navigateUp();
-                return;
             }
         });
 
@@ -123,10 +111,8 @@ public class QuizResultFragment extends BaseFragment {
     }
 
     public void updateModuleProgress() {
-        // TODO: post to DB and default to local data if connection can't be established
         String key = moduleViewModel.getTechnique() + "_submodule_progress";
         int count = sharedPref.getInt(key, 0);
-        // Store results in shared preference
         boolean complete = sharedPref.getBoolean(quizViewModel.generateSubmoduleCompleteKey(), false);
         if (!complete) {
             SharedPreferences.Editor editor = sharedPref.edit();

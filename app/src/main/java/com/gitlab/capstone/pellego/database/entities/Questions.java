@@ -8,6 +8,13 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/****************************************
+ * Chris Bordoy
+ *
+ * Represents a Questions object which
+ * is used for quizzes
+ ***************************************/
+
 @Entity(foreignKeys = @ForeignKey(entity = LM_Submodule.class, parentColumns = "SMID", childColumns = "SMID"))
 public class Questions {
     @PrimaryKey(autoGenerate = true)

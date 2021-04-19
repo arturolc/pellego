@@ -1,22 +1,16 @@
 package com.gitlab.capstone.pellego.fragments.auth;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.gitlab.capstone.pellego.R;
-
-import static androidx.navigation.Navigation.findNavController;
 
 /**********************************************
  Arturo Lara

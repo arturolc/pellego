@@ -144,8 +144,6 @@
 
     <string name="quiz_try_again">TRY AGAIN</string>
     <string name="quiz_return">RETURN TO LEARNING MODULE</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--    Onboarding Text    -->
     <string-array name="onboarding_header">
@@ -161,6 +159,5 @@
         <item>Prove your mastery in the comprehension quizzes at the end of every learning module</item>
         <item>Apply the tools you learned to your own ebooks, pdf\'s, and txt document. Happy Reading!</item>
     </string-array>
-
 
 </resources>

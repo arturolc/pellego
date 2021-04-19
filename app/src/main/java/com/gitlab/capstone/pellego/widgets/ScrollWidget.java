@@ -10,11 +10,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
-import androidx.annotation.NonNull;
-import androidx.core.view.GestureDetectorCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -24,12 +19,18 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.gitlab.capstone.pellego.app.Storage;
+import androidx.annotation.NonNull;
+import androidx.core.view.GestureDetectorCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.TopAlwaysSmoothScroller;
 import com.gitlab.capstone.pellego.app.PDFPlugin;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Reflow;
+import com.gitlab.capstone.pellego.app.Storage;
 
 import org.geometerplus.fbreader.fbreader.FBView;
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
@@ -49,6 +50,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+
+/****************************************
+ * Eli Hebdon
+ *
+ * View widget that handles scrolling
+ * functionality that is directly
+ * used with the FBReaderView
+ ***************************************/
 
 public class ScrollWidget extends RecyclerView implements ZLViewWidget {
     FBReaderView fb;

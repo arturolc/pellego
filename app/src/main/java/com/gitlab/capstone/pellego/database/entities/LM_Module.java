@@ -8,6 +8,13 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/****************************************
+ * Chris Bordoy and Arturo Lara
+ *
+ * Represents a Learning Modules
+ * object
+ ***************************************/
+
 @Entity
 public class LM_Module {
     @PrimaryKey(autoGenerate = true)
