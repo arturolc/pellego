@@ -97,6 +97,13 @@ public class PlayerWidget {
         usersRepo.setUserWordValues(wordsRead, wpm);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setUserWordValues() {
+        usersRepo.setUserWordValues(wordCount, wpm);
+        wordCount = 0;
+        togglePlay(playButton);
+    }
+
     Runnable updateGravity = new Runnable() {
         @Override
         public void run() {
@@ -512,6 +519,7 @@ public class PlayerWidget {
                         switch (technique_id) {
                             case R.id.rsvp_menu_item:
                                 rsvpModuleFragment.stop();
+                                break;
                             case R.id.metaguiding_menu_item:
                                 metaguidingModuleFragment.stop();
                                 break;
@@ -577,8 +585,7 @@ public class PlayerWidget {
                     togglePlay(playButton);
                     metaguidingModuleFragment.play();
                     break;
-
-                    default:
+                default:
                     Toast.makeText(activity, "Select a technique to start speed reading",
                             Toast.LENGTH_SHORT).show();
                     break;
@@ -1007,14 +1014,6 @@ public class PlayerWidget {
         }
 
         wordCount += (fragment.fragmentText).split("\\w+").length;
-        ZLTextPosition end;
-        end = fb.app.BookTextView.getEndCursor();
-        if (end.compareTo(fragment.fragment.start) <= 0 && fragment.fragmentText.isEmpty() && PlayerWidget.playing) {
-            setUserWordValues(wordCount, wpm);
-            playButton = activity.findViewById(R.id.button_play);
-            togglePlay(playButton);
-            wordCount = 0;
-        }
         return fragment.fragmentText;
     }
 

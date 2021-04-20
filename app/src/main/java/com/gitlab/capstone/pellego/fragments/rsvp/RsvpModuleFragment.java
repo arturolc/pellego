@@ -82,7 +82,9 @@ public class RsvpModuleFragment extends BaseFragment {
         View root = inflater.inflate(R.layout.fragment_rsvp_module, container, false);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(null);
-
+        NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
+        PlayerWidget.wpm = wpm;
         this.setupHeader(root);
         if (moduleViewModel.isShowSubmodulePopupDialog()) showSubmodulePopupDialog();
 
@@ -151,24 +153,48 @@ public class RsvpModuleFragment extends BaseFragment {
         this.playerWidget = playerWidget;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void play() {
-        if (content.equals("")) {
+        int limit = 5;
+        while (content == "" && limit != 0) {
             content = playerWidget.selectNext();
+            limit--;
         }
+        if (limit == 0) playerWidget.setUserWordValues();
         if (PlayerWidget.playing) {
             asyncUpdateText = new AsyncUpdateText(); // start thread on ok
             asyncUpdateText.execute(PlayerWidget.wpm);
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void startNext() {
         content = playerWidget.selectNext();
+        int limit = 5;
+        while (content == "" && limit != 0) {
+            content = playerWidget.selectNext();
+            limit--;
+        }
+        if (limit == 0) {
+            playerWidget.setUserWordValues();
+            return;
+        }
         asyncUpdateText = new AsyncUpdateText(); // start thread on ok
         asyncUpdateText.execute(PlayerWidget.wpm);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void startPrev() {
         content = playerWidget.selectPrev();
+        int limit = 5;
+        while (content == "" && limit != 0) {
+            content = playerWidget.selectPrev();
+            limit--;
+        }
+        if (limit == 0) {
+            playerWidget.setUserWordValues();
+            return;
+        }
         asyncUpdateText = new AsyncUpdateText(); // start thread on ok
         asyncUpdateText.execute(PlayerWidget.wpm);
     }
@@ -183,7 +209,7 @@ public class RsvpModuleFragment extends BaseFragment {
     public class AsyncUpdateText extends AsyncTask<Integer, String, Integer> {
 
         TextView rsvp_text;
-        String[] words = content.split (" "); // split on non-word characters
+        String[] words = content.split("\\s+"); // split on non-word characters
 
         @Override
         protected void onPreExecute() {
@@ -194,27 +220,22 @@ public class RsvpModuleFragment extends BaseFragment {
         @Override
         protected Integer doInBackground(Integer... ints) {
             for (String word : words) {
+                if (word.length() <= 1) continue;
+                // Verify that user has not navigated away from the RSVP fragment
                 NavHostFragment navHostFragment = (NavHostFragment) currentView.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
                 String currFragment = navHostFragment.getChildFragmentManager().getFragments().get(0).toString();
-
-                if (!currFragment.contains("RsvpModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing)) {
-                    cancel(true);
-                    return 0;
-                } else {
-                    if (currFragment.contains("RsvpModuleFragment")) {
-                        PlayerWidget.wpm = wpm;
-                    }
-                    if (!word.isEmpty()) {
-                        rsvp_text.setText(word);
-                    }
-                    if (PlayerWidget.playing && !content.isEmpty()) {
-                        content = content.replaceFirst(word, "");
-                    }
-                }
                 try {
+                    if (!currFragment.contains("RsvpModuleFragment") && (!currFragment.contains("ReaderFragment") || !PlayerWidget.playing)) {
+                        cancel(true);
+                        return 0;
+                    } else {
+                        rsvp_text.setText(word);
+                        if (PlayerWidget.playing) {
+                            content = content.replaceFirst(word, "");
+                        }
+                    }
                     Thread.sleep((long) ((60.0 / (float) PlayerWidget.wpm) * 1000));
-                } catch (Exception e) {
-                    cancel(true);
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                     return 0;
                 }
@@ -228,9 +249,7 @@ public class RsvpModuleFragment extends BaseFragment {
         protected void onPostExecute(Integer result) {
             try {
                 if (PlayerWidget.playing) {
-                    content = playerWidget.selectNext();
-                    asyncUpdateText = new AsyncUpdateText();
-                    asyncUpdateText.execute(PlayerWidget.wpm);
+                    startNext();
                 }
                 showQuizPopupDialog();
             } catch (Exception e) {
