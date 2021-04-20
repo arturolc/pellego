@@ -62,6 +62,7 @@ public class OnboardingActivity extends AppCompatActivity {
                     btn_register.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view){
+                            finishOnboarding();
                             finish();
                         }
                     });
