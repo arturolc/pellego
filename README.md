@@ -11,7 +11,7 @@ Click Build -> Make Project.
 
 In Android Studio go to Tools -> AVD Manager \
 Click on "Create Virtual Device" \
-Follow the prompts to select the phone you want to run the app on. \
+Follow the prompts to select the phone you want to run the app on. Pixel 3 or 3a are recommended. \
 Select Android R as the system image. \
 Click "Finish"  
 
