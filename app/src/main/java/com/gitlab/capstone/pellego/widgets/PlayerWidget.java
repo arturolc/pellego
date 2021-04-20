@@ -336,7 +336,13 @@ public class PlayerWidget {
         }
 
         public String select() {
-            return allText.substring(getCurrent().getElementIndex(), getCurrent().getElementIndex() + 1);
+            try {
+                return allText.substring(getCurrent().getElementIndex(), getCurrent().getElementIndex() + 1);
+            }
+            catch(Exception e) {
+                Log.e("select", e.toString());
+                return "";
+            }
         }
 
         public boolean prevWord() {
