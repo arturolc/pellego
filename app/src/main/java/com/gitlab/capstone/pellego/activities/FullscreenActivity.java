@@ -2,6 +2,7 @@ package com.gitlab.capstone.pellego.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,9 @@ import com.amplifyframework.core.Amplify;
 import com.github.axet.androidlibrary.activities.AppCompatFullscreenThemeActivity;
 import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.app.App;
+import com.gitlab.capstone.pellego.database.PellegoDatabase;
+import com.gitlab.capstone.pellego.database.daos.UserDao;
+import com.gitlab.capstone.pellego.database.entities.Users;
 import com.gitlab.capstone.pellego.fragments.auth.AuthActivity;
 import com.gitlab.capstone.pellego.fragments.profile.ProfileModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -65,6 +69,34 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Amplify.Auth.fetchUserAttributes(s ->  {
+            String name = "";
+            String email = "";
+
+            for(int i = 0; i < s.size(); i++) {
+                if (s.get(i).getKey().getKeyString().equals("name")) {
+                    name = s.get(i).getValue();
+                }
+                else if (s.get(i).getKey().getKeyString().equals("email")) {
+                    email = s.get(i).getValue();
+                }
+            }
+
+            PellegoDatabase db = PellegoDatabase.getDatabase(getApplicationContext());
+            UserDao dao = db.userDao();
+
+            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("User", 0);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("UserName", name);
+            editor.putString("UserEmail", email);
+            long uid = dao.addUser(new Users(0, name, email));
+            editor.putLong("UserID", uid);
+            editor.apply();
+
+        }, fail ->  {
+            Log.i("user", fail.toString());
+        });
+
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         setContentView(R.layout.activity_home);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -95,13 +127,14 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         View headerView = drawerNavigationView.getHeaderView(0);
 
         ProfileModel p = ProfileModel.getInstance(getApplication());
-        p.getUserName().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                Log.i("SIDENAV", s);
-                ((TextView)headerView.findViewById(R.id.headerUserName)).setText(s);
-            }
-        });
+        ((TextView)headerView.findViewById(R.id.headerUserName)).setText(p.getUser().getName());
+
+//        p.getUserName().observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(String s) {
+//
+//            }
+//        });
 
         NavigationUI.setupWithNavController(drawerNavigationView, navController);
 

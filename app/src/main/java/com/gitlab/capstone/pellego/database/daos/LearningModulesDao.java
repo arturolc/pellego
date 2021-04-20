@@ -1,5 +1,6 @@
 package com.gitlab.capstone.pellego.database.daos;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -24,31 +25,31 @@ import java.util.List;
 public interface LearningModulesDao {
     // Module
     @Query("Select * from LM_Module")
-    public List<LM_Module> getModules();
+    public LiveData<List<LM_Module>> getModules();
 
     @Query("Select * from LM_Module where MID = :mID")
-    public LM_Module getModule(int mID);
+    public LiveData<LM_Module> getModule(int mID);
 
     @Query("Select count(*) from LM_Module")
     public int getModulesCount();
 
     // Submodule
     @Query("Select * from LM_Submodule where MID = :mID")
-    public List<LM_Submodule> getSubmodules(int mID);
+    public LiveData<List<LM_Submodule>> getSubmodules(int mID);
 
     @Query("Select count(*) from LM_Submodule where MID = :mID")
     public int getSubmodulesCount(int mID);
 
     // Intro
     @Query("Select * from LM_Intro where MID = :mID")
-    public List<LM_Intro> getIntro(int mID);
+    public LiveData<List<LM_Intro>> getIntro(int mID);
 
     // Questions & Answers
     @Query("Select * from Questions where SMID = :sMID")
-    public List<Questions> getQuestions(int sMID);
+    public LiveData<List<Questions>> getQuestions(int sMID);
 
     @Query("Select QUID as qUID, Answer as answer, Correct as correct from Answers where SMID = :sMID and QUID = :qUID")
-    public List<Answer> getAnswers(int sMID, int qUID);
+    public LiveData<List<Answer>> getAnswers(int sMID, int qUID);
 
     // Insert queries
     @Insert

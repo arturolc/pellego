@@ -1,15 +1,20 @@
 package com.gitlab.capstone.pellego.fragments.profile;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.amplifyframework.core.Amplify;
 import com.gitlab.capstone.pellego.database.UsersRepo;
+import com.gitlab.capstone.pellego.database.entities.Users;
 import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
 
 /**********************************************
@@ -19,30 +24,25 @@ import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
  **********************************************/
 
 public class ProfileModel extends AndroidViewModel {
-    private final MutableLiveData<String> userName;
-    private final MutableLiveData<String> email;
+    private Users user;
     private static ProfileModel INSTANCE;
     private final UsersRepo usersRepo;
     private LiveData<TotalWordsReadResponse> totalWordsReadResponse;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private ProfileModel(@NonNull Application application) {
         super(application);
         this.usersRepo = UsersRepo.getInstance(application);
         totalWordsReadResponse = new MutableLiveData<>();
-        userName = new MutableLiveData<>();
-        email = new MutableLiveData<>();
-        Amplify.Auth.fetchUserAttributes(success ->  {
-            for(int i = 0; i < success.size(); i++) {
-                if (success.get(i).getKey().getKeyString().equals("name")) {
-                    userName.postValue(success.get(i).getValue());
-                }
-                else if (success.get(i).getKey().getKeyString().equals("email")) {
-                    email.postValue(success.get(i).getValue());
-                }
-            }
-        }, fail -> Log.i("user", fail.toString()));
+
+        SharedPreferences sharedPref = application.getSharedPreferences("User", Context.MODE_PRIVATE);
+        long uid = sharedPref.getLong("UserID", -1);
+        String name = sharedPref.getString("UserName", "");
+        String email = sharedPref.getString("UserEmail", "");
+        this.user = new Users((int)uid, name, email);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static ProfileModel getInstance(@NonNull Application application) {
         if (INSTANCE != null) {
             return INSTANCE;
@@ -56,11 +56,7 @@ public class ProfileModel extends AndroidViewModel {
         return totalWordsReadResponse;
     }
 
-    public LiveData<String> getUserName() {
-        return userName;
-    }
-
-    public LiveData<String> getEmail() {
-        return email;
+    public Users getUser() {
+        return user;
     }
 }

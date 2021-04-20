@@ -2,6 +2,7 @@ package com.gitlab.capstone.pellego.database;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkRequest;
@@ -12,6 +13,7 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.gitlab.capstone.pellego.database.daos.LearningModulesDao;
 import com.gitlab.capstone.pellego.database.entities.Answers;
@@ -19,6 +21,7 @@ import com.gitlab.capstone.pellego.database.entities.LM_Intro;
 import com.gitlab.capstone.pellego.database.entities.LM_Module;
 import com.gitlab.capstone.pellego.database.entities.LM_Submodule;
 import com.gitlab.capstone.pellego.database.entities.Questions;
+import com.gitlab.capstone.pellego.database.entities.Users;
 import com.gitlab.capstone.pellego.network.APIService;
 import com.gitlab.capstone.pellego.network.RetroInstance;
 import com.gitlab.capstone.pellego.network.models.AllContentsResponse;
@@ -53,6 +56,7 @@ public class LearningModulesRepo {
     private final MutableLiveData<List<LMDescResponse>> lmDescResponse = new MutableLiveData<>();
     private final MutableLiveData<List<SMResponse>> smResponse = new MutableLiveData<>();
     private final MutableLiveData<List<QuizResponse>> quizResponse = new MutableLiveData<>();
+    private Users user;
     private static LearningModulesRepo INSTANCE;
     private final Application application;
     private boolean isNetworkConnected;
@@ -63,9 +67,13 @@ public class LearningModulesRepo {
         db = PellegoDatabase.getDatabase(application);
         dao = db.learningModulesDao();
         apiService = RetroInstance.getRetroClient().create(APIService.class);
+        SharedPreferences sharedPref = application.getSharedPreferences("User", Context.MODE_PRIVATE);
+        long uid = sharedPref.getLong("UserID", -1);
+        String name = sharedPref.getString("UserName", "");
+        String email = sharedPref.getString("UserEmail", "");
+        user = new Users((int)uid, name, email);
         registerNetworkCallback();
 
-        // check to see if we have anything in local db
         AsyncTask.execute(()-> {
             int count = dao.getModulesCount();
             Log.d("ModulesCount", "" + count);
@@ -87,7 +95,7 @@ public class LearningModulesRepo {
     public LiveData<List<LMResponse>> getModules() {
         Log.d("LMRepo", isNetworkConnected + "");
         if (isNetworkConnected) {
-            Call<List<LMResponse>> call = apiService.getModules(new AuthToken("chris.bordoy@gmail.com"));
+            Call<List<LMResponse>> call = apiService.getModules(new AuthToken(user.getEmail()));
             call.enqueue(new Callback<List<LMResponse>>() {
                 @Override
                 public void onResponse(@NotNull Call<List<LMResponse>> call, @NotNull Response<List<LMResponse>> response) {
@@ -103,18 +111,20 @@ public class LearningModulesRepo {
             });
         }
         else {
-            AsyncTask.execute(() -> {
-                List<LM_Module> mn = dao.getModules();
-                Log.d("LMDAO", mn.toString());
-                List<LMResponse> res = new ArrayList<>();
-                for(int i = 0; i < mn.size(); i++) {
-                    LM_Module m = mn.get(i);
-                    res.add(new LMResponse(m.getMID(), m.getName(), m.getSubheader(), m.getIcon(),
-                            dao.getModuleProgress(1, mn.get(i).getMID()),
-                            dao.getSubmodulesCount(mn.get(i).getMID())));
-                }
 
-                lmResponse.postValue(res);
+            dao.getModules().observeForever(new Observer<List<LM_Module>>() {
+                @Override
+                public void onChanged(List<LM_Module> mn) {
+                    Log.d("LMDAO", mn.toString());
+                    List<LMResponse> res = new ArrayList<>();
+                    for(int i = 0; i < mn.size(); i++) {
+                        LM_Module m = mn.get(i);
+                        res.add(new LMResponse(m.getMID(), m.getName(), m.getSubheader(), m.getIcon(),
+                                dao.getModuleProgress(1, mn.get(i).getMID()),
+                                dao.getSubmodulesCount(mn.get(i).getMID())));
+                    }
+                    lmResponse.postValue(res);
+                }
             });
         }
         return lmResponse;
@@ -137,16 +147,24 @@ public class LearningModulesRepo {
             });
         }
         else {
-            AsyncTask.execute(() -> {
-                LM_Module mod = dao.getModule(Integer.parseInt(moduleID));
-                LMDescResponse resp = new LMDescResponse(mod.getMID(), mod.getName(),
-                        mod.getDescription(), dao.getSubmodules(mod.getMID()));
-                List<LMDescResponse> l = new ArrayList<>();
-                l.add(resp);
-                lmDescResponse.postValue(l);
-            });
-        }
+                dao.getModule(Integer.parseInt(moduleID)).observeForever(new Observer<LM_Module>() {
+                    @Override
+                    public void onChanged(LM_Module mod) {
+                        dao.getSubmodules(mod.getMID()).observeForever(new Observer<List<LM_Submodule>>() {
+                            @Override
+                            public void onChanged(List<LM_Submodule> lm_submodules) {
+                                LMDescResponse resp = new LMDescResponse(mod.getMID(), mod.getName(),
+                                        mod.getDescription(), lm_submodules);
+                                List<LMDescResponse> l = new ArrayList<>();
+                                l.add(resp);
+                                lmDescResponse.postValue(l);
+                            }
+                        });
 
+                    }
+                });
+
+        }
         return lmDescResponse;
     }
 
@@ -168,24 +186,29 @@ public class LearningModulesRepo {
             });
         }
         else {
-            AsyncTask.execute(() -> {
                 List<SMResponse> result = new ArrayList<>();
 
-                List<LM_Intro> intro = dao.getIntro(Integer.parseInt(mID));
-                List<IntroContentModel> ic = new ArrayList<>();
-                for (LM_Intro el : intro) {
-                    ic.add(new IntroContentModel(el.getHeader(), el.getContent()));
-                }
+                dao.getIntro(Integer.parseInt(mID)).observeForever(new Observer<List<LM_Intro>>() {
+                    @Override
+                    public void onChanged(List<LM_Intro> intro) {
+                        List<IntroContentModel> ic = new ArrayList<>();
+                        for (LM_Intro el : intro) {
+                            ic.add(new IntroContentModel(el.getHeader(), el.getContent()));
+                        }
 
-                List<LM_Submodule> submodules = dao.getSubmodules(Integer.parseInt(mID));
-                result.add(new SMResponse(submodules.get(0).getName(), submodules.get(0).getSubheader(), null, ic));
-                for (int i = 1; i < submodules.size(); i++) {
-                    LM_Submodule sm = submodules.get(i);
-                    result.add(new SMResponse(sm.getName(), sm.getSubheader(), sm.getText(), null));
-                }
-
-                smResponse.postValue(result);
-            });
+                        dao.getSubmodules(Integer.parseInt(mID)).observeForever(new Observer<List<LM_Submodule>>() {
+                            @Override
+                            public void onChanged(List<LM_Submodule> submodules) {
+                                result.add(new SMResponse(submodules.get(0).getName(), submodules.get(0).getSubheader(), null, ic));
+                                for (int i = 1; i < submodules.size(); i++) {
+                                    LM_Submodule sm = submodules.get(i);
+                                    result.add(new SMResponse(sm.getName(), sm.getSubheader(), sm.getText(), null));
+                                }
+                                smResponse.postValue(result);
+                            }
+                        });
+                    }
+                });
         }
         return smResponse;
     }
@@ -208,25 +231,30 @@ public class LearningModulesRepo {
             });
         }
         else {
-            AsyncTask.execute(() -> {
-                List<Questions> questions = dao.getQuestions(Integer.parseInt(smID));
-                List<QuizResponse> result = new ArrayList<>();
+                dao.getQuestions(Integer.parseInt(smID)).observeForever(new Observer<List<Questions>>() {
+                    @Override
+                    public void onChanged(List<Questions> questions) {
+                        List<QuizResponse> result = new ArrayList<>();
 
-                for (Questions q : questions) {
-                    List<Answer> answers = dao.getAnswers(Integer.parseInt(smID), q.getQUID());
-                    result.add(new QuizResponse(q.getQUID(), q.getQuestion(), answers));
-                }
+                        for (Questions q : questions) {
+                            dao.getAnswers(Integer.parseInt(smID), q.getQUID()).observeForever(new Observer<List<Answer>>() {
+                                @Override
+                                public void onChanged(List<Answer> answers) {
+                                    result.add(new QuizResponse(q.getQUID(), q.getQuestion(), answers));
+                                    Log.d("LMREPO", result.toString());
+                                    quizResponse.postValue(result);
+                                }
+                            });
 
-                Log.d("LMREPO", result.toString());
-                quizResponse.postValue(result);
-            });
+                        }
+                    }
+                });
         }
-
         return quizResponse;
     }
 
     public void cacheModules() {
-        Call<AllContentsResponse> call = apiService.getAllContentsModules(new AuthToken("chris.bordoy@gmail.com", "2021-01-01"));
+        Call<AllContentsResponse> call = apiService.getAllContentsModules(new AuthToken(user.getEmail(), "2021-01-01"));
         call.enqueue(new Callback<AllContentsResponse>() {
 
             @Override
@@ -274,15 +302,16 @@ public class LearningModulesRepo {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback(){
-                                                                       @Override
-                                                                       public void onAvailable(Network network) {
-                                                                           isNetworkConnected = true;
-                                                                       }
-                                                                       @Override
-                                                                       public void onLost(Network network) {
-                                                                           isNetworkConnected = false;
-                                                                       }
-                                                                   }
+                   @Override
+                   public void onAvailable(Network network) {
+                       isNetworkConnected = true;
+                   }
+                   @Override
+                   public void onLost(Network network) {
+                       isNetworkConnected = false;
+                   }
+               }
+
                 );
             }
             isNetworkConnected = false;

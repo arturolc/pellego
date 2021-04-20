@@ -22,6 +22,12 @@ public class ProgressValuesResponse {
     @Expose
     private Integer wpm;
 
+    public ProgressValuesResponse(Date recorded, Integer wordsRead, Integer wpm) {
+        this.recorded = recorded;
+        this.wordsRead = wordsRead;
+        this.wpm = wpm;
+    }
+
     public Date getRecorded() {
         return recorded;
     }

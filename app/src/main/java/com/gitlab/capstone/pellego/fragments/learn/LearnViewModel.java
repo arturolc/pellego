@@ -1,8 +1,10 @@
 package com.gitlab.capstone.pellego.fragments.learn;
 
 import android.app.Application;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -26,6 +28,7 @@ public class LearnViewModel extends AndroidViewModel {
     private LiveData<List<LMResponse>> lmResponse;
     private LiveData<List<CompletionResponse>> completionResponse;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public LearnViewModel(@NonNull Application application) {
         super(application);
         learningModulesRepo = LearningModulesRepo.getInstance(application);
@@ -34,6 +37,7 @@ public class LearnViewModel extends AndroidViewModel {
         completionResponse = new MutableLiveData<>();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public LiveData<List<LMResponse>> getLMResponse() {
         lmResponse = learningModulesRepo.getModules();
 

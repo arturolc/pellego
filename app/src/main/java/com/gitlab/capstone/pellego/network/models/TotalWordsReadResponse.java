@@ -8,6 +8,10 @@ public class TotalWordsReadResponse {
     @Expose
     public int totalWordsRead;
 
+    public TotalWordsReadResponse(int totalWordsRead) {
+        this.totalWordsRead = totalWordsRead;
+    }
+
     public int getTotalWordsRead() {
         return totalWordsRead;
     }
