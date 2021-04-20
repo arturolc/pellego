@@ -96,12 +96,12 @@ public class MetaguidingModuleFragment extends BaseFragment {
                 new ViewModelProvider(requireActivity()).get(ModuleViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_metaguiding_module, container, false);
-
+        PlayerWidget.wpm = wpm;
         this.setupHeader(root);
         mtext = root.findViewById(R.id.mText);
         mtext.setBackgroundColor(Color.WHITE);
         scroller = root.findViewById(R.id.mscroller);
-        mtext.setText(content); 
+        mtext.setText(content);
         if (moduleViewModel.isShowSubmodulePopupDialog()) showSubmodulePopupDialog();
 
         return root;
@@ -190,21 +190,35 @@ public class MetaguidingModuleFragment extends BaseFragment {
     }
 
     public String getNextPage() {
-        StringBuilder txt = new StringBuilder();
-        String result = playerWidget.selectNext();
-        while(txt.length() < 900 && !result.isEmpty()) {
-            txt.append(result);
-            result = playerWidget.selectNext();
+        String txt = "";
+        int limit = 10;
+        String tmp = playerWidget.selectNext();
+        while(txt.length() < 900 && limit != 0) {
+            txt += tmp;
+            tmp = playerWidget.selectNext();
+            if (tmp == "")  limit--;
         }
-        return txt.toString();
+        if (limit == 0 && txt.length() == 0) {
+            playerWidget.setUserWordValues();
+        }
+        return txt;
+
     }
 
     public String getPrevPage() {
-        StringBuilder txt = new StringBuilder();
-        while(txt.length() < 900) {
-            txt.append(playerWidget.selectPrev());
+        String txt = "";
+        int limit = 10;
+        String tmp = playerWidget.selectPrev();
+        while(txt.length() < 900 && limit != 0) {
+            txt += tmp;
+            tmp = playerWidget.selectPrev();
+            if (tmp == "")  limit--;
         }
-        return txt.toString();
+        if (limit == 0 && txt.length() == 0) {
+            playerWidget.setUserWordValues();
+        }
+        return txt;
+
     }
 
     public void startNext() {
@@ -259,6 +273,7 @@ public class MetaguidingModuleFragment extends BaseFragment {
         @Override
         protected Integer doInBackground(Integer... ints) {
             String pageTxt = content;
+            int wordCount = pageTxt.split("\\s+").length;
             Layout layout = mtext.getLayout();
             mtext.setText(Html.fromHtml(pageTxt));
             Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
@@ -288,9 +303,6 @@ public class MetaguidingModuleFragment extends BaseFragment {
                     cancel(true);
                     return 0;
                 }
-                if (currFragment.contains("MetaguidingModuleFragment")) {
-                    PlayerWidget.wpm = wpm;
-                }
                 try {
                     Thread.sleep((long) (((60.0 / (float) PlayerWidget.wpm) * 90)));
                 } catch (InterruptedException e) {
@@ -298,7 +310,6 @@ public class MetaguidingModuleFragment extends BaseFragment {
                     e.printStackTrace();
                 }
             }
-
             return 0;
         }
 
