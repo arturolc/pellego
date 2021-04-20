@@ -188,8 +188,15 @@ public class MetaguidingModuleFragment extends BaseFragment {
 
     public String getNextPage() {
         String txt = "";
-        while(txt.length() < 900) {
-            txt += playerWidget.selectNext();
+        int limit = 10;
+        String tmp = playerWidget.selectNext();
+        while(txt.length() < 900 && limit != 0) {
+            txt += tmp;
+            tmp = playerWidget.selectNext();
+            if (tmp == "")  limit--;
+        }
+        if (limit == 0 && txt.length() == 0) {
+            playerWidget.setUserWordValues();
         }
         return txt;
 
@@ -197,8 +204,15 @@ public class MetaguidingModuleFragment extends BaseFragment {
 
     public String getPrevPage() {
         String txt = "";
-        while(txt.length() < 900) {
-            txt += playerWidget.selectPrev();
+        int limit = 10;
+        String tmp = playerWidget.selectPrev();
+        while(txt.length() < 900 && limit != 0) {
+            txt += tmp;
+            tmp = playerWidget.selectPrev();
+            if (tmp == "")  limit--;
+        }
+        if (limit == 0 && txt.length() == 0) {
+            playerWidget.setUserWordValues();
         }
         return txt;
 

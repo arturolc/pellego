@@ -155,9 +155,12 @@ public class RsvpModuleFragment extends BaseFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void play() {
-        if (content == "") {
+        int limit = 5;
+        while (content == "" && limit != 0) {
             content = playerWidget.selectNext();
+            limit--;
         }
+        if (limit == 0) playerWidget.setUserWordValues();
         if (PlayerWidget.playing) {
             asyncUpdateText = new AsyncUpdateText(); // start thread on ok
             asyncUpdateText.execute(PlayerWidget.wpm);
@@ -167,12 +170,31 @@ public class RsvpModuleFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void startNext() {
         content = playerWidget.selectNext();
+        int limit = 5;
+        while (content == "" && limit != 0) {
+            content = playerWidget.selectNext();
+            limit--;
+        }
+        if (limit == 0) {
+            playerWidget.setUserWordValues();
+            return;
+        }
         asyncUpdateText = new AsyncUpdateText(); // start thread on ok
         asyncUpdateText.execute(PlayerWidget.wpm);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void startPrev() {
         content = playerWidget.selectPrev();
+        int limit = 5;
+        while (content == "" && limit != 0) {
+            content = playerWidget.selectPrev();
+            limit--;
+        }
+        if (limit == 0) {
+            playerWidget.setUserWordValues();
+            return;
+        }
         asyncUpdateText = new AsyncUpdateText(); // start thread on ok
         asyncUpdateText.execute(PlayerWidget.wpm);
     }
@@ -227,9 +249,7 @@ public class RsvpModuleFragment extends BaseFragment {
         protected void onPostExecute(Integer result) {
             try {
                 if (PlayerWidget.playing) {
-                    content = playerWidget.selectNext();
-                    asyncUpdateText = new AsyncUpdateText();
-                    asyncUpdateText.execute(PlayerWidget.wpm);
+                    startNext();
                 }
                 showQuizPopupDialog();
             } catch (Exception e) {
