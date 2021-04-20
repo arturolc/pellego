@@ -186,6 +186,14 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences =
+                getSharedPreferences("my_preferences", MODE_PRIVATE);
+
+        if(!preferences.getBoolean("onboarding_complete",false)){
+            OnboardingActivity.startActivity(this);
+        }
+
         storage = new Storage(this);
         registerReceiver(receiver, new IntentFilter(FBReaderView.ACTION_MENU));
         if (savedInstanceState == null && getIntent().getParcelableExtra(SAVE_INSTANCE_STATE) == null) {
@@ -214,7 +222,7 @@ public class MainActivity extends FullscreenActivity implements NavigationView.O
         }
         super.onBackPressed();
         if (fm.getBackStackEntryCount() == 0)
-            onResume(); // udpate theme if changed
+            onResume();
     }
 
     public static void loadImageFromStorage(Activity a)
