@@ -75,21 +75,8 @@ public class ProfileFragment extends BaseFragment {
         pgsBar.setVisibility(View.INVISIBLE);
         ((TextView)root.findViewById(R.id.tv_name)).setText(user.getName());
         ((TextView)root.findViewById(R.id.userName)).setText(user.getName());
-//        profileViewModel.getUserName().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(String s) {
-//
-//            }
-//        });
 
         ((TextView)root.findViewById(R.id.userEmail)).setText(user.getEmail());
-
-//        profileViewModel.getEmail().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(String s) {
-//
-//            }
-//        });
 
         profileViewModel.getTotalWordsReadResponse().observe(getViewLifecycleOwner(), new Observer<TotalWordsReadResponse>() {
            @Override
@@ -117,14 +104,11 @@ public class ProfileFragment extends BaseFragment {
                         View headerView = navView.getHeaderView(0);
                         ImageView im2 = (ImageView) headerView.findViewById(R.id.profile_image_drawer);
                         im2.setImageBitmap(bitmap);
-                        // save profile photo
                         storeImage(bitmap);
 
                     } catch (FileNotFoundException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }

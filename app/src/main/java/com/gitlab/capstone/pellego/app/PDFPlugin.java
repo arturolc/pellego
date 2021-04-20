@@ -8,12 +8,12 @@ import android.graphics.pdf.PdfRenderer;
 import android.os.ParcelFileDescriptor;
 import android.util.SparseArray;
 
-import com.gitlab.capstone.pellego.widgets.FBReaderView;
-import com.gitlab.capstone.pellego.widgets.ScrollWidget;
 import com.github.axet.androidlibrary.app.Natives;
 import com.github.axet.androidlibrary.widgets.CacheImagesAdapter;
 import com.github.axet.pdfium.Config;
 import com.github.axet.pdfium.Pdfium;
+import com.gitlab.capstone.pellego.widgets.FBReaderView;
+import com.gitlab.capstone.pellego.widgets.ScrollWidget;
 
 import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.book.BookUtil;
@@ -41,6 +41,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+
+/****************************************
+ * Eli Hebdon
+ *
+ * Manages PDF imports for library
+ ***************************************/
 
 public class PDFPlugin extends BuiltinFormatPlugin implements Plugin {
     public static String TAG = PDFPlugin.class.getSimpleName();

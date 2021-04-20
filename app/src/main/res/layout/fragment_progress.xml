@@ -43,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/title_today"
+                android:textSize="18sp"
                 android:layout_below="@+id/progress_animation"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp" />
@@ -60,7 +61,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/title_words_read"
-                android:textSize="10sp"
+                android:textSize="14sp"
                 android:layout_below="@+id/text_today_title"
                 android:layout_toLeftOf="@+id/centerShim"/>
 
@@ -78,7 +79,7 @@
                 android:id="@+id/today_wpm_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="10sp"
+                android:textSize="14sp"
                 android:gravity="center"
                 android:layout_toRightOf="@+id/centerShim"
                 android:layout_below="@+id/text_today_title"
@@ -94,13 +95,22 @@
                 android:layout_below="@+id/today_wpm_label"
                 android:textSize="18sp"/>
 
+            <View
+                android:id="@+id/today_lastweek_divider"
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/today_wpm_description"
+                android:background="@color/white_transparent"/>
+
             <TextView
                 android:id="@+id/text_last_week_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
                 android:text="@string/title_last_week"
-                android:layout_below="@+id/today_words_read_description"
+                android:textSize="18sp"
+                android:layout_below="@+id/today_lastweek_divider"
                 android:layout_marginLeft="5dp" />
 
             <TextView
@@ -109,7 +119,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/title_words_read"
-                android:textSize="10sp"
+                android:textSize="14sp"
                 android:layout_below="@+id/text_last_week_title"
                 android:layout_toLeftOf="@+id/centerShim"/>
 
@@ -128,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="10sp"
+                android:textSize="14sp"
                 android:layout_toRightOf="@+id/centerShim"
                 android:layout_below="@+id/text_last_week_title"
                 android:text="@string/title_wpm" />
@@ -151,13 +161,22 @@
                 android:layout_gravity="center"
                 android:layout_below="@+id/last_week_wpm_description"/>
 
+            <View
+                android:id="@+id/lastweek_lastyear_divider"
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/last_week_barChart"
+                android:background="@color/white_transparent"/>
+
             <TextView
                 android:id="@+id/text_last_year_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
                 android:text="@string/title_last_year"
-                android:layout_below="@+id/last_week_barChart"
+                android:textSize="18sp"
+                android:layout_below="@+id/lastweek_lastyear_divider"
                 android:layout_marginLeft="5dp" />
 
             <TextView
@@ -166,7 +185,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/title_words_read"
-                android:textSize="10sp"
+                android:textSize="14sp"
                 android:layout_below="@+id/text_last_year_title"
                 android:layout_toLeftOf="@+id/centerShim"/>
 
@@ -185,7 +204,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="10sp"
+                android:textSize="14sp"
                 android:layout_toRightOf="@+id/centerShim"
                 android:layout_below="@+id/text_last_year_title"
                 android:text="@string/title_wpm" />

@@ -6,7 +6,11 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-
+/****************************************
+ * Arturo Lara
+ *
+ * Represents a User
+ ***************************************/
 
 @Entity(tableName = "Users",
         indices = {@Index(value = {"Email"},

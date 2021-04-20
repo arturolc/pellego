@@ -6,6 +6,13 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Handler;
 
+/****************************************
+ * Eli Hebdon
+ *
+ * Represents time animation for progress
+ * bars
+ ***************************************/
+
 public class TimeAnimatorCompat {
     Handler handler = new Handler();
     TimeListener listener;

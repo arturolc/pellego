@@ -18,7 +18,6 @@ import androidx.lifecycle.Observer;
 
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
-import com.gitlab.capstone.pellego.R;
 import com.gitlab.capstone.pellego.database.daos.UserDao;
 import com.gitlab.capstone.pellego.database.entities.ProgressCompleted;
 import com.gitlab.capstone.pellego.database.entities.UserWordValues;
@@ -38,7 +37,6 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -78,7 +76,6 @@ public class UsersRepo {
         String name = sharedPref.getString("UserName", "");
         String email = sharedPref.getString("UserEmail", "");
         user = new Users((int)uid, name, email);
-        Log.d("USERSREPO", user.toString());
         registerNetworkCallback();
     }
 
@@ -109,7 +106,6 @@ public class UsersRepo {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, Response<Void> response) {
-
             }
 
             @Override
@@ -132,7 +128,6 @@ public class UsersRepo {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, Response<Void> response) {
-
             }
 
             @Override
@@ -223,10 +218,6 @@ public class UsersRepo {
                 Log.e("UsersRepo", e.toString());
             }
 
-            Log.d("timezone", c.getTime().toString());
-//            Log.d("timezone", Instant.now().toString());
-//            Log.d("timezone", Instant.now().toEpochMilli() + "");
-//            Log.d("timezone", c.getTime() + "");
             AsyncTask.execute(()-> {
                 for (int i = 0; i < 7; i++) {
                     UserWordValues el = dao.getProgressLast7Days(user.getUID(), c.getTime());
@@ -236,7 +227,7 @@ public class UsersRepo {
 
                     c.add(Calendar.DATE, -1);
                 }
-                // putting it back to current date
+
                 c.add(Calendar.DATE, 7);
 
                 for (int i = 0; i < 12; i++) {
@@ -246,7 +237,6 @@ public class UsersRepo {
                     res.add(new ProgressValuesResponse(el.getRecorded(), el.getWordsRead(), el.getWpm()));
                     c.add(Calendar.MONTH, -1);
                 }
-                Log.d("ProgValRes", res.toString());
                 progressValuesResponse.postValue(res);
             });
         }
@@ -372,13 +362,11 @@ public class UsersRepo {
         });
     }
 
-    // Network Check
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void registerNetworkCallback()
     {
         try {
             ConnectivityManager connectivityManager = (ConnectivityManager) application.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkRequest.Builder builder = new NetworkRequest.Builder();
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {

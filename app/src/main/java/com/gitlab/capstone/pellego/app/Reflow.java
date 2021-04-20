@@ -8,19 +8,26 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import androidx.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
-import com.gitlab.capstone.pellego.widgets.FBReaderView;
+import androidx.preference.PreferenceManager;
+
 import com.github.axet.androidlibrary.app.Natives;
 import com.github.axet.k2pdfopt.Config;
 import com.github.axet.k2pdfopt.K2PdfOpt;
+import com.gitlab.capstone.pellego.widgets.FBReaderView;
 
 import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+/****************************************
+ * Eli Hebdon
+ *
+ * Helper class for import files for library
+ ***************************************/
 
 public class Reflow {
     public K2PdfOpt k2;

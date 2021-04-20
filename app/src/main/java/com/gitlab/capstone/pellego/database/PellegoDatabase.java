@@ -26,6 +26,12 @@ import com.gitlab.capstone.pellego.database.entities.UserWordValues;
 import com.gitlab.capstone.pellego.database.entities.User_Analytics;
 import com.gitlab.capstone.pellego.database.entities.Users;
 
+/****************************************
+ * Arturo Lara
+ *
+ * Represents the Pellego Database
+ ***************************************/
+
 @Database(entities = {Answers.class,
         Average_WPM_History.class,
         Books.class,

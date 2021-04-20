@@ -8,6 +8,13 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/****************************************
+ * Chris Bordoy
+ *
+ * Represents the completion status for
+ * Learning Module Introductions
+ ***************************************/
+
 @Entity(foreignKeys = {@ForeignKey(entity = Users.class, parentColumns = "UID", childColumns = "UID"),
     @ForeignKey(entity = LM_Intro.class, parentColumns = "IID", childColumns = "Intro")})
 public class Intro_Status {

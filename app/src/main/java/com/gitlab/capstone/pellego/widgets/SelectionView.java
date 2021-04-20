@@ -25,6 +25,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/****************************************
+ * Eli Hebdon
+ *
+ * Represents spatial handling of
+ * FBReaderView pages
+ ***************************************/
+
 public class SelectionView extends FrameLayout {
     public static final int ARTIFACT_PERCENTS = 15;
     public static final int SELECTION_ALPHA = 0x99;

@@ -25,7 +25,6 @@ import com.gitlab.capstone.pellego.network.models.TotalWordsReadResponse;
 
 public class ProfileModel extends AndroidViewModel {
     private Users user;
-
     private static ProfileModel INSTANCE;
     private final UsersRepo usersRepo;
     private LiveData<TotalWordsReadResponse> totalWordsReadResponse;

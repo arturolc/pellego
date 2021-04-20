@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
-import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -16,8 +15,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
-import com.amazonaws.mobileconnectors.cognitoauth.Auth;
-import com.amplifyframework.core.Amplify;
 import com.gitlab.capstone.pellego.database.daos.LearningModulesDao;
 import com.gitlab.capstone.pellego.database.entities.Answers;
 import com.gitlab.capstone.pellego.database.entities.LM_Intro;
@@ -38,8 +35,6 @@ import com.gitlab.capstone.pellego.network.models.SMResponse;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Array;
-import java.nio.channels.NetworkChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +73,7 @@ public class LearningModulesRepo {
         String email = sharedPref.getString("UserEmail", "");
         user = new Users((int)uid, name, email);
         registerNetworkCallback();
-        isNetworkConnected = false;
+
         AsyncTask.execute(()-> {
             int count = dao.getModulesCount();
             Log.d("ModulesCount", "" + count);

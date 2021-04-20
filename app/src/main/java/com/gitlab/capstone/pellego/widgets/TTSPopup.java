@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.gitlab.capstone.pellego.app.TTS;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.github.axet.androidlibrary.widgets.ThemeUtils;
 import com.github.axet.androidlibrary.widgets.Toast;
 import com.gitlab.capstone.pellego.R;
@@ -24,6 +24,7 @@ import com.gitlab.capstone.pellego.app.App;
 import com.gitlab.capstone.pellego.app.Plugin;
 import com.gitlab.capstone.pellego.app.Reflow;
 import com.gitlab.capstone.pellego.app.Storage;
+import com.gitlab.capstone.pellego.app.TTS;
 
 import org.geometerplus.fbreader.fbreader.TextBuildTraverser;
 import org.geometerplus.zlibrary.core.view.ZLViewEnums;
@@ -40,6 +41,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Locale;
+
+/****************************************
+ * Eli Hebdon
+ *
+ * Represents a Text To Speech popup object
+ ***************************************/
 
 public class TTSPopup {
     public static String[] EOL = {"\n", "\r"};

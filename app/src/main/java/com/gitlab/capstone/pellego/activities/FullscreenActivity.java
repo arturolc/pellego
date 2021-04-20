@@ -23,7 +23,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -48,7 +47,10 @@ import static com.gitlab.capstone.pellego.activities.MainActivity.bitmap;
 
 /****************************************
  * Arturo Lara, Eli Hebdon
+ *
+ * Manages drawers and readers
  ***************************************/
+
 public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
     public Toolbar toolbar;
     private AppBarConfiguration appBarConfiguration;
@@ -103,7 +105,6 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         bottomContent = findViewById(R.id.container_bottom);
         toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.ic_action_button_overflow));
 
-
         // setup bottom nav and drawer nav menus
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
         drawer = findViewById(R.id.home_layout);
@@ -119,7 +120,6 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
         FrameLayout constraintLayout = this.findViewById(R.id.host_fragment_container);
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) constraintLayout.getLayoutParams();
-//        layoutParams.bottomToTop = R.id.container_bottom;
         constraintLayout.setLayoutParams(layoutParams);
         
         // Attach nav drawer to nav controller
@@ -136,7 +136,6 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
 //            }
 //        });
 
-
         NavigationUI.setupWithNavController(drawerNavigationView, navController);
 
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -151,12 +150,10 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
             public void onDrawerOpened(@NonNull View drawerView) {
                 ImageView im2 = (ImageView) findViewById(R.id.profile_image_drawer);
                 im2.setImageBitmap(bitmap);
-
             }
 
             @Override
             public void onDrawerClosed(@NonNull View drawerView) {
-
             }
 
             @Override
@@ -164,7 +161,6 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
             }
         });
 
-        // TODO: refactor this so it's just a click listener for the sign out button, otherwise navigation to other views doesn't work
         drawerNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -194,17 +190,13 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
                 return true;
             }
         });
-
     }
-
-
 
     @Override
     protected void onResume() {
         super.onResume();
     }
 
-    // TODO: update theme to pellego theme
     @Override
     public int getAppTheme() {
         return App.getTheme(this, R.style.Theme_Pellego, R.style.Theme_Pellego_Dark);
@@ -229,7 +221,6 @@ public class FullscreenActivity extends AppCompatFullscreenThemeActivity {
         }
     }
 
-    // TODO: fix full screen mode
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void hideSystemUI() {

@@ -4,10 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+/****************************************
+ * Chris Bordoy and Arturo Lara
+ *
+ * Represents a Progress Completion object
+ * used for Learning Submodules
+ ***************************************/
 
 @Entity(foreignKeys = {
     @ForeignKey(entity = Users.class, parentColumns = "UID", childColumns = "UID"),

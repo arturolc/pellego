@@ -11,6 +11,12 @@ import com.google.gson.annotations.SerializedName;
 
 import static androidx.room.ForeignKey.CASCADE;
 
+/****************************************
+ * Chris Bordoy and Arturo Lara
+ *
+ * Represents a Learning SubModule object
+ ***************************************/
+
 @Entity(foreignKeys = @ForeignKey(entity = LM_Module.class,
     parentColumns = "MID", childColumns = "MID", onDelete = CASCADE))
 public class LM_Submodule {

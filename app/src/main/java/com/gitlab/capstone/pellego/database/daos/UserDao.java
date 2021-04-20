@@ -13,6 +13,13 @@ import com.gitlab.capstone.pellego.network.models.ProgressValuesResponse;
 import java.util.Date;
 import java.util.List;
 
+/****************************************
+ * Arturo Lara
+ *
+ * Represents a User
+ * data access object for caching
+ ***************************************/
+
 @Dao
 public interface UserDao {
 
