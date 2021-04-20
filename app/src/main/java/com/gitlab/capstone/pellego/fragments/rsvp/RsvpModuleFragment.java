@@ -212,7 +212,6 @@ public class RsvpModuleFragment extends BaseFragment {
                             content = content.replaceFirst(word, "");
                         }
                     }
-                    Log.d("here", PlayerWidget.wpm + "");
                     Thread.sleep((long) ((60.0 / (float) PlayerWidget.wpm) * 1000));
                 } catch (InterruptedException e) {
                     e.printStackTrace();

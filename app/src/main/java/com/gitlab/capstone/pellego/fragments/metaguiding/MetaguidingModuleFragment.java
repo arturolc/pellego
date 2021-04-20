@@ -293,11 +293,6 @@ public class MetaguidingModuleFragment extends BaseFragment {
                     e.printStackTrace();
                 }
             }
-            if (!pageTxt.isEmpty() && currFragment != null) {
-                if (currFragment.contains("ReaderFragment") && wordCount != 0 && PlayerWidget.wpm != 0) {
-                    playerWidget.setUserWordValues(wordCount, PlayerWidget.wpm);
-                }
-            }
             return 0;
         }
 
